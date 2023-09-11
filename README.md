@@ -1,7 +1,5 @@
-# Gradutaion Project
-This is a Research Based Software for Brain Tumor Segmentation & MRI Sequence Synthesis with the aid of
-Deep Learning and Generative AI.
-
+# Gradutaion Project - Learning Branch
+This branch is to keep track of the learning material we went through the process of creating this Gradution Project.
 
 
 ### Team 
