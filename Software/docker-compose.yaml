@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  backend:
+    build: ./backend
+    container_name: gp_backend
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./backend:/app
+      - ./home/user/myapp/node_modules:/app/node_modules
+  frontend:
+    build: ./frontend
+    container_name: gp_frontend
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+  
