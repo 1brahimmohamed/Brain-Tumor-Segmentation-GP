@@ -1,0 +1,20 @@
+{
+  "name": "medical_viewer_gp_backend",
+  "version": "1.0.0",
+  "description": "Medical Viewer for Graduation Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon -L app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Docker-Net-Ninja-"
+  },
+  "author": "sou7hernsaint",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.2"
+  }
+}
