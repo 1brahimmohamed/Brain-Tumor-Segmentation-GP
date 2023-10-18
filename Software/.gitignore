@@ -1,0 +1,7 @@
+
+# IDEs
+.idea/
+
+
+# Dependences
+**/node_modules/
