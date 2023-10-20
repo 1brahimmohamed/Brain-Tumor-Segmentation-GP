@@ -1,14 +1,30 @@
 import { createBrowserRouter } from "react-router-dom";
+
+// layouts
 import ViewerLayout from "./layouts/ViewerLayout";
 import LoginLayout from "./layouts/LoginLayout";
 import HomeLayout from "./layouts/HomeLayout";
-import Login from "./pages/Auth/Login.jsx";
+
+// pages
+import Login from "./pages/Auth/Login";
+import Home from "./pages/Home/Home";
+import NotFound404 from "./pages/404/404";
 
 
 const AppRouter = createBrowserRouter([
     {
         path: "/",
         element: <HomeLayout/>,
+        children: [
+            {
+                index: true,
+                element: <Home />,
+            },
+            {
+                path: "/home",
+                element: <Home/>,
+            }
+        ],
     },
     {
         path: "/viewer",
@@ -16,7 +32,7 @@ const AppRouter = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <div>HIMA</div>,
+                element: <div>Viewer</div>,
             },
         ],
     },
@@ -30,6 +46,10 @@ const AppRouter = createBrowserRouter([
             }
         ],
     },
+    {
+        path: "*",
+        element: <NotFound404/>,
+    }
 ]);
 
 export default AppRouter;
