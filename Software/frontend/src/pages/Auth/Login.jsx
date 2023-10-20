@@ -1,36 +1,42 @@
+import {useContext, useState} from 'react';
+
 // MUI imports
 import {
     InputAdornment,
     OutlinedInput,
     SvgIcon,
     Button,
-    useTheme
+    useTheme,
 } from "@mui/material";
-
-// theme colors
-import {tokens} from "../../assets/theme/theme";
 
 // icons
 import LockIcon from '@mui/icons-material/Lock';
 import PersonIcon from '@mui/icons-material/Person';
 
+// theme colors
+import {ColorModeContext, tokens} from "../../assets/theme/theme";
 import Logo from "../../components/Logo/Logo";
+import LoginFooter from "../../components/Footers/LoginFooter.jsx";
+
 
 const Login = () => {
 
-    // theme
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
+
+    const [signInError, setSignInError] = useState(false);
+
     return (
 
-        <div className="flex h-screen justify-center items-center">
+        <div className="flex flex-col h-screen justify-center items-center">
 
+            {/* Body */}
             <div className="w-96 text-white p-7 text-center">
 
                 {/* Logo */}
                 <div className={"w-50 mx-auto"}>
-                    <Logo mode={theme.palette.mode} />
+                    <Logo mode={theme.palette.mode}/>
                 </div>
 
                 {/* Form */}
@@ -47,7 +53,7 @@ const Login = () => {
                                         color="inherit"
                                         fontSize="large"
                                     >
-                                        <PersonIcon />
+                                        <PersonIcon/>
                                     </SvgIcon>
                                 </InputAdornment>
                             )}
@@ -58,7 +64,7 @@ const Login = () => {
                                     border: 'none', // Remove the outline
                                 },
                             }}
-                            onChange={(e)=> console.log(e.target.value)}
+                            onChange={(e) => console.log(e.target.value)}
                         />
 
                         <OutlinedInput
@@ -73,7 +79,7 @@ const Login = () => {
                                         color="inherit"
                                         fontSize="large"
                                     >
-                                        <LockIcon />
+                                        <LockIcon/>
                                     </SvgIcon>
                                 </InputAdornment>
                             )}
@@ -84,8 +90,18 @@ const Login = () => {
                                     border: 'none', // Remove the outline
                                 },
                             }}
-                            onChange={(e)=> console.log(e.target.value)}
+                            onChange={(e) => console.log(e.target.value)}
                         />
+
+                        <div className={""}>
+                            {
+                                signInError &&
+                                <h6
+                                    className={"mb-2 text-red-600"}>
+                                    The username or password is incorrect.
+                                </h6>
+                            }
+                        </div>
 
                         <Button
                             fullWidth
@@ -98,8 +114,12 @@ const Login = () => {
                         </Button>
                     </form>
                 </div>
-
             </div>
+
+            <div>
+                <LoginFooter />
+            </div>
+
         </div>
     );
 };

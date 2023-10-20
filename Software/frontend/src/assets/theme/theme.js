@@ -1,10 +1,7 @@
 import {createContext, useState, useMemo} from 'react';
+
+// MUI
 import {createTheme} from '@mui/material/styles';
-//
-//
-// // color design tokens
-//
-//
 
 
 export const tokens = (mode) => ({
@@ -24,7 +21,7 @@ export const tokens = (mode) => ({
             primary: {
                 100: "#d5d5d6",
                 200: "#acacad",
-                300: "#828285",
+                300: "#3f3f43",
                 400: "#383842",
                 500: "#2f2f33",
                 600: "#262629",
@@ -85,7 +82,7 @@ export const tokens = (mode) => ({
                 400: "#262629",
                 500: "#2f2f33",
                 600: "#383842",
-                700: "#828285",
+                700: "#3f3f43",
                 800: "#acacad",
                 900: "#d5d5d6",
             },
@@ -135,9 +132,11 @@ export const themeSettings = (mode) => {
                 mode === 'dark'? {
                     primary: {
                         main: colors.primary[500],
+                        dark: colors.primary[600],
+                        light: colors.primary[400],
                     },
                     secondary: {
-                        main: colors.green[500],
+                        main: colors.blue[500],
                     },
                     neutral: {
                         dark: colors.grey[700],
@@ -149,10 +148,12 @@ export const themeSettings = (mode) => {
                     },
                 } : {
                     primary: {
-                        main: colors.primary[100],
+                        main: "#ffffff",
+                        dark: colors.primary[300],
+                        light: colors.primary[800],
                     },
                     secondary: {
-                        main: colors.green[500],
+                        main: colors.blue[500],
                     },
                     neutral: {
                         dark: colors.grey[700],
@@ -201,7 +202,7 @@ export const ColorModeContext = createContext({
 });
 
 export const useMode = () => {
-    const [mode, setMode] = useState('light');
+    const [mode, setMode] = useState('dark');
 
     const colorMode = useMemo(
         () => ({

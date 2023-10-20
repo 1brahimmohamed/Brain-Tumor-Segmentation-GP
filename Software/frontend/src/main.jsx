@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import { HelmetProvider } from 'react-helmet-async'
 import ColorModeProvider from "./hooks/ColorModeProvider.jsx";
+import { HelmetProvider } from 'react-helmet-async'
+import App from './App.jsx'
 
 import './index.css'
 
