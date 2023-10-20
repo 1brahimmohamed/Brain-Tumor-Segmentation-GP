@@ -1,13 +1,19 @@
-import {Box, IconButton, InputBase, useTheme}  from "@mui/material";
 import {useContext} from "react";
-import {ColorModeContext, tokens} from "../../assets/theme/theme";
-import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
-import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
-import NotificationImportantOutlined from "@mui/icons-material/NotificationImportantOutlined";
+
+// MUI
+import {Box, IconButton, InputBase, useTheme}  from "@mui/material";
+
+// Icons
 import SearchIcon from "@mui/icons-material/Search";
+import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
+import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
+import NotificationImportantOutlined from "@mui/icons-material/NotificationImportantOutlined";
+
+// Theme
+import {ColorModeContext, tokens} from "../../assets/theme/theme";
 
 
-const Topbar = () => {
+const ViewerTopbar = () => {
 
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
@@ -41,4 +47,4 @@ const Topbar = () => {
     )
 };
 
-export default Topbar;
+export default ViewerTopbar;

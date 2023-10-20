@@ -35,6 +35,10 @@ body,
   background: #555;
 }
 
+.ant-picker-input {
+  color: green !important;
+}
+
 
 /*:root {*/
 /*  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;*/

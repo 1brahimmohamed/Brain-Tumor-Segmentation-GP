@@ -1,4 +1,6 @@
 import {ColorModeContext, useMode} from "../assets/theme/theme";
+
+// MUI
 import {CssBaseline, ThemeProvider} from "@mui/material";
 
 const ColorModeProvider = ({ children }) => {

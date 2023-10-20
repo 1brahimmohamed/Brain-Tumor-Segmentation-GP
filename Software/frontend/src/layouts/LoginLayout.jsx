@@ -8,7 +8,8 @@ const LoginLayout = () => {
                 <title>MMM.AI Login</title>
                 <meta
                     name="description"
-                    content="Multimodal Medical Viewer for brain tumor segementaion and MRI squence sythnises" />
+                    content="Multimodal Medical Viewer for brain tumor segmentation and MRI sequence synthesis"
+                />
             </Helmet>
             <Outlet />
         </div>
