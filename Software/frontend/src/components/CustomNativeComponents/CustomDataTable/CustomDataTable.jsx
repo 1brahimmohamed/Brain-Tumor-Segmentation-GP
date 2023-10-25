@@ -17,6 +17,7 @@ import { styled } from '@mui/material/styles';
 // Icons
 import LibraryBooksOutlinedIcon from '@mui/icons-material/LibraryBooksOutlined';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import {Link} from "react-router-dom";
 
 
 // Custom Styled Components
@@ -122,12 +123,13 @@ const CustomizedTables = () => {
                             <StyledTableCell component="th" scope="row">{/*<Checkbox />*/} </StyledTableCell>
 
                             <StyledTableCell component="th" scope="row">
-                                <VisibilityIcon sx={{
-                                    "&:hover": {
-                                        cursor: "pointer",
-                                    }
-                                }}
-                                />
+                                <Link to={"/viewer"}>
+                                    <VisibilityIcon sx={{
+                                        "&:hover": {
+                                            cursor: "pointer",
+                                        }
+                                    }}/>
+                                </Link>
                             </StyledTableCell>
 
                             <StyledTableCell component="th" scope="row">{row.id}</StyledTableCell>

@@ -36,7 +36,7 @@ const Login = () => {
 
                 {/* Logo */}
                 <div className={"w-50 mx-auto"}>
-                    <Logo mode={theme.palette.mode}/>
+                    <Logo/>
                 </div>
 
                 {/* Form */}

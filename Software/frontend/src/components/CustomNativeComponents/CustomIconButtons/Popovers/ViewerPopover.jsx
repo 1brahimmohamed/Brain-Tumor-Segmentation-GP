@@ -1,13 +1,11 @@
-import * as React from "react";
-
 // MUI
-import {MenuItem, Popover, useTheme} from "@mui/material";
+import {Box, MenuItem, Popover, useTheme} from "@mui/material";
 
 // Theme
-import {tokens} from "../../../assets/theme/theme.js";
+import {tokens} from "../../../../assets/theme/theme.js";
 
-
-const SettingsPopover = ({anchorElement, open, closePopoverHandler}) => {
+import InvertColorsIcon from '@mui/icons-material/InvertColors';
+const ViewerPopover = ({anchorElement, open, closePopoverHandler}) => {
 
     const theme = useTheme();
     const colorMode = theme.palette.mode;
@@ -16,16 +14,16 @@ const SettingsPopover = ({anchorElement, open, closePopoverHandler}) => {
     const id = open ? 'simple-popover' : undefined;
 
     const popDownStyle = {
+
         backgroundColor: colorMode === 'dark' ? colors.primary[400] : colors.grey[900],
         '&:hover': {
             backgroundColor: colors.blue[500],
         },
     }
 
-    return (
 
+    return (
         <Popover
-            className={"mt-3 ml-2"}
             id={id}
             open={open}
             onClose={closePopoverHandler}
@@ -33,32 +31,38 @@ const SettingsPopover = ({anchorElement, open, closePopoverHandler}) => {
 
             anchorOrigin={{
                 vertical: 'bottom',
-                horizontal: 'right',
+                horizontal: 'left',
             }}
 
             transformOrigin={{
                 vertical: 'top',
-                horizontal: 'right',
+                horizontal: 'left',
             }}
         >
             <MenuItem sx={popDownStyle}>
-                About
+               <InvertColorsIcon className={"mr-2"}/>
+                <Box>
+                    Feature 1
+                </Box>
             </MenuItem>
 
             <MenuItem sx={popDownStyle}>
-                License Agreement
+                <InvertColorsIcon className={"mr-2"}/>
+                Feature 2
             </MenuItem>
 
             <MenuItem sx={popDownStyle}>
-                Support
+                <InvertColorsIcon className={"mr-2"}/>
+                Feature 3
             </MenuItem>
 
             <MenuItem sx={popDownStyle}>
-                Logout
+                <InvertColorsIcon className={"mr-2"}/>
+                Feature 4
             </MenuItem>
 
         </Popover>
     )
 };
 
-export default SettingsPopover;
+export default ViewerPopover;

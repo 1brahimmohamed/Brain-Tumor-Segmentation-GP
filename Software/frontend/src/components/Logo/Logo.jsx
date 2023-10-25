@@ -1,4 +1,9 @@
-const Logo = ({mode}) => {
+import {useTheme} from "@mui/material/styles";
+
+const Logo = () => {
+    const theme = useTheme();
+    const mode = theme.palette.mode;
+
     return (
         <img
             alt={"logo"}

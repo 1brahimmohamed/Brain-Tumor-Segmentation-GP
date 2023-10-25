@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 
 // MUI
 import {IconButton, Popover, useTheme} from "@mui/material";
@@ -7,13 +7,13 @@ import {IconButton, Popover, useTheme} from "@mui/material";
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
 
 // Theme
-import {tokens} from "../../../assets/theme/theme.js";
+import { tokens } from "../../../assets/theme/theme.js";
 
 // Custom
-import SettingsPopover from "../../Topbars/Popovers/SettingsPopover";
+import GeneralSettingsPopover from "./Popovers/GeneralSettingsPopover.jsx";
 
 
-const CustomIconButton = ({sx, icon ,doPopDown = false, children, onClick}) => {
+const GeneralCustomIconButton = ({sx, icon ,doPopDown = false, children, onClick}) => {
 
     const theme = useTheme();
     const colorMode = theme.palette.mode;
@@ -28,7 +28,7 @@ const CustomIconButton = ({sx, icon ,doPopDown = false, children, onClick}) => {
     }
 
     // the anchor element is the element that the popover is attached to
-    const [anchorElement, setAnchorElement] = React.useState(null);
+    const [anchorElement, setAnchorElement] = useState(null);
 
     const handlePopoverClose = () => {
         setAnchorElement(null);
@@ -57,10 +57,10 @@ const CustomIconButton = ({sx, icon ,doPopDown = false, children, onClick}) => {
 
             </IconButton>
 
-            <SettingsPopover open={open} anchorEl={anchorElement} closePopoverHandler={handlePopoverClose}/>
+            <GeneralSettingsPopover open={open} anchorElement={anchorElement} closePopoverHandler={handlePopoverClose}/>
 
         </div>
     );
 };
 
-export default CustomIconButton;
+export default GeneralCustomIconButton;

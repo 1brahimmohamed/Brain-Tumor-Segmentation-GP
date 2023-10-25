@@ -16,6 +16,7 @@ const ViewerLayout = () => {
                 />
             </Helmet>
 
+            {/* Topbar */}
             <ViewerTopbar/>
             <Outlet/>
         </div>

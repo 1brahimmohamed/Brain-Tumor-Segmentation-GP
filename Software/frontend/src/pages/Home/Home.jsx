@@ -22,7 +22,7 @@ const Home = () => {
             </Box>
 
             <Box className={"flex mt-5 h-14 justify-center"}>
-                <Logo mode={theme.palette.mode}/>
+                <Logo/>
             </Box>
         </div>
     );

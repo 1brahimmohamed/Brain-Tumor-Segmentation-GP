@@ -15,7 +15,7 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import {ColorModeContext, tokens} from "../../assets/theme/theme";
 
 // Custom Components
-import CustomIconButton from "../CustomNativeComponents/CustomIconButton/CustomIconButton.jsx";
+import GeneralCustomIconButton from "../CustomNativeComponents/CustomIconButtons/GeneralCustomIconButton.jsx";
 import DateRangesButtonsGroup from "../../pages/Home/Components/DateRangesButtonsGroup/DateRangesButtonsGroup";
 import ModalityButtonsGroup from "../../pages/Home/Components/ModalityButtonsGroup/ModalityButtonsGroup";
 
@@ -59,15 +59,15 @@ const HomeTopbar = () => {
             {/* Right Side */}
             <Box className={"flex space-x-1"}>
 
-                <CustomIconButton
+                <GeneralCustomIconButton
                     icon={ <VerticalAlignBottomIcon/>}
                 />
 
-                <CustomIconButton
+                <GeneralCustomIconButton
                     icon={<NotificationImportantOutlined/>}
                 />
 
-                <CustomIconButton
+                <GeneralCustomIconButton
                     icon={
                             theme.palette.mode === 'dark' ?
                                 (<LightModeOutlinedIcon/>) :
@@ -76,7 +76,7 @@ const HomeTopbar = () => {
                     onClick={colorMode.toggleColorMode}
                 />
 
-                <CustomIconButton
+                <GeneralCustomIconButton
                     doPopDown={true}
                     icon={<SettingsOutlinedIcon/>}
                 />
