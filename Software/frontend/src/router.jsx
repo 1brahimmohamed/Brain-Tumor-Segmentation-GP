@@ -10,6 +10,7 @@ import Login from "./pages/Auth/Login";
 import Home from "./pages/Home/Home";
 import NotFound404 from "./pages/404/404";
 import RegularViewer from "./pages/Viewer/RegularViewer.jsx";
+import LoadingScreen from "./components/LoadingScreen/LoadingScreen.jsx";
 
 
 const AppRouter = createBrowserRouter([
@@ -48,9 +49,13 @@ const AppRouter = createBrowserRouter([
         ],
     },
     {
+        path:"/loading",
+        element: <LoadingScreen />
+    },
+    {
         path: "*",
         element: <NotFound404/>,
-    }
+    },
 ]);
 
 export default AppRouter;

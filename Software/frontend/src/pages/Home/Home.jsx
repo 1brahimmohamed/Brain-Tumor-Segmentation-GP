@@ -9,6 +9,7 @@ import CustomDataTable from "../../components/CustomNativeComponents/CustomDataT
 import {tokens} from "../../assets/theme/theme";
 
 import Logo from "../../components/Logo/Logo";
+import LoadingBar from "../../components/LoadingBars/LinearProgressBarIndeterminate.jsx";
 
 const Home = () => {
 

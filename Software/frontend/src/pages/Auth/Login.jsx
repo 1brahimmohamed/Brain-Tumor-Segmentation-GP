@@ -1,4 +1,5 @@
 import {useContext, useState} from 'react';
+import {useNavigate} from "react-router-dom";
 
 // MUI imports
 import {
@@ -24,6 +25,7 @@ const Login = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
+    const navigate = useNavigate();
 
     const [signInError, setSignInError] = useState(false);
 
@@ -109,6 +111,7 @@ const Login = () => {
                             color="inherit"
                             className={"h-12 text-2"}
                             style={{backgroundColor: colors.blue[500]}}
+                            onClick={() => navigate("/")}
                         >
                             Login
                         </Button>
