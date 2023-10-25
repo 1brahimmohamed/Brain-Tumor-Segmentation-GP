@@ -19,6 +19,9 @@ import GeneralCustomIconButton from "../CustomNativeComponents/CustomIconButtons
 import DateRangesButtonsGroup from "../../pages/Home/Components/DateRangesButtonsGroup/DateRangesButtonsGroup";
 import ModalityButtonsGroup from "../../pages/Home/Components/ModalityButtonsGroup/ModalityButtonsGroup";
 
+import './DateRange.scss'
+
+
 
 const { RangePicker } = DatePicker;
 
@@ -33,15 +36,13 @@ const HomeTopbar = () => {
 
             {/* Left Side */}
             <Box className={"flex"}>
+
                 {/* Date Picker */}
                 <Box className={"flex"} >
                     <RangePicker
-                        allowClear={false}
-                        style={{
-                            color: "white",
-                            backgroundColor: theme.palette.mode === 'dark' ? colors.primary[400] : colors.primary[900],
-                            border: "1px solid" + `${theme.palette.mode === 'dark' ? colors.primary[600] : colors.primary[800]}`,
-                        }}
+                        className={`createDateRangePicker ${theme.palette.mode === 'light' ? 'light-mode' : ''}`}
+                        popupClassName={`createDateRangePickerPopup ${theme.palette.mode === 'light' ? 'light-mode' : ''}`}
+                        allowClear={true}
                     />
                 </Box>
 

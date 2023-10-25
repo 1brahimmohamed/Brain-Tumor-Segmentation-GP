@@ -12,7 +12,7 @@ const LoadingScreen = () => {
                 </Box>
 
                 <Box className={"w-2/3"}>
-                    <LinearProgressBarIndeterminate />
+                    <LinearProgressBarIndeterminate variant={"query"} />
                 </Box>
             </Box>
         </Box>
