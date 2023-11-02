@@ -1,8 +1,8 @@
 version: "3.8"
 services:
   backend:
-    build: ./backend
-    container_name: gp_backend
+    build: ./backend/Gatway
+    container_name: gp_gateway
     ports:
       - "4000:4000"
     volumes:
