@@ -1,18 +1,30 @@
 version: "3.8"
 services:
   backend:
-    build: ./backend/Gatway
+    build: ./backend/Gateway
     container_name: gp_gateway
     ports:
       - "4000:4000"
     volumes:
-      - ./backend:/app
-      - ./home/user/myapp/node_modules:/app/node_modules
+      - ./backend/Gateway:/app
+  orthanc:
+    build: ./backend/Services/orthanc
+    container_name: gp_orthanc
+    ports:
+      - "8042:8042"
+      - "4242:4242"
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./backend/Services/Orthanc/config/orthanc.json:/etc/orthanc/orthanc.json
+      - ./backend/Services/Orthanc/config/initial_script.sh:/etc/orthanc/initial_script.sh
+
   frontend:
     build: ./frontend
     container_name: gp_frontend
     ports:
       - "5000:5000"
-    stdin_open: true
-    tty: true
+    # stdin_open: true
+    # tty: true
   
+
