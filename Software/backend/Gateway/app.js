@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const http = require('http');
+const https = require('https');
 
 const app = express();
 const PORT = 4000;
@@ -29,6 +31,34 @@ app.get("/", (req, res) => {
       name: "Maha Medhat: Artificial Intelligence",
     },
   ]);
+});
+
+
+// Define a route for the proxy server
+app.get('/proxy', (req, res) => {
+  const targetUrl = req.query.target || '';
+  console.log('Proxy request for:', targetUrl)
+  console.log('Request headers:', req.headers)
+
+  // Determine the protocol (http or https) based on the target URL
+  const targetProtocol = targetUrl.startsWith('https://') ? https : http;
+
+  targetProtocol.get(targetUrl, {
+    headers: req.headers
+  },(targetRes) => {
+    res.writeHead(targetRes.statusCode, targetRes.headers);
+    targetRes.pipe(res);
+}).on('error', (e) => {
+    console.log(e);
+});
+});
+
+
+app.get("/api", (req, res) => {
+  res.json({
+    id: "1",
+    name: "Hello Network",
+  })
 });
 
 app.listen(PORT, () => {

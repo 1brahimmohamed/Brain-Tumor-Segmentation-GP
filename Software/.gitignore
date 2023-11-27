@@ -5,3 +5,8 @@
 
 # Dependences
 **/node_modules/
+
+
+
+# ORTHANC Storage
+/backend/Services/Orthanc/storage

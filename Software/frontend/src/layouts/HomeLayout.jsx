@@ -17,8 +17,9 @@ const HomeLayout = () => {
                     content="Multimodal Medical Viewer for brain tumor segmentation and MRI sequence synthesis"
                 />
             </Helmet>
-            {/*<LinearProgressBarIndeterminate />*/}
-            <LinearProgressBarDeterminate />
+
+            <LinearProgressBarIndeterminate />
+
             <div className={"p-4"}>
                 <HomeTopbar />
                 <Outlet />
