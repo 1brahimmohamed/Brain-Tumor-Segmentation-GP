@@ -21,4 +21,4 @@ EXPOSE 8042
 # Start the Orthanc service
 # CMD ["service", "orthanc", "start"]
 
-CMD ["/etc/orthanc/initial_script.sh"]
+CMD ["/usr/share/orthanc/scripts/initial_script.sh"]
