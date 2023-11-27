@@ -1,10 +1,14 @@
 import Box from '@mui/material/Box';
 import CustomLinearProgress from "./styles.js";
+import { useLoading } from "../../hooks/LoadingProvider.jsx";
 
 const LinearProgressBarIndeterminate = ({variant}) => {
+
+    const {isLoading, setIsLoading} = useLoading();
+
     return (
         <Box className={"w-full"}>
-            <CustomLinearProgress/>
+            { isLoading && <CustomLinearProgress variant={variant} /> }
         </Box>
     );
 }
