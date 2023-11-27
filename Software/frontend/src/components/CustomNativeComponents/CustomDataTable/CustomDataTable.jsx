@@ -1,22 +1,27 @@
-import * as React from 'react';
+import {useState} from 'react';
 
 // MUI
 import {
     Table,
-    TableBody ,
+    TableBody,
     TableCell,
     TableContainer,
     TableHead,
     TableRow,
-    Paper,
-    tableCellClasses
+    Box,
+    tableCellClasses,
+    Input,
+
 } from '@mui/material';
 
-import { styled } from '@mui/material/styles';
+
+import {styled, useTheme} from '@mui/material/styles';
 
 // Icons
 import LibraryBooksOutlinedIcon from '@mui/icons-material/LibraryBooksOutlined';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import SearchIcon from '@mui/icons-material/Search';
+
 import {Link} from "react-router-dom";
 
 
@@ -52,53 +57,122 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
             backgroundColor: theme.palette.secondary.main,
         },
     },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-        border: 0,
-    },
 }));
 
-// temp data
-const createData = (id, name, modality, description, dateTime) =>{
-    return { id, name, modality, description, dateTime};
+import {tokens} from "../../../assets/theme/theme.js";
+
+
+// data creator
+const createData = (studyId, patientId, patientName, institution, studyDescription, studyDate, studyInstanceUID) =>{
+    return {
+        id: studyId,
+        patientId,
+        patientName,
+        institution,
+        studyDescription,
+        studyDate,
+        studyInstanceUID
+    };
 }
 
-const rows = [
-    createData(1, "Report 1", "CT", "Description 1", "2021-10-10"),
-    createData(2, "Report 2", "MR", "Description 2", "2021-10-10"),
-    createData(3, "Report 3", "US", "Description 3", "2021-10-10"),
-    createData(4, "Report 4", "PET", "Description 4", "2021-10-10"),
-    createData(5, "Report 5", "XA", "Description 5", "2021-10-10"),
-    createData(6, "Report 6", "CT", "Description 6", "2021-10-10"),
-    createData(7, "Report 7", "MR", "Description 7", "2021-10-10"),
-    createData(8, "Report 8", "US", "Description 8", "2021-10-10"),
-    createData(9, "Report 9", "PET", "Description 9", "2021-10-10"),
-    createData(10, "Report 10", "XA", "Description 10", "2021-10-10"),
-    createData(11, "Report 11", "CT", "Description 11", "2021-10-10"),
-    createData(12, "Report 12", "MR", "Description 12", "2021-10-10"),
-    createData(13, "Report 13", "US", "Description 13", "2021-10-10"),
-    createData(14, "Report 14", "PET", "Description 14", "2021-10-10"),
-    createData(15, "Report 15", "XA", "Description 15", "2021-10-10"),
-    createData(16, "Report 16", "CT", "Description 16", "2021-10-10"),
-    createData(17, "Report 17", "MR", "Description 17", "2021-10-10"),
-    createData(18, "Report 18", "US", "Description 18", "2021-10-10"),
-];
+const formatDate = (inputDate) => {
+    const year = inputDate.slice(0, 4);
+    const month = inputDate.slice(4, 6);
+    const day = inputDate.slice(6, 8);
+
+    // Format the date as "YYYY-MM-DD"
+    return `${year}-${month}-${day}`;
+}
 
 
 // Table Head Columns
 const tableHeadColumns = [
-    "",
-    "Report" ,
-    "ID",
-    "Name",
-    "Modality",
-    "Description",
-    "Date Time",
+    {
+        displayName: "",
+        key: "checkbox",
+        searchable: false,
+    },
+    {
+        displayName: "report",
+        key: "report",
+        searchable: false,
+    },
+    {
+        displayName: "Study ID",
+        key: "id",
+        searchable: true,
+    },
+    {
+        displayName: "Patient ID",
+        key: "patientId",
+        searchable: true,
+    },
+    {
+        displayName: "Patient Name",
+        key: "patientName",
+        searchable: true,
+    },
+    {
+        displayName: "Institution",
+        key: "institution",
+        searchable: true,
+    },
+    {
+        displayName: "Study Description",
+        key: "studyDescription",
+        searchable: true,
+    },
+    {
+        displayName: "Study Date",
+        key: "studyDate",
+        searchable: true,
+    }
 ];
 
-const CustomizedTables = () => {
+const CustomizedTables = ({data}) => {
+
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+    const [searchValues, setSearchValues] = useState(Array(tableHeadColumns.length).fill(''));
+
+    let rows = [];
+
+    data.forEach((study) => {
+
+        let dataRow = createData(
+            study.MainDicomTags.StudyID,
+            study.PatientMainDicomTags.PatientID,
+            study.PatientMainDicomTags.PatientName,
+            study.MainDicomTags.InstitutionName,
+            study.MainDicomTags.StudyDescription,
+            formatDate(study.MainDicomTags.StudyDate),
+            study.MainDicomTags.StudyInstanceUID
+        );
+
+        rows.push(dataRow);
+    });
+
+    const filterRows = () => {
+        return rows.filter((row) => {
+            return tableHeadColumns.every((column, index) => {
+                const searchValue = searchValues[index].toLowerCase();
+                const cellValue = String(row[column.key]).toLowerCase();
+                return cellValue.includes(searchValue);
+            });
+        });
+    };
+
+    const filteredRows = filterRows();
+
+    const handleSearchChange = (index, value) => {
+        const newSearchValues = [...searchValues];
+        newSearchValues[index] = value;
+        setSearchValues(newSearchValues);
+    };
+
+
     return (
-        <TableContainer component={Paper}>
+        <TableContainer component={Box} className={"max-h-[80vh] min-h-[80vh] overflow-auto"}>
 
             <Table sx={{ minWidth: 1100, boxShadow: "none" }} aria-label="customized table" size={"small"}>
 
@@ -107,7 +181,31 @@ const CustomizedTables = () => {
                         {
                             tableHeadColumns.map((column, index) => {
                                 return (
-                                    <StyledTableCell align="left" key={index}>{column}</StyledTableCell>
+                                    <StyledTableCell align="left" key={index}>
+                                       <Box className={"flex items-center"}>
+                                           {
+                                               column.searchable? (
+                                                   <Input
+                                                       id="outlined-basic"
+                                                       placeholder={column.displayName}
+                                                       sx={{
+                                                           width: "100%",
+                                                           '&:before': {
+                                                               borderBottom: 'none',
+                                                           },
+
+                                                           '&:hover::before, &:after': {
+                                                               borderBottomColor: `${colors.blue[500]} !important`,
+                                                           },
+                                                       }}
+                                                       onChange={(e) => handleSearchChange(index, e.target.value)}
+                                                   />
+                                               ) : (column.displayName)
+                                           }
+
+                                           {column.searchable?  <SearchIcon/>: ""}
+                                        </Box>
+                                    </StyledTableCell>
                                 )
                             })
                         }
@@ -115,30 +213,35 @@ const CustomizedTables = () => {
                 </TableHead>
 
 
-                <TableBody>
+                <TableBody >
 
-                    {rows.map((row) => (
-                        <StyledTableRow key={row.name}>
+                    {
+                        filteredRows.map((row) => {
+                            return (
+                                <StyledTableRow key={row.id}>
 
-                            <StyledTableCell component="th" scope="row">{/*<Checkbox />*/} </StyledTableCell>
+                                    <StyledTableCell component="th" scope="row" sx={{ width: '2%' }}> {/*<Checkbox />*/} </StyledTableCell>
 
-                            <StyledTableCell component="th" scope="row">
-                                <Link to={"/viewer"}>
-                                    <VisibilityIcon sx={{
-                                        "&:hover": {
-                                            cursor: "pointer",
-                                        }
-                                    }}/>
-                                </Link>
-                            </StyledTableCell>
+                                    <StyledTableCell component="th" scope="row" sx={{ width: '5%' }}>
+                                        <Link to={`/viewer?study=${row.studyInstanceUID}`}>
+                                            <VisibilityIcon sx={{
+                                                "&:hover": {
+                                                    cursor: "pointer",
+                                                }
+                                            }}/>
+                                        </Link>
+                                    </StyledTableCell>
 
-                            <StyledTableCell component="th" scope="row">{row.id}</StyledTableCell>
-                            <StyledTableCell component="th" align="left">{row.name}</StyledTableCell>
-                            <StyledTableCell component="th" align="left">{row.modality}</StyledTableCell>
-                            <StyledTableCell component="th" align="left">{row.description}</StyledTableCell>
-                            <StyledTableCell component="th" align="left">{row.dateTime}</StyledTableCell>
-                        </StyledTableRow>
-                    ))}
+                                    <StyledTableCell component="th" scope="row"  sx={{ width: '10%' }} >{row.id}</StyledTableCell>
+                                    <StyledTableCell component="th" scope="row"  sx={{ width: '10%' }} >{row.patientId}</StyledTableCell>
+                                    <StyledTableCell component="th" align="left" sx={{ width: '20%' }} >{row.patientName}</StyledTableCell>
+                                    <StyledTableCell component="th" align="left" sx={{ width: '10%' }} >{row.institution}</StyledTableCell>
+                                    <StyledTableCell component="th" align="left" sx={{ width: '20%' }} >{row.studyDescription}</StyledTableCell>
+                                    <StyledTableCell component="th" align="left" sx={{ width: '10%' }} >{row.studyDate}</StyledTableCell>
+                                </StyledTableRow>
+                            )
+                        })
+                    }
 
                 </TableBody>
 

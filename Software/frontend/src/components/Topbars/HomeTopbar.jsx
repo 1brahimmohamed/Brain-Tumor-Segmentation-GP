@@ -12,7 +12,7 @@ import VerticalAlignBottomIcon from '@mui/icons-material/VerticalAlignBottom';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 
 // Theme
-import {ColorModeContext, tokens} from "../../assets/theme/theme";
+import {ColorModeContext} from "../../assets/theme/theme";
 
 // Custom Components
 import GeneralCustomIconButton from "../CustomNativeComponents/CustomIconButtons/GeneralCustomIconButton.jsx";
@@ -28,7 +28,6 @@ const { RangePicker } = DatePicker;
 const HomeTopbar = () => {
 
     const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
     const colorMode = useContext(ColorModeContext);
 
     return (

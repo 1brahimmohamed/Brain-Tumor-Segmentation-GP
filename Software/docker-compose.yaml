@@ -17,8 +17,8 @@ services:
     tty: true
     volumes:
       - ./backend/Services/Orthanc/config/orthanc.json:/etc/orthanc/orthanc.json
-      - ./backend/Services/Orthanc/config/initial_script.sh:/etc/orthanc/initial_script.sh
-
+      - ./backend/Services/Orthanc/config/Scripts/initial_script.sh:/usr/share/orthanc/scripts/initial_script.sh
+      - ./backend/Services/Orthanc/storage:/var/lib/orthanc/db-v6
   frontend:
     build: ./frontend
     container_name: gp_frontend
