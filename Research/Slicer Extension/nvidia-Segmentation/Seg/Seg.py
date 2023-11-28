@@ -205,12 +205,12 @@ class SegWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
                     volume_nodes = slicer.util.getNodesByClass("vtkMRMLScalarVolumeNode")
                     self.output_directory = os.path.dirname(volume_nodes[0].GetStorageNode().GetFileName())
                     current_file_dir_path = os.path.dirname(os.path.abspath(__file__))
-                    BraTS2021_train =  os.path.join(current_file_dir_path, "BraTS2021_train")
-                    BraTS2021_train_folders = os.listdir(BraTS2021_train)
+                    BraTS2021_train_path =  os.path.join(current_file_dir_path, "BraTS2021_train")
+                    BraTS2021_train_folders = os.listdir(BraTS2021_train_path)
 
                     # Iterate through the files and remove each one(files of previous study)
                     for folder in BraTS2021_train_folders:
-                        folder_path = os.path.join(BraTS2021_train, folder)
+                        folder_path = os.path.join(BraTS2021_train_path, folder)
                         if os.path.isdir(folder_path):
                             shutil.rmtree(folder_path)
                     
@@ -221,9 +221,9 @@ class SegWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
                     base_filename = base_filename.rsplit('_', 1)[0]
 
                     # Specify the path of the folder you want to create
-                    input_folder = os.path.join(BraTS2021_train, base_filename)
+                    input_folder_path = os.path.join(BraTS2021_train_path, base_filename)
                     # Use os.makedirs to create the folder and its parent directories if they don't exist
-                    os.makedirs(input_folder, exist_ok=True)
+                    os.makedirs(input_folder_path, exist_ok=True)
 
 
                     # Loop through the volume nodes and retrieve the NIfTI file path for each
@@ -231,13 +231,13 @@ class SegWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
                         node_name = volume_node.GetName()
 
                         # Construct the output file path for this volume using its name
-                        input_file_path = os.path.join(input_folder, f"{node_name}.nii.gz")
+                        input_file_path = os.path.join(input_folder_path, f"{node_name}.nii.gz")
 
                         # Save the scalar volume as a NIfTI file
                         slicer.util.saveNode(volume_node, input_file_path)
                         print(f"Saved NIfTI file '{node_name}' to: {input_file_path}")
                     try:
-                        prepare_dataset(BraTS2021_train, True)
+                        prepare_dataset(input_folder_path, True)
                         print("Finished!")
                     except Exception as e:
                         print(f"An error occurred: {e}")
