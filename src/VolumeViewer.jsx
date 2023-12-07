@@ -214,8 +214,22 @@ const VolumeViewer = () => {
         // Serialize the annotations to JSON
         const annotationsString = JSON.stringify(allAnnotations);
 
-        // Store the annotations somewhere
-        localStorage.setItem('annotations', annotationsString);
+        // Create a Blob from the JSON string
+        const blob = new Blob([annotationsString], { type: 'application/json' });
+
+        // Create a download link
+        const downloadLink = document.createElement('a');
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.download = 'annotations.json';
+
+        // Append the link to the document
+        document.body.appendChild(downloadLink);
+
+        // Trigger a click on the link to start the download
+        downloadLink.click();
+
+        // Remove the link from the document
+        document.body.removeChild(downloadLink);
         
         annotation.state.removeAllAnnotations(element);
 
@@ -223,23 +237,47 @@ const VolumeViewer = () => {
         renderingEngine.current.render();
     };
 
-    const uploadAnnotations = (element) => { 
+    const uploadAnnotations = (element) => {
         // --- To put the tool data back ---
-        var allToolData = JSON.parse(localStorage.getItem('annotations'));
-        for (var toolType in allToolData) {
-            console.log(toolType);
-            if (allToolData.hasOwnProperty(toolType)) {
-                console.log(allToolData[toolType])
-                for (var i = 0; i < allToolData[toolType].length; i++) {
-                    console.log(allToolData[toolType][i]);
-                    annotation.state.addAnnotation(allToolData[toolType][i], element);
+
+        // Create an input element
+        const inputElement = document.createElement('input');
+        inputElement.type = 'file';
+        inputElement.accept = '.json';
+
+        // Listen for the change event on the input element
+        inputElement.addEventListener('change', (event) => {
+            // Read the content of the selected file
+            const reader = new FileReader();
+            reader.onload = (loadEvent) => onReaderLoad(loadEvent, element);
+            reader.readAsText(event.target.files[0])
+            
+        })
+
+        // Trigger a click on the input element to open the file dialog
+        inputElement.click();
+    }
+
+    const onReaderLoad = (event, element) => {
+        const fileContent = event.target.result;
+
+        try {
+            const allToolData = JSON.parse(fileContent);
+            console.log(allToolData)
+            for (const toolType in allToolData) {
+                if (allToolData.hasOwnProperty(toolType)) {
+                    for (let i = 0; i < allToolData[toolType].length; i++) {
+                        annotation.state.addAnnotation(allToolData[toolType][i], element);
+                    }
                 }
             }
-        }
 
-        // Update the canvas
-        renderingEngine.current.render();
-    }
+            // Update the canvas
+            renderingEngine.current.render();
+        } catch (error) {
+            console.error('Error parsing JSON file:', error);
+        }
+    };
 
     const createHandleMenuClick = (e) => {
         const newSelectedToolName = e.target.value;
