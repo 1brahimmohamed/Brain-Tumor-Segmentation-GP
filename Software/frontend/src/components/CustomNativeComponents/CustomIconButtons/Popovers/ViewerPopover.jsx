@@ -5,7 +5,7 @@ import {Box, MenuItem, Popover, useTheme} from "@mui/material";
 import {tokens} from "../../../../assets/theme/theme.js";
 
 import InvertColorsIcon from '@mui/icons-material/InvertColors';
-const ViewerPopover = ({anchorElement, open, closePopoverHandler}) => {
+const ViewerPopover = ({anchorElement, open, closePopoverHandler, popDownChildren}) => {
 
     const theme = useTheme();
     const colorMode = theme.palette.mode;
@@ -39,27 +39,24 @@ const ViewerPopover = ({anchorElement, open, closePopoverHandler}) => {
                 horizontal: 'left',
             }}
         >
-            <MenuItem sx={popDownStyle}>
-               <InvertColorsIcon className={"mr-2"}/>
-                <Box>
-                    Feature 1
-                </Box>
-            </MenuItem>
-
-            <MenuItem sx={popDownStyle}>
-                <InvertColorsIcon className={"mr-2"}/>
-                Feature 2
-            </MenuItem>
-
-            <MenuItem sx={popDownStyle}>
-                <InvertColorsIcon className={"mr-2"}/>
-                Feature 3
-            </MenuItem>
-
-            <MenuItem sx={popDownStyle}>
-                <InvertColorsIcon className={"mr-2"}/>
-                Feature 4
-            </MenuItem>
+            {
+                popDownChildren.map((child, index) => {
+                    return (
+                        <MenuItem
+                            key={index}
+                            sx={popDownStyle}
+                            onClick={child.onClickAction}
+                        >
+                           <div className={"mr-2"}>
+                               {child.icon}
+                           </div>
+                            <div>
+                                 {child.text}
+                            </div>
+                        </MenuItem>
+                    )
+                })
+            }
 
         </Popover>
     )

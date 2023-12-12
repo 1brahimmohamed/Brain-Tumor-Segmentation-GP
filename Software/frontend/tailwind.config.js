@@ -12,7 +12,14 @@ export default {
       xl: '1440px',
     },
 
-    extend: {},
+    extend: {
+      colors: {
+        AAprimary: "#10a9e2",
+        AAsecondary: "#fff",
+        AAError: "#ff6489",
+        AAtertiary: "#27272b",
+      },
+    },
   },
   plugins: [],
 }

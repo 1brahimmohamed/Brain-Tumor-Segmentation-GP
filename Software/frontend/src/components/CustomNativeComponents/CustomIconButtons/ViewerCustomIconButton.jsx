@@ -14,7 +14,7 @@ import GeneralSettingsPopover from "./Popovers/GeneralSettingsPopover.jsx";
 import ViewerPopover from "./Popovers/ViewerPopover.jsx";
 
 
-const ViewerCustomIconButton = ({sx, icon , text, children, doPopDown = true, isClickable = true}) => {
+const ViewerCustomIconButton = ({sx, icon , text, onClickAction, doPopDown = true, isClickable = true, popDownChildren = []}) => {
 
     const theme = useTheme();
     const colorMode = theme.palette.mode;
@@ -49,10 +49,8 @@ const ViewerCustomIconButton = ({sx, icon , text, children, doPopDown = true, is
 
     const onButtonClickHandler = (event) => {
         setIsClicked((prev) => !prev);
-        console.log("clicked")
+        onClickAction();
     };
-
-
 
     // open is true if the anchor element is not null, it's used to open the popover
     const open = Boolean(anchorElement);
@@ -87,7 +85,12 @@ const ViewerCustomIconButton = ({sx, icon , text, children, doPopDown = true, is
             {/* Popover if doPopDown is activated */}
             {
                 doPopDown &&
-                <ViewerPopover open={open} anchorElement={anchorElement} closePopoverHandler={handlePopoverClose}/>
+                <ViewerPopover
+                    open={open}
+                    anchorElement={anchorElement}
+                    closePopoverHandler={handlePopoverClose}
+                    popDownChildren={popDownChildren}
+                />
             }
 
         </div>

@@ -5,7 +5,7 @@ import { LoadingProvider } from "./hooks/LoadingProvider.jsx";
 import { HelmetProvider } from 'react-helmet-async'
 import App from './App.jsx'
 
-import './index.css'
+import './styles/index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 
@@ -13,7 +13,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <HelmetProvider>
           <ColorModeProvider>
               <LoadingProvider>
-                  <App />
+                    <App />
               </LoadingProvider>
           </ColorModeProvider>
       </HelmetProvider>

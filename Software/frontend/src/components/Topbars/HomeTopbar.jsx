@@ -19,7 +19,7 @@ import GeneralCustomIconButton from "../CustomNativeComponents/CustomIconButtons
 import DateRangesButtonsGroup from "../../pages/Home/Components/DateRangesButtonsGroup/DateRangesButtonsGroup";
 import ModalityButtonsGroup from "../../pages/Home/Components/ModalityButtonsGroup/ModalityButtonsGroup";
 
-import './DateRange.scss'
+import '../../styles/DateRange.scss'
 
 
 
