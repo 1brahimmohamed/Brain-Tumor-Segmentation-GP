@@ -1,0 +1,30 @@
+{
+    /**
+     * The following options control the configuration of the Orthanc
+     * plugin adding support of WADO and DICOMweb.
+     **/
+
+    "DicomWeb" : {
+        "Enable" : true,         // Whether DICOMweb support is enabled
+        "Root" : "/dicom-web/",  // Root URI of the DICOMweb API (for QIDO-RS, STOW-RS and WADO-RS)
+        "EnableWado" : true,     // Whether WADO-URI (aka. WADO) support is enabled
+        "WadoRoot" : "/wado",    // Root URI of the WADO-URI (aka. WADO) API
+        "Host" : "localhost",    // Hard-codes the name of the host for subsequent WADO-RS requests
+        "Ssl" : false,           // Whether HTTPS should be used for subsequent WADO-RS requests
+        
+        "StudiesMetadata" : "Full",     // How study-level metadata is retrieved (since release 1.1, cf. section below)
+        "SeriesMetadata" : "Full",      // How series-level metadata is retrieved (since release 1.1, cf. section below)
+        "EnableMetadataCache": true,    // Wheter the plugin caches metadata as a gzipped attachment (since release 1.15)
+        "MetadataWorkerThreadsCount": 4,// The number of concurrent threads that are used to extract the metadata in Full mode
+                                        // (since release 1.14)
+        "PublicRoot": "/dicom-web/",    // The public Root URI of the DICOMweb API in case it is different from "Root".
+                                        // This is useful if, e.g, your Orthanc is behind a reverse-proxy and has another
+                                        // base endpoint than the "Root" one.  Note that, if using a reverse-proxy, make sure to set the "host"
+                                        // and "proto" correctly in the "Forwarded" HTTP headers.
+                                        // (since release 1.8)
+        
+        "Servers": {
+            "My Orthanc" : [ "http://127.0.0.1:8042/dicom-web/" ]
+        }
+    }
+}
