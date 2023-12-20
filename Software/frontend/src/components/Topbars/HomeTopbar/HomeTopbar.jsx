@@ -12,14 +12,14 @@ import VerticalAlignBottomIcon from '@mui/icons-material/VerticalAlignBottom';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 
 // Theme
-import {ColorModeContext} from "../../assets/theme/theme";
+import {ColorModeContext} from "../../../assets/theme/theme.js";
 
 // Custom Components
-import GeneralCustomIconButton from "../CustomNativeComponents/CustomIconButtons/GeneralCustomIconButton.jsx";
-import DateRangesButtonsGroup from "../../pages/Home/Components/DateRangesButtonsGroup/DateRangesButtonsGroup";
-import ModalityButtonsGroup from "../../pages/Home/Components/ModalityButtonsGroup/ModalityButtonsGroup";
+import GeneralCustomIconButton from "../../CustomNativeComponents/CustomIconButtons/GeneralCustomIconButton.jsx";
+import DateRangesButtonsGroup from "../../../pages/Home/Components/DateRangesButtonsGroup/DateRangesButtonsGroup.jsx";
+import ModalityButtonsGroup from "../../../pages/Home/Components/ModalityButtonsGroup/ModalityButtonsGroup.jsx";
 
-import '../../styles/DateRange.scss'
+import '../../../styles/DateRange.scss'
 
 
 

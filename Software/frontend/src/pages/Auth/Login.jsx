@@ -14,8 +14,6 @@ import {
 import LockIcon from '@mui/icons-material/Lock';
 import PersonIcon from '@mui/icons-material/Person';
 
-// theme colors
-import {ColorModeContext, tokens} from "../../assets/theme/theme";
 import Logo from "../../components/Logo/Logo";
 import LoginFooter from "../../components/Footers/LoginFooter.jsx";
 
@@ -23,8 +21,6 @@ import LoginFooter from "../../components/Footers/LoginFooter.jsx";
 const Login = () => {
 
     const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
-
     const navigate = useNavigate();
 
     const [signInError, setSignInError] = useState(false);
@@ -60,7 +56,7 @@ const Login = () => {
                                 </InputAdornment>
                             )}
                             sx={{
-                                backgroundColor: theme.palette.mode === 'dark' ? colors.primary[400] : colors.primary[900],
+                                backgroundColor: theme.palette.primary.dark,
                                 fontSize: "medium",
                                 '& .MuiOutlinedInput-notchedOutline': {
                                     border: 'none', // Remove the outline
@@ -86,7 +82,7 @@ const Login = () => {
                                 </InputAdornment>
                             )}
                             sx={{
-                                backgroundColor: theme.palette.mode === 'dark' ? colors.primary[400] : colors.primary[900],
+                                backgroundColor: theme.palette.primary.dark,
                                 fontSize: "medium",
                                 '& .MuiOutlinedInput-notchedOutline': {
                                     border: 'none', // Remove the outline
@@ -108,9 +104,9 @@ const Login = () => {
                         <Button
                             fullWidth
                             size="large"
-                            color="inherit"
+                            color="primary"
                             className={"h-12 text-2"}
-                            style={{backgroundColor: colors.blue[500]}}
+                            style={{backgroundColor: theme.palette.secondary.main}}
                             onClick={() => navigate("/")}
                         >
                             Login

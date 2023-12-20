@@ -1,28 +1,23 @@
-import {Box, useTheme} from '@mui/material';
-import {tokens} from "../../assets/theme/theme.js";
+import { Box } from '@mui/material';
+import CornerstoneViewport from "../../components/CornerstoneViewport/CornerstoneViewport.jsx";
+import ViewerSidebar from "../../components/ViewerSidebar/ViewerSidebar.jsx";
 
 const RegularViewer= () => {
 
-    const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
 
     return (
 
         // left Sidebar Layout
         <Box className={"flex w-full"}>
+
             {/* Sidebar*/}
-            <Box className={"w-60 h-[94vh]"}
-                 sx={{
-                        backgroundColor: theme.palette.mode === 'dark' ? colors.primary[600] : colors.primary[900],
-                 }}
-            >
-                SIDEBAR
-            </Box>
+            <ViewerSidebar className={"w-60 h-[94vh]"}/>
 
             {/* Body*/}
             <Box className={"flex-1 bg-black h-[94vh]"}>
-                BODY
+                <CornerstoneViewport/>
             </Box>
+
         </Box>
 
         // right Sidebar Layout

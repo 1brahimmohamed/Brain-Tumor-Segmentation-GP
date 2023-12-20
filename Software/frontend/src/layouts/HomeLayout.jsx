@@ -2,7 +2,7 @@ import {Outlet} from "react-router-dom";
 import {Helmet} from "react-helmet-async";
 
 // components
-import HomeTopbar from "../components/Topbars/HomeTopbar";
+import HomeTopbar from "../components/Topbars/HomeTopbar/HomeTopbar.jsx";
 import LinearProgressBarIndeterminate from "../components/LoadingBars/LinearProgressBarIndeterminate.jsx";
 import LinearProgressBarDeterminate from "../components/LoadingBars/LinearProgressBarDeterminate.jsx";
 

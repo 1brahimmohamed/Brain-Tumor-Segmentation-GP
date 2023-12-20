@@ -1,19 +1,14 @@
-import {useTheme} from "@mui/material";
-import {tokens} from "../../../assets/theme/theme.js";
-
-
-
-
-const DataRangesButtonStyles = (colorMode, colors) => {
+const DataRangesButtonStyles = (theme) => {
 
     const buttonStyle = {
         textTransform: "none",
-        border: "1px solid" + `${colorMode === 'dark' ? colors.primary[600] : colors.primary[800]}`,
-        borderRadius: "0",
-        backgroundColor: colorMode === 'dark' ? colors.primary[400] : colors.primary[900],
+        border: "0.5px solid" + `${theme.palette.primary.dark}`,
+        borderRight: 0,
+        borderRadius: 0,
+        backgroundColor: theme.palette.primary.lighter,
         boxShadow: "none",
         '&:hover': {
-            backgroundColor: colorMode === 'dark' ? colors.primary[300] : colors.primary[800],
+            backgroundColor: theme.palette.primary.lighter,
             boxShadow: "none",
         },
         padding: 0
@@ -21,37 +16,39 @@ const DataRangesButtonStyles = (colorMode, colors) => {
 
     const leftSideButtonStyle = {
         ...buttonStyle,
+        borderRight: 0,
         borderRadius: "0.3rem 0 0 0.3rem",
     };
 
     const rightSideButtonStyle = {
         ...buttonStyle,
         borderRadius: "0 0.3rem 0.3rem 0",
+        borderRight: "1px solid" + `${theme.palette.primary.dark}`,
     };
 
     const selectedButton ={
         ...buttonStyle,
-        backgroundColor: colors.blue[500],
+        backgroundColor: theme.palette.secondary.main,
         "&:hover": {
-            backgroundColor: colors.blue[700],
+            backgroundColor: theme.palette.secondary.dark,
             boxShadow: "none",
         },
     }
 
     const selectedLeftSideButton = {
         ...leftSideButtonStyle,
-        backgroundColor: colors.blue[500],
+        backgroundColor: theme.palette.secondary.main,
         "&:hover": {
-            backgroundColor: colors.blue[700],
+            backgroundColor: theme.palette.secondary.dark,
             boxShadow: "none",
         },
     }
 
     const selectedRightSideButton = {
         ...rightSideButtonStyle,
-        backgroundColor: colors.blue[500],
+        backgroundColor: theme.palette.secondary.main,
         "&:hover": {
-            backgroundColor: colors.blue[700],
+            backgroundColor: theme.palette.secondary.dark,
             boxShadow: "none",
         },
     }

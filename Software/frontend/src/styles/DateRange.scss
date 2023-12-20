@@ -17,7 +17,12 @@ THE INPUT FIELD
 
   /* Background Color of Input filed  */
   background-color: $body-background-dark;
-  border: 1px solid #212126;
+  border: 1px solid #27272b;
+
+
+  &:hover{
+    border: 1px solid $primary-color-dark;
+  }
 
   /* Input filed when foucsed */
   &:focus{

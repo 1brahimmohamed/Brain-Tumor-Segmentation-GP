@@ -2,7 +2,7 @@ import {Outlet} from "react-router-dom";
 import {Helmet} from "react-helmet-async";
 
 // components
-import ViewerTopbar from "../components/Topbars/ViewerTopBar.jsx";
+import ViewerTopbar from "../components/Topbars/ViewerTopbar/ViewerTopBar.jsx";
 
 
 const ViewerLayout = () => {

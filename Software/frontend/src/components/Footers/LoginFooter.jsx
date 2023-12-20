@@ -9,7 +9,7 @@ import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 
 // theme colors
-import {ColorModeContext, tokens} from "../../assets/theme/theme";
+import { ColorModeContext } from "../../assets/theme/theme";
 
 const LoginFooter = () => {
 

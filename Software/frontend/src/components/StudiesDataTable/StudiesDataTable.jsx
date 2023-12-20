@@ -29,16 +29,15 @@ import {Link} from "react-router-dom";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
     [`&.${tableCellClasses.head}`]: {
-        backgroundColor: theme.palette.primary.light,
-        // color: theme.palette.common.white,
-        border: "2px solid" + theme.palette.primary.dark,
+        backgroundColor: theme.palette.primary.lighter,
+        border: "1px solid" + theme.palette.primary.dark,
         fontWeight: "bold",
 
     },
 
     [`&.${tableCellClasses.body}`]: {
         fontSize: 14,
-        border: "2px solid " + theme.palette.primary.dark,
+        border: "1px solid " + theme.palette.primary.dark,
     },
 
 }));
@@ -46,20 +45,20 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
     '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: theme.palette.primary.light,
         "&:hover": {
             backgroundColor: theme.palette.secondary.main,
         },
     },
     '&:nth-of-type(even)': {
-        backgroundColor: theme.palette.primary.light,
+        backgroundColor: theme.palette.primary.lighter,
         "&:hover": {
             backgroundColor: theme.palette.secondary.main,
         },
     },
 }));
 
-import {tokens} from "../../../assets/theme/theme.js";
+import StudiesTableHeaderSearchInput from "./StudiesTableHeaderSearchInput.jsx";
 
 
 // data creator
@@ -129,10 +128,9 @@ const tableHeadColumns = [
     }
 ];
 
-const CustomizedTables = ({data}) => {
+const StudiesDataTable = ({data}) => {
 
     const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
     const [searchValues, setSearchValues] = useState(Array(tableHeadColumns.length).fill(''));
 
     let rows = [];
@@ -182,28 +180,20 @@ const CustomizedTables = ({data}) => {
                             tableHeadColumns.map((column, index) => {
                                 return (
                                     <StyledTableCell align="left" key={index}>
-                                       <Box className={"flex items-center"}>
-                                           {
-                                               column.searchable? (
-                                                   <Input
-                                                       id="outlined-basic"
-                                                       placeholder={column.displayName}
-                                                       sx={{
-                                                           width: "100%",
-                                                           '&:before': {
-                                                               borderBottom: 'none',
-                                                           },
+                                        <Box className={"flex items-center"}>
+                                            {
+                                                column.searchable? (
+                                                    <StudiesTableHeaderSearchInput
+                                                        key={index}
+                                                        displayName={column.displayName}
+                                                        index={index}
+                                                        onChange={handleSearchChange}
+                                                        theme={theme}
+                                                    />
+                                                ) : (column.displayName)
+                                            }
 
-                                                           '&:hover::before, &:after': {
-                                                               borderBottomColor: `${colors.blue[500]} !important`,
-                                                           },
-                                                       }}
-                                                       onChange={(e) => handleSearchChange(index, e.target.value)}
-                                                   />
-                                               ) : (column.displayName)
-                                           }
-
-                                           {column.searchable?  <SearchIcon/>: ""}
+                                            {column.searchable?  <SearchIcon/>: ""}
                                         </Box>
                                     </StyledTableCell>
                                 )
@@ -223,7 +213,7 @@ const CustomizedTables = ({data}) => {
                                     <StyledTableCell component="th" scope="row" sx={{ width: '2%' }}> {/*<Checkbox />*/} </StyledTableCell>
 
                                     <StyledTableCell component="th" scope="row" sx={{ width: '5%' }}>
-                                        <Link to={`/viewer?study=${row.studyInstanceUID}`}>
+                                        <Link target={"_blank"}  to={`/viewer?StudyInstanceUID=${row.studyInstanceUID}`}>
                                             <VisibilityIcon sx={{
                                                 "&:hover": {
                                                     cursor: "pointer",
@@ -250,4 +240,4 @@ const CustomizedTables = ({data}) => {
     );
 }
 
-export default CustomizedTables;
+export default StudiesDataTable;

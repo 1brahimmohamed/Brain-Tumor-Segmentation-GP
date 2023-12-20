@@ -155,14 +155,12 @@
   // "AuthenticationEnabled" is not explicitly set, authentication is
   // enabled iff. remote access is allowed (i.e. the default value of
   // "AuthenticationEnabled" equals that of "RemoteAccessAllowed").
-  /**
-     "AuthenticationEnabled" : false,
-   **/
+  "AuthenticationEnabled" : false,
 
   // The list of the registered users. Because Orthanc uses HTTP
   // Basic Authentication, the passwords are stored as plain text.
   "RegisteredUsers" : {
-    "ibra" : "ibraeltop"
+    "ibrahim" : "orthanc_ibrahim_pass"
   },
 
 
