@@ -5,13 +5,14 @@ import formatNumberPrecision from './formatNumberPrecision';
 import isValidNumber from './isValidNumber';
 import getImageCompressionType from './getImageCompressionType';
 
-const overlayHelpers = {
+
+const helpers = {
     formatPatientName,
     formatDate,
     formatDicomTime,
     formatNumberPrecision,
     isValidNumber,
-    getImageCompressionType
+    getImageCompressionType,
 };
 
-export { overlayHelpers };
+export { helpers };

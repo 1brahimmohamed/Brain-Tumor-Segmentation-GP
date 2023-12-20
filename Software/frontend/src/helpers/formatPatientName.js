@@ -6,6 +6,12 @@ const formatPatientName = (name) => {
         return;
     }
 
+    if (name.Alphabetic){
+        return name.Alphabetic;
+    }
+
+    // some time the name is
+
     // Convert the first ^ to a ', '. String.replace() only affects
     // the first appearance of the character.
     const commaBetweenFirstAndLast = name.replace('^', ', ');
