@@ -1,7 +1,6 @@
 import {useState} from "react";
 import {Button, useTheme} from "@mui/material";
 
-import {tokens} from "../../../../assets/theme/theme.js";
 import DateRangesButtonStyles from "../ButtonGroupStyles.js";
 
 
@@ -16,7 +15,6 @@ const modalities = [
 const ModalityButtonsGroup = () => {
 
     const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
 
     const [selectedButtonsIndices, setSelectedButtonsIndices] = useState([]);
 
@@ -27,7 +25,7 @@ const ModalityButtonsGroup = () => {
         selectedButton,
         selectedLeftSideButton,
         selectedRightSideButton
-    } = DateRangesButtonStyles(theme.palette.mode, colors);
+    } = DateRangesButtonStyles(theme);
 
 
     const handleButtonClick = (index) => {

@@ -6,9 +6,6 @@ import {IconButton, Popover, useTheme} from "@mui/material";
 // Icons
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
 
-// Theme
-import { tokens } from "../../../assets/theme/theme.js";
-
 // Custom
 import GeneralSettingsPopover from "./Popovers/GeneralSettingsPopover.jsx";
 
@@ -16,15 +13,13 @@ import GeneralSettingsPopover from "./Popovers/GeneralSettingsPopover.jsx";
 const GeneralCustomIconButton = ({sx, icon ,doPopDown = false, children, onClick}) => {
 
     const theme = useTheme();
-    const colorMode = theme.palette.mode;
-    const colors = tokens(colorMode);
 
 
     const customStyle = {
         ...sx,
         borderRadius: "0.2rem",
-        border: "1px solid" + `${colorMode === 'dark'? colors.primary[600] : colors.primary[800]}`,
-        backgroundColor: colorMode === 'dark' ? colors.primary[400] : colors.primary[900],
+        border: "1px solid" + `${theme.palette.primary.dark}`,
+        backgroundColor: theme.palette.primary.lighter,
     }
 
     // the anchor element is the element that the popover is attached to

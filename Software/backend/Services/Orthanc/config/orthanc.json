@@ -120,6 +120,7 @@
   // "AuthenticationEnabled" is not explicitly set, authentication is
   // enabled iff. remote access is allowed (i.e. the default value of
   // "AuthenticationEnabled" equals that of "RemoteAccessAllowed").
+  
   "AuthenticationEnabled": false,
   // The list of the registered users. Because Orthanc uses HTTP
   // Basic Authentication, the passwords are stored as plain text.

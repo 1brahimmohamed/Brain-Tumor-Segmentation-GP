@@ -5,24 +5,22 @@ import { Container, Typography, Button, Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
 // Custom
-import { tokens } from '../../assets/theme/theme';
 import Illustration from './Illustration';
 
 
 const NotFound404 = () =>{
     const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
     const navigate = useNavigate();
 
-
     return (
-        <Container className={"py-36"}>
+        <Box>
+            <Container className={"py-36"}>
             <div className={"flex relative justify-center"}>
 
                 {/* 404 Illustration */}
                 <Illustration
                     className={"absolute inset-0 opacity-75"}
-                    style={{color: colors.primary[400]}}
+                    style={{color: theme.palette.primary.lighter}}
                 />
 
                 {/* 404 Text */}
@@ -42,11 +40,11 @@ const NotFound404 = () =>{
                             variant={"contained"}
                             sx={{
                                 textTransform: "none",
-                                backgroundColor: colors.blue[500],
+                                backgroundColor: theme.palette.secondary.main,
                                 boxShadow: "none",
 
                                 "&:hover": {
-                                    backgroundColor: colors.blue[600],
+                                    backgroundColor: theme.palette.secondary.dark,
                                     boxShadow: "none",
                                 },
                             }}
@@ -59,6 +57,7 @@ const NotFound404 = () =>{
 
             </div>
         </Container>
+        </Box>
     );
 }
 

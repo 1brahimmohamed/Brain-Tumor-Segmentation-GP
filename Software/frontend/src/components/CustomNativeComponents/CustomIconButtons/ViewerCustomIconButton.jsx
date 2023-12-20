@@ -1,24 +1,18 @@
 import {useState} from "react";
 
 // MUI
-import {IconButton, Box,Popover, useTheme} from "@mui/material";
+import {IconButton, Box, useTheme} from "@mui/material";
 
 // Icons
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
 
-// Theme
-import {tokens} from "../../../assets/theme/theme.js";
 
-// Custom
-import GeneralSettingsPopover from "./Popovers/GeneralSettingsPopover.jsx";
 import ViewerPopover from "./Popovers/ViewerPopover.jsx";
 
 
 const ViewerCustomIconButton = ({sx, icon , text, onClickAction, doPopDown = true, isClickable = true, popDownChildren = []}) => {
 
     const theme = useTheme();
-    const colorMode = theme.palette.mode;
-    const colors = tokens(colorMode);
 
     // the anchor element is the element that the popover is attached to
     const [anchorElement, setAnchorElement] = useState(null);
@@ -34,7 +28,7 @@ const ViewerCustomIconButton = ({sx, icon , text, onClickAction, doPopDown = tru
         overflow: "hidden",
 
         "&:hover": {
-            backgroundColor: colorMode === 'dark' ? colors.primary[400] : colors.primary[800],
+            backgroundColor: theme.palette.primary.dark,
         },
     }
 
@@ -76,7 +70,10 @@ const ViewerCustomIconButton = ({sx, icon , text, onClickAction, doPopDown = tru
                     doPopDown &&
 
                     <Box className={"flex flex-col justify-center h-full"}>
-                        < ArrowDropDownOutlinedIcon onClick={onArrowDownButtonHandler} sx={{color: colors.blue[500]}}/>
+                        <ArrowDropDownOutlinedIcon
+                            onClick={onArrowDownButtonHandler}
+                            sx={{color: theme.palette.secondary.main}}
+                        />
                     </Box>
                 }
 

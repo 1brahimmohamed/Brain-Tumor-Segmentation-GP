@@ -3,22 +3,16 @@ import * as React from "react";
 // MUI
 import {MenuItem, Popover, useTheme} from "@mui/material";
 
-// Theme
-import {tokens} from "../../../../assets/theme/theme.js";
-
-
 const GeneralSettingsPopover = ({anchorElement, open, closePopoverHandler}) => {
 
     const theme = useTheme();
-    const colorMode = theme.palette.mode;
-    const colors = tokens(colorMode);
 
     const id = open ? 'simple-popover' : undefined;
 
     const popDownStyle = {
-        backgroundColor: colorMode === 'dark' ? colors.primary[400] : colors.grey[900],
+        backgroundColor: theme.palette.primary.lighter,
         '&:hover': {
-            backgroundColor: colors.blue[500],
+            backgroundColor: theme.palette.secondary.main,
         },
     }
 

@@ -10,7 +10,8 @@ const formatDate = (date, strFormat = 'MMM d, yyyy') => {
         const parsedDateTime = parse(date, 'yyyyMMdd', new Date());
         return format(parsedDateTime, strFormat);
     } catch (err) {
-        // swallow?
+        console.error(err);
+        return date;
     }
 }
 
