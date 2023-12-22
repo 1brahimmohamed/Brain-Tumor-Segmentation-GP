@@ -12,8 +12,9 @@ import {
     addSegmentationsToState,
     segmentationToolGroup,
     segmentationToolsNames,
-    segmentationIds,
     segmentationRepresentationUIDs,
+    changeBrushSize,
+    selectSegment,
 } from "./SegmentationTools";
 
 // Test Data
@@ -29,19 +30,24 @@ const viewportIds = [viewportId1, viewportId2, viewportId3];
 
 const renderingEngineId = "myRenderingEngine";
 
-const {
-    Enums: csToolsEnums,
-    init: csTools3dInit,
-    ToolGroupManager,
-} = cornerstoneTools;
+const { Enums: csToolsEnums, init: csTools3dInit } = cornerstoneTools;
 
 const { MouseBindings } = csToolsEnums;
 
 const VolumeViewer = () => {
+    // Viewport References
     const contentRef1 = useRef(null);
     const contentRef2 = useRef(null);
     const contentRef3 = useRef(null);
 
+    // Segmentation Variables
+    const [segmentationIds, setSegmentationIds] = useState([]);
+    const [activeSegmentation, setActiveSegmentation] = useState(null);
+    const [segmentationMap, setSegmentationMap] = useState(
+        new Map(segmentationIds.map((id) => [id, [1]]))
+    );
+
+    // RenderingEngine Reference
     const renderingEngine = useRef(null);
     const [selectedAnnotationToolName, setSelectedAnnotationToolName] =
         useState(annotationToolsNames[0]);
@@ -105,7 +111,6 @@ const VolumeViewer = () => {
 
         console.log("Loading Volume");
         await cornerstone.volumeLoader.createAndCacheVolume(volumeId);
-        await addSegmentationsToState(volumeId);
         console.log("Volume Loaded");
 
         cornerstone.setVolumesForViewports(
@@ -144,6 +149,7 @@ const VolumeViewer = () => {
         setSelectedAnnotationToolName(newSelectedToolName);
     };
 
+    // Function to activate the segmentation tools and change the active segmentation tool
     const changeSegmentationTool = (e) => {
         const newSelectedToolName = e.target.value;
 
@@ -169,6 +175,7 @@ const VolumeViewer = () => {
 
     const changeActiveSegmentation = (e) => {
         const name = String(e.target.value);
+        setActiveSegmentation(name);
         const index = segmentationIds.indexOf(name);
         const uid = segmentationRepresentationUIDs[index];
 
@@ -178,9 +185,48 @@ const VolumeViewer = () => {
         );
     };
 
-    useEffect(() => {
-        
-    }, [segmentationIds]);
+    const addSegmentation = async () => {
+        const newSegmentationId = await addSegmentationsToState(
+            volumeId,
+            segmentationIds
+        );
+        console.log("New Segmentation ID: ", newSegmentationId);
+
+        setSegmentationIds((prevSegmentationIds) => [
+            ...prevSegmentationIds,
+            newSegmentationId,
+        ]);
+
+        setActiveSegmentation(newSegmentationId);
+        console.log(activeSegmentation);
+
+        // addSegmentToSegmentation();
+        // console.log(segmentationMap);
+    };
+
+    const addSegmentToSegmentation = () => {
+        setSegmentationMap((prevSegmentationMap) => {
+            const newMap = new Map(prevSegmentationMap);
+            const existingSegments = newMap.get(activeSegmentation) || [];
+
+            // Find the maximum number or default to 0
+            const maxNumber = Math.max(...existingSegments, 0);
+
+            // Increment the counter for the new segment
+            const incrementedSegment = maxNumber + 1;
+
+            newMap.set(activeSegmentation, [
+                ...existingSegments,
+                incrementedSegment,
+            ]);
+            return newMap;
+        });
+    };
+
+    const selectActiveSegment = (e) => {
+        const segmentIndex = Number(e.target.value);
+        selectSegment(activeSegmentation, segmentIndex);
+    };
 
     return (
         <div>
@@ -215,7 +261,10 @@ const VolumeViewer = () => {
                     ))}
                 </select>
 
-                <button onClick={() => addSegmentationsToState(volumeId)}>
+                <br></br>
+                <br></br>
+
+                <button onClick={() => addSegmentation()}>
                     Create new Segmentation on Current Image
                 </button>
 
@@ -227,6 +276,32 @@ const VolumeViewer = () => {
                         </option>
                     ))}
                 </select>
+
+                <br></br>
+
+                <button onClick={() => addSegmentToSegmentation()}>
+                    Add segment on Current Segmentation Group
+                </button>
+
+                <span> Select the active segment</span>
+                <select onChange={selectActiveSegment}>
+                    {Array.from(
+                        segmentationMap.get(activeSegmentation) || []
+                    ).map((segmentIndex) => (
+                        <option key={segmentIndex} value={segmentIndex}>
+                            {segmentIndex}
+                        </option>
+                    ))}
+                </select>
+
+                <span> Choose your brush size</span>
+                <input
+                    type="range"
+                    min="1"
+                    max="50"
+                    defaultValue="1"
+                    onChange={(e) => changeBrushSize(e.target.value)}
+                />
             </div>
 
             <div id="content" style={{ display: "flex" }}>

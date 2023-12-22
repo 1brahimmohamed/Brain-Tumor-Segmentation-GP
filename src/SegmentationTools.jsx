@@ -3,7 +3,6 @@ import * as cornerstoneTools from "@cornerstonejs/tools";
 import * as cornerstone from "@cornerstonejs/core";
 
 const toolGroupId = "SegmentationTools";
-const segmentationIds = [];
 const segmentationRepresentationUIDs = [];
 let segmentationCounter = 0;
 
@@ -26,8 +25,6 @@ const {
 
 const { MouseBindings, KeyboardBindings } = csToolsEnums;
 const { segmentation: segmentationUtils } = cstUtils;
-
-
 
 const brushInstanceNames = {
     CircularBrush: "CircularBrush",
@@ -180,12 +177,11 @@ segmentationToolGroup.setToolActive(StackScrollMouseWheelTool.toolName);
 // Add new Segmentation to the state of the volume viewer
 async function addSegmentationsToState(volumeId) {
     const newSegmentationId = `SEGMENTATION_${segmentationCounter}`;
-    segmentationIds.push(newSegmentationId);
 
     // Create a segmentation of the same resolution as the source data
     // using volumeLoader.createAndCacheDerivedVolume.
     await cornerstone.volumeLoader.createAndCacheDerivedVolume(volumeId, {
-        volumeId: segmentationIds[segmentationCounter],
+        volumeId: newSegmentationId,
     });
 
     // Add the segmentations to state
@@ -195,7 +191,7 @@ async function addSegmentationsToState(volumeId) {
             representation: {
                 type: csToolsEnums.SegmentationRepresentations.Labelmap,
                 data: {
-                    volumeId: segmentationIds[segmentationCounter],
+                    volumeId: newSegmentationId,
                 },
             },
         },
@@ -218,20 +214,29 @@ async function addSegmentationsToState(volumeId) {
         toolGroupId,
         uid
     );
+    segmentationCounter++;
 
-    // Set the color of the active segmentation according to its index
-    segmentation.segmentIndex.setActiveSegmentIndex(
-        newSegmentationId,
-        segmentationCounter + 1
-    );
-
-    segmentationCounter = segmentationCounter + 1;
+    return newSegmentationId;
 }
+
+// Add Segment to a specific segmentation representation
+const selectSegment = (segmentationId, segmentationIndex) => {
+    segmentation.segmentIndex.setActiveSegmentIndex(
+        segmentationId,
+        segmentationIndex
+    );
+};
+
+// Function to change the brush size of the segmentationTool
+const changeBrushSize = (size) => {
+    segmentationUtils.setBrushSizeForToolGroup(toolGroupId, size);
+};
 
 export {
     addSegmentationsToState,
     segmentationToolGroup,
     segmentationToolsNames,
-    segmentationIds,
     segmentationRepresentationUIDs,
+    changeBrushSize,
+    selectSegment,
 };
