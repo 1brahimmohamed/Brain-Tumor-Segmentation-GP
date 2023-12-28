@@ -3,11 +3,11 @@ import {
     setCtTransferFunctionForVolumeActor,
     addToggleButtonToToolbar,
     createImageIdsAndCacheMetaData,
-    initDemo,
 } from "../helpers";
 import * as cornerstoneTools from "@cornerstonejs/tools";
 import * as cornerstone from "@cornerstonejs/core";
 import { cornerstoneNiftiImageVolumeLoader } from "@cornerstonejs/nifti-volume-loader";
+import { cornerstoneStreamingImageVolumeLoader } from "@cornerstonejs/streaming-image-volume-loader";
 import { annotationToolGroup, annotationToolsNames } from "./AnnotationTools";
 import {
     addSegmentationsToState,
@@ -18,8 +18,19 @@ import {
     selectSegment,
     downloadSegmentation,
 } from "./SegmentationTools";
-import * as nifti from "nifti-js";
-import * as niftiReader from "nifti-reader-js";
+
+const volumeName = "CT_VOLUME_ID"; // Id of the volume less loader prefix
+const volumeLoaderScheme = "cornerstoneStreamingImageVolume"; // Loader id which defines which volume loader to use
+let volumeId = `${volumeLoaderScheme}:${volumeName}`; // VolumeId with loader id + volume id
+
+// Get Cornerstone imageIds and fetch metadata into RAM
+const imageIds = await createImageIdsAndCacheMetaData({
+    StudyInstanceUID:
+        "1.3.6.1.4.1.14519.5.2.1.7009.2403.334240657131972136850343327463",
+    SeriesInstanceUID:
+        "1.3.6.1.4.1.14519.5.2.1.7009.2403.226151125820845824875394858561",
+    wadoRsRoot: "https://d3t6nz73ql33tx.cloudfront.net/dicomweb",
+});
 
 //Initialize viewports
 const viewportId1 = "CT_NIFTI_AXIAL";
@@ -32,22 +43,12 @@ const renderingEngineId = "myRenderingEngine";
 const { Enums: csToolsEnums, init: csTools3dInit } = cornerstoneTools;
 
 const { MouseBindings } = csToolsEnums;
-let viewportInputArray = [];
 
-let volumeId = "";
-let dataBuffer = null;
-
-let niftiHeader;
-let niftiImage;
-let niftiExt;
-
-const VolumeViewer = () => {
+const DicomVolumeViewer = () => {
     // Viewport References
     const contentRef1 = useRef(null);
     const contentRef2 = useRef(null);
     const contentRef3 = useRef(null);
-
-    const [selectedFileType, setSelectedFileType] = useState("nifti");
 
     // Segmentation Variables
     const [segmentationIds, setSegmentationIds] = useState([]);
@@ -58,30 +59,18 @@ const VolumeViewer = () => {
 
     // RenderingEngine Reference
     const renderingEngine = useRef(null);
-
-    // Annotation Tool Variables
     const [selectedAnnotationToolName, setSelectedAnnotationToolName] =
         useState(annotationToolsNames[0]);
-
-    // Segmentation Tool Variables
     const [selectedSegmentationToolName, setSelectedSegmentationToolName] =
         useState(segmentationToolsNames[0]);
-
-    const handleViewerTypeChange = (event) => {
-        setSelectedFileType(event.target.value);
-    };
 
     // Handle file input change
     const handleFileInputSelection = async (e) => {
         const file = e.target.files[0];
-
+        console.log(file);
         if (file) {
-            if (selectedFileType === "dicom") {
-                const volumeId = "cornerstoneStreamingImageVolume:myVolumeId";
-            } else if (selectedFileType === "nifti") {
-                const niftiURL = URL.createObjectURL(file);
-                volumeId = "nifti:" + niftiURL;
-            }
+            const niftiURL = URL.createObjectURL(file);
+            volumeId = "nifti:" + niftiURL;
 
             const fileReader = new FileReader();
             // Set up an event listener to handle when the file is loaded
@@ -89,24 +78,8 @@ const VolumeViewer = () => {
                 // e.target.result contains the array buffer
                 dataBuffer = e.target.result;
 
-                if (niftiReader.isCompressed(dataBuffer))
-                    dataBuffer = niftiReader.decompress(dataBuffer);
-
-                if (niftiReader.isNIFTI(dataBuffer)) {
-                    niftiHeader = niftiReader.readHeader(dataBuffer);
-                    niftiImage = niftiReader.readImage(niftiHeader, dataBuffer);
-
-                    if (niftiReader.hasExtension(niftiHeader)) {
-                        niftiExt = niftiReader.readExtensionData(
-                            niftiHeader,
-                            dataBuffer
-                        );
-                    }
-
-                    console.log("Nifti Header -> ", niftiHeader);
-                    console.log("Nifti Image -> ", niftiImage);
-                    console.log("Nifti Ext -> ", niftiExt);
-                }
+                // Now you can use the array buffer as needed
+                console.log("Array Buffer:", dataBuffer);
             };
 
             // Read the file as an array buffer
@@ -114,23 +87,19 @@ const VolumeViewer = () => {
 
             // Set up the viewer with the new NIfTI file
             await setup();
-            await loadVolume();
         }
     };
 
     // Setup the viewport
     async function setup() {
         // Initialize Cornerstone and related libraries
-        await initDemo();
+        await cornerstone.init();
         await csTools3dInit();
 
-        if (selectedFileType === "nifti") {
-            // Add the NIfTI loader
-            cornerstone.volumeLoader.registerVolumeLoader(
-                "nifti",
-                cornerstoneNiftiImageVolumeLoader
-            );
-        }
+        cornerstone.volumeLoader.registerVolumeLoader(
+            "cornerstoneStreamingImageVolume",
+            cornerstoneStreamingImageVolumeLoader
+        );
 
         // Instantiate a rendering engine
         renderingEngine.current = new cornerstone.RenderingEngine(
@@ -138,7 +107,7 @@ const VolumeViewer = () => {
         );
 
         // Create a stack viewport
-        viewportInputArray = [
+        const viewportInputArray = [
             {
                 viewportId: viewportId1,
                 type: cornerstone.Enums.ViewportType.ORTHOGRAPHIC,
@@ -171,16 +140,18 @@ const VolumeViewer = () => {
         viewportIds.forEach((viewportId) => {
             annotationToolGroup.addViewport(viewportId, renderingEngineId);
         });
-    }
 
-    async function loadVolume() {
         console.log("Loading Volume");
-        await cornerstone.volumeLoader.createAndCacheVolume(volumeId);
+        const volume = await cornerstone.volumeLoader.createAndCacheVolume(
+            volumeId,
+            { imageIds }
+        );
         console.log("Volume Loaded");
+        volume.load();
 
         cornerstone.setVolumesForViewports(
             renderingEngine.current,
-            [{ volumeId }],
+            [{ volumeId, callback: setCtTransferFunctionForVolumeActor }],
             viewportInputArray.map((v) => v.viewportId)
         );
 
@@ -255,6 +226,7 @@ const VolumeViewer = () => {
             volumeId,
             segmentationIds
         );
+        console.log("New Segmentation ID: ", newSegmentationId);
 
         setSegmentationIds((prevSegmentationIds) => [
             ...prevSegmentationIds,
@@ -262,6 +234,7 @@ const VolumeViewer = () => {
         ]);
 
         setActiveSegmentation(newSegmentationId);
+        console.log(activeSegmentation);
 
         // addSegmentToSegmentation();
         // console.log(segmentationMap);
@@ -291,30 +264,33 @@ const VolumeViewer = () => {
         selectSegment(activeSegmentation, segmentIndex);
     };
 
+    const saveNifti = () => {
+        const volume = cornerstoneTools.getToolState(
+            contentRef1.current,
+            "volume"
+        )[0].volume;
+
+        const nifti = volume.toNifti();
+        const blob = new Blob([nifti], { type: "application/octet-stream" });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "nifti.nii.gz";
+        a.click();
+    };
+
     return (
         <div>
             <h1>
-                Volume Cornerstone 3D Viewer - Annotations and Segmentations _{" "}
-                {selectedFileType === "nifti" ? "NIFTI" : ""}
-                {selectedFileType === "dicom" ? "DICOM" : ""}
+                Volume Cornerstone 3D Viewer - Annotations and Segmentations _
+                DICOM
             </h1>
-
-            <label>
-                Choose Viewer Type:
-                <select
-                    value={selectedFileType}
-                    onChange={handleViewerTypeChange}
-                >
-                    <option value="">Select Viewer Type</option>
-                    <option value="dicom">DICOM</option>
-                    <option value="nifti">NIfTI</option>
-                </select>
-            </label>
 
             <div>
                 <input
                     type="file"
-                    accept=".nii, .nii.gz, .dcm"
+                    accept=".nii, .nii.gz, .dcm, .dcm.gz"
                     onChange={handleFileInputSelection}
                 />
             </div>
@@ -410,7 +386,7 @@ const VolumeViewer = () => {
             </div> */}
 
             <div>
-                <button onClick={() => downloadSegmentation(niftiHeader)}>
+                <button onClick={() => downloadSegmentation()}>
                     Save Mask
                 </button>
             </div>
@@ -422,4 +398,4 @@ const VolumeViewer = () => {
     );
 };
 
-export default VolumeViewer;
+export default DicomVolumeViewer;

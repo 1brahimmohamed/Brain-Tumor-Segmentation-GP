@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as cornerstoneTools from "@cornerstonejs/tools";
 import * as cornerstone from "@cornerstonejs/core";
+import { cornerstoneStreamingImageVolumeLoader } from "@cornerstonejs/streaming-image-volume-loader";
+import nifti from "nifti-reader-js";
 
 const toolGroupId = "SegmentationTools";
 const segmentationRepresentationUIDs = [];
 let segmentationCounter = 0;
+let newSegmentationId = "";
 
 const {
     SegmentationDisplayTool,
@@ -176,7 +179,7 @@ segmentationToolGroup.setToolActive(StackScrollMouseWheelTool.toolName);
 
 // Add new Segmentation to the state of the volume viewer
 async function addSegmentationsToState(volumeId) {
-    const newSegmentationId = `SEGMENTATION_${segmentationCounter}`;
+    newSegmentationId = `SEGMENTATION_${segmentationCounter}`;
 
     // Create a segmentation of the same resolution as the source data
     // using volumeLoader.createAndCacheDerivedVolume.
@@ -232,6 +235,68 @@ const changeBrushSize = (size) => {
     segmentationUtils.setBrushSizeForToolGroup(toolGroupId, size);
 };
 
+const downloadSegmentation = async (niftiHeader) => {
+    const data = segmentation.state.getAllSegmentationRepresentations();
+    console.log(data);
+
+    console.log("---------------------------------------------------");
+    console.log("---------------------------------------------------");
+
+    // // Extract all properties for each segmentation representation
+    // const segmentationData = data.SegmentationTools.map(
+    //     (segmentationRepresentation) => ({
+    //         segmentationId: segmentationRepresentation.segmentationId,
+    //         segmentationRepresentationUID:
+    //             segmentationRepresentation.segmentationRepresentationUID,
+    //         type: segmentationRepresentation.type,
+    //         active: segmentationRepresentation.active,
+    //         colorLUTIndex: segmentationRepresentation.colorLUTIndex,
+    //         config: segmentationRepresentation.config,
+    //         segmentSpecificConfig:
+    //             segmentationRepresentation.segmentSpecificConfig,
+    //         segmentationRepresentationSpecificConfig:
+    //             segmentationRepresentation.segmentationRepresentationSpecificConfig,
+    //         segmentsHidden: Array.from(
+    //             segmentationRepresentation.segmentsHidden
+    //         ),
+    //     })
+    // );
+
+    // Convert to JSON
+    const segmentationJsonData = JSON.stringify(data, null, 2);
+
+    changeSegmentationToNifti(segmentationJsonData, niftiHeader);
+};
+
+// Function to download 3D volume
+function changeSegmentationToNifti(segmentationJsonData, niftiHeader) {
+    // Convert the NIfTI header to Uint8Array
+    const headerUint8Array = new Uint8Array(niftiHeader);
+
+    // Convert the segmentationData to Uint8Array
+    const segmentationUint8Array = new TextEncoder().encode(
+        segmentationJsonData
+    );
+
+    // Combine the Uint8Arrays
+    const data = [headerUint8Array, segmentationUint8Array];
+
+    console.log(data);
+
+    // var fileName = "3DVolume.nii";
+
+    // var blob = new Blob(data);
+    // var url = window.URL.createObjectURL(blob);
+
+    // var a = document.createElement("a");
+    // a.href = url;
+    // a.download = fileName;
+    // a.style.display = "none";
+    // document.body.appendChild(a);
+    // a.click();
+    // window.URL.revokeObjectURL(url);
+}
+
 export {
     addSegmentationsToState,
     segmentationToolGroup,
@@ -239,4 +304,5 @@ export {
     segmentationRepresentationUIDs,
     changeBrushSize,
     selectSegment,
+    downloadSegmentation,
 };

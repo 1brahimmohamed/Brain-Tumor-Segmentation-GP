@@ -27,7 +27,9 @@
     "dcmjs": "^0.29.12",
     "dicomweb-client": "^0.10.3",
     "hammerjs": "^2.0.8",
-    "nifti-reader-js": "^0.6.6",
+    "nifti-js": "^1.0.1",
+    "nifti-reader-js": "^0.6.8",
+    "pako": "^2.1.0",
     "react": "^18.2.0",
     "react-cornerstone-viewport": "^4.1.5",
     "react-dom": "^18.2.0"
@@ -40,7 +42,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
-    "vite": "^4.4.5",
+    "vite": "^5.0.10",
     "vite-plugin-cross-origin-isolation": "^0.1.6"
   }
 }
