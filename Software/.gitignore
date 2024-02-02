@@ -6,7 +6,13 @@
 # Dependences
 **/node_modules/
 
-
-
 # ORTHANC Storage
 /backend/Services/Orthanc/storage
+
+# Backend env
+/backend/MainApp/venv
+**/pgdata
+/backend/Services/NiftiPACS/NiftiPACS/pgdata
+/backend/Services/NiftiPACS/venv
+**/__pycache__
+*.env
