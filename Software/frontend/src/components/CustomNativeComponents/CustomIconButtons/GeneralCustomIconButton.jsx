@@ -1,7 +1,7 @@
-import { useState } from "react";
+import {useState} from "react";
 
 // MUI
-import {IconButton, Popover, useTheme} from "@mui/material";
+import {IconButton, Popover, Tooltip, useTheme} from "@mui/material";
 
 // Icons
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
@@ -10,7 +10,7 @@ import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined
 import GeneralSettingsPopover from "./Popovers/GeneralSettingsPopover.jsx";
 
 
-const GeneralCustomIconButton = ({sx, icon ,doPopDown = false, children, onClick}) => {
+const GeneralCustomIconButton = ({sx, icon, doPopDown = false, children, onClick, tooltipName}) => {
 
     const theme = useTheme();
 
@@ -37,25 +37,46 @@ const GeneralCustomIconButton = ({sx, icon ,doPopDown = false, children, onClick
     const open = Boolean(anchorElement);
 
     return (
-        <div>
-            <IconButton
-                sx={{...customStyle}}
-                onClick={onClick}
-            >
-                {/* the component contains the icon and if popDown is true it has a popover element activated */}
-                {icon}
+        <>
+            {
+                tooltipName ? (
+                    <Tooltip title={tooltipName}>
+                        <IconButton
+                            sx={{...customStyle}}
+                            onClick={onClick}
+                        >
+                            {/* the component contains the icon and if popDown is true it has a popover element activated */}
+                            {icon}
 
-                {
-                    doPopDown &&
-                    <ArrowDropDownOutlinedIcon onClick={handleClickOnArrowDownButton}/>
-                }
+                            {
+                                doPopDown &&
+                                <ArrowDropDownOutlinedIcon onClick={handleClickOnArrowDownButton}/>
+                            }
 
-            </IconButton>
+                        </IconButton>
+                    </Tooltip>
+                ) : (
+                    <IconButton
+                        sx={{...customStyle}}
+                        onClick={onClick}
+                    >
+                        {/* the component contains the icon and if popDown is true it has a popover element activated */}
+                        {icon}
 
-            <GeneralSettingsPopover open={open} anchorElement={anchorElement} closePopoverHandler={handlePopoverClose}/>
+                        {
+                            doPopDown &&
+                            <ArrowDropDownOutlinedIcon onClick={handleClickOnArrowDownButton}/>
+                        }
 
-        </div>
-    );
+                    </IconButton>
+                )
+            }
+        </>
+    )
 };
+
+const coreComponent = () => {
+
+}
 
 export default GeneralCustomIconButton;

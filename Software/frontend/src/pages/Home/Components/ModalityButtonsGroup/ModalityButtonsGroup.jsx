@@ -2,6 +2,8 @@ import {useState} from "react";
 import {Button, useTheme} from "@mui/material";
 
 import DateRangesButtonStyles from "../ButtonGroupStyles.js";
+import {useDispatch, useSelector} from "react-redux";
+import {addFilterModality, removeFilterModality} from "../../../../redux/reducers/homepageReducer.js"
 
 
 const modalities = [
@@ -17,6 +19,9 @@ const ModalityButtonsGroup = () => {
     const theme = useTheme();
 
     const [selectedButtonsIndices, setSelectedButtonsIndices] = useState([]);
+
+    const {selectedModalities} = useSelector((store) => store.homepage)
+    const dispatch = useDispatch();
 
     const {
         buttonStyle,
@@ -34,8 +39,10 @@ const ModalityButtonsGroup = () => {
             setSelectedButtonsIndices((prevSelectedIndices) =>
                 prevSelectedIndices.filter((selectedIndex) => selectedIndex !== index)
             );
+            dispatch(removeFilterModality(modalities[index]))
         } else {
             // If the button is not selected, add it to the selection
+            dispatch(addFilterModality(modalities[index]))
             setSelectedButtonsIndices((prevSelectedIndices) => [...prevSelectedIndices, index]);
         }
     };

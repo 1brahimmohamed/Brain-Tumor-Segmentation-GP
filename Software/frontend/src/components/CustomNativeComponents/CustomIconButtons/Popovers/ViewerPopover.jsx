@@ -1,11 +1,23 @@
 // MUI
 import {Box, MenuItem, Popover, useTheme} from "@mui/material";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect, useState} from "react";
+import {setLeftMouseTool} from "../../../../redux/reducers/viewerpagereducer"
 
-const ViewerPopover = ({anchorElement, open, closePopoverHandler, popDownChildren}) => {
+const ViewerPopover = ({anchorElement, open, closePopoverHandler,popDownChildren}) => {
 
     const theme = useTheme();
 
     const id = open ? 'simple-popover' : undefined;
+
+    const dispatch = useDispatch();
+
+    const {
+        rightMouseTool,
+        leftMouseTool,
+        mouseWheelTool,
+    } = useSelector((store) => store.viewerpage )
+
 
     const popDownStyle = {
 
@@ -13,6 +25,12 @@ const ViewerPopover = ({anchorElement, open, closePopoverHandler, popDownChildre
         '&:hover': {
             backgroundColor: theme.palette.secondary.main,
         },
+    }
+
+    const onMouseDownHandler = (action, toolName, event) => {
+        action()
+        dispatch(setLeftMouseTool(toolName))
+        closePopoverHandler()
     }
 
 
@@ -39,7 +57,7 @@ const ViewerPopover = ({anchorElement, open, closePopoverHandler, popDownChildre
                         <MenuItem
                             key={index}
                             sx={popDownStyle}
-                            onClick={child.onClickAction}
+                            onClick={(e)=> onMouseDownHandler(child.onClickAction, child.toolName, e)}
                         >
                            <div className={"mr-2"}>
                                {child.icon}
@@ -51,7 +69,6 @@ const ViewerPopover = ({anchorElement, open, closePopoverHandler, popDownChildre
                     )
                 })
             }
-
         </Popover>
     )
 };

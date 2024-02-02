@@ -3,10 +3,10 @@ import {useLocation} from "react-router-dom";
 
 import {Box} from "@mui/material";
 import StudyCard from "./StudyCard.jsx";
-import "../../helpers/getMetadata.js"
-import CustomLinearProgress from "../LoadingBars/styles";
+import "../../../helpers/getMetadata.js"
+import CustomLinearProgress from "../../LoadingBars/styles";
 
-import * as metadata from "../../helpers/getMetadata.js"
+import * as metadata from "../../../helpers/getMetadata.js"
 import {useEffect, useState} from "react";
 
 const ViewerSidebar = ({className, sx, children}) => {
@@ -26,7 +26,6 @@ const ViewerSidebar = ({className, sx, children}) => {
         });
     }, [studyInstanceUID]);
 
-    console.log(allSeriesData)
     return (
         <Box
             className={`${className}`}

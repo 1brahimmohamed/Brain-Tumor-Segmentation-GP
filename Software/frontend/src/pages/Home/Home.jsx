@@ -10,8 +10,9 @@ import {Box, Button, Typography} from "@mui/material";
 import StudiesDataTable from "../../components/StudiesDataTable/StudiesDataTable.jsx";
 
 import Logo from "../../components/Logo/Logo";
-import {useLoading} from "../../hooks/LoadingProvider.jsx";
 import {useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {changeDisplayedDataTable, setIsDataLoading} from "../../redux/reducers/homepageReducer.js"
 
 
 
@@ -48,18 +49,19 @@ const Home = () => {
 
     const [studiesFullData, setStudiesFullData] = useState([]);
 
-    const navigate = useNavigate();
-
-    const {isLoading, setIsLoading} = useLoading();
+    const dispatch = useDispatch();
+    const {
+        isDisplayingDicom,
+    } = useSelector((store) => store.homepage)
 
     useEffect(() => {
 
         getAllStudies().then((data) => {
             let hima = parseStudiesMetadata(data);
-            console.log(hima)
         });
         const fetchStudies = async () => {
-            setIsLoading(true);
+            dispatch(setIsDataLoading(true))
+
             let studiesFullDataMirror = [];
             const studiesIds = await GetStudiesIds();
 
@@ -67,38 +69,55 @@ const Home = () => {
                 const studyData = await GetStudy(studyId);
                 studiesFullDataMirror.push(studyData);
             }
-            console.log(studiesFullDataMirror)
-            setStudiesFullData(studiesFullDataMirror);
-            setIsLoading(false);
 
+            const concat = [...studiesFullDataMirror];
+
+            setStudiesFullData(concat);
+            dispatch(setIsDataLoading(false))
         };
 
         fetchStudies();
     }, []);
 
-    const handleDataChange = (event) => {
-        let files = [...event.target.files];
-        navigate("/viewer", {state: {files}});
+
+    const tabChangeHandler = () => {
+        dispatch(changeDisplayedDataTable())
     }
 
     return (
-        <div className={"mt-4 space-y-5"}>
+        <Box className={"h-screen flex-col mt-4 space-y-5"}>
 
-            <Box>
+            <Box className={"flex items-center space-x-2 h-1/12"}>
                 <Typography variant={"h4"}>Studies List</Typography>
+
+                <Button variant={isDisplayingDicom? "contained": "outlined"} color={"secondary"} onClick={tabChangeHandler}>
+                    DICOM
+                </Button>
+                <Button variant={isDisplayingDicom? "outlined" :"contained"} color={"secondary"} onClick={tabChangeHandler}>
+                    NIFTI
+                </Button>
+
             </Box>
 
-            <Box>
+            <Box className={"h-3/4"}>
                 {
-                    studiesFullData.length > 0 &&
-                    <StudiesDataTable data={studiesFullData}/>
+                   isDisplayingDicom? (
+                       studiesFullData.length > 0 &&
+                       <StudiesDataTable data={studiesFullData}/>
+                   ):(
+                       <Typography>
+                           NIFTI TABLE
+                       </Typography>
+                   )
                 }
             </Box>
 
-            <Box className={"flex mt-5 h-14 justify-center"}>
-                <Logo/>
+            <Box className={"h-1/12 mt-5"}>
+                   <Box className={"flex h-12 justify-center"}>
+                       <Logo/>
+                   </Box>
             </Box>
-        </div>
+        </Box>
     );
 };
 

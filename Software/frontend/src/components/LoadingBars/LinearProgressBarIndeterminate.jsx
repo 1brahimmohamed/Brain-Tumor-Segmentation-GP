@@ -1,14 +1,15 @@
 import Box from '@mui/material/Box';
 import CustomLinearProgress from "./styles.js";
 import { useLoading } from "../../hooks/LoadingProvider.jsx";
+import {useSelector} from "react-redux";
 
 const LinearProgressBarIndeterminate = ({variant}) => {
 
-    const {isLoading, setIsLoading} = useLoading();
+    const { isDataLoading } = useSelector((store)=> store.homepage)
 
     return (
         <Box className={"w-full"}>
-            { isLoading && <CustomLinearProgress variant={variant} /> }
+            { isDataLoading && <CustomLinearProgress variant={variant} /> }
         </Box>
     );
 }

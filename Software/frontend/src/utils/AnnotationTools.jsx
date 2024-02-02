@@ -22,6 +22,7 @@ const {
     CobbAngleTool,
     ArrowAnnotateTool,
     annotation,
+    PlanarRotateTool,
     Enums: csToolsEnums,
 } = cornerstoneTools;
 
@@ -40,7 +41,25 @@ const annotationToolsNames = [
     AngleTool.toolName,
     CobbAngleTool.toolName,
     ArrowAnnotateTool.toolName,
+    ZoomTool.toolName,
+    PlanarRotateTool.toolName,
 ];
+
+const annotationToolsNamesObj = {
+    window: WindowLevelTool.toolName,
+    pan: PanTool.toolName,
+    length: LengthTool.toolName,
+    probe: ProbeTool.toolName,
+    rectangle: RectangleROITool.toolName,
+    ellipse: EllipticalROITool.toolName,
+    circleRoi: CircleROITool.toolName,
+    biDirectional: BidirectionalTool.toolName,
+    angle: AngleTool.toolName,
+    cobbAngle: CobbAngleTool.toolName,
+    arrow: ArrowAnnotateTool.toolName,
+    zoom: ZoomTool.toolName,
+    rotate: PlanarRotateTool.toolName,
+}
 
 // Add tools to Cornerstone3D
 cornerstoneTools.addTool(WindowLevelTool);
@@ -75,31 +94,59 @@ annotationToolGroup.addTool(AngleTool.toolName);
 annotationToolGroup.addTool(CobbAngleTool.toolName);
 annotationToolGroup.addTool(ArrowAnnotateTool.toolName);
 
+const setLeftMouseButton = (tool, prevTool) => {
+    annotationToolGroup.setToolActive(tool, {
+        bindings: [
+            {
+                mouseButton: MouseBindings.Primary, // Left Click
+            },
+        ],
+    });
+
+    if (prevTool)
+        annotationToolGroup.setToolPassive(prevTool)
+
+}
+const setRightMouseButton = (tool, prevTool) => {
+    annotationToolGroup.setToolActive(tool, {
+        bindings: [
+            {
+                mouseButton: MouseBindings.Secondary, // Right Click
+            },
+        ],
+    });
+
+    if (prevTool)
+        annotationToolGroup.setToolPassive(prevTool)
+}
+const setMouseWheelButton = (tool, prevTool=null) => {
+    annotationToolGroup.setToolActive(tool, {
+        bindings: [
+            {
+                mouseButton: MouseBindings.Auxiliary, // Middle Click
+            },
+        ],
+    });
+
+    if (prevTool)
+        annotationToolGroup.setToolPassive(prevTool)
+}
+
 // Set the initial state of the tools, here all tools are active and bound to
 // Different mouse inputs
-annotationToolGroup.setToolActive(WindowLevelTool.toolName, {
-    bindings: [
-    {
-        mouseButton: MouseBindings.Primary, // Left Click
-    },
-    ],
-});
-annotationToolGroup.setToolActive(PanTool.toolName, {
-bindings: [
-    {
-        mouseButton: MouseBindings.Auxiliary, // Middle Click
-    },
-    ],
-});
-annotationToolGroup.setToolActive(ZoomTool.toolName, {
-    bindings: [
-    {
-        mouseButton: MouseBindings.Secondary, // Right Click
-    },
-    ],
-});
-
 annotationToolGroup.setToolActive(StackScrollMouseWheelTool.toolName);
 
+setLeftMouseButton(WindowLevelTool.toolName)
 
-export {annotationToolGroup, annotationToolsNames};
+setRightMouseButton(ZoomTool.toolName)
+
+setMouseWheelButton(PanTool.toolName)
+
+export {
+    annotationToolGroup,
+    annotationToolsNames,
+    annotationToolsNamesObj,
+    setLeftMouseButton,
+    setRightMouseButton,
+    setMouseWheelButton,
+};

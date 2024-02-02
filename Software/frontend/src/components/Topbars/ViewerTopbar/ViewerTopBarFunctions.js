@@ -2,9 +2,11 @@
 export const fullScreenToggle = () => {
     const elem = document.getElementById("root");
     if (!document.fullscreenElement) {
-        elem.requestFullscreen().then(r => console.log(r));
+        elem.requestFullscreen();
     } else {
-        document.exitFullscreen().then(r => console.log(r));
+        document.exitFullscreen()
     }
 };
+
+
 
