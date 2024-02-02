@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import {initDemo, createImageIdsAndCacheMetaData, setCtTransferFunctionForVolumeActor} from '../../cornerstone/helpers';
+import {initCornerstone, createImageIdsAndCacheMetaData, setCtTransferFunctionForVolumeActor} from '../../cornerstone/helpers';
 import * as cornerstoneTools from '@cornerstonejs/tools';
 import * as cornerstone from '@cornerstonejs/core';
 import dicomParser from "dicom-parser";
@@ -7,73 +7,57 @@ import ViewportFrame from "./ViewportFrame.jsx";
 import cornerstoneDICOMImageLoader from '@cornerstonejs/dicom-image-loader';
 import {useLocation} from "react-router-dom";
 import ViewportOverlay from "./ViewportOverlay.jsx";
+import * as metadata from "../../helpers/getMetadata.js"
 
 import "../../helpers/getMetadata.js"
+import {getSeriesInStudy} from "../../helpers/getMetadata.js";
+import {
+    annotationToolGroup,
+    setMouseWheelButton,
+    setRightMouseButton,
+    setLeftMouseButton,
+    annotationToolsNamesObj
+} from "../../utils/AnnotationTools.jsx"
+import {useSelector} from "react-redux";
 
+// CornerstoneJS tool initialization
+const {
+    ToolGroupManager,
+    TrackballRotateTool,
+    Enums: csToolsEnums,
+} = cornerstoneTools;
+
+const { MouseBindings } = csToolsEnums;
 
 
 const CornerstoneViewport = ({viewportId}) => {
-
     const [imgId, setImgId] = React.useState(null);
 
     const contentRef1 = useRef(null);
     const contentRef2 = useRef(null);
     const contentRef3 = useRef(null);
-    // const contentRef4 = useRef(null);
+    const contentRef4 = useRef(null);
 
     const renderingEngineRef = useRef(null);
 
     const viewportId1 = 'CT_AXIAL';
     const viewportId2 = 'CT_SAGITTAL';
     const viewportId3 = 'CT_CORONAL';
-    // const viewportId4 = 'CT_3D';
+    const viewportId4 = 'CT_3D';
 
     const [myImageIds, setMyImageIds] = React.useState([]); // [
 
-    // const { state } = useLocation();
-    //
-    //
-    // let customImageIds = []
-    // for (const file of state.files) {
-    //     customImageIds.push(cornerstoneDICOMImageLoader.wadors.fileManager.add(file)
-    // }
-
-    // console.log(customImageIds)
-
-    let globalImgIds = [];
 
     useEffect(() => {
-
-
-
-
-        // CornerstoneJS tool initialization
-        const {
-            LengthTool,
-            PanTool,
-            WindowLevelTool,
-            CrosshairsTool,
-            StackScrollMouseWheelTool,
-            ZoomTool,
-            AngleTool,
-            PlanarRotateTool,
-            TrackballRotateTool,
-            ToolGroupManager,
-            Enums: csToolsEnums,
-        } = cornerstoneTools;
-
-        const { ViewportType } = cornerstoneTools.Enums;
-        const {MouseBindings} = csToolsEnums;
-
-
         // Define a unique id for the volume
 
         const volumeName = 'CT_VOLUME_ID'; // Id of the volume less loader prefix
+        // const volumeName2 = 'CT_VOLUME_ID2'; // Id of the volume less loader prefix
         const volumeLoaderScheme = 'cornerstoneStreamingImageVolume'; // Loader id which defines which volume loader to use
         const volumeId = `${volumeLoaderScheme}:${volumeName}`; // VolumeId with loader id + volume id
-
+        // const volumeId2 = `${volumeLoaderScheme}:${volumeName2}`; // VolumeId with loader id + volume id
         // Set up the initial state of your application
-        const toolGroupId = 'MY_TOOLGROUP_ID';
+
         const toolGroup3DId = '3D_TOOLGROUP_ID';
 
         // const leftClickTools = [WindowLevelTool.toolName, PanTool.toolName, PlanarRotateTool.toolName];
@@ -130,26 +114,86 @@ const CornerstoneViewport = ({viewportId}) => {
 
         // Run the demo1
         async function run() {
-            // Initialize Cornerstone and related libraries
-            await initDemo();
+            // Initialize Cornerstone
+            await initCornerstone();
 
+            // const urlParams = new URLSearchParams(location.search);
+            // const studyInstanceUID = urlParams.get('StudyInstanceUID');
+
+            // const allSeries = await getSeriesInStudy(studyInstanceUID);
+
+            // get the SeriesInstanceUID of the first series in the study
+            // const firstSeries = allSeries[0];
+
+            // // Get Cornerstone imageIds for the source data and fetch metadata into RAM
+            // const imageIds = await createImageIdsAndCacheMetaData({
+            //     StudyInstanceUID: studyInstanceUID,
+            //     SeriesInstanceUID:
+            //         firstSeries["0020000E"].Value[0],
+            //     wadoRsRoot: 'http://localhost:4000/proxy/?target=http://orthanc:8042/dicom-web',
+            // });
 
             // Get Cornerstone imageIds for the source data and fetch metadata into RAM
             const imageIds = await createImageIdsAndCacheMetaData({
                 StudyInstanceUID:
-                    '1.2.840.4892943.343.20220204232928.585770',
+                    '1.3.6.1.4.1.14519.5.2.1.7009.2403.334240657131972136850343327463',
                 SeriesInstanceUID:
-                    '1.2.840.113619.2.312.6945.3553526.11449.1643962392.770',
-                wadoRsRoot: 'http://localhost:4000/proxy/?target=http://orthanc:8042/dicom-web',
+                    '1.3.6.1.4.1.14519.5.2.1.7009.2403.226151125820845824875394858561',
+                wadoRsRoot: 'https://d3t6nz73ql33tx.cloudfront.net/dicomweb',
             });
 
-            setImgId(imageIds[0])
+            // const imageIds2 = await createImageIdsAndCacheMetaData({
+            //     StudyInstanceUID:
+            //         '1.2.840.4892943.343.20220204232928.585770',
+            //     SeriesInstanceUID:
+            //         '1.2.840.113619.2.312.6945.3553526.11449.1643962392.769',
+            //     wadoRsRoot: 'http://localhost:4000/proxy/?target=http://orthanc:8042/dicom-web',
+            // });
+
+
+
 
             // Define a volume in memory
             const volume = await cornerstone.volumeLoader.createAndCacheVolume(volumeId, {
                 imageIds,
             });
 
+            // const volume2 = await cornerstone.volumeLoader.createAndCacheVolume(volumeId2, {
+            //     imageIds: imageIds2,
+            // });
+
+
+            const toolGroup = ToolGroupManager.createToolGroup(toolGroup3DId);
+
+            cornerstoneTools.addTool(TrackballRotateTool);
+            // Add the tools to the tool group and specify which volume they are pointing at
+            toolGroup.addTool(TrackballRotateTool.toolName, {
+                configuration: { volumeId },
+            });
+
+            toolGroup.addTool(annotationToolsNamesObj.pan, {
+                configuration: { volumeId },
+            });
+
+
+
+            // Set the initial state of the tools, here we set one tool active on left click.
+            // This means left click will draw that tool.
+            toolGroup.setToolActive(TrackballRotateTool.toolName, {
+                bindings: [
+                    {
+                        mouseButton: MouseBindings.Primary, // Left Click
+                    },
+                ],
+            });
+
+            toolGroup.setToolActive(annotationToolsNamesObj.pan, {
+                bindings: [
+                    {
+                        mouseButton: MouseBindings.Secondary, // Right Click
+                    },
+                ],
+            });
 
             // Instantiate a rendering engine
             const renderingEngineId = 'myRenderingEngine';
@@ -185,16 +229,15 @@ const CornerstoneViewport = ({viewportId}) => {
                         background: [0, 0, 0],
                     },
                 },
-                // {
-                //     viewportId: viewportId4,
-                //     type: cornerstone.Enums.ViewportType.VOLUME_3D,
-                //     element: contentRef4.current,
-                //     defaultOptions: {
-                //         orientation: cornerstone.Enums.OrientationAxis.CORONAL,
-                //         background: [0, 0, 0],
-                //     },
-                // },
-
+                {
+                    viewportId: viewportId4,
+                    type: cornerstone.Enums.ViewportType.VOLUME_3D,
+                    element: contentRef4.current,
+                    defaultOptions: {
+                        orientation: cornerstone.Enums.OrientationAxis.AXIAL,
+                        background: [0, 0, 0],
+                    },
+                },
             ];
 
 
@@ -202,6 +245,7 @@ const CornerstoneViewport = ({viewportId}) => {
 
             // Set the volume to load
             volume.load();
+            // volume2.load();
 
             // Set volumes on the viewportsin
             await cornerstone.setVolumesForViewports(
@@ -209,98 +253,68 @@ const CornerstoneViewport = ({viewportId}) => {
                 [
                     {
                         volumeId,
-                        callback: setCtTransferFunctionForVolumeActor,
+                        // callback: setCtTransferFunctionForVolumeActor,
                     },
                 ],
-                [viewportId1,
+                [
+                    viewportId1,
                     viewportId2,
                     viewportId3,
-                    // viewportId4
+                    viewportId4
                 ]
             ).then(() => {
-                // const volumeActor = renderingEngineRef.current
-                //     .getViewport(viewportId4)
-                //     .getDefaultActor().actor;
-                //
-                // cornerstone.utilities.applyPreset(
-                //     volumeActor,
-                //     cornerstone.CONSTANTS.VIEWPORT_PRESETS.find((preset) => preset.name === "CT-Fat")
-                // );
-                //
-                // const viewport = renderingEngineRef.current.getViewport(viewportId4);
-                // viewport.render();
+                const volumeActor = renderingEngineRef.current
+                    .getViewport(viewportId4)
+                    .getDefaultActor().actor;
+
+                cornerstone.utilities.applyPreset(
+                    volumeActor,
+                    cornerstone.CONSTANTS.VIEWPORT_PRESETS.find((preset) => preset.name === "CT-Fat")
+                );
+
+                const viewport = renderingEngineRef.current.getViewport(viewportId4);
+                viewport.render();
             });
 
 
-            // Add tools to Cornerstone3D
-            cornerstoneTools.addTool(PanTool);
-            cornerstoneTools.addTool(LengthTool);
-            cornerstoneTools.addTool(WindowLevelTool);
-            cornerstoneTools.addTool(StackScrollMouseWheelTool);
-            cornerstoneTools.addTool(CrosshairsTool);
-            cornerstoneTools.addTool(TrackballRotateTool);
-            cornerstoneTools.addTool(ZoomTool);
-            cornerstoneTools.addTool(AngleTool);
-            // cornerstoneTools.addTool(PlanarRotateTool);
+            // await cornerstone.setVolumesForViewports(
+            //     renderingEngineRef.current,
+            // [
+            //     {
+            //         volumeId: volumeId2,
+            //     }
+            // ], [
+            //     viewportId2
+            //     ]
+            // )
 
 
-            const toolGroup = ToolGroupManager.createToolGroup(toolGroupId);
-            // const toolGroup3D = ToolGroupManager.createToolGroup(toolGroup3DId);
 
-            // For the crosshairs to operate, the viewports must currently be
-            // added ahead of setting the tool active. This will be improved in the future.
-            toolGroup.addViewport(viewportId1, renderingEngineId);
-            toolGroup.addViewport(viewportId2, renderingEngineId);
-            toolGroup.addViewport(viewportId3, renderingEngineId);
+
+            annotationToolGroup.addViewport(viewportId1, renderingEngineId);
+            annotationToolGroup.addViewport(viewportId2, renderingEngineId);
+            annotationToolGroup.addViewport(viewportId3, renderingEngineId);
+            toolGroup.addViewport(viewportId4, renderingEngineId);
 
             // toolGroup3D.addViewport(viewportId4, renderingEngineId);
 
-            const isMobile = window.matchMedia('(any-pointer:coarse)').matches;
-
             // // Add tools to the tool group
-            toolGroup.addTool(WindowLevelTool.toolName);
-            toolGroup.addTool(LengthTool.toolName);
-            toolGroup.addTool(PanTool.toolName);
-            toolGroup.addTool(ZoomTool.toolName);
-            toolGroup.addTool(AngleTool.toolName);
-            toolGroup.addTool(StackScrollMouseWheelTool.toolName, {loop: true});
-            // toolGroup.addTool(PlanarRotateTool.toolName);
-            toolGroup.addTool(CrosshairsTool.toolName, {
-                getReferenceLineColor,
-                getReferenceLineControllable,
-                getReferenceLineDraggableRotatable,
-                getReferenceLineSlabThicknessControlsOn,
-                mobile: {
-                    enabled: isMobile,
-                    opacity: 0.8,
-                    handleRadius: 9,
-                },
-            });
+
+            // toolGroup.addTool(CrosshairsTool.toolName, {
+            //     getReferenceLineColor,
+            //     getReferenceLineControllable,
+            //     getReferenceLineDraggableRotatable,
+            //     getReferenceLineSlabThicknessControlsOn,
+            //     mobile: {
+            //         enabled: isMobile,
+            //         opacity: 0.8,
+            //         handleRadius: 9,
+            //     },
+            // });
 
             // toolGroup3D.addTool(TrackballRotateTool.toolName);
 
-            toolGroup.setToolActive(CrosshairsTool.toolName, {
-                bindings: [{ mouseButton: MouseBindings.Primary }],
-            });
-            // As the Stack Scroll mouse wheel is a tool using the `mouseWheelCallback`
-            // hook instead of mouse buttons, it does not need to assign any mouse button.
-            toolGroup.setToolActive(StackScrollMouseWheelTool.toolName);
-            toolGroup.setToolActive(WindowLevelTool.toolName, {
-                bindings: [
-                    {
-                        mouseButton: MouseBindings.Secondary, // Right Click
-                    },
-                ],
-            });
-            toolGroup.setToolActive(PanTool.toolName, {
-                bindings: [
-                    {
-                        mouseButton: MouseBindings.Auxiliary
-                    },
-                ],
-            });
-
-            // toolGroup3D.setToolActive(TrackballRotateTool.toolName, {
+                // toolGroup3D.setToolActive(TrackballRotateTool.toolName, {
             //     bindings: [
             //         {
             //             mouseButton: MouseBindings.Primary, // Left Click
@@ -314,6 +328,27 @@ const CornerstoneViewport = ({viewportId}) => {
 
     }, []);
 
+
+    const {
+        rightMouseTool,
+        leftMouseTool,
+        mouseWheelTool,
+        prevRightMouseTool,
+        prevLeftMouseTool,
+        prevMouseWheelTool
+    } = useSelector((store) => store.viewerpage )
+
+    useEffect(()=>{
+        setRightMouseButton(rightMouseTool, prevRightMouseTool)
+    }, [rightMouseTool])
+
+    useEffect(()=>{
+        setLeftMouseButton(leftMouseTool, prevLeftMouseTool)
+    },[leftMouseTool])
+
+    useEffect(() => {
+        setMouseWheelButton(mouseWheelTool, prevMouseWheelTool)
+    }, [mouseWheelTool]);
 
 
     return (
@@ -331,23 +366,29 @@ const CornerstoneViewport = ({viewportId}) => {
                     </ViewportFrame>
                 </div>
 
-               {/*<div className={"w-1/2 flex justify-center"}>*/}
-               {/*    <ViewportFrame>*/}
-               {/*        <div className={"w-full h-full"}*/}
-               {/*             id="cornerstone-element"*/}
-               {/*             ref={contentRef4}*/}
-               {/*             style={{width: "100%", height: "100%"}}*/}
-               {/*             onContextMenu={(e) => {e.preventDefault()}}*/}
-               {/*        />*/}
-               {/*    </ViewportFrame>*/}
-               {/*</div>*/}
-
-                {/*<div>*/}
-                {/*    <ViewportOverlay imageId={imgId}/>*/}
-                {/*</div>*/}
+               <div className={"w-1/2 flex justify-center"}>
+                   <ViewportFrame>
+                       <div className={"w-full h-full"}
+                            id="cornerstone-element"
+                            ref={contentRef4}
+                            style={{width: "100%", height: "100%"}}
+                            onContextMenu={(e) => {e.preventDefault()}}
+                       />
+                   </ViewportFrame>
+               </div>
             </div>
 
            <div className={"flex"}>
+               <div className={"w-1/2 flex justify-center"}>
+                   <ViewportFrame>
+                       <div className={"w-full h-full"}
+                            id="cornerstone-element"
+                            ref={contentRef2}
+                            style={{width: "100%", height: "100%"}}
+                            onContextMenu={(e) => {e.preventDefault()}}
+                       />
+                   </ViewportFrame>
+               </div>
                <div className={"w-1/2 flex justify-center"}>
                    <ViewportFrame>
                        <div className={"w-full h-full"}
@@ -359,16 +400,6 @@ const CornerstoneViewport = ({viewportId}) => {
                    </ViewportFrame>
                </div>
 
-               <div className={"w-1/2 flex justify-center"}>
-                   <ViewportFrame>
-                       <div className={"w-full h-full"}
-                            id="cornerstone-element"
-                            ref={contentRef2}
-                            style={{width: "100%", height: "100%"}}
-                            onContextMenu={(e) => {e.preventDefault()}}
-                       />
-                   </ViewportFrame>
-               </div>
 
            </div>
         </div>

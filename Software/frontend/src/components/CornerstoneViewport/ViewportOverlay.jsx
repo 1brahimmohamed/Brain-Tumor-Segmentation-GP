@@ -52,23 +52,23 @@ const ViewportOverlay = ({scale, windowWidth, windowCenter, imageId, imageIndex,
 
                 </Box>
 
-                <Box className="top-left overlay-element">
+                <Box className="absolute bg-red-500 p-2 rounded">
                     <Box> {helpers.formatPatientName(patientName['Alphabetic'])} </Box>
                     <Box> {patientId} </Box>
                 </Box>
 
-                <Box className="top-right overlay-element">
+                <Box className="absolute right-10 bg-blue-500 p-2 rounded">
                     <Box> {studyDescription} </Box>
                     <Box> {helpers.formatDate(studyDate)} {helpers.formatDicomTime(studyTime)} </Box>
                 </Box>
 
-                <Box className="bottom-right overlay-element">
+                <Box className="absolute bottom-1 right-10 bg-blue-500 p-2 rounded overlay-element">
                     <Box>Zoom: {zoomPercentage}%</Box>
                     <Box>{ windowWidthLengthStr }</Box>
                     <Box className="compressionIndicator">{compressionType}</Box>
                 </Box>
 
-                <Box className="bottom-left overlay-element">
+                <Box className="absolute bottom-1 bg-blue-500 p-2 rounded">
                     <Box>{seriesNumber >= 0 ? `Ser: ${seriesNumber}` : ''}</Box>
                     <Box>
                         {stackSize > 1
