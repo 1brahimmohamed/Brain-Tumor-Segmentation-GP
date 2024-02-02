@@ -9,10 +9,17 @@
 # ORTHANC Storage
 /backend/Services/Orthanc/storage
 
-# Backend env
-/backend/MainApp/venv
+# Backend
 **/pgdata
+
+# Main app
+/backend/MainApp/venv
+
+# Services
+# Nifti PACS
 /backend/Services/NiftiPACS/NiftiPACS/pgdata
 /backend/Services/NiftiPACS/venv
+/backend/Services/NiftiPACS/uploads
+
 **/__pycache__
 *.env

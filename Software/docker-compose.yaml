@@ -6,7 +6,33 @@ services:
     ports:
       - "4000:4000"
     volumes:
-      - ./backend/Gateway:/app
+      - ./backend/Gateway:/api
+    depends_on:
+      - orthanc
+
+  server:
+    build: ./backend/MainApp/server
+    container_name: gp_server
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/MainApp/server:/usr/src/app
+    depends_on:
+      - main_app_db
+
+  main_app_db:
+    image: postgres:latest
+    container_name: gp_main_app_db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - ./backend/MainApp/server/pgdata:/var/lib/postgresql/data
+    restart: always
+
   orthanc:
     build: ./backend/Services/Orthanc
     container_name: gp_orthanc
@@ -20,12 +46,34 @@ services:
       - ./backend/Services/Orthanc/config/dicomweb.json:/etc/orthanc/dicomweb.json
       - ./backend/Services/Orthanc/config/Scripts/starter_script.sh:/usr/share/orthanc/scripts/starter_script.sh
       - ./backend/Services/Orthanc/storage:/var/lib/orthanc/db-v6
+
   frontend:
     build: ./frontend
     container_name: gp_frontend
     ports:
       - "5000:5000"
-    # stdin_open: true
-    # tty: true
-  
+    depends_on:
+      - backend
 
+  nifti_pacs:
+    build: ./backend/Services/NiftiPACS/NiftiPACS
+    container_name: gp_nifti_pacs
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend/Services/NiftiPACS/:/usr/src/app
+    depends_on:
+      - nifti_pacs_db
+
+  nifti_pacs_db:
+    image: postgres:latest
+    container_name: gp_nifti_pacs_db
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=nifti_user
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=nifti
+    volumes:
+      - ./backend/Services/NiftiPACS/pgdata:/var/lib/postgresql/data
+    restart: always
