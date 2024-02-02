@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
 import {useTheme} from "@mui/material/styles";
 import {Box} from "@mui/material";
-import Image from "../CustomNativeComponents/Image/Image.jsx";
+import Image from "../../CustomNativeComponents/Image/Image.jsx";
 
-const SeriesCard = ({ seriesData, seriesIndex ,selectedIndex, key, onSelectedSeriesChange }) => {
+const SeriesCard = ({ seriesData, seriesIndex ,selectedIndex, onSelectedSeriesChange }) => {
 
     const theme = useTheme();
     const [seriesImage, setSeriesImage] = useState(null);
