@@ -20,6 +20,8 @@ import DateRangesButtonsGroup from "../../../pages/Home/Components/DateRangesBut
 import ModalityButtonsGroup from "../../../pages/Home/Components/ModalityButtonsGroup/ModalityButtonsGroup.jsx";
 
 import '../../../styles/DateRange.scss'
+import {setDateFilter} from "../../../redux/reducers/homepageReducer.js"
+import {useDispatch} from "react-redux";
 
 
 
@@ -29,6 +31,27 @@ const HomeTopbar = () => {
 
     const theme = useTheme();
     const colorMode = useContext(ColorModeContext);
+
+    const dispatch = useDispatch()
+
+
+    const rangePickerChangeHandler = (data) =>{
+
+        if (!data) {
+            dispatch(setDateFilter({
+                startDate: null,
+                endDate: null,
+            }))
+
+            return;
+        }
+
+        dispatch(setDateFilter({
+            startDate: data[0].format('YYYY-MM-DD'),
+            endDate: data[1].format('YYYY-MM-DD')
+        }))
+
+    }
 
     return (
         <Box className={"flex justify-between w-full"}>
@@ -42,6 +65,7 @@ const HomeTopbar = () => {
                         className={`createDateRangePicker ${theme.palette.mode === 'light' ? 'light-mode' : ''}`}
                         popupClassName={`createDateRangePickerPopup ${theme.palette.mode === 'light' ? 'light-mode' : ''}`}
                         allowClear={true}
+                        onChange={rangePickerChangeHandler}
                     />
                 </Box>
 

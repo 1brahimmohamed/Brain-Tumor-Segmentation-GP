@@ -53,6 +53,7 @@ const ViewerTopbar = () => {
                                     isClickable={option.isClickable}
                                     onClickAction={option.onClickAction}
                                     popDownChildren={option.children}
+                                    toolName={option.toolName}
                                 />
                             )
                         })

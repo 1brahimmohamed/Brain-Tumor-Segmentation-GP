@@ -63,6 +63,8 @@ import * as topbarFunctions from "./ViewerTopBarFunctions.js"
 
 import {CONSTANTS} from "@cornerstonejs/core";
 
+import {annotationToolsNamesObj} from "../../../utils/AnnotationTools.jsx";
+
 
 const getCornerstonePresets = () => {
 
@@ -81,6 +83,8 @@ const ViewerTopbarOptions = [
         text: "Window",
         doPopDown: true,
         isClickable: true,
+        toolName: annotationToolsNamesObj.window,
+        onClickAction: () =>{ console.log("contrast") },
         children: [
             {
                 icon: <InvertColorsIcon/>,
@@ -94,6 +98,8 @@ const ViewerTopbarOptions = [
         text: "Pan",
         doPopDown: true,
         isClickable: true,
+        toolName: annotationToolsNamesObj.pan,
+        onClickAction: () =>{ console.log("Pan") },
         children: [
             {
                 icon: <AlignHorizontalCenterIcon/>,
@@ -117,6 +123,8 @@ const ViewerTopbarOptions = [
         text: "Zoom",
         doPopDown: true,
         isClickable: true,
+        toolName: annotationToolsNamesObj.zoom,
+        onClickAction: () =>{ console.log("Zoom") },
         children: [
             {
                 icon: <FitScreenIcon/>,
@@ -139,6 +147,7 @@ const ViewerTopbarOptions = [
             {
                 icon: <RxAngle/>,
                 text: "Angle",
+                toolName: annotationToolsNamesObj.angle,
                 onClickAction: () => {console.log("angle")}
             },
             {
@@ -149,16 +158,19 @@ const ViewerTopbarOptions = [
             {
                 icon: <IoEllipseOutline/>,
                 text: "Ellipse",
+                toolName: annotationToolsNamesObj.ellipse,
                 onClickAction: () => {console.log("ellipse")}
             },
             {
                 icon: <RectangleOutlinedIcon/>,
                 text: "Rectangle",
+                toolName: annotationToolsNamesObj.rectangle,
                 onClickAction: () => {console.log("rectangle")}
             },
             {
                 icon: <CallMadeIcon/>,
                 text: "arrow",
+                toolName: annotationToolsNamesObj.arrow,
                 onClickAction: () => {console.log("arrow")}
             },
             {
@@ -173,6 +185,7 @@ const ViewerTopbarOptions = [
         text: "Rotate",
         doPopDown: true,
         isClickable: true,
+        toolName: annotationToolsNamesObj.rotate,
         children: [
             {
                 icon: <TbFlipHorizontal/>,
@@ -205,8 +218,8 @@ const ViewerTopbarOptions = [
     {
         icon: <PolylineIcon />,
         text: "Segmentation",
-        doPopDown: true,
-        isClickable: false,
+        doPopDown: false,
+        isClickable: true,
     },
     {
         icon: <GridViewIcon />,

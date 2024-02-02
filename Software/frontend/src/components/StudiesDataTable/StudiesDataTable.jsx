@@ -10,8 +10,6 @@ import {
     TableRow,
     Box,
     tableCellClasses,
-    Input,
-
 } from '@mui/material';
 
 
@@ -168,75 +166,76 @@ const StudiesDataTable = ({data}) => {
         setSearchValues(newSearchValues);
     };
 
-
     return (
-        <TableContainer component={Box} className={"max-h-[80vh] min-h-[80vh] overflow-auto"}>
+        <Box>
+            <TableContainer component={Box} className={"overflow-auto"}>
 
-            <Table sx={{ minWidth: 1100, boxShadow: "none" }} aria-label="customized table" size={"small"}>
+                <Table sx={{ minWidth: 1100, boxShadow: "none" }} aria-label="customized table" size={"small"}>
 
-                <TableHead>
-                    <TableRow>
+                    <TableHead>
+                        <TableRow>
+                            {
+                                tableHeadColumns.map((column, index) => {
+                                    return (
+                                        <StyledTableCell align="left" key={index}>
+                                            <Box className={"flex items-center"}>
+                                                {
+                                                    column.searchable? (
+                                                        <StudiesTableHeaderSearchInput
+                                                            key={index}
+                                                            displayName={column.displayName}
+                                                            index={index}
+                                                            onChange={handleSearchChange}
+                                                            theme={theme}
+                                                        />
+                                                    ) : (column.displayName)
+                                                }
+
+                                                {column.searchable?  <SearchIcon/>: ""}
+                                            </Box>
+                                        </StyledTableCell>
+                                    )
+                                })
+                            }
+                        </TableRow>
+                    </TableHead>
+
+
+                    <TableBody >
+
                         {
-                            tableHeadColumns.map((column, index) => {
+                            filteredRows.map((row, index) => {
                                 return (
-                                    <StyledTableCell align="left" key={index}>
-                                        <Box className={"flex items-center"}>
-                                            {
-                                                column.searchable? (
-                                                    <StudiesTableHeaderSearchInput
-                                                        key={index}
-                                                        displayName={column.displayName}
-                                                        index={index}
-                                                        onChange={handleSearchChange}
-                                                        theme={theme}
-                                                    />
-                                                ) : (column.displayName)
-                                            }
+                                    <StyledTableRow key={index}>
 
-                                            {column.searchable?  <SearchIcon/>: ""}
-                                        </Box>
-                                    </StyledTableCell>
+                                        <StyledTableCell component="th" scope="row" sx={{ width: '2%' }}> {/*<Checkbox />*/} </StyledTableCell>
+
+                                        <StyledTableCell component="th" scope="row" sx={{ width: '5%' }}>
+                                            <Link target={"_blank"}  to={`/viewer?StudyInstanceUID=${row.studyInstanceUID}`}>
+                                                <VisibilityIcon sx={{
+                                                    "&:hover": {
+                                                        cursor: "pointer",
+                                                    }
+                                                }}/>
+                                            </Link>
+                                        </StyledTableCell>
+
+                                        <StyledTableCell component="th" scope="row"  sx={{ width: '10%' }} >{row.id}</StyledTableCell>
+                                        <StyledTableCell component="th" scope="row"  sx={{ width: '10%' }} >{row.patientId}</StyledTableCell>
+                                        <StyledTableCell component="th" align="left" sx={{ width: '20%' }} >{row.patientName}</StyledTableCell>
+                                        <StyledTableCell component="th" align="left" sx={{ width: '10%' }} >{row.institution}</StyledTableCell>
+                                        <StyledTableCell component="th" align="left" sx={{ width: '20%' }} >{row.studyDescription}</StyledTableCell>
+                                        <StyledTableCell component="th" align="left" sx={{ width: '10%' }} >{row.studyDate}</StyledTableCell>
+                                    </StyledTableRow>
                                 )
                             })
                         }
-                    </TableRow>
-                </TableHead>
 
+                    </TableBody>
 
-                <TableBody >
-
-                    {
-                        filteredRows.map((row) => {
-                            return (
-                                <StyledTableRow key={row.id}>
-
-                                    <StyledTableCell component="th" scope="row" sx={{ width: '2%' }}> {/*<Checkbox />*/} </StyledTableCell>
-
-                                    <StyledTableCell component="th" scope="row" sx={{ width: '5%' }}>
-                                        <Link target={"_blank"}  to={`/viewer?StudyInstanceUID=${row.studyInstanceUID}`}>
-                                            <VisibilityIcon sx={{
-                                                "&:hover": {
-                                                    cursor: "pointer",
-                                                }
-                                            }}/>
-                                        </Link>
-                                    </StyledTableCell>
-
-                                    <StyledTableCell component="th" scope="row"  sx={{ width: '10%' }} >{row.id}</StyledTableCell>
-                                    <StyledTableCell component="th" scope="row"  sx={{ width: '10%' }} >{row.patientId}</StyledTableCell>
-                                    <StyledTableCell component="th" align="left" sx={{ width: '20%' }} >{row.patientName}</StyledTableCell>
-                                    <StyledTableCell component="th" align="left" sx={{ width: '10%' }} >{row.institution}</StyledTableCell>
-                                    <StyledTableCell component="th" align="left" sx={{ width: '20%' }} >{row.studyDescription}</StyledTableCell>
-                                    <StyledTableCell component="th" align="left" sx={{ width: '10%' }} >{row.studyDate}</StyledTableCell>
-                                </StyledTableRow>
-                            )
-                        })
-                    }
-
-                </TableBody>
-
-            </Table>
-        </TableContainer>
+                </Table>
+            </TableContainer>
+        </Box>
     );
 }
 
