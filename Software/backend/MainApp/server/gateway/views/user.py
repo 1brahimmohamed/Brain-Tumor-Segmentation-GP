@@ -1,7 +1,6 @@
-from rest_framework import viewsets, permissions, status
+from rest_framework import viewsets, status
 from rest_framework.response import Response
 
-from django.contrib.auth import authenticate, login, logout
 from gateway.models import User
 from gateway.serializers import UserSerializer
 from django.views.decorators.csrf import csrf_exempt
@@ -23,16 +22,24 @@ class UserViewSet(viewsets.ModelViewSet):
 
     @csrf_exempt
     def create(self, request):
-        serializer = UserSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
 
-        return Response({
-            'status': "success",
-            'data': {
-                'user': serializer.data
+        serializer = UserSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            resp = {
+                'status': "success",
+                'data': {
+                    'user': serializer.data
+                }
             }
-        }, status=status.HTTP_201_CREATED)
+        else:
+            resp = {
+                'status': "error",
+                'message': serializer.errors
+            }
+
+        return Response(resp, status=status.HTTP_201_CREATED)
 
     @csrf_exempt
     def retrieve(self, request, pk=None):

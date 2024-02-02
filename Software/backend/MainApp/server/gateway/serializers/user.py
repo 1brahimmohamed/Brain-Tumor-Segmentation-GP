@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from gateway.models import User
+from django.contrib.auth.hashers import make_password
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -14,7 +15,10 @@ class UserSerializer(serializers.ModelSerializer):
         instance = self.Meta.model(**validated_data)
 
         if password is not None:
-            instance.set_password(password)
+            # encrypt password us
+            new_password = make_password(password)
+            instance.set_password(new_password)
+
         instance.save()
 
         return instance
