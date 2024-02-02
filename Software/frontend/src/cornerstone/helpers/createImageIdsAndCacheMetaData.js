@@ -46,10 +46,10 @@ export default async function createImageIdsAndCacheMetaData({
 
   client = client || new api.DICOMwebClient({
     url: wadoRsRoot,
-    headers: {
-      'Authorization': `Basic ${base64Credentials}`,
-      'Accept': 'application/dicom+json',
-    }
+    // headers: {
+    //   'Authorization': `Basic ${base64Credentials}`,
+    //   'Accept': 'application/dicom+json',
+    // }
   });
 
   const instances = await client.retrieveSeriesMetadata(studySearchOptions);

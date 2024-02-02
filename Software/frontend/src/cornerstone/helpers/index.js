@@ -1,6 +1,6 @@
 import createImageIdsAndCacheMetaData from './createImageIdsAndCacheMetaData';
 import wadoURICreateImageIds from './WADOURICreateImageIds';
-import initDemo from './initDemo';
+import initCornerstone from './initCornerstone.js';
 import setCtTransferFunctionForVolumeActor, {
   ctVoiRange,
 } from './setCtTransferFunctionForVolumeActor';
@@ -17,7 +17,7 @@ import camera from './camera';
 export {
   createImageIdsAndCacheMetaData,
   wadoURICreateImageIds,
-  initDemo,
+  initCornerstone,
   setTitleAndDescription,
   addButtonToToolbar,
   addCheckboxToToolbar,
