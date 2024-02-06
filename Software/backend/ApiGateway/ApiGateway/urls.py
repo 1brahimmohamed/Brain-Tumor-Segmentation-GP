@@ -1,5 +1,5 @@
 """
-URL configuration for server project.
+URL configuration for ApiGateway project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.0/topics/http/urls/
@@ -19,6 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/users/', include('gateway.urls')),
-    path('api/auth/', include('authentication.urls'))
+    path('dicom/', include('gateway.orthanc.urls')),
+    path('users/', include('gateway.users.urls')),
 ]
