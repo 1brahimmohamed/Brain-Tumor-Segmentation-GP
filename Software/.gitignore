@@ -9,13 +9,11 @@
 # ORTHANC Storage
 /backend/Services/Orthanc/storage
 
-# Backend
+### Backend
 **/pgdata
+**/venv/
 
-# Main app
-/backend/MainApp/venv
-
-# Services
+## Services
 # Nifti PACS
 /backend/Services/NiftiPACS/NiftiPACS/pgdata
 /backend/Services/NiftiPACS/venv
