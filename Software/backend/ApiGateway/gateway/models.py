@@ -1,9 +1,9 @@
 from django.db import models
 from django.core.validators import RegexValidator, EmailValidator, MinLengthValidator
-from django.contrib.auth.models import AbstractUser
 
 
-class User(AbstractUser):
+# Create your models here.
+class User(models.Model):
     ROLES = (
         ('Admin', 'Admin'),
         ('Radiologist', 'Radiologist'),
@@ -11,7 +11,7 @@ class User(AbstractUser):
         ('Viewer', 'Viewer'),
     )
 
-    # id = models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True)
 
     first_name = models.CharField(
         max_length=50, null=True,
@@ -50,6 +50,7 @@ class User(AbstractUser):
 
         ]
     )
+
     email = models.CharField(
         max_length=50,
         unique=True,
@@ -68,7 +69,7 @@ class User(AbstractUser):
     department = models.CharField(max_length=100, blank=True)
 
     password = models.CharField(
-        max_length=100,
+        max_length=120,
         null=False,
         validators=[
             MinLengthValidator(
@@ -89,6 +90,3 @@ class User(AbstractUser):
     lastLogin = models.DateTimeField(null=True)
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
-
-    # def set_password(self, password):
-    #     self.password = password
