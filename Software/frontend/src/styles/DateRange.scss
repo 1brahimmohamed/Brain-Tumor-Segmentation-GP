@@ -4,7 +4,6 @@ $body-background-dark: #383842;
 $text-color-dark: #ffffff;
 
 // dark mode
-
 $primary-color-light: #10a9e2;
 $body-input-light: #d5d5d6;
 $body-background-light: #ffffff;
@@ -22,11 +21,14 @@ THE INPUT FIELD
 
   &:hover{
     border: 1px solid $primary-color-dark;
+    background: $body-background-dark;
   }
 
   /* Input filed when foucsed */
   &:focus{
     border: 1px solid $primary-color-dark;
+    background: $body-background-dark;
+
   }
 
   /* The bar under the selection  */
