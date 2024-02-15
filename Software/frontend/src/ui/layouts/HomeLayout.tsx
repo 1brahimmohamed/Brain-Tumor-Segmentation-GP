@@ -21,7 +21,7 @@ const HomeLayout = () => {
                 <title>MMM.AI Home</title>
                 <meta
                     name="description"
-                    content="Multimodal Medical Viewer for brain tumor segmentation and MRI sequence synthesis"
+                    content="Multimodal Medical Viewer for brain tumor segmentation and MRI Motion Artifacts Correction."
                 />
             </Helmet>
 
