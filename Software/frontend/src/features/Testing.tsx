@@ -1,11 +1,9 @@
-import {AboutModal} from "@ohif/ui";
 
 const Testing = () => {
-    return (
-        <div className="bg-primary-dark">
-            <AboutModal />
-        </div>
-    );
+    return <div>
+
+    </div>;
 };
+
 
 export default Testing;
