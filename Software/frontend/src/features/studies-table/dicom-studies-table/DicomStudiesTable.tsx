@@ -18,7 +18,6 @@ import {
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SearchIcon from '@mui/icons-material/Search';
 import DicomUtil from '@/utilities/dicom';
-import { Input } from 'antd';
 
 const StudiesDataTable = ({ data }: { data: IDicomTableStudy[] }) => {
 
@@ -85,9 +84,9 @@ const StudiesDataTable = ({ data }: { data: IDicomTableStudy[] }) => {
                                     <StyledTableRow key={index}>
 
                                         <StyledTableCell component="th" scope="row" sx={{ width: '2%' }}>
-                                            <Checkbox 
-                                                size={'medium'} 
-                                                sx={{ 
+                                            <Checkbox
+                                                size={'medium'}
+                                                sx={{
                                                     padding: 0,
                                                     color: theme.palette.neutral.main,
                                                     '&.Mui-checked': {

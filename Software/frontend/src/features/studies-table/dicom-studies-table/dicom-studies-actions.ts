@@ -6,7 +6,7 @@ const GATEWAY_URL = import.meta.env.VITE_SERVER_URL;
 
 export const fetchDicomStudiesThunk = () => {
     console.log(`fetching dicom studies from ${GATEWAY_URL}/dicom/studies`);
-    
+
     return async (dispatch: Dispatch) => {
         const studies = await AxiosUtil.sendRequest({
             method: 'GET',
@@ -17,7 +17,7 @@ export const fetchDicomStudiesThunk = () => {
             return;
         }
         console.log(studies);
-        
+
 
         dispatch(studiesSliceActions.addStudies(studies));
     };
@@ -30,7 +30,7 @@ export const fetchDicomStudyByIdThunk = (studyInstanceUID: string) => {
             url: `${GATEWAY_URL}/dicom/studies/${studyInstanceUID}`,
         });
 
-        if (study) {
+        if (!study) {
             return;
         }
 
