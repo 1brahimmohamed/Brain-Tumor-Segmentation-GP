@@ -61,8 +61,10 @@
       ]
     },
     /* Bundler mode */
-    "moduleResolution": "bundler",
+    "moduleResolution": "Node",
+    "allowJs": true,
     "allowImportingTsExtensions": true,
+    "allowSyntheticDefaultImports": true,  
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
