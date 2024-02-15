@@ -1,7 +1,7 @@
 import { useTheme } from "@mui/material/styles";
 
-import whiteLogo from "@assets/images/logos/logo-white.png";
-import blackLogo from "@assets/images/logos/logo-black.png";
+import whiteLogo from "@assets/images/logos/viewer-logo-white.png";
+import blackLogo from "@assets/images/logos/viewer-logo-black.png";
 
 const Logo = () => {
     const theme = useTheme();

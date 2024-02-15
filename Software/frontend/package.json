@@ -10,12 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@cornerstonejs/core": "^1.58.4",
+    "@cornerstonejs/streaming-image-volume-loader": "^1.58.4",
+    "@cornerstonejs/tools": "^1.58.4",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^5.0.8",
     "@mui/icons-material": "^5.15.7",
     "@mui/material": "^5.15.7",
-    "@ohif/ui": "^3.7.0",
     "@reduxjs/toolkit": "^2.1.0",
     "antd": "^5.14.0",
     "axios": "^1.6.7",
@@ -32,10 +34,12 @@
     "react-router-dom": "^6.22.0",
     "react-spinners": "^0.13.8",
     "react-toastify": "^10.0.4",
+    "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {
+    "@types/node": "^20.11.17",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
