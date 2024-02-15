@@ -1,9 +1,11 @@
 import { FormEvent, useRef } from 'react';
 // import { useNavigate } from 'react-router-dom';
 import { Button, Theme } from '@mui/material';
-import PersonIcon from '@mui/icons-material/Person';
-import LockIcon from '@mui/icons-material/Lock';
 import LoginInputField from '@features/authentication/components/LoginInputField.tsx';
+import {
+    Person as UsernameIcon,
+    Lock as PasswordIcon
+} from '@mui/icons-material';
 
 
 const LoginForm = ({ theme }: { theme: Theme }) => {
@@ -25,10 +27,10 @@ const LoginForm = ({ theme }: { theme: Theme }) => {
         <form ref={loginFormRef} onSubmit={handleSubmit}>
 
             <LoginInputField theme={theme} name={'username'} autoComplete={'username'} placeholder={'Username'}
-                             Icon={PersonIcon} />
+                             Icon={UsernameIcon} />
 
             <LoginInputField theme={theme} name={'password'} autoComplete={'current-password'} placeholder={'Password'}
-                             Icon={LockIcon} />
+                             Icon={PasswordIcon} />
 
             <Button
                 type={'submit'}

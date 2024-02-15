@@ -1,13 +1,18 @@
 // MUI imports
-import {IconButton, Tooltip, useTheme} from "@mui/material";
+import { IconButton, Tooltip, useTheme } from '@mui/material';
 
 // icons
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
-import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
-import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
-import {useDispatch} from "react-redux";
-import {TAppDispatch} from "@/redux/store.ts";
-import {uiSliceActions} from "@ui/ui-slice.ts";
+
+import {
+    DarkModeOutlined as DarkModeOutlinedIcon,
+    LightModeOutlined as LightModeOutlinedIcon,
+    HelpOutlineOutlined as HelpOutlineOutlinedIcon
+} from '@mui/icons-material';
+
+
+import { useDispatch } from 'react-redux';
+import { TAppDispatch } from '@/redux/store.ts';
+import { uiSliceActions } from '@ui/ui-slice.ts';
 
 
 const LoginFooter = () => {
@@ -23,7 +28,7 @@ const LoginFooter = () => {
         <div>
 
             {/* Dark Mode Toggle Button */}
-            <Tooltip title={"Toggle Dark Mode"}>
+            <Tooltip title={'Toggle Dark Mode'}>
 
                 <IconButton
                     onClick={handleColorModeChange}
@@ -31,25 +36,25 @@ const LoginFooter = () => {
                 >
                     {
                         theme.palette.mode === 'dark' ?
-                            (<DarkModeOutlinedIcon/>) :
-                            (<LightModeOutlinedIcon/>)
+                            (<DarkModeOutlinedIcon />) :
+                            (<LightModeOutlinedIcon />)
                     }
                 </IconButton>
 
             </Tooltip>
 
             {/* Contact Support Button */}
-            <Tooltip title={"Contact Support"}>
+            <Tooltip title={'Contact Support'}>
 
                 <IconButton
-                    onClick={() => console.log("Help")}
+                    onClick={() => console.log('Help')}
                 >
-                    <HelpOutlineOutlinedIcon/>
+                    <HelpOutlineOutlinedIcon />
                 </IconButton>
 
             </Tooltip>
         </div>
-    )
+    );
 };
 
 export default LoginFooter;
