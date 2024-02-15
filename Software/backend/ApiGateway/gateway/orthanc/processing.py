@@ -1,6 +1,12 @@
 from pydicom import Dataset
 import json
 
+
+def clean_patient_name(patient_name):
+    if patient_name:
+        return patient_name.replace("^", " ")
+    return ''
+
 def extract_studies_metadata(studies_metadata):
     extracted_metadata = []
 
@@ -16,7 +22,7 @@ def extract_studies_metadata(studies_metadata):
             'accessionNumber': main_dicom_tags.get('AccessionNumber', ''),
             'institutionName': main_dicom_tags.get('InstitutionName', ''),
             'patientId': patient_main_dicom_tags.get('PatientID', ''),
-            'patientName': patient_main_dicom_tags.get('PatientName', '')
+            'patientName': clean_patient_name(patient_main_dicom_tags.get('PatientName', '')),
         })
 
     return extracted_metadata
@@ -30,6 +36,10 @@ def extract_study_metadata(study):
     for series in study:
         # make a dataset from json
         dataset = Dataset().from_json(series)
+
+        if getattr(dataset, 'Modality', '') in ['SR', 'PR']:
+            continue
+
         series_datasets.append(dataset)
 
         # get the total number of instances
@@ -51,7 +61,7 @@ def extract_study_metadata(study):
 
         # append the study data + patient data to the object
         study_data = {
-            'patientName': str(getattr(dataset, 'PatientName', '')),
+            'patientName': clean_patient_name(str(getattr(series_datasets[0], 'PatientName', ''))),
             'patientId': getattr(series_datasets[0], 'PatientID', ''),
             'patientBirthDate': getattr(series_datasets[0], 'PatientBirthDate', ''),
             'patientSex': getattr(series_datasets[0], 'PatientSex', ''),
