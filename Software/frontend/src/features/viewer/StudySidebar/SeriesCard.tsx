@@ -1,0 +1,55 @@
+import { useTheme } from '@mui/material/styles';
+import { Box } from '@mui/material';
+import Image from '@ui/shared/Image';
+
+const SeriesCard = ({ seriesData, seriesIndex, selectedIndex, onSelectedSeriesChange }) => {
+
+    const theme = useTheme();
+
+    let retrieveUrl = seriesData.retrieveUrl;
+
+    // change link from localhost to localhost:8080
+    retrieveUrl = retrieveUrl.replace('localhost', 'localhost:8042');
+    const imageSrc = `http://localhost:8000/dicom/studies/${seriesData.studyInstanceUid}/series/${seriesData.seriesInstanceUid}/image`;
+
+    return (
+        <Box
+            className="flex-col p-2"
+            sx={{ backgroundColor: theme.palette.primary.light }}>
+
+            <Box className={'flex justify-between items-center mb-1'}>
+
+                <Box className={'flex items-center w-11/12 '}>
+
+                    <Box className={'text-lg font-bold text-AAprimary w-2/12'}>
+                        {seriesData.seriesModality}
+                    </Box>
+                    <Box className={'text-sm w-10/12 whitespace-nowrap truncate'} title={seriesData.seriesDescription}>
+                        {seriesData.seriesDescription}
+                    </Box>
+                </Box>
+
+                <Box className={'w-1/12'}>
+                    {seriesData.numberOfInstances}
+                </Box>
+
+            </Box>
+
+            <Box>
+                <Image
+                    width={100}
+                    height={100}
+                    className={`border cursor-pointer ${selectedIndex === seriesIndex ? 'border-AAprimary' : ''}`}
+                    src={imageSrc}
+                    alt="Series Image"
+                    onClick={() => {
+                        onSelectedSeriesChange(seriesIndex, seriesData.seriesInstanceUid);
+                    }}
+                />
+
+            </Box>
+        </Box>
+    );
+};
+
+export default SeriesCard;
