@@ -4,8 +4,8 @@ import Viewport from '../Viewport/Viewport';
 import { createImageIdsAndCacheMetaData, initCornerstone } from '@/utilities/helpers';
 import { useEffect, useState } from 'react';
 import * as cornerstone from '@cornerstonejs/core';
-import { useSelector } from 'react-redux';
-import { render } from 'react-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeClickedViewport, removeClickedSeries } from '../Viewport/viewports-slice';
 
 // Initialize the rendering engine
 const renderingEngineId = 'myRenderingEngine';
@@ -36,6 +36,7 @@ const createDicomVolumes = async (studyInstanceUID: string | null, seriesInstanc
 const MainViewer = () => {
     const urlParams = new URLSearchParams(location.search);
     const studyInstanceUID = urlParams.get('StudyInstanceUID');
+    const dispatch = useDispatch();
 
     // Initialize the state with a type of null or an array of strings
     const [renderingEngine, setRenderingEngine] = useState<cornerstone.RenderingEngine | null>(null);
@@ -65,15 +66,17 @@ const MainViewer = () => {
     }, [currentStudyData]);
 
     useEffect(() => {
-        console.log(volumes);
         volumes.forEach((volume) => volume?.load());
     }, [volumes]);
 
     useEffect(() => {
-        if (renderingEngine && viewports.length > 0 && volumes.length > 0) {
+        if (renderingEngine && clickedViewportId && clickedSeriesId) {
             renderingEngine?.setViewports(viewports);
 
             setVolumeToViewport(clickedViewportId, clickedSeriesId);
+            dispatch(removeClickedViewport());
+            dispatch(removeClickedSeries());
+
             console.log('Setting volume to viewport');
         }
     }, [renderingEngine, clickedViewportId, clickedSeriesId, volumes]); // Dependencies array ensures this effect runs when these variables change

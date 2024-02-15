@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addViewport, updateViewport } from './viewports-slice'; // Adjust the import path as necessary
 import * as cornerstone from '@cornerstonejs/core';
 import { setClickedViewport } from './viewports-slice';
+import { style } from '@cornerstonejs/tools/dist/types/stateManagement/annotation/config';
 
 const Viewport = () => {
     // State for layout rows and columns
@@ -14,6 +15,7 @@ const Viewport = () => {
 
     const dispatch = useDispatch();
     const viewports = useSelector((state: any) => state.viewports.viewports);
+    const clickedViewportId = useSelector((state: any) => state.viewports.clickedViewportId);
 
     // Function to handle layout changes from the LayoutTool
     const handleLayoutChange = (newRows: number, newCols: number) => {
@@ -54,7 +56,7 @@ const Viewport = () => {
         return Array.from({ length: layoutRows * layoutCols }, (_, i) => (
             <div
                 key={i}
-                className="max-w-[100vw] min-w-[24%] h-auto m-1 bg-black "
+                className={`max-w-[100vw] min-w-[24%] h-auto m-1 bg-black ${clickedViewportId === `cornerstone-element${i}` ? 'border-2 border-blue-300' : ''}`}
                 onClick={() => handleViewportClick(`cornerstone-element${i}`)}
             >
                 <div className="w-full h-full" id={`cornerstone-element${i}`}></div>

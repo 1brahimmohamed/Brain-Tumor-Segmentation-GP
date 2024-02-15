@@ -45,12 +45,21 @@ const viewportsSlice = createSlice({
         removeViewport(state, action: PayloadAction<string>) {
             state.viewports = state.viewports.filter((vp) => vp.viewportId !== action.payload);
         },
+
         setClickedSeries(state, action: PayloadAction<string | null>) {
             state.clickedSeriesInstanceUid = action.payload;
         },
+        removeClickedSeries(state) {
+            state.clickedSeriesInstanceUid = null;
+        },
+
         setClickedViewport(state, action: PayloadAction<string | null>) {
             state.clickedViewportId = action.payload;
         },
+        removeClickedViewport(state) {
+            state.clickedViewportId = null;
+        },
+
         setStudyData(state, action: PayloadAction<any>) {
             state.studyData = action.payload;
         },
@@ -62,7 +71,9 @@ export const {
     updateViewport,
     removeViewport,
     setClickedSeries,
+    removeClickedSeries,
     setClickedViewport,
+    removeClickedViewport,
     setStudyData,
 } = viewportsSlice.actions;
 
