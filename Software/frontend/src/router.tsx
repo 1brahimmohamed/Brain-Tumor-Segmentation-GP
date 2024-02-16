@@ -8,11 +8,12 @@ import Login from '@pages/Login';
 import NotFound404 from '@pages/404';
 import DicomStudies from '@features/studies-table/dicom-studies-table/DicomStudies.tsx';
 import Testing from '@features/Testing.tsx';
+import MainViewer from '@/features/viewer/components/MainViewer';
 
 const AppRouter = createBrowserRouter([
     {
         path: '/',
-        element: <Layouts.HomeLayout/>,
+        element: <Layouts.HomeLayout />,
         children: [
             {
                 index: true,
@@ -40,13 +41,9 @@ const AppRouter = createBrowserRouter([
         children: [
             {
                 index: true,
-                // element: <RegularViewer />,
+                element: <MainViewer />,
             },
         ],
-    },
-    {
-        path: '/test',
-        element: <Testing />,
     },
     {
         path: '*',

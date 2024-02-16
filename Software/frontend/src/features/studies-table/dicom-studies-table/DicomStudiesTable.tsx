@@ -18,6 +18,7 @@ import {
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SearchIcon from '@mui/icons-material/Search';
 import DicomUtil from '@/utilities/dicom';
+// import { Input } from 'antd';
 
 const StudiesDataTable = ({ data }: { data: IDicomTableStudy[] }) => {
 
