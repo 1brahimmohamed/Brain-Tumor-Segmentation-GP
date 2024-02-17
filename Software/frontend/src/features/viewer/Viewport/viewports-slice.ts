@@ -1,25 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-// Define a type for the viewport configuration
-interface ViewportConfig {
-    viewportId: string;
-    type: string; // Assuming this is a string, adjust the type as necessary
-    element: any; // This could be a reference type
-    defaultOptions?: {
-        orientation: string; // Adjust the type as necessary
-    };
-}
-
-// Define the initial state type
-interface ViewportSliceState {
-    viewports: ViewportConfig[];
-    clickedViewportId: string | null;
-    clickedSeriesInstanceUid: string | null;
-    studyData: any;
-}
+import { IViewportConfig, IViewportSliceState } from '@models/viewer';
 
 // Set the initial state
-const initialState: ViewportSliceState = {
+const initialState: IViewportSliceState = {
     viewports: [],
     clickedViewportId: null,
     clickedSeriesInstanceUid: null,
@@ -31,11 +14,11 @@ const viewportsSlice = createSlice({
     initialState,
     reducers: {
         // Action to add a new viewport configuration
-        addViewport(state, action: PayloadAction<ViewportConfig>) {
+        addViewport(state, action: PayloadAction<IViewportConfig>) {
             state.viewports.push(action.payload);
         },
         // Action to update an existing viewport configuration by viewportId
-        updateViewport(state, action: PayloadAction<ViewportConfig>) {
+        updateViewport(state, action: PayloadAction<IViewportConfig>) {
             const index = state.viewports.findIndex((vp) => vp.viewportId === action.payload.viewportId);
             if (index !== -1) {
                 state.viewports[index] = action.payload;

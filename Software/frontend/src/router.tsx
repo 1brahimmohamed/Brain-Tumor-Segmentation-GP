@@ -7,8 +7,7 @@ import Layouts from '@ui/layouts/index.tsx';
 import Login from '@pages/Login';
 import NotFound404 from '@pages/404';
 import DicomStudies from '@features/studies-table/dicom-studies-table/DicomStudies.tsx';
-import Testing from '@features/Testing.tsx';
-import MainViewer from '@/features/viewer/components/MainViewer';
+import MainViewer from '@/features/viewer/MainViewer';
 
 const AppRouter = createBrowserRouter([
     {

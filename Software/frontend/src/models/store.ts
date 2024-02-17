@@ -2,6 +2,7 @@ import { INotification } from '@models/notification';
 import { modeType } from '@assets/theme/theme';
 import { IUserInfo } from '@models/auth.ts';
 import { IDicomTableStudy } from '@models/study.ts';
+import { ILayout } from '@models/viewer.ts';
 
 export interface IStoreUISlice {
     notification: INotification | null;
@@ -28,8 +29,31 @@ export interface IStoreStudiesSlice {
     selectedModalities: string[];
 }
 
+export interface IStoreViewerSlice {
+    // ui
+    isFullScreen: boolean;
+    layout: ILayout;
+    isRightPanelOpen: boolean;
+    isStudiesPanelOpen: boolean;
+    isInfoOnViewportsShown: boolean;
+
+    // tools
+    rightMouseTool: string;
+    leftMouseTool: string;
+    middleMouseTool: string;
+    mouseWheelTool: string;
+
+    // ismail
+    viewports: [];
+    clickedViewportId: null;
+    clickedSeriesInstanceUid: null;
+    studyData: null;
+
+}
+
 export interface IStore {
     ui: IStoreUISlice;
     auth: IStoreAuthSlice;
-    studies: IStoreStudiesSlice;
+    studies: IStoreStudiesSlice,
+    viewer: IStoreViewerSlice,
 }
