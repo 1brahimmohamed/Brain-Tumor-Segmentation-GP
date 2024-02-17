@@ -1,4 +1,12 @@
-const Image = ({width, height, src, alt, ...props }) => {
+interface ImageProps {
+    width?: number;
+    height?: number;
+    src: string;
+    alt: string;
+    [x: string]: any;
+}
+
+const Image = ({width, height, src, alt, ...props }: ImageProps) => {
 
     return (
         <img

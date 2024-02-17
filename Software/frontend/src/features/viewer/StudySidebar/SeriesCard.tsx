@@ -1,8 +1,16 @@
 import { useTheme } from '@mui/material/styles';
 import { Box } from '@mui/material';
 import Image from '@ui/shared/Image';
+import { IDicomSeriesData } from '@models/study.ts';
 
-const SeriesCard = ({ seriesData, seriesIndex, selectedIndex, onSelectedSeriesChange }) => {
+interface SeriesCardProps {
+    seriesData: IDicomSeriesData;
+    seriesIndex: number;
+    selectedIndex: number;
+    onSelectedSeriesChange: (seriesIndex: number, seriesInstanceUid: string) => void;
+}
+
+const SeriesCard = ({ seriesData, seriesIndex, selectedIndex, onSelectedSeriesChange }: SeriesCardProps) => {
 
     const theme = useTheme();
 

@@ -8,10 +8,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import PermMediaIcon from '@mui/icons-material/PermMedia';
 import { useDispatch } from 'react-redux';
 import { setClickedSeries, setStudyData } from '../Viewport/viewports-slice.js';
-
+import { IDicomSeriesData, IDicomStudyData } from '@models/study.ts';
 import { useTheme } from '@mui/material/styles';
 
-const StudyCard = ({ studyData }) => {
+const StudyCard = ({ studyData }: {studyData: IDicomStudyData}) => {
     const theme = useTheme();
 
     const [isStudyOpen, setIsStudyOpen] = useState(true);
@@ -77,7 +77,7 @@ const StudyCard = ({ studyData }) => {
 
             {isStudyOpen && (
                 <Box className={'max-h-[84vh] overflow-y-auto'}>
-                    {studyData.series.map((series, index) => {
+                    {studyData.series.map((series: IDicomSeriesData, index: number) => {
                         return (
                             <SeriesCard
                                 key={index}
