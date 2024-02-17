@@ -21,9 +21,11 @@ import {
 
 import store from '@/redux/store.ts';
 import { LANGUAGE_MENU_ITEMS } from '@features/top-bars/HomeTopBar/home-buttons.tsx';
-import WindowButtonItems from '@features/top-bars/ViewerTopBar/options-menu-items/WindowButtonItems.tsx';
+import WindowButtonItems from '@features/viewer/ViewerTopBar/options-menu-items/WindowButtonItems.tsx';
 import { handleColorModeChange, handleLanguageChange, handleSettingsItemClick } from "@features/top-bars/topbars-actions.ts";
-
+import { AnnotationToolsNames } from '@features/viewer/AnnotationTool/AnnotationClass';
+import LayoutSelector from '@features/viewer/components/LayoutSelector.tsx';
+import { toggleFullScreen } from '@features/viewer/ViewerTopBar/viewer-top-bar-actions.ts';
 export const VIEWER_SETTINGS_MENU_ITEMS = [
     "About",
     "License Agreement",
@@ -33,19 +35,19 @@ export const VIEWER_SETTINGS_MENU_ITEMS = [
 
 const VIEWER_TOOLS_BUTTONS = [
     {
-        title: 'Window',
+        title: AnnotationToolsNames.window,
         onClick: () => console.log('contrast'),
         icon: <ContrastIcon />,
         menuComponent: <WindowButtonItems />,
     },
     {
-        title: 'Pan',
+        title: AnnotationToolsNames.pan,
         onClick: () => console.log('Pan'),
         icon: <PanToolIcon />,
         menuComponent: <WindowButtonItems />,
     },
     {
-        title: 'Zoom',
+        title: AnnotationToolsNames.zoom,
         onClick: () => console.log('Zoom'),
         icon: <ZoomToolIcon />,
         menuComponent: <WindowButtonItems />,
@@ -70,10 +72,12 @@ const VIEWER_TOOLS_BUTTONS = [
     {
         title: 'Layout',
         icon: <LayoutIcon />,
+        menuComponent: <LayoutSelector rows={4} columns={4}  />,
     },
     {
         title: 'Full Screen',
         icon: <FullScreenIcon />,
+        onClick: toggleFullScreen
     },
     {
         title: 'Thumbnails',

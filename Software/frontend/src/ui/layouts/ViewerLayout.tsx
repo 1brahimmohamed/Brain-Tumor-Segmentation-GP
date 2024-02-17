@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import ViewerTopBar from '@features/top-bars/ViewerTopBar/ViewerTopBar.tsx';
+import ViewerTopBar from '@features/viewer/ViewerTopBar/ViewerTopBar.tsx';
 import ViewerSidebar from '@features/viewer/StudySidebar/ViewerSidebar.tsx';
 
 const ViewerLayout = () => {

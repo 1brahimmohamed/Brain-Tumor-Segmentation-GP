@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import Menu from '@mui/material/Menu';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { StyledDiv } from '@features/top-bars/components/StyledDiv.tsx';
@@ -8,7 +8,7 @@ import { useTheme } from '@mui/material';
 
 interface ICustomButtonProps {
     title: string;
-    onClick: (() => void);
+    onClick?: (() => void);
     menuComponent?: ReactNode;
     icon: ReactNode;
     sx?: any;
@@ -19,7 +19,7 @@ const ViewerToolButton = ({ title, onClick, menuComponent, icon, sx }: ICustomBu
     const [anchorElement, setAnchorElement] = useState<HTMLButtonElement | null>(null);
     const theme = useTheme();
 
-    const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    const handleClick = (event: any) => {
         if (menuComponent) {
             setAnchorElement(event.target?.parentElement.parentElement);
             return

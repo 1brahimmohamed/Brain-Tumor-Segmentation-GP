@@ -1,25 +1,30 @@
 import * as cornerstoneTools from '@cornerstonejs/tools';
 
+export const AnnotationToolsNames = {
+    window: cornerstoneTools.WindowLevelTool.toolName,
+    pan: cornerstoneTools.PanTool.toolName,
+    length: cornerstoneTools.LengthTool.toolName,
+    probe: cornerstoneTools.ProbeTool.toolName,
+    rectangleROI: cornerstoneTools.RectangleROITool.toolName,
+    ellipticalROI: cornerstoneTools.EllipticalROITool.toolName,
+    circleROI: cornerstoneTools.CircleROITool.toolName,
+    bidirectional: cornerstoneTools.BidirectionalTool.toolName,
+    angle: cornerstoneTools.AngleTool.toolName,
+    cobbAngle: cornerstoneTools.CobbAngleTool.toolName,
+    arrowAnnotate: cornerstoneTools.ArrowAnnotateTool.toolName,
+    crosshairs: cornerstoneTools.CrosshairsTool.toolName,
+    zoom: cornerstoneTools.ZoomTool.toolName,
+    stackScroll: cornerstoneTools.StackScrollMouseWheelTool.toolName,
+};
+
+
 class CornerstoneToolInitializer {
-    private toolGroupId: string;
-    private annotationToolsNames: { key: string; value: string }[];
+    private readonly toolGroupId: string;
+    public static annotationToolsNames = AnnotationToolsNames;
     private annotationToolGroup: any;
 
     constructor(toolGroupId: string = 'AnnotationTools') {
         this.toolGroupId = toolGroupId;
-        this.annotationToolsNames = [
-            { key: 'window', value: cornerstoneTools.WindowLevelTool.toolName },
-            { key: 'pan', value: cornerstoneTools.PanTool.toolName },
-            { key: 'length', value: cornerstoneTools.LengthTool.toolName },
-            { key: 'probe', value: cornerstoneTools.ProbeTool.toolName },
-            { key: 'rectangleROI', value: cornerstoneTools.RectangleROITool.toolName },
-            { key: 'ellipticalROI', value: cornerstoneTools.EllipticalROITool.toolName },
-            { key: 'circleROI', value: cornerstoneTools.CircleROITool.toolName },
-            { key: 'bidirectional', value: cornerstoneTools.BidirectionalTool.toolName },
-            { key: 'angle', value: cornerstoneTools.AngleTool.toolName },
-            { key: 'cobbAngle', value: cornerstoneTools.CobbAngleTool.toolName },
-            { key: 'arrowAnnotate', value: cornerstoneTools.ArrowAnnotateTool.toolName },
-        ];
 
         // Add all the necessary tools to cornerstoneTools
         this.initializeTools();
@@ -42,6 +47,7 @@ class CornerstoneToolInitializer {
         cornerstoneTools.addTool(cornerstoneTools.AngleTool);
         cornerstoneTools.addTool(cornerstoneTools.CobbAngleTool);
         cornerstoneTools.addTool(cornerstoneTools.ArrowAnnotateTool);
+        cornerstoneTools.addTool(cornerstoneTools.CrosshairsTool);
         // Add other tools here...
     }
 
@@ -73,12 +79,12 @@ class CornerstoneToolInitializer {
         // Set initial active state for some tools
         this.setToolActive(
             cornerstoneTools.WindowLevelTool.toolName,
-            cornerstoneTools.Enums.MouseBindings.Primary
+            cornerstoneTools.Enums.MouseBindings.Primary,
         );
         this.setToolActive(cornerstoneTools.PanTool.toolName, cornerstoneTools.Enums.MouseBindings.Auxiliary);
         this.setToolActive(
             cornerstoneTools.ZoomTool.toolName,
-            cornerstoneTools.Enums.MouseBindings.Secondary
+            cornerstoneTools.Enums.MouseBindings.Secondary,
         );
 
         // Set the stack scroll tool as active for the middle mouse button;
@@ -97,9 +103,11 @@ class CornerstoneToolInitializer {
     }
 
     public getToolNames() {
-        return this.annotationToolsNames;
+        return CornerstoneToolInitializer.annotationToolsNames;
     }
 }
 
 // Export the class for use elsewhere
 export { CornerstoneToolInitializer };
+
+export default CornerstoneToolInitializer;
