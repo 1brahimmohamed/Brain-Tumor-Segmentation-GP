@@ -5,11 +5,6 @@ import setCtTransferFunctionForVolumeActor, { ctVoiRange } from './setCtTransfer
 import setPetTransferFunctionForVolumeActor from './setPetTransferFunctionForVolumeActor.js';
 import setPetColorMapTransferFunctionForVolumeActor from './setPetColorMapTransferFunctionForVolumeActor.js';
 import setTitleAndDescription from './setTitleAndDescription.js';
-import addButtonToToolbar from './addButtonToToolbar';
-import addCheckboxToToolbar from './addCheckboxToToolbar';
-import addToggleButtonToToolbar from './addToggleButtonToToolbar';
-import addDropdownToToolbar from './addDropdownToToolbar';
-import addSliderToToolbar from './addSliderToToolbar';
 import camera from './camera';
 import initCornerstone from './initCornerstone.js';
 
@@ -19,11 +14,6 @@ export {
     wadoURICreateImageIds,
     initDemo,
     setTitleAndDescription,
-    addButtonToToolbar,
-    addCheckboxToToolbar,
-    addDropdownToToolbar,
-    addSliderToToolbar,
-    addToggleButtonToToolbar,
     setPetColorMapTransferFunctionForVolumeActor,
     setPetTransferFunctionForVolumeActor,
     setCtTransferFunctionForVolumeActor,
