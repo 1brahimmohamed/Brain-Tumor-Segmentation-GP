@@ -25,7 +25,7 @@ export default function initCornerstoneDICOMImageLoader() {
     maxWebWorkers = Math.min(navigator.hardwareConcurrency, 7);
   }
 
-  var config = {
+  let config = {
     maxWebWorkers,
     startWebWorkersOnDemand: false,
     taskConfiguration: {

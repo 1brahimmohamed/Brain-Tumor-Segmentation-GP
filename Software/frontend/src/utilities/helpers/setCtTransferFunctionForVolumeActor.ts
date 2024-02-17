@@ -6,7 +6,7 @@ const upper = windowCenter + windowWidth / 2.0;
 
 const ctVoiRange = { lower, upper };
 
-export default function setCtTransferFunctionForVolumeActor({ volumeActor }) {
+export default function setCtTransferFunctionForVolumeActor({ volumeActor } : { volumeActor: any}) {
   volumeActor
     .getProperty()
     .getRGBTransferFunction(0)

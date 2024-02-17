@@ -1,4 +1,4 @@
-const sopInstanceUIDs = [
+const sopInstanceUIDs : string[][] = [
   ['1.3.6.1.4.1.14519.5.2.1.7009.2403.811199116755887922789178901449'],
   ['1.3.6.1.4.1.14519.5.2.1.7009.2403.187727384733858550691265022399'],
   ['1.3.6.1.4.1.14519.5.2.1.7009.2403.357394051723501392130797480739'],
@@ -143,7 +143,7 @@ export default function wadoURICreateImageIds() {
     '1.3.6.1.4.1.14519.5.2.1.7009.2403.334240657131972136850343327463';
   const wadoURIRoot = `https://server.dcmjs.org/dcm4chee-arc/aets/DCM4CHEE/wado?requestType=WADO&studyUID=${studyUID}&seriesUID=${seriesUID}&contentType=application%2Fdicom`;
 
-  const imageIds = sopInstanceUIDs.map((uid) => {
+  const imageIds: string[] = sopInstanceUIDs.map((uid) => {
     return `wadouri:${wadoURIRoot}&objectUID=${uid}`;
   });
 

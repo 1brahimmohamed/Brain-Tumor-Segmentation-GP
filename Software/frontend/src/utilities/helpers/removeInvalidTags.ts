@@ -13,7 +13,7 @@
  * @param srcMetadata - source metadata
  * @returns new metadata object without invalid tags
  */
-function removeInvalidTags(srcMetadata) {
+function removeInvalidTags(srcMetadata: Record<string, any>) {
   // Object.create(null) make it ~9% faster
   const dstMetadata = Object.create(null);
   const tagIds = Object.keys(srcMetadata);

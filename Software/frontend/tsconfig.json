@@ -64,7 +64,7 @@
     "moduleResolution": "Node",
     "allowJs": true,
     "allowImportingTsExtensions": true,
-    "allowSyntheticDefaultImports": true,  
+    "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -74,7 +74,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": false
+    "noImplicitAny": true,
   },
   "include": [
     "src"

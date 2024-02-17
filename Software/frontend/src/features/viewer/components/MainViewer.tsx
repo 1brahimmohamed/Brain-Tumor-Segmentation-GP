@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import ViewerTopBar from '@features/viewer/ViewerTopBar/ViewerTopBar.tsx';
 import Viewport from '../Viewport/Viewport';
-import { createImageIdsAndCacheMetaData, initCornerstone } from '@/utilities/helpers';
+import { createImageIdsAndCacheMetaData, initCornerstone } from '@utilities/helpers';
 import { useEffect, useState } from 'react';
 import * as cornerstone from '@cornerstonejs/core';
 import { useSelector, useDispatch } from 'react-redux';

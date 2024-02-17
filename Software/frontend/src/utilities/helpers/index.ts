@@ -1,17 +1,17 @@
 import createImageIdsAndCacheMetaData from './createImageIdsAndCacheMetaData';
-import wadoURICreateImageIds from './WADOURICreateImageIds';
-import initDemo from './initDemo';
-import setCtTransferFunctionForVolumeActor, { ctVoiRange } from './setCtTransferFunctionForVolumeActor';
-import setPetTransferFunctionForVolumeActor from './setPetTransferFunctionForVolumeActor';
-import setPetColorMapTransferFunctionForVolumeActor from './setPetColorMapTransferFunctionForVolumeActor';
-import setTitleAndDescription from './setTitleAndDescription';
+import wadoURICreateImageIds from './WADOURICreateImageIds.js';
+import initDemo from './initDemo.js';
+import setCtTransferFunctionForVolumeActor, { ctVoiRange } from './setCtTransferFunctionForVolumeActor.js';
+import setPetTransferFunctionForVolumeActor from './setPetTransferFunctionForVolumeActor.js';
+import setPetColorMapTransferFunctionForVolumeActor from './setPetColorMapTransferFunctionForVolumeActor.js';
+import setTitleAndDescription from './setTitleAndDescription.js';
 import addButtonToToolbar from './addButtonToToolbar';
 import addCheckboxToToolbar from './addCheckboxToToolbar';
 import addToggleButtonToToolbar from './addToggleButtonToToolbar';
 import addDropdownToToolbar from './addDropdownToToolbar';
 import addSliderToToolbar from './addSliderToToolbar';
 import camera from './camera';
-import initCornerstone from './initCornerstone';
+import initCornerstone from './initCornerstone.js';
 
 export {
     initCornerstone,

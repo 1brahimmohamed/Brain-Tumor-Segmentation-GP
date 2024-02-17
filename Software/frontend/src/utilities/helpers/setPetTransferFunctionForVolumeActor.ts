@@ -1,6 +1,6 @@
 import { utilities } from '@cornerstonejs/core';
 
-export default function setPetTransferFunction({ volumeActor }) {
+export default function setPetTransferFunction({ volumeActor }: {volumeActor: any}) {
   const rgbTransferFunction = volumeActor
     .getProperty()
     .getRGBTransferFunction(0);
