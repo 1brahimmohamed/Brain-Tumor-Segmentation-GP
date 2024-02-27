@@ -9,12 +9,17 @@
 # ORTHANC Storage
 /backend/Services/Orthanc/storage
 
-### Backend
+# Backend
 **/pgdata
 **/venv/
 
 ## Services
-# Nifti PACS
+
+### Orthanc
+/backend/Services/Orthanc/config/Scripts/starter_script.sh
+
+
+### Nifti PACS
 /backend/Services/NiftiPACS/NiftiPACS/pgdata
 /backend/Services/NiftiPACS/venv
 /backend/Services/NiftiPACS/uploads
