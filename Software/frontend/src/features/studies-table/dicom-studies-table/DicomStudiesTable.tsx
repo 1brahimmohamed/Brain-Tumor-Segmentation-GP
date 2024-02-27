@@ -18,6 +18,8 @@ import {
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SearchIcon from '@mui/icons-material/Search';
 import DicomUtil from '@/utilities/dicom';
+import { useSelector } from 'react-redux';
+import { IStore } from '@models/store.ts';
 // import { Input } from 'antd';
 
 const StudiesDataTable = ({ data }: { data: IDicomTableStudy[] }) => {
@@ -25,8 +27,45 @@ const StudiesDataTable = ({ data }: { data: IDicomTableStudy[] }) => {
     const theme = useTheme();
     const [searchValues, setSearchValues] = useState(Array(tableColumnHeadings.length).fill(''));
 
+    const {
+        startDateFilter,
+        endDateFilter,
+        filterPeriod,
+        selectedModalities,
+    } = useSelector((store: IStore) => store.studies);
+
+
+
     const filterRows = () => {
-        return data.filter((row: IDicomTableStudy) => {
+
+        let filteredData = data;
+
+
+        // first filter by the upper controls (date range and modality)
+        if (filterPeriod !== "Any") {
+            filteredData = data.filter(
+                DicomStudy => {
+                    const studyStrFormattedDate = DicomUtil.formatDate(DicomStudy.studyDate);
+                    const studyDate = new Date(studyStrFormattedDate!);
+                    const startDate = new Date(startDateFilter!);
+                    const endDate = new Date(endDateFilter!);
+
+                    return studyDate >= startDate && studyDate <= endDate;
+                }
+            );
+        }
+
+        // uncomment this when the modality is sent from the backend
+        // if (selectedModalities.length > 0) {
+        //     filteredData = filteredData.filter(
+        //         DicomStudy => {
+        //             return selectedModalities.includes(DicomStudy.modality);
+        //         }
+        //     );
+        // }
+
+        // then filter by the search inputs
+        return filteredData.filter((row: IDicomTableStudy) => {
             return tableColumnHeadings.every((column: IDicomTableColumnHead, index: number) => {
                 const searchValue = searchValues[index].toLowerCase();
                 const cellValue = String((row as any)[column.key]).toLowerCase();

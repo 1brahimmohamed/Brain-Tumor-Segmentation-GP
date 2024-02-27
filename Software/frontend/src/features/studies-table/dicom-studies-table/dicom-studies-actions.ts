@@ -16,8 +16,6 @@ export const fetchDicomStudiesThunk = () => {
         if (!studies) {
             return;
         }
-        console.log(studies);
-
 
         dispatch(studiesSliceActions.addStudies(studies));
     };

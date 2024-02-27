@@ -23,8 +23,8 @@ export interface IStoreStudiesSlice {
     selectedDicomStudy: any;
     niftiStudies: any[];
     selectedNiftiStudy: any;
-    startDateFilter: Date | null;
-    endDateFilter: Date | null;
+    startDateFilter:string | null;
+    endDateFilter: string |null;
     filterPeriod: string;
     selectedModalities: string[];
 }

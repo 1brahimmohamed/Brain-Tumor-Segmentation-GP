@@ -28,8 +28,8 @@ const HomeTopBar = () => {
         }
 
         dispatch(studiesSliceActions.setDateFilter({
-            startDate: data[0].format('YYYY-MM-DD'),
-            endDate: data[1].format('YYYY-MM-DD'),
+            startDate: new Date(data[0]).toISOString(),
+            endDate: new Date(data[1]).toISOString(),
         }));
 
     };
