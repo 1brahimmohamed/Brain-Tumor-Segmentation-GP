@@ -1,5 +1,5 @@
 import { MathUtils } from '@/utilities';
-import { HelpersUtil } from '@/utilities/';
+import { HelpersUtil } from '@/utilities';
 
 export default class Matrix {
 
