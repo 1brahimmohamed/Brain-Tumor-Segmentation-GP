@@ -1,6 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { IStoreStudiesSlice } from '@models/store.ts';
-import { IDicomStudyData, IDicomTableStudy } from '@models/study.ts';
+import { IStoreStudiesSlice, IDicomStudyData, IDicomTableStudy } from '@/models';
 
 
 const dicomStudiesReducers = {

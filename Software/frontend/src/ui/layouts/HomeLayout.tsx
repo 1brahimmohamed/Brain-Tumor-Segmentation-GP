@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import {Helmet} from "react-helmet-async";
 import { Box, Button, Typography } from '@mui/material';
-import Logo from '@ui/shared/Logo.tsx';
+import { Logo } from '@ui/library';
 import HomeTopBar from '@features/top-bars/HomeTopBar/HomeTopBar.tsx';
 
 

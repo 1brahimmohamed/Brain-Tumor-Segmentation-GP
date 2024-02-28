@@ -1,4 +1,4 @@
-import { NotFoundProps } from "@models/404.ts";
+import { NotFoundProps } from '@/models';
 
 const Illustration = (props : NotFoundProps ) => {
     return (

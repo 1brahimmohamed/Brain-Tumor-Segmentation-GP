@@ -1,5 +1,5 @@
 import { Box, useTheme } from '@mui/material';
-import Logo from '@ui/shared/Logo.tsx';
+import { Logo } from '@ui/library';
 import { Link } from 'react-router-dom';
 import {VIEWER_TOOLS_BUTTONS ,VIEWER_OPTION_BUTTONS } from '@features/viewer/ViewerTopBar/viewer-buttons.tsx';
 import ViewerToolButton from '@features/viewer/ViewerTopBar/ViewerToolButton.tsx';

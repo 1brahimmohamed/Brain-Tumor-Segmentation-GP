@@ -1,5 +1,4 @@
 import { FormEvent, useRef } from 'react';
-// import { useNavigate } from 'react-router-dom';
 import { Button, Theme } from '@mui/material';
 import LoginInputField from '@features/authentication/components/LoginInputField.tsx';
 import {

@@ -1,8 +1,10 @@
-import { INotification } from '@models/notification';
+import {
+    INotification,
+    IUserInfo,
+    IDicomStudyData,
+    IDicomTableStudy,
+    ILayout  } from '@/models';
 import { modeType } from '@assets/theme/theme';
-import { IUserInfo } from '@models/auth.ts';
-import { IDicomTableStudy } from '@models/study.ts';
-import { ILayout } from '@models/viewer.ts';
 
 export interface IStoreUISlice {
     notification: INotification | null;
@@ -20,7 +22,7 @@ export interface IStoreAuthSlice {
 
 export interface IStoreStudiesSlice {
     dicomStudies: IDicomTableStudy[];
-    selectedDicomStudy: any;
+    selectedDicomStudy: IDicomStudyData | null;
     niftiStudies: any[];
     selectedNiftiStudy: any;
     startDateFilter:string | null;

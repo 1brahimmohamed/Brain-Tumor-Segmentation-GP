@@ -1,5 +1,5 @@
 import Viewport from './Viewport/Viewport';
-import { createImageIdsAndCacheMetaData, initCornerstone } from '@utilities/helpers';
+import { createImageIdsAndCacheMetaData, initCornerstone } from '@utilities/helpers/index';
 import { useEffect, useState } from 'react';
 import * as cornerstone from '@cornerstonejs/core';
 import { useSelector, useDispatch } from 'react-redux';

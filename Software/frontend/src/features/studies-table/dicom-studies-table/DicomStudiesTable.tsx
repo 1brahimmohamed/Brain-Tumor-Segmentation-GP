@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { IDicomTableStudy } from '@models/study.ts';
+import { IDicomTableStudy, IDicomTableColumnHead, IStore } from '@/models';
 import { StyledTableCell, StyledTableRow } from '@features/studies-table/components/StyledTableComponents.tsx';
 import StudiesTableHeaderSearchInput from '@features/studies-table/components/StudiesTableHeaderSearchInput.tsx';
 import tableColumnHeadings from '@features/studies-table/dicom-studies-table/dicom-table-head-row.ts';
-import { IDicomTableColumnHead } from '@models/studies-table.ts';
 import {
     Table,
     TableBody,
@@ -19,8 +18,6 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import SearchIcon from '@mui/icons-material/Search';
 import DicomUtil from '@/utilities/dicom';
 import { useSelector } from 'react-redux';
-import { IStore } from '@models/store.ts';
-// import { Input } from 'antd';
 
 const StudiesDataTable = ({ data }: { data: IDicomTableStudy[] }) => {
 
@@ -31,9 +28,8 @@ const StudiesDataTable = ({ data }: { data: IDicomTableStudy[] }) => {
         startDateFilter,
         endDateFilter,
         filterPeriod,
-        selectedModalities,
+        // selectedModalities,
     } = useSelector((store: IStore) => store.studies);
-
 
 
     const filterRows = () => {
@@ -42,7 +38,7 @@ const StudiesDataTable = ({ data }: { data: IDicomTableStudy[] }) => {
 
 
         // first filter by the upper controls (date range and modality)
-        if (filterPeriod !== "Any") {
+        if (filterPeriod !== 'Any') {
             filteredData = data.filter(
                 DicomStudy => {
                     const studyStrFormattedDate = DicomUtil.formatDate(DicomStudy.studyDate);
@@ -51,7 +47,7 @@ const StudiesDataTable = ({ data }: { data: IDicomTableStudy[] }) => {
                     const endDate = new Date(endDateFilter!);
 
                     return studyDate >= startDate && studyDate <= endDate;
-                }
+                },
             );
         }
 
@@ -131,8 +127,8 @@ const StudiesDataTable = ({ data }: { data: IDicomTableStudy[] }) => {
                                                     color: theme.palette.neutral.main,
                                                     '&.Mui-checked': {
                                                         color: theme.palette.secondary.light,
-                                                    }
-                                                 }}
+                                                    },
+                                                }}
                                             />
                                         </StyledTableCell>
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { TAppDispatch } from '@/redux/store.ts';
 import { viewerSliceActions } from '@features/viewer/viewer-slice.ts';
-import { ILayout } from '@models/viewer.ts';
+import { ILayout } from '@/models';
 
 
 interface LayoutSelectorProps {

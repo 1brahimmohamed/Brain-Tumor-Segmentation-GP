@@ -1,18 +1,19 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 // layouts
-import Layouts from '@ui/layouts/index.tsx';
+import {HomeLayout, ViewerLayout, LoginLayout} from '@ui/layouts';
 
 // pages
-import Login from '@pages/Login';
-import NotFound404 from '@pages/404';
+import {Login, NotFound404} from '@/pages';
+
 import DicomStudies from '@features/studies-table/dicom-studies-table/DicomStudies.tsx';
 import MainViewer from '@/features/viewer/MainViewer';
+import Testing from '@features/Testing.tsx';
 
 const AppRouter = createBrowserRouter([
     {
         path: '/',
-        element: <Layouts.HomeLayout />,
+        element: <HomeLayout />,
         children: [
             {
                 index: true,
@@ -26,7 +27,7 @@ const AppRouter = createBrowserRouter([
     },
     {
         path: '/login',
-        element: <Layouts.LoginLayout />,
+        element: <LoginLayout />,
         children: [
             {
                 index: true,
@@ -36,13 +37,17 @@ const AppRouter = createBrowserRouter([
     },
     {
         path: 'viewer',
-        element: <Layouts.ViewerLayout />,
+        element: <ViewerLayout />,
         children: [
             {
                 index: true,
                 element: <MainViewer />,
             },
         ],
+    },
+    {
+        path: 'test',
+        element: <Testing />,
     },
     {
         path: '*',

@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client'
 import {HelmetProvider} from 'react-helmet-async'
 import App from './App.tsx'
-import ColorModeProvider from "@context/ColorModeProvider.jsx";
+import { ColorModeProvider } from "@context/index";
 import {Provider} from "react-redux"
 
 import store from "./redux/store.ts";

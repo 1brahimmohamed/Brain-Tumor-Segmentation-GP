@@ -60,6 +60,8 @@ const Viewport = () => {
         ));
     };
 
+    console.log(numCols, numRows);
+
     const classStr = `h-[93vh] grid grid-cols-${numCols} grid-rows-${numRows} gap-1 w-[90vw]`
 
     return (

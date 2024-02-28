@@ -4,8 +4,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {IStore} from "@models/store.ts";
 import {uiSliceActions} from "@ui/ui-slice.ts";
 import {TAppDispatch} from "@/redux/store.ts";
-import Notification from "@/ui/Notification.tsx";
-import Spinner from "@/ui/Spinner.tsx";
+import { Notification } from "@ui/library";
+import { Spinner } from "@ui/library";
 
 function App() {
 

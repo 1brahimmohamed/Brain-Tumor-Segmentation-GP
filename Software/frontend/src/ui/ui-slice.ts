@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { IStoreUISlice } from '@models/store.ts';
-import { INotification } from '@models/notification.ts';
+import { IStoreUISlice, INotification } from '@/models';
 
 const initialState: IStoreUISlice = {
     notification: null,

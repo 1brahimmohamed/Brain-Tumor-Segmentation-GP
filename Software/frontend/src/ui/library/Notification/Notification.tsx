@@ -1,11 +1,9 @@
 import React, {useEffect, useRef, useId} from 'react';
 import ReactDOM from 'react-dom';
 import {ToastContainer, toast, Id} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
-
-import {INotification} from '@models/notification';
+import {IStore, INotification} from '@/models';
 import {useSelector} from "react-redux";
-import {IStore} from "@models/store.ts";
+import 'react-toastify/dist/ReactToastify.min.css';
 
 const Notification: React.FC<{
     notification: INotification | null;

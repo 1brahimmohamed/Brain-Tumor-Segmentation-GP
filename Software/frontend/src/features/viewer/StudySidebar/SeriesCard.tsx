@@ -1,7 +1,7 @@
 import { useTheme } from '@mui/material/styles';
 import { Box } from '@mui/material';
-import Image from '@ui/shared/Image';
-import { IDicomSeriesData } from '@models/study.ts';
+import { Image } from '@ui/library';
+import { IDicomSeriesData } from '@/models';
 
 interface SeriesCardProps {
     seriesData: IDicomSeriesData;

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IViewportConfig, IViewportSliceState } from '@models/viewer';
+import { IViewportConfig, IViewportSliceState } from '@/models';
 
 // Set the initial state
 const initialState: IViewportSliceState = {

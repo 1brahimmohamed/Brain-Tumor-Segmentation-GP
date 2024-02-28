@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import PropagateLoader from 'react-spinners/PropagateLoader';
 import { LengthType } from 'react-spinners/helpers/props';
 
-import Backdrop from '@ui/Backdrop';
+import { Backdrop } from '@ui/library';
 
 const Spinner: React.FC<{
     loading: boolean;

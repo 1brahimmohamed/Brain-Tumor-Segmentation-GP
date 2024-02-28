@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import SeriesCard from './SeriesCard.js';
-
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import CloseIcon from '@mui/icons-material/Close';
 import PermMediaIcon from '@mui/icons-material/PermMedia';
 import { useDispatch } from 'react-redux';
 import { setClickedSeries, setStudyData } from '../Viewport/viewports-slice.js';
-import { IDicomSeriesData, IDicomStudyData } from '@models/study.ts';
+import { IDicomSeriesData, IDicomStudyData } from '@/models';
 import { useTheme } from '@mui/material/styles';
 
 const StudyCard = ({ studyData }: {studyData: IDicomStudyData}) => {

@@ -2,7 +2,7 @@ import React, { ReactNode, useState } from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { StyledIconButton } from '@ui/StyledIconButton.tsx';
+import { StyledIconButton } from '@ui/library';
 import { useTheme } from '@mui/material';
 
 interface ICustomButtonProps {

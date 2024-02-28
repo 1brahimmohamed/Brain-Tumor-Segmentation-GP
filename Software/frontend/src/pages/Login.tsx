@@ -1,5 +1,5 @@
 import { useTheme } from "@mui/material";
-import Logo from "@/ui/shared/Logo";
+import { Logo } from "@ui/library";
 import LoginFooter from "@features/authentication/components/LoginFooter";
 import LoginForm from '@features/authentication/components/LoginForm.tsx';
 

@@ -1,6 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { IStoreViewerSlice } from '@models/store.ts';
-import { ILayout } from '@models/viewer.ts';
+import { IStoreViewerSlice, ILayout } from '@/models';
 
 const viewerUiReducer = {
     changeViewerLayout: (state: IStoreViewerSlice, action: PayloadAction<ILayout>) => {
