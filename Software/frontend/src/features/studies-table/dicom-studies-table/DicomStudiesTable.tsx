@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SearchIcon from '@mui/icons-material/Search';
-import DicomUtil from '@/utilities/dicom';
+import { DicomUtil } from '@/utilities';
 import { useSelector } from 'react-redux';
 
 const StudiesDataTable = ({ data }: { data: IDicomTableStudy[] }) => {

@@ -1,5 +1,5 @@
 import { Dispatch } from '@reduxjs/toolkit';
-import AxiosUtil from '@utilities/axios.ts';
+import { AxiosUtil } from '@/utilities';
 import { studiesSliceActions } from '@features/studies-table/studies-slice.ts';
 
 const GATEWAY_URL = import.meta.env.VITE_SERVER_URL;
