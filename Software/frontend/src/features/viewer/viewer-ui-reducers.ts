@@ -16,8 +16,7 @@ const viewerUiReducer = {
     },
     toggleInfoOnViewports: (state: IStoreViewerSlice) => {
         state.isInfoOnViewportsShown = !state.isInfoOnViewportsShown;
-    },
+    }
 };
-
 
 export default viewerUiReducer;

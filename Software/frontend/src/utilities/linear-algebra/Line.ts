@@ -1,7 +1,6 @@
 import Point from './Point';
 
 class Line {
-
     p1: Point;
     p2: Point;
     m: number;

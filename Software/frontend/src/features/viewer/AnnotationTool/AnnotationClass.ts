@@ -14,9 +14,8 @@ export const AnnotationToolsNames = {
     arrowAnnotate: cornerstoneTools.ArrowAnnotateTool.toolName,
     crosshairs: cornerstoneTools.CrosshairsTool.toolName,
     zoom: cornerstoneTools.ZoomTool.toolName,
-    stackScroll: cornerstoneTools.StackScrollMouseWheelTool.toolName,
+    stackScroll: cornerstoneTools.StackScrollMouseWheelTool.toolName
 };
-
 
 class CornerstoneToolInitializer {
     private readonly toolGroupId: string;
@@ -65,7 +64,9 @@ class CornerstoneToolInitializer {
         this.annotationToolGroup.addTool(cornerstoneTools.ZoomTool.toolName);
         this.annotationToolGroup.addTool(cornerstoneTools.RectangleROITool.toolName);
         this.annotationToolGroup.addTool(cornerstoneTools.EllipticalROITool.toolName);
-        this.annotationToolGroup.addTool(cornerstoneTools.StackScrollMouseWheelTool.toolName, { loop: true });
+        this.annotationToolGroup.addTool(cornerstoneTools.StackScrollMouseWheelTool.toolName, {
+            loop: true
+        });
         this.annotationToolGroup.addTool(cornerstoneTools.LengthTool.toolName);
         this.annotationToolGroup.addTool(cornerstoneTools.ProbeTool.toolName);
         this.annotationToolGroup.addTool(cornerstoneTools.RectangleROITool.toolName);
@@ -79,12 +80,12 @@ class CornerstoneToolInitializer {
         // Set initial active state for some tools
         this.setToolActive(
             cornerstoneTools.WindowLevelTool.toolName,
-            cornerstoneTools.Enums.MouseBindings.Primary,
+            cornerstoneTools.Enums.MouseBindings.Primary
         );
         this.setToolActive(cornerstoneTools.PanTool.toolName, cornerstoneTools.Enums.MouseBindings.Auxiliary);
         this.setToolActive(
             cornerstoneTools.ZoomTool.toolName,
-            cornerstoneTools.Enums.MouseBindings.Secondary,
+            cornerstoneTools.Enums.MouseBindings.Secondary
         );
 
         // Set the stack scroll tool as active for the middle mouse button;
@@ -94,7 +95,7 @@ class CornerstoneToolInitializer {
 
     private setToolActive(toolName: string, mouseButton: number) {
         this.annotationToolGroup.setToolActive(toolName, {
-            bindings: [{ mouseButton }],
+            bindings: [{ mouseButton }]
         });
     }
 

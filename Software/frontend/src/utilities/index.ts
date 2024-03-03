@@ -8,14 +8,4 @@ import Point from './linear-algebra/Point.ts';
 import Vector from './linear-algebra/Vector.ts';
 import Matrix from './linear-algebra/Matrix.ts';
 
-export {
-    AxiosUtil,
-    DicomUtil,
-    MathUtils,
-    HelpersUtil,
-
-    Line,
-    Point,
-    Vector,
-    Matrix
-};
+export { AxiosUtil, DicomUtil, MathUtils, HelpersUtil, Line, Point, Vector, Matrix };

@@ -5,8 +5,6 @@ import { useDispatch } from 'react-redux';
 import { studiesSliceActions } from '@features/studies-table/studies-slice.ts';
 import { TIME_INTERVALS } from '@features/top-bars/HomeTopBar/home-buttons.tsx';
 
-
-
 const PeriodButtons = () => {
     const [selectedButton, setSelectedButton] = useState<number | null>(TIME_INTERVALS.length - 1);
 

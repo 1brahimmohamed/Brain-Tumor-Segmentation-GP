@@ -5,15 +5,17 @@ input[type='range'] {
 
 input[type='range']::-webkit-slider-thumb {
     -webkit-appearance: none;
-    @apply border-AAprimary  bg-AAError border-[2px] border-solid; // Assuming you're using some CSS preprocessor to use @apply
-height: 13px;
+    @apply border-AAPrimary bg-AAPrimary border-[2px] border-solid;
+    // Assuming you're using some CSS preprocessor to use @apply
+    height: 13px;
     width: 13px;
     border-radius: 50%;
 }
 
 input[type='range']::-moz-range-thumb {
-    @apply border-AAprimary  bg-AAError border-[2px] border-solid; // Assuming you're using some CSS preprocessor to use @apply
-height: 13px;
+    // Assuming you're using some CSS preprocessor to use @apply
+    @apply border-AAPrimary bg-AAError border-[2px] border-solid;
+    height: 13px;
     width: 13px;
     border-radius: 50%;
 }

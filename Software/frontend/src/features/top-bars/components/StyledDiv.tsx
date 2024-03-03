@@ -10,6 +10,6 @@ export const StyledDiv = styled(Box)(({ theme }) => ({
     // overflow: 'hidden',
 
     '&:hover': {
-        backgroundColor: theme.palette.primary.light,
-    },
+        backgroundColor: theme.palette.primary.light
+    }
 }));

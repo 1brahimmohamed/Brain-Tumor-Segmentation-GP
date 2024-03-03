@@ -7,14 +7,11 @@ const WindowButtonItems = () => {
             <MenuItem>
                 <div className={'flex items-center'}>
                     <div className={'text-xl'}>
-                       <InvertTool />
+                        <InvertTool />
                     </div>
-                    <div className={'truncate text-xs'}>
-                        Invert
-                    </div>
+                    <div className={'truncate text-xs'}>Invert</div>
                 </div>
             </MenuItem>
-
         </div>
     );
 };

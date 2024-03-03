@@ -1,5 +1,5 @@
-import {Outlet} from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import { Outlet } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const LoginLayout = () => {
     return (
@@ -13,7 +13,7 @@ const LoginLayout = () => {
             </Helmet>
             <Outlet />
         </div>
-    )
+    );
 };
 
 export default LoginLayout;

@@ -29,7 +29,7 @@ export default async function createImageIdsAndCacheMetaData({
     SeriesInstanceUID,
     SOPInstanceUID = null,
     wadoRsRoot,
-    client = null,
+    client = null
 }) {
     const SOP_INSTANCE_UID = '00080018';
     const SERIES_INSTANCE_UID = '0020000E';
@@ -37,7 +37,7 @@ export default async function createImageIdsAndCacheMetaData({
 
     const studySearchOptions = {
         studyInstanceUID: StudyInstanceUID,
-        seriesInstanceUID: SeriesInstanceUID,
+        seriesInstanceUID: SeriesInstanceUID
     };
 
     client = client || new api.DICOMwebClient({ url: wadoRsRoot });
@@ -82,7 +82,7 @@ export default async function createImageIdsAndCacheMetaData({
             if (pixelSpacing) {
                 calibratedPixelSpacingMetadataProvider.add(imageId, {
                     rowPixelSpacing: parseFloat(pixelSpacing[0]),
-                    columnPixelSpacing: parseFloat(pixelSpacing[1]),
+                    columnPixelSpacing: parseFloat(pixelSpacing[1])
                 });
             }
         }

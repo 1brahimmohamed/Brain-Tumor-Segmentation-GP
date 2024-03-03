@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 
 import store from '@/redux/store';
-import { uiSliceActions } from "@ui/ui-slice";
+import { uiSliceActions } from '@ui/ui-slice';
 import { authSliceActions } from '@features/authentication/auth-slice';
 
 class AxiosUtil {
@@ -32,8 +32,8 @@ class AxiosUtil {
 
                 store.dispatch(
                     uiSliceActions.setNotification({
-                        type: "error",
-                        content: errorMsg,
+                        type: 'error',
+                        content: errorMsg
                     })
                 );
             }

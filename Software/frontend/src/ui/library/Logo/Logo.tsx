@@ -1,7 +1,7 @@
-import { useTheme } from "@mui/material/styles";
+import { useTheme } from '@mui/material/styles';
 
-import whiteLogo from "@assets/images/logos/viewer-logo-white.png";
-import blackLogo from "@assets/images/logos/viewer-logo-black.png";
+import whiteLogo from '@assets/images/logos/viewer-logo-white.png';
+import blackLogo from '@assets/images/logos/viewer-logo-black.png';
 
 const Logo = () => {
     const theme = useTheme();
@@ -9,11 +9,11 @@ const Logo = () => {
 
     return (
         <img
-            alt={"logo"}
-            title={"MMM.AI is a medical imaging platform"}
-            src={`${ mode === 'dark' ? whiteLogo : blackLogo }`}
+            alt={'logo'}
+            title={'MMM.AI is a medical imaging platform'}
+            src={`${mode === 'dark' ? whiteLogo : blackLogo}`}
         />
-    )
+    );
 };
 
 export default Logo;

@@ -1,13 +1,13 @@
-import {useTheme} from "@mui/material/styles";
-import {Box} from "@mui/material";
-import StudyCard from "./StudyCard.tsx";
+import { useTheme } from '@mui/material/styles';
+import { Box } from '@mui/material';
+import StudyCard from './StudyCard.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { IStore } from '@models/store.ts';
 import { useEffect } from 'react';
 import { fetchDicomStudyByIdThunk } from '@features/studies-table/dicom-studies-table/dicom-studies-actions.ts';
 import { TAppDispatch } from '@/redux/store.ts';
 
-const ViewerSidebar = ({className}: {className?: string}) => {
+const ViewerSidebar = ({ className }: { className?: string }) => {
     const theme = useTheme();
     const dispatch = useDispatch<TAppDispatch>();
 
@@ -15,29 +15,24 @@ const ViewerSidebar = ({className}: {className?: string}) => {
         const urlParams = new URLSearchParams(location.search);
         const studyInstanceUID = urlParams.get('StudyInstanceUID');
 
-        if (studyInstanceUID){
+        if (studyInstanceUID) {
             console.log(studyInstanceUID);
             dispatch(fetchDicomStudyByIdThunk(studyInstanceUID));
         }
-
     }, []);
 
-    const {
-        selectedDicomStudy,
-    } = useSelector((store: IStore) => store.studies);
-
+    const { selectedDicomStudy } = useSelector((store: IStore) => store.studies);
 
     return (
         <Box
             className={`${className}`}
             sx={{
-                backgroundColor: theme.palette.primary.dark,
+                backgroundColor: theme.palette.primary.dark
             }}
         >
-
-            { selectedDicomStudy && <StudyCard studyData={selectedDicomStudy} /> }
+            {selectedDicomStudy && <StudyCard studyData={selectedDicomStudy} />}
         </Box>
-    )
+    );
 };
 
 export default ViewerSidebar;

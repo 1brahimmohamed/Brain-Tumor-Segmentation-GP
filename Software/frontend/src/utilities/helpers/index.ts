@@ -18,5 +18,5 @@ export {
     setPetTransferFunctionForVolumeActor,
     setCtTransferFunctionForVolumeActor,
     ctVoiRange,
-    camera,
+    camera
 };

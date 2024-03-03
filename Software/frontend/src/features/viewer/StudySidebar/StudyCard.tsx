@@ -10,7 +10,7 @@ import { setClickedSeries, setStudyData } from '../Viewport/viewports-slice.js';
 import { IDicomSeriesData, IDicomStudyData } from '@/models';
 import { useTheme } from '@mui/material/styles';
 
-const StudyCard = ({ studyData }: {studyData: IDicomStudyData}) => {
+const StudyCard = ({ studyData }: { studyData: IDicomStudyData }) => {
     const theme = useTheme();
 
     const [isStudyOpen, setIsStudyOpen] = useState(true);
@@ -36,12 +36,12 @@ const StudyCard = ({ studyData }: {studyData: IDicomStudyData}) => {
     return (
         <Box
             sx={{
-                backgroundColor: theme.palette.primary.lighter,
+                backgroundColor: theme.palette.primary.lighter
             }}
         >
             {/* Study Card Header */}
             <Box className={'flex justify-between text-base cursor-pointer'} onClick={StudyArrowClickHandler}>
-                <Box className={'text-AAprimary'}>
+                <Box className={'text-AAPrimary'}>
                     {isStudyOpen ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
                 </Box>
 
@@ -59,7 +59,7 @@ const StudyCard = ({ studyData }: {studyData: IDicomStudyData}) => {
                 onClick={StudyArrowClickHandler}
             >
                 <Box>
-                    <Box className={'text-lg font-bold text-AAprimary'}>{studyData.modality}</Box>
+                    <Box className={'text-lg font-bold text-AAPrimary'}>{studyData.modality}</Box>
 
                     <Box className={'text-sm'} title={studyData.studyDate}>
                         {studyData.studyDate}

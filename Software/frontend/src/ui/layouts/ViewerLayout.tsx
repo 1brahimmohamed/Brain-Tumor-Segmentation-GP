@@ -4,10 +4,8 @@ import ViewerTopBar from '@features/viewer/ViewerTopBar/ViewerTopBar.tsx';
 import ViewerSidebar from '@features/viewer/StudySidebar/ViewerSidebar.tsx';
 
 const ViewerLayout = () => {
-
     return (
         <div className={'w-full'}>
-
             <Helmet>
                 <title>MMM.AI Viewer</title>
                 <meta
@@ -19,7 +17,7 @@ const ViewerLayout = () => {
             <ViewerTopBar />
             <div className={'flex'}>
                 <div className={'h-[100vh] w-52'}>
-                    <ViewerSidebar className={"h-full"} />
+                    <ViewerSidebar className={'h-full'} />
                 </div>
                 <div className={'h-[100vh] w-10/12'}>
                     <Outlet />

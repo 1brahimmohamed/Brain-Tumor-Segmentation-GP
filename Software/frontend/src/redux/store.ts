@@ -10,9 +10,9 @@ const store = configureStore({
         auth: authSlice.reducer,
         studies: studiesSlice.reducer,
         viewer: viewerSlice.reducer,
-        viewports: viewportsSlice.reducer,
+        viewports: viewportsSlice.reducer
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware()
 });
 
 export type TAppDispatch = typeof store.dispatch;

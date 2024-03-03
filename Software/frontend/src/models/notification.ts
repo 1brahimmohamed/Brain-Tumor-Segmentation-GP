@@ -3,5 +3,3 @@ export interface INotification {
     content: string;
     type: 'info' | 'success' | 'warning' | 'error';
 }
-
-

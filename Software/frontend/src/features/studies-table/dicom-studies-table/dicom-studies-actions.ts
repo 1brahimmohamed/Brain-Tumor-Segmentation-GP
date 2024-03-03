@@ -10,7 +10,7 @@ export const fetchDicomStudiesThunk = () => {
     return async (dispatch: Dispatch) => {
         const studies = await AxiosUtil.sendRequest({
             method: 'GET',
-            url: `${GATEWAY_URL}/dicom/studies`,
+            url: `${GATEWAY_URL}/dicom/studies`
         });
 
         if (!studies) {
@@ -25,7 +25,7 @@ export const fetchDicomStudyByIdThunk = (studyInstanceUID: string) => {
     return async (dispatch: Dispatch) => {
         const study = await AxiosUtil.sendRequest({
             method: 'GET',
-            url: `${GATEWAY_URL}/dicom/studies/${studyInstanceUID}`,
+            url: `${GATEWAY_URL}/dicom/studies/${studyInstanceUID}`
         });
 
         if (!study) {

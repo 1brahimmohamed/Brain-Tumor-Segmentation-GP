@@ -3,7 +3,7 @@ import { IStoreStudiesSlice } from '@models/store.ts';
 import dicomStudiesReducers from '@features/studies-table/dicom-studies-table/dicom-studies-reducers.ts';
 import filterStudiesReducers from '@features/studies-table/filter-reducers.ts';
 
-const initialState : IStoreStudiesSlice = {
+const initialState: IStoreStudiesSlice = {
     dicomStudies: [],
     selectedDicomStudy: null,
     niftiStudies: [],
@@ -11,7 +11,7 @@ const initialState : IStoreStudiesSlice = {
     startDateFilter: null,
     endDateFilter: null,
     filterPeriod: 'Any',
-    selectedModalities: [],
+    selectedModalities: []
 };
 
 const studiesSlice = createSlice({
@@ -19,10 +19,9 @@ const studiesSlice = createSlice({
     initialState: initialState,
     reducers: {
         ...dicomStudiesReducers,
-        ...filterStudiesReducers,
-    },
+        ...filterStudiesReducers
+    }
 });
 
 export const studiesSliceActions = studiesSlice.actions;
 export default studiesSlice;
-

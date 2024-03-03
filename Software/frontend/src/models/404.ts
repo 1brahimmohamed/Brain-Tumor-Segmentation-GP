@@ -1,4 +1,4 @@
 export interface NotFoundProps {
- className: string,
-    style: object
+    className: string;
+    style: object;
 }

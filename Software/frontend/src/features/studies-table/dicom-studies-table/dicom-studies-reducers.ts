@@ -1,7 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { IStoreStudiesSlice, IDicomStudyData, IDicomTableStudy } from '@/models';
 
-
 const dicomStudiesReducers = {
     addStudies: (state: IStoreStudiesSlice, action: PayloadAction<IDicomTableStudy[]>) => {
         state.dicomStudies = action.payload;
@@ -14,8 +13,7 @@ const dicomStudiesReducers = {
     },
     setSelectedDicomStudy: (state: IStoreStudiesSlice, action: PayloadAction<IDicomStudyData>) => {
         state.selectedDicomStudy = action.payload;
-    },
+    }
 };
 
 export default dicomStudiesReducers;
-

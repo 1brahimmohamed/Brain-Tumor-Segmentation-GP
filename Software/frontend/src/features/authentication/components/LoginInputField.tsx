@@ -18,22 +18,19 @@ const LoginInputField = ({ name, autoComplete, placeholder, Icon, theme }: Login
             autoComplete={autoComplete}
             placeholder={placeholder}
             className={'my-2'}
-            startAdornment={(
+            startAdornment={
                 <InputAdornment position="start">
-                    <SvgIcon
-                        color="inherit"
-                        fontSize="large"
-                    >
+                    <SvgIcon color="inherit" fontSize="large">
                         <Icon />
                     </SvgIcon>
                 </InputAdornment>
-            )}
+            }
             sx={{
                 backgroundColor: theme.palette.primary.dark,
                 fontSize: 'medium',
                 '& .MuiOutlinedInput-notchedOutline': {
-                    border: 'none', // Remove the outline
-                },
+                    border: 'none' // Remove the outline
+                }
             }}
         />
     );

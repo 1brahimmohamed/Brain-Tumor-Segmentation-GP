@@ -1,15 +1,10 @@
-import {
-    INotification,
-    IUserInfo,
-    IDicomStudyData,
-    IDicomTableStudy,
-    ILayout  } from '@/models';
-import { modeType } from '@assets/theme/theme';
+import { INotification, IUserInfo, IDicomStudyData, IDicomTableStudy, ILayout } from '@/models';
+import { TModeType } from '@assets/theme/theme';
 
 export interface IStoreUISlice {
     notification: INotification | null;
     isLoading: boolean;
-    themeMode: modeType;
+    themeMode: TModeType;
     isDisplayingDicomStudies: boolean;
     currentLanguage: string;
 }
@@ -25,8 +20,8 @@ export interface IStoreStudiesSlice {
     selectedDicomStudy: IDicomStudyData | null;
     niftiStudies: any[];
     selectedNiftiStudy: any;
-    startDateFilter:string | null;
-    endDateFilter: string |null;
+    startDateFilter: string | null;
+    endDateFilter: string | null;
     filterPeriod: string;
     selectedModalities: string[];
 }
@@ -50,12 +45,11 @@ export interface IStoreViewerSlice {
     clickedViewportId: null;
     clickedSeriesInstanceUid: null;
     studyData: null;
-
 }
 
 export interface IStore {
     ui: IStoreUISlice;
     auth: IStoreAuthSlice;
-    studies: IStoreStudiesSlice,
-    viewer: IStoreViewerSlice,
+    studies: IStoreStudiesSlice;
+    viewer: IStoreViewerSlice;
 }

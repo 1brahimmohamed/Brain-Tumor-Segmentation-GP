@@ -4,19 +4,19 @@ import { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from 
 import { IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { twMerge } from 'tailwind-merge';
 
-type InputFilterTextProps = {
+type TInputFilterTextProps = {
     className?: string;
     value?: string;
     placeholder?: string;
     onDebounceChange?: (value: string) => void;
     onChange?: (value: string) => void;
     debounceTime?: number;
+    disabled?: boolean;
+};
 
-}
-
-const InputFilterText = (props: InputFilterTextProps): ReactElement => {
-
+const InputFilterText = (props: TInputFilterTextProps): ReactElement => {
     const {
         className,
         value = '',
@@ -24,6 +24,7 @@ const InputFilterText = (props: InputFilterTextProps): ReactElement => {
         onDebounceChange,
         onChange,
         debounceTime = 300,
+        disabled = false
     } = props;
 
     const [filterValue, setFilterValue] = useState<string>(value);
@@ -31,8 +32,7 @@ const InputFilterText = (props: InputFilterTextProps): ReactElement => {
     const searchInputRef = useRef<HTMLInputElement>(null);
 
     const debouncedOnChange = useMemo(() => {
-        return debounce(onDebounceChange || (() => {
-        }), debounceTime);
+        return debounce(onDebounceChange || (() => {}), debounceTime);
     }, []);
 
     // This allows for the filter value to be updated via the props.
@@ -56,33 +56,40 @@ const InputFilterText = (props: InputFilterTextProps): ReactElement => {
 
     return (
         <label className={classNames('relative', className)}>
-
-            <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+            <span className="absolute inset-y-0 left-0 flex items-center pl-2 text-AAPrimaryLight">
                 <SearchIcon name="icon-search" />
             </span>
 
             <input
                 ref={searchInputRef}
                 type="text"
-                className="disabled: placeholder:text-inputfield-placeholder block w-full appearance-none rounded-md  bg-AAFirstShade py-2 px-9 text-base leading-tight shadow transition duration-300 focus:outline-none"
+                disabled={disabled}
+                className={twMerge(
+                    'block w-full appearance-none rounded-sm bg-AASecondShade py-2 px-9 text-base leading-tight shadow transition duration-300',
+                    'focus:outline-none focus:ring-2 focus:ring-AAPrimaryLight focus:ring-opacity-50',
+                    'disabled:bg-AAFirstShade disabled:cursor-not-allowed disabled:opacity-50'
+                )}
                 placeholder={placeholder}
-                onChange={event => handleFilterTextChanged(event.target.value)}
+                onChange={(event) => handleFilterTextChanged(event.target.value)}
                 autoComplete="off"
                 value={filterValue}
             />
 
             <span className="absolute inset-y-0 right-0 flex items-center pr-2">
-                <IconButton
-                    className={classNames('cursor-pointer', filterValue ? '' : 'hidden')}
-                    onClick={() => {
-                        if (searchInputRef.current) {
-                            searchInputRef.current.value = '';
-                        }
-                        handleFilterTextChanged('');
-                    }}>
-                    <CancelIcon />
-                </IconButton>
-          </span>
+                {filterValue && (
+                    <IconButton
+                        className={'cursor-pointer'}
+                        onClick={() => {
+                            if (searchInputRef.current) {
+                                searchInputRef.current.value = '';
+                            }
+                            handleFilterTextChanged('');
+                        }}
+                    >
+                        <CancelIcon fontSize={'small'} />
+                    </IconButton>
+                )}
+            </span>
         </label>
     );
 };

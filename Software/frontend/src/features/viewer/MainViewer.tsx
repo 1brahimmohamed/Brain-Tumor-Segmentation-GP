@@ -18,12 +18,14 @@ const createDicomVolumes = async (studyInstanceUID: string | null, seriesInstanc
             const imageIds = await createImageIdsAndCacheMetaData({
                 StudyInstanceUID: studyInstanceUID,
                 SeriesInstanceUID: seriesInstanceUID,
-                wadoRsRoot: wadoRsRoot,
+                wadoRsRoot: wadoRsRoot
             });
             console.log(imageIds);
             if (imageIds.length > 0) {
                 // @TODO: Add less than 6 instances handling
-                return await cornerstone.volumeLoader.createAndCacheVolume(volumeId, { imageIds });
+                return await cornerstone.volumeLoader.createAndCacheVolume(volumeId, {
+                    imageIds
+                });
             }
         })
     );
@@ -41,10 +43,10 @@ const MainViewer = () => {
     const [volumes, setVolumes] = useState<any[]>([]);
 
     // Select the current states from the Redux state
-    const viewports = useSelector((state: any) => state.viewports.viewports);
-    const clickedSeriesId = useSelector((state: any) => state.viewports.clickedSeriesInstanceUid);
-    const clickedViewportId = useSelector((state: any) => state.viewports.clickedViewportId);
-    const currentStudyData = useSelector((state: any) => state.viewports.studyData);
+    const viewports = useSelector((store: any) => store.viewports.viewports);
+    const clickedSeriesId = useSelector((store: any) => store.viewports.clickedSeriesInstanceUid);
+    const clickedViewportId = useSelector((store: any) => store.viewports.clickedViewportId);
+    const currentStudyData = useSelector((store: any) => store.viewports.studyData);
 
     useEffect(() => {
         const setupImageIdsAndVolumes = async () => {

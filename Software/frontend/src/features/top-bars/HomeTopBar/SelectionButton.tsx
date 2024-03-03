@@ -1,4 +1,4 @@
-import {useTheme } from '@mui/material';
+import { useTheme } from '@mui/material';
 import { StyledButton } from '@features/top-bars/components/StyledButton.tsx';
 interface IButtonProps {
     id: number;
@@ -7,7 +7,6 @@ interface IButtonProps {
     selected: boolean;
     lastBtnIndex: number;
 }
-
 
 const SelectionButton = ({ id, label, onClick, selected, lastBtnIndex }: IButtonProps) => {
     const handleClick = () => {

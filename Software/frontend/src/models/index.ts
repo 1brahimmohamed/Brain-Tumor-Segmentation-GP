@@ -24,5 +24,5 @@ export type {
     IDicomStudyData,
     IViewportConfig,
     IViewportSliceState,
-    ILayout,
+    ILayout
 };

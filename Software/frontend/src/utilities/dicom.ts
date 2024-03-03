@@ -1,6 +1,6 @@
-import {format, parse} from 'date-fns';
+import { format, parse } from 'date-fns';
 import store from '@/redux/store';
-import { uiSliceActions } from "@ui/ui-slice";
+import { uiSliceActions } from '@ui/ui-slice';
 
 class DicomUtil {
     public static formatDate(date: string, strFormat: string = 'MMM dd, yyyy') {
@@ -13,10 +13,12 @@ class DicomUtil {
             const parsedDateTime = parse(date, 'yyyyMMdd', new Date());
             return format(parsedDateTime, strFormat);
         } catch (err: any) {
-            store.dispatch(uiSliceActions.setNotification({
-                type: "error",
-                content: err.message
-            }))
+            store.dispatch(
+                uiSliceActions.setNotification({
+                    type: 'error',
+                    content: err.message
+                })
+            );
         }
     }
 
@@ -36,19 +38,22 @@ class DicomUtil {
         try {
             const inputFormat = 'HHmmss.SSS';
             const strTime = time.toString().substring(0, inputFormat.length);
-            const parsedDateTime = parse(strTime, inputFormat.substring(0,strTime.length), new Date(0));
+            const parsedDateTime = parse(strTime, inputFormat.substring(0, strTime.length), new Date(0));
 
             return format(parsedDateTime, strFormat);
         } catch (err: any) {
-            store.dispatch(uiSliceActions.setNotification({
-                type: "error",
-                content: err.message
-            }))
+            store.dispatch(
+                uiSliceActions.setNotification({
+                    type: 'error',
+                    content: err.message
+                })
+            );
         }
     }
 
-    public static detectImageOrientation(orientation: number[]) : "Axial" | "Sagittal" | "Coronal" | "Unknown" {
-
+    public static detectImageOrientation(
+        orientation: number[]
+    ): 'Axial' | 'Sagittal' | 'Coronal' | 'Unknown' {
         // Convert orientation values to numbers and take absolute values
         const orientation_array = orientation.map(Number).map(Math.abs);
 
@@ -65,13 +70,13 @@ class DicomUtil {
         // Determine the orientation based on the maximum dot product
         const max_dot = Math.max(dot_axial, dot_sagittal, dot_coronal);
         if (max_dot === dot_axial) {
-            return "Axial";
+            return 'Axial';
         } else if (max_dot === dot_sagittal) {
-            return "Sagittal";
+            return 'Sagittal';
         } else if (max_dot === dot_coronal) {
-            return "Coronal";
+            return 'Coronal';
         } else {
-            return "Unknown";
+            return 'Unknown';
         }
     }
 
@@ -80,4 +85,4 @@ class DicomUtil {
     }
 }
 
-export default DicomUtil
+export default DicomUtil;

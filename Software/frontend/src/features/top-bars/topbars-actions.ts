@@ -28,9 +28,4 @@ const handleSettingsItemClick = (setting: string) => {
     }
 };
 
-
-export {
-    handleColorModeChange,
-    handleLanguageChange,
-    handleSettingsItemClick
-};
+export { handleColorModeChange, handleLanguageChange, handleSettingsItemClick };

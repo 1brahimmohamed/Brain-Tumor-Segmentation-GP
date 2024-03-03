@@ -6,17 +6,8 @@ interface ImageProps {
     [x: string]: any;
 }
 
-const Image = ({width, height, src, alt, ...props }: ImageProps) => {
-
-    return (
-        <img
-            width={width}
-            height={height}
-            src={src}
-            alt={alt}
-            {...props}
-        />
-    );
+const Image = ({ width, height, src, alt, ...props }: ImageProps) => {
+    return <img width={width} height={height} src={src} alt={alt} {...props} />;
 };
 
 export default Image;

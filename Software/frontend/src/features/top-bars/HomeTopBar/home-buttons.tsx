@@ -1,5 +1,5 @@
 import store from '@/redux/store.ts';
-import { handleColorModeChange, handleLanguageChange, handleSettingsItemClick } from "../topbars-actions.ts";
+import { handleColorModeChange, handleLanguageChange, handleSettingsItemClick } from '../topbars-actions.ts';
 
 import {
     VerticalAlignBottom as ExportIcon,
@@ -7,25 +7,12 @@ import {
     DarkModeOutlined as DarkModeOutlinedIcon,
     LightModeOutlined as LightModeOutlinedIcon,
     Translate as LanguagesIcon,
-    SettingsOutlined as SettingsOutlinedIcon,
+    SettingsOutlined as SettingsOutlinedIcon
 } from '@mui/icons-material';
 
+export const HOME_SETTINGS_MENU_ITEMS = ['About', 'License Agreement', 'Help', 'Logout'];
 
-export const HOME_SETTINGS_MENU_ITEMS = [
-    "About",
-    "License Agreement",
-    "Help",
-    "Logout"
-];
-
-export const LANGUAGE_MENU_ITEMS = [
-    "EN",
-    "AR",
-    "ES",
-    "DE",
-    "FR",
-    "IT",
-];
+export const LANGUAGE_MENU_ITEMS = ['EN', 'AR', 'ES', 'DE', 'FR', 'IT'];
 
 export const TIME_INTERVALS = [
     { id: 0, label: '1d' },
@@ -33,7 +20,7 @@ export const TIME_INTERVALS = [
     { id: 2, label: '1w' },
     { id: 3, label: '1m' },
     { id: 4, label: '1y' },
-    { id: 5, label: 'Any' },
+    { id: 5, label: 'Any' }
 ];
 
 export const MODALITIES = [
@@ -41,7 +28,7 @@ export const MODALITIES = [
     { id: 1, label: 'MR' },
     { id: 2, label: 'US' },
     { id: 3, label: 'PET' },
-    { id: 4, label: 'XA' },
+    { id: 4, label: 'XA' }
 ];
 
 // buttons configuration
@@ -56,7 +43,7 @@ export const OPTIONS = [
     },
     {
         onClick: handleColorModeChange,
-        icon: store.getState().ui.themeMode === 'light' ? <DarkModeOutlinedIcon /> : <LightModeOutlinedIcon />,
+        icon: store.getState().ui.themeMode === 'light' ? <DarkModeOutlinedIcon /> : <LightModeOutlinedIcon />
     },
     {
         onClick: handleLanguageChange,
@@ -67,6 +54,5 @@ export const OPTIONS = [
         onClick: handleSettingsItemClick,
         icon: <SettingsOutlinedIcon />,
         menuItems: HOME_SETTINGS_MENU_ITEMS
-    },
+    }
 ];
-

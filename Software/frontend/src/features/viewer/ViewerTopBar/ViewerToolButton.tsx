@@ -8,21 +8,20 @@ import { useTheme } from '@mui/material';
 
 interface ICustomButtonProps {
     title: string;
-    onClick?: (() => void);
+    onClick?: () => void;
     menuComponent?: ReactNode;
     icon: ReactNode;
     sx?: any;
 }
 
 const ViewerToolButton = ({ title, onClick, menuComponent, icon, sx }: ICustomButtonProps) => {
-
     const [anchorElement, setAnchorElement] = useState<HTMLButtonElement | null>(null);
     const theme = useTheme();
 
     const handleClick = (event: any) => {
         if (menuComponent) {
             setAnchorElement(event.target?.parentElement.parentElement);
-            return
+            return;
         }
         return;
     };
@@ -33,42 +32,34 @@ const ViewerToolButton = ({ title, onClick, menuComponent, icon, sx }: ICustomBu
 
     return (
         <>
-            <StyledDiv
-                aria-haspopup="true"
-                className={'flex items-center justify-center p-1'}
-                sx={sx}
-            >
+            <StyledDiv aria-haspopup="true" className={'flex items-center justify-center p-1'} sx={sx}>
                 <div
-                    className={'flex flex-col items-center justify-center cursor-pointer w-4/5 overflow-hidden'}
+                    className={
+                        'flex flex-col items-center justify-center cursor-pointer w-4/5 overflow-hidden'
+                    }
                     onClick={onClick}
                     title={title}
                 >
                     <div className={'text-2xl'}>
-                        <SvgIcon fontSize={"inherit"}>
-                            {icon}
-                        </SvgIcon>
+                        <SvgIcon fontSize={'inherit'}>{icon}</SvgIcon>
                     </div>
-                    <div className={'truncate text-xs'}>
-                        {title}
-                    </div>
+                    <div className={'truncate text-xs'}>{title}</div>
                 </div>
 
-                <Box onClick={handleClick} className={"cursor-pointer"} sx={{color: theme.palette.secondary.main}}>
+                <Box
+                    onClick={handleClick}
+                    className={'cursor-pointer'}
+                    sx={{ color: theme.palette.secondary.main }}
+                >
                     {menuComponent && <ArrowDropDownIcon />}
                 </Box>
-
             </StyledDiv>
 
-            {
-                menuComponent && (
-                    <Menu
-                        anchorEl={anchorElement}
-                        open={Boolean(anchorElement)}
-                        onClose={handleCloseMenu}
-                    >
-                        {menuComponent}
-                    </Menu>)
-            }
+            {menuComponent && (
+                <Menu anchorEl={anchorElement} open={Boolean(anchorElement)} onClose={handleCloseMenu}>
+                    {menuComponent}
+                </Menu>
+            )}
         </>
     );
 };

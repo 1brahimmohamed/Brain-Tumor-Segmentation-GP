@@ -6,7 +6,7 @@ const initialState: IStoreUISlice = {
     isLoading: false,
     themeMode: 'dark',
     isDisplayingDicomStudies: true,
-    currentLanguage: 'EN',
+    currentLanguage: 'EN'
 };
 
 const uiSlice = createSlice({
@@ -16,7 +16,7 @@ const uiSlice = createSlice({
         setNotification(state, action: PayloadAction<Omit<INotification, 'id'>>) {
             state.notification = {
                 ...action.payload,
-                id: new Date().toISOString(),
+                id: new Date().toISOString()
             };
         },
         clearNotification(state) {
@@ -33,12 +33,10 @@ const uiSlice = createSlice({
         },
         setCurrentLanguage(state, action: PayloadAction<string>) {
             state.currentLanguage = action.payload;
-        },
-    },
+        }
+    }
 });
 
 export const uiSliceActions = uiSlice.actions;
 
 export default uiSlice;
-
-

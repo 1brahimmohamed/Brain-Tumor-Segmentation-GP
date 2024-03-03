@@ -13,14 +13,13 @@ interface ICustomButtonProps {
 }
 
 const CustomButton = ({ onClick, menuItems, icon, sx }: ICustomButtonProps) => {
-
     const [anchorElement, setAnchorElement] = useState<HTMLButtonElement | null>(null);
     const theme = useTheme();
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         if (menuItems) {
             setAnchorElement(event.currentTarget);
-            return
+            return;
         }
 
         onClick();
@@ -35,13 +34,12 @@ const CustomButton = ({ onClick, menuItems, icon, sx }: ICustomButtonProps) => {
         onClick(item);
     };
 
-
     const popDownStyle = {
         backgroundColor: theme.palette.primary.lighter,
         '&:hover': {
-            backgroundColor: theme.palette.secondary.main,
-        },
-    }
+            backgroundColor: theme.palette.secondary.main
+        }
+    };
 
     return (
         <>
@@ -54,23 +52,17 @@ const CustomButton = ({ onClick, menuItems, icon, sx }: ICustomButtonProps) => {
             >
                 {icon}
                 {menuItems && <ArrowDropDownIcon />}
-
             </StyledIconButton>
 
-            {
-                menuItems && (
-                    <Menu
-                        anchorEl={anchorElement}
-                        open={Boolean(anchorElement)}
-                        onClose={handleCloseMenu}
-                    >
-                        {menuItems.map((item: string, index: number) => (
-                            <MenuItem sx={popDownStyle} key={index} onClick={() => handleMenuItemClick(item)}>
-                                {item}
-                            </MenuItem>
-                        ))}
-                    </Menu>)
-            }
+            {menuItems && (
+                <Menu anchorEl={anchorElement} open={Boolean(anchorElement)} onClose={handleCloseMenu}>
+                    {menuItems.map((item: string, index: number) => (
+                        <MenuItem sx={popDownStyle} key={index} onClick={() => handleMenuItemClick(item)}>
+                            {item}
+                        </MenuItem>
+                    ))}
+                </Menu>
+            )}
         </>
     );
 };

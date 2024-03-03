@@ -14,20 +14,20 @@
  * @returns new metadata object without invalid tags
  */
 function removeInvalidTags(srcMetadata: Record<string, any>) {
-  // Object.create(null) make it ~9% faster
-  const dstMetadata = Object.create(null);
-  const tagIds = Object.keys(srcMetadata);
-  let tagValue;
+    // Object.create(null) make it ~9% faster
+    const dstMetadata = Object.create(null);
+    const tagIds = Object.keys(srcMetadata);
+    let tagValue;
 
-  tagIds.forEach((tagId) => {
-    tagValue = srcMetadata[tagId];
+    tagIds.forEach((tagId) => {
+        tagValue = srcMetadata[tagId];
 
-    if (tagValue !== undefined && tagValue !== null) {
-      dstMetadata[tagId] = tagValue;
-    }
-  });
+        if (tagValue !== undefined && tagValue !== null) {
+            dstMetadata[tagId] = tagValue;
+        }
+    });
 
-  return dstMetadata;
+    return dstMetadata;
 }
 
 export { removeInvalidTags as default, removeInvalidTags };

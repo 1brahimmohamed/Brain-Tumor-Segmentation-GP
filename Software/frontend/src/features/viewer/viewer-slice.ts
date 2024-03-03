@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { IStoreViewerSlice } from '@models/store.ts';
 import viewerUiReducer from '@features/viewer/viewer-ui-reducers.ts';
 
-
 const initialState: IStoreViewerSlice = {
     // ui
     isFullScreen: false,
@@ -24,7 +23,7 @@ const initialState: IStoreViewerSlice = {
     viewports: [],
     clickedViewportId: null,
     clickedSeriesInstanceUid: null,
-    studyData: null,
+    studyData: null
 };
 
 const viewportsSlice = createSlice({
@@ -35,6 +34,6 @@ const viewportsSlice = createSlice({
     }
 });
 
-export const viewerSliceActions =  viewportsSlice.actions;
+export const viewerSliceActions = viewportsSlice.actions;
 
 export default viewportsSlice;

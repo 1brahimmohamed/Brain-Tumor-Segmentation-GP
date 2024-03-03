@@ -1,8 +1,8 @@
-import React, {useEffect, useRef, useId} from 'react';
+import React, { useEffect, useRef, useId } from 'react';
 import ReactDOM from 'react-dom';
-import {ToastContainer, toast, Id} from 'react-toastify';
-import {IStore, INotification} from '@/models';
-import {useSelector} from "react-redux";
+import { ToastContainer, toast, Id } from 'react-toastify';
+import { IStore, INotification } from '@/models';
+import { useSelector } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.min.css';
 
 const Notification: React.FC<{
@@ -12,8 +12,8 @@ const Notification: React.FC<{
     const toastContainerId = useId();
     const lastNotificationId = useRef<Id>();
 
-    const {notification, notificationDisappearingHandler} = props;
-    const {content, type, id} = notification || {};
+    const { notification, notificationDisappearingHandler } = props;
+    const { content, type, id } = notification || {};
 
     const themeMode = useSelector((store: IStore) => store.ui.themeMode) as string;
 
@@ -32,14 +32,14 @@ const Notification: React.FC<{
             closeOnClick: false,
             theme: themeMode,
             className: 'bg-[#1a1a1a]',
-            type: type,
+            type: type
         });
     }, [content, type, id, lastNotificationId, toastContainerId]);
 
     useEffect(() => {
         toast.onChange((toastItem) => {
             if (toastItem.status === 'removed') {
-                toast.clearWaitingQueue({containerId: toastContainerId});
+                toast.clearWaitingQueue({ containerId: toastContainerId });
 
                 if (lastNotificationId.current === toastItem.id && notificationDisappearingHandler) {
                     notificationDisappearingHandler();
@@ -51,7 +51,7 @@ const Notification: React.FC<{
     return ReactDOM.createPortal(
         <ToastContainer
             containerId={toastContainerId}
-            style={{maxWidth: '100%', width: '500px', right: 0, bottom: 0, padding: '1rem'}}
+            style={{ maxWidth: '100%', width: '500px', right: 0, bottom: 0, padding: '1rem' }}
             position="bottom-right"
             limit={1}
         />,

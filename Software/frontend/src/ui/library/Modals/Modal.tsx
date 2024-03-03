@@ -1,32 +1,31 @@
 import ReactModal from 'react-modal';
-import {Typography, IconButton } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import './Modal.scss';
 import { ReactNode } from 'react';
+import { Typography, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import { Backdrop } from '@ui/library';
+import './Modal.scss';
 
 if (typeof document !== 'undefined') {
     ReactModal.setAppElement(document.getElementById('root')!);
 }
 
-type ModalProps = {
+type TModalProps = {
     shouldCloseOnEsc: boolean;
     isOpen: boolean;
     title: string;
     onClose: () => void;
     children: ReactNode;
     shouldCloseOnOverlayClick: boolean;
-}
+};
 
 const Modal = ({
-                   shouldCloseOnEsc,
-                   isOpen,
-                   title,
-                   onClose,
-                   children,
-                   shouldCloseOnOverlayClick,
-               }: ModalProps) => {
-
+    shouldCloseOnEsc,
+    isOpen,
+    title,
+    onClose,
+    children,
+    shouldCloseOnOverlayClick
+}: TModalProps) => {
     const renderHeader = () => {
         return (
             <>
@@ -43,10 +42,7 @@ const Modal = ({
                         </Typography>
                         {onClose && (
                             <IconButton onClick={onClose}>
-                                <CloseIcon
-                                    name="close"
-                                    className="text-primary-active cursor-pointer"
-                                />
+                                <CloseIcon name="close" className="text-primary-active cursor-pointer" />
                             </IconButton>
                         )}
                     </header>
@@ -66,8 +62,7 @@ const Modal = ({
             shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
         >
             {renderHeader()}
-            <section
-                className="modal-content bg-AAFirstShade overflow-y-auto rounded-bl rounded-br px-7 pt-5 pb-[20px]">
+            <section className="modal-content bg-AAFirstShade overflow-y-auto rounded-bl rounded-br px-7 pt-5 pb-[20px]">
                 {children}
             </section>
         </ReactModal>

@@ -6,7 +6,7 @@ const initialState: IViewportSliceState = {
     viewports: [],
     clickedViewportId: null,
     clickedSeriesInstanceUid: null,
-    studyData: null,
+    studyData: null
 };
 
 const viewportsSlice = createSlice({
@@ -45,8 +45,8 @@ const viewportsSlice = createSlice({
 
         setStudyData(state, action: PayloadAction<any>) {
             state.studyData = action.payload;
-        },
-    },
+        }
+    }
 });
 
 export const {
@@ -57,7 +57,7 @@ export const {
     removeClickedSeries,
     setClickedViewport,
     removeClickedViewport,
-    setStudyData,
+    setStudyData
 } = viewportsSlice.actions;
 
 export default viewportsSlice;

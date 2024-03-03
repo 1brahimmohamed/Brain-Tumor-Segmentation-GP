@@ -15,9 +15,8 @@ const {
     CobbAngleTool,
     ArrowAnnotateTool,
     annotation,
-    PlanarRotateTool,
+    PlanarRotateTool
 } = cornerstoneTools;
-
 
 export const annotationToolsNames = {
     window: WindowLevelTool.toolName,
@@ -34,5 +33,5 @@ export const annotationToolsNames = {
     zoom: ZoomTool.toolName,
     rotate: PlanarRotateTool.toolName,
     stackScroll: StackScrollMouseWheelTool.toolName,
-    annotation: annotation,
-}
+    annotation: annotation
+};

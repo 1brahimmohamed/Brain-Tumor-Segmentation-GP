@@ -3,8 +3,7 @@ import { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 
 const DicomTagsBrowser = () => {
-
-    const [isOpen, setIsOpen] = useState(true)
+    const [isOpen, setIsOpen] = useState(true);
     const onClose = () => {
         setIsOpen(false);
     };

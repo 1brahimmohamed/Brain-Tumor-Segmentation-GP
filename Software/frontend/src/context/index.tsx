@@ -1,5 +1,3 @@
-import ColorModeProvider from "../context/ColorModeProvider";
+import ColorModeProvider from '../context/ColorModeProvider';
 
-export {
-    ColorModeProvider
-}
+export { ColorModeProvider };

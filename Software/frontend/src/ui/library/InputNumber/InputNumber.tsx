@@ -1,24 +1,16 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import getMaxDigits from "@utilities/helpers/getMaxDigits.ts";
-import { IconButton } from "@mui/material";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { Label } from '@ui/library';
+import { twMerge } from 'tailwind-merge';
+import getMaxDigits from '@utilities/helpers/getMaxDigits.ts';
 import './InputNumber.scss';
-import { Label } from "@ui/library";
-/**
- *  React Number Input component'
- * it has two props, value and onChange
- * value is a number value
- * onChange is a function that will be called when the number input is changed
- * it can get changed by clicking on the up and down buttons
- * or by typing a number in the input
- */
 
 const sizesClasses = {
     sm: 'w-[45px] h-[28px]',
-    lg: 'w-[206px] h-[35px]',
+    lg: 'w-[206px] h-[35px]'
 };
 
-type InputNumberProps = {
+type TInputNumberProps = {
     value: number;
     onChange: (value: number) => void;
     step?: number;
@@ -31,7 +23,7 @@ type InputNumberProps = {
     showAdjustmentArrows?: boolean;
 };
 
-const InputNumber = (props: InputNumberProps) => {
+const InputNumber = (props: TInputNumberProps) => {
     const {
         value,
         onChange,
@@ -42,7 +34,7 @@ const InputNumber = (props: InputNumberProps) => {
         maxValue = Infinity,
         labelClassName,
         label,
-        showAdjustmentArrows = true,
+        showAdjustmentArrows = true
     } = props;
 
     const [numberValue, setNumberValue] = useState<number>(value);
@@ -100,16 +92,13 @@ const InputNumber = (props: InputNumberProps) => {
 
     return (
         <div className="flex flex-1 flex-col">
-            {label && (
-                <Label
-                    className={labelClassName}
-                    text={label}
-                />
-            )}
+            {label && <Label className={labelClassName} text={label} />}
             <div
-                className={`border-secondary-light flex items-center justify-center overflow-hidden rounded-md border-2 bg-black px-1 ${
-                    sizesClasses[size]
-                } ${className || ''}`}
+                className={twMerge(
+                    'flex items-center justify-center overflow-hidden rounded-sm ring-1 ring-opacity-50 ring-AAPrimaryLight bg-AASecondShade px-1 ',
+                    sizesClasses[size],
+                    className
+                )}
                 style={{ width: containerWidth }}
             >
                 <div className="flex">
@@ -120,15 +109,14 @@ const InputNumber = (props: InputNumberProps) => {
                         onFocus={handleFocus}
                         onBlur={handleBlur}
                         onChange={handleChange}
-                        className={'input-number w-full bg-black text-center text-[12px] text-white'}
+                        className={
+                            'input-number w-full bg-AASecondShade text-center text-md text-white focus'
+                        }
                         style={{ width: inputWidth }}
                     />
                     {showAdjustmentArrows && (
                         <div className="up-arrowsize flex flex-col items-center justify-around">
-                            <ArrowButton
-                                onClick={increment}
-                                rotate
-                            />
+                            <ArrowButton onClick={increment} rotate />
                             <ArrowButton onClick={decrement} />
                         </div>
                     )}
@@ -139,15 +127,10 @@ const InputNumber = (props: InputNumberProps) => {
 };
 
 const ArrowButton = ({ onClick, rotate = false }: { onClick: () => void; rotate?: boolean }) => (
-    <IconButton
-        id="arrow-icon"
-        // variant="text"
-        color="inherit"
-        className={`text-[#726f7e] ${rotate ? 'rotate-180 transform' : ''}`}
+    <ArrowDropDownIcon
         onClick={onClick}
-    >
-        <ArrowDropDownIcon />
-    </IconButton>
+        className={`text-[#726f7e] ${rotate ? 'rotate-180 transform' : ''}`}
+    />
 );
 
 export default InputNumber;

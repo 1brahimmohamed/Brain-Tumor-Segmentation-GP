@@ -1,18 +1,10 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { InputNumber } from "@ui/library";
 import classNames from 'classnames';
+import React, { useState, useCallback, useEffect } from 'react';
+import { InputNumber } from '@ui/library';
 import getMaxDigits from '@utilities/helpers/getMaxDigits';
 import './InputRange.scss';
 
-/**
- * React Range Input component
- * it has two props, value and onChange
- * value is a number value
- * onChange is a function that will be called when the range input is changed
- *
- *
- */
-type InputRangeProps = {
+type TInputRangeProps = {
     value: number;
     onChange: (value: number) => void;
     minValue: number;
@@ -30,21 +22,21 @@ type InputRangeProps = {
     showAdjustmentArrows?: boolean;
 };
 
-const InputRange: React.FC<InputRangeProps> = ({
-                                                   value,
-                                                   onChange,
-                                                   minValue,
-                                                   maxValue,
-                                                   step = 1,
-                                                   unit = '',
-                                                   containerClassName,
-                                                   inputClassName,
-                                                   labelClassName,
-                                                   showLabel = true,
-                                                   labelPosition = 'right',
-                                                   allowNumberEdit = false,
-                                                   showAdjustmentArrows = true,
-                                               }) => {
+const InputRange: React.FC<TInputRangeProps> = ({
+    value,
+    onChange,
+    minValue,
+    maxValue,
+    step = 1,
+    unit = '',
+    containerClassName,
+    inputClassName,
+    labelClassName,
+    showLabel = true,
+    labelPosition = 'right',
+    allowNumberEdit = false,
+    showAdjustmentArrows = true
+}) => {
     const [rangeValue, setRangeValue] = useState(value);
 
     const maxDigits = getMaxDigits(maxValue, step);
@@ -69,7 +61,7 @@ const InputRange: React.FC<InputRangeProps> = ({
             minValue={minValue}
             maxValue={maxValue}
             value={rangeValue}
-            onChange={val => {
+            onChange={(val) => {
                 setRangeValue(val);
                 onChange(val);
             }}
@@ -77,16 +69,16 @@ const InputRange: React.FC<InputRangeProps> = ({
             showAdjustmentArrows={showAdjustmentArrows}
         />
     ) : (
-        <span className={classNames(labelClassName ?? 'text-white')}>
-      {rangeValue}
+        <span className={classNames(labelClassName ?? 'text-white ')}>
+            {rangeValue}
             {unit}
-    </span>
+        </span>
     );
 
     return (
         <div
             className={`flex cursor-pointer items-center ${containerClassName ?? ''}`}
-            onClick={e => {
+            onClick={(e) => {
                 e.stopPropagation();
                 e.preventDefault();
             }}
@@ -103,7 +95,7 @@ const InputRange: React.FC<InputRangeProps> = ({
                     value={rangeValue}
                     className={`h-[3px] appearance-none rounded-md ${inputClassName ?? ''}`}
                     style={{
-                        background: `linear-gradient(to right, #5acce6 0%, #5acce6 ${rangeValuePercentage}%, #3a3f99 ${rangeValuePercentage}%, #3a3f99 100%)`,
+                        background: `linear-gradient(to right, #0b769e 0%, #10a9e2 ${rangeValuePercentage}%, #27272b ${rangeValuePercentage}%, #27272b 100%)`
                     }}
                     onChange={handleChange}
                     id="myRange"

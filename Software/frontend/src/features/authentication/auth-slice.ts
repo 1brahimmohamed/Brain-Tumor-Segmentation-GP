@@ -4,7 +4,7 @@ import { IStoreAuthSlice } from '@models/store';
 const initialState: IStoreAuthSlice = {
     userInfo: null,
     token: null,
-    hasAutoLoginFinished: false,
+    hasAutoLoginFinished: false
 };
 
 const authSlice = createSlice({
@@ -13,7 +13,10 @@ const authSlice = createSlice({
     reducers: {
         setAuthInfo: (
             state,
-            action: PayloadAction<{ userInfo: IStoreAuthSlice['userInfo']; token: IStoreAuthSlice['token'] }>
+            action: PayloadAction<{
+                userInfo: IStoreAuthSlice['userInfo'];
+                token: IStoreAuthSlice['token'];
+            }>
         ) => {
             state.userInfo = action.payload.userInfo;
             state.token = action.payload.token;
@@ -24,8 +27,8 @@ const authSlice = createSlice({
         },
         setAutoLoginFinished: (state) => {
             state.hasAutoLoginFinished = true;
-        },
-    },
+        }
+    }
 });
 
 export const authSliceActions = authSlice.actions;

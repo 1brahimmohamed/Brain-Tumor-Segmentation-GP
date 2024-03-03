@@ -8,7 +8,6 @@ export interface IViewportConfig {
     };
 }
 
-
 // Define the initial state type
 export interface IViewportSliceState {
     viewports: IViewportConfig[];
@@ -17,8 +16,7 @@ export interface IViewportSliceState {
     studyData: any;
 }
 
-
 export interface ILayout {
-    numRows: number,
-    numCols: number
+    numRows: number;
+    numCols: number;
 }
