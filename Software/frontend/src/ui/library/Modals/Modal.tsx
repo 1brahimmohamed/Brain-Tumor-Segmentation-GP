@@ -24,18 +24,18 @@ const Modal = ({
     title,
     onClose,
     children,
-    shouldCloseOnOverlayClick
+    shouldCloseOnOverlayClick,
 }: TModalProps) => {
     const renderHeader = () => {
         return (
             <>
                 <Backdrop show={isOpen} />
                 {title && (
-                    <header className="bg-AASecondShade flex items-center rounded-tl rounded-tr px-[20px] py-[13px]">
+                    <header className="bg-AAFirstShade flex items-center rounded-tl rounded-tr px-5 py-2">
                         <Typography
                             variant="h3"
-                            color="primaryLight"
-                            className="flex grow !leading-[1.2] p-2"
+                            color="secondary"
+                            className="flex grow !leading-[1.2] px-2"
                             data-cy="modal-header"
                         >
                             {title}
@@ -53,7 +53,7 @@ const Modal = ({
 
     return (
         <ReactModal
-            className="relative max-h-full w-11/12 text-white outline-none lg:w-10/12  xl:w-5/12"
+            className="relative max-h-full w-11/12 text-white outline-none lg:w-10/12  xl:w-6/12"
             overlayClassName="fixed top-0 left-0 right-0 bottom-0 z-50 bg-overlay flex items-start justify-center py-16"
             shouldCloseOnEsc={shouldCloseOnEsc}
             onRequestClose={onClose}

@@ -77,7 +77,7 @@ const InputRange: React.FC<TInputRangeProps> = ({
 
     return (
         <div
-            className={`flex cursor-pointer items-center ${containerClassName ?? ''}`}
+            className={`flex cursor-pointer  items-center ${containerClassName ?? ''}`}
             onClick={(e) => {
                 e.stopPropagation();
                 e.preventDefault();
