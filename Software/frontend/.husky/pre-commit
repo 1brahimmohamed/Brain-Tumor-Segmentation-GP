@@ -1,0 +1,2 @@
+cd Software/frontend
+npx prettier --write .
