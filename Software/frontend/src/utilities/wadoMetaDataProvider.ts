@@ -1,4 +1,4 @@
-import getDICOMMetaData from './dicomMetaData.ts';
+import getDICOMMetaData from './dicomMetaDataParser.ts';
 
 interface DICOMInfo {
     label: string | undefined;

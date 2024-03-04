@@ -6,11 +6,10 @@ interface DICOMInfo {
     vr: string;
     value?: string | string[];
     BulkDataURI?: string;
-    isMultiframe?: boolean;
 }
 
 const getDICOMMetaData = (imageId: string) => {
-    const dicomData: { [key: string]: any } = {};
+    const dicomData: { [key: string]: DICOMInfo } = {};
 
     try {
         const metadata = cornerstoneDICOMImageLoader.wadors.metaDataManager.get(imageId);
@@ -48,7 +47,7 @@ const getDICOMMetaData = (imageId: string) => {
                     value = tagData.Value;
                 }
 
-                dicomData[label] = value;
+                dicomData[label] = { tag, vr, value, BulkDataURI };
             }
         }
     } catch (error) {
