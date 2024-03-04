@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import * as cornerstone from '@cornerstonejs/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeClickedViewport, removeClickedSeries } from './Viewport/viewports-slice';
+import { get } from '@utilities/wadoMetaDataProvider';
 
 // Initialize the rendering engine
 const renderingEngineId = 'myRenderingEngine';
@@ -20,12 +21,17 @@ const createDicomVolumes = async (studyInstanceUID: string | null, seriesInstanc
                 SeriesInstanceUID: seriesInstanceUID,
                 wadoRsRoot: wadoRsRoot
             });
-            console.log(imageIds);
+
+            // Uncomment the following line to see the metadata of the first image in the series
+            // This will log the metadata of the first image in the series in case of adding the function to the provider
+            // console.log(cornerstone.metaData.get('all', imageIds[0]));
+
+            // Uncomment the following line to see the metadata of the first image in the series without the need for the provider
+            // console.log(get('all', imageIds[0]));
+
             if (imageIds.length > 0) {
-                // @TODO: Add less than 6 instances handling
-                return await cornerstone.volumeLoader.createAndCacheVolume(volumeId, {
-                    imageIds
-                });
+                // @TODO: Handle Stack of Images as well as volumes.
+                return await cornerstone.volumeLoader.createAndCacheVolume(volumeId, { imageIds });
             }
         })
     );
@@ -43,10 +49,10 @@ const MainViewer = () => {
     const [volumes, setVolumes] = useState<any[]>([]);
 
     // Select the current states from the Redux state
-    const viewports = useSelector((store: any) => store.viewports.viewports);
-    const clickedSeriesId = useSelector((store: any) => store.viewports.clickedSeriesInstanceUid);
-    const clickedViewportId = useSelector((store: any) => store.viewports.clickedViewportId);
-    const currentStudyData = useSelector((store: any) => store.viewports.studyData);
+    const viewports = useSelector((state: any) => state.viewports.viewports);
+    const clickedSeriesId = useSelector((state: any) => state.viewports.clickedSeriesInstanceUid);
+    const clickedViewportId = useSelector((state: any) => state.viewports.clickedViewportId);
+    const currentStudyData = useSelector((state: any) => state.viewports.studyData);
 
     useEffect(() => {
         const setupImageIdsAndVolumes = async () => {
