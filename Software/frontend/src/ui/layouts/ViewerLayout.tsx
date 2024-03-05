@@ -16,10 +16,10 @@ const ViewerLayout = () => {
 
             <ViewerTopBar />
             <div className={'flex'}>
-                <div className={'h-[100vh] w-52'}>
+                <div className={'h-[93vh] w-2/12 max-w-52'}>
                     <ViewerSidebar className={'h-full'} />
                 </div>
-                <div className={'h-[100vh] w-10/12'}>
+                <div className={'h-auto w-11/12'}>
                     <Outlet />
                 </div>
             </div>
