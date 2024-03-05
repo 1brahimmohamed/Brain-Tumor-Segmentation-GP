@@ -7,10 +7,10 @@ def clean_patient_name(patient_name):
         return patient_name.replace("^", " ")
     return ''
 
-def extract_studies_metadata(studies_metadata):
+def extract_studies_metadata(studies_metadata_arr, first_series_metadata_arr):
     extracted_metadata = []
 
-    for study_metadata in studies_metadata:
+    for i, study_metadata, in enumerate(studies_metadata_arr):
         main_dicom_tags = study_metadata['MainDicomTags']
         patient_main_dicom_tags = study_metadata['PatientMainDicomTags']
         extracted_metadata.append({
@@ -23,6 +23,7 @@ def extract_studies_metadata(studies_metadata):
             'institutionName': main_dicom_tags.get('InstitutionName', ''),
             'patientId': patient_main_dicom_tags.get('PatientID', ''),
             'patientName': clean_patient_name(patient_main_dicom_tags.get('PatientName', '')),
+            'modality': first_series_metadata_arr[i]["MainDicomTags"].get('Modality', ''),
         })
 
     return extracted_metadata
