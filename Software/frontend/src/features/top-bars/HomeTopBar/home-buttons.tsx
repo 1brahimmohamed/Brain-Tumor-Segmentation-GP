@@ -10,9 +10,24 @@ import {
     SettingsOutlined as SettingsOutlinedIcon
 } from '@mui/icons-material';
 
-export const HOME_SETTINGS_MENU_ITEMS = ['About', 'License Agreement', 'Help', 'Logout'];
+import NotificationsMenu from '@features/notifications/NotificationsMenu.tsx';
 
-export const LANGUAGE_MENU_ITEMS = ['EN', 'AR', 'ES', 'DE', 'FR', 'IT'];
+
+export const HOME_SETTINGS_MENU_ITEMS = [
+    'About',
+    'License Agreement',
+    'Help',
+    'Logout'
+];
+
+export const LANGUAGE_MENU_ITEMS = [
+    'EN',
+    'AR',
+    'ES',
+    'DE',
+    'FR',
+    'IT'
+];
 
 export const TIME_INTERVALS = [
     { id: 0, label: '1d' },
@@ -39,7 +54,8 @@ export const OPTIONS = [
     },
     {
         onClick: () => {},
-        icon: <NotificationOutlinedIcon />
+        icon: <NotificationOutlinedIcon />,
+        menuComponent: <NotificationsMenu />
     },
     {
         onClick: handleColorModeChange,
@@ -56,3 +72,4 @@ export const OPTIONS = [
         menuItems: HOME_SETTINGS_MENU_ITEMS
     }
 ];
+

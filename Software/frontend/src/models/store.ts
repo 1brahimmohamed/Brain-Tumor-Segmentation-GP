@@ -3,6 +3,7 @@ import { TModeType } from '@assets/theme/theme';
 
 export interface IStoreUISlice {
     notification: INotification | null;
+    notifications: INotification[];
     isLoading: boolean;
     themeMode: TModeType;
     isDisplayingDicomStudies: boolean;

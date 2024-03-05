@@ -1,8 +1,8 @@
 import React, { ReactNode, useState } from 'react';
-import Menu from '@mui/material/Menu';
+// import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { StyledIconButton } from '@ui/library';
+import { StyledIconButton, StyledMenu } from '@ui/library';
 import { useTheme } from '@mui/material';
 
 interface ICustomButtonProps {
@@ -10,16 +10,18 @@ interface ICustomButtonProps {
     menuItems?: string[];
     icon: ReactNode;
     sx?: any;
+    menuComponent?: ReactNode;
 }
 
-const CustomButton = ({ onClick, menuItems, icon, sx }: ICustomButtonProps) => {
+const CustomButton = ({ onClick, menuItems, icon, sx, menuComponent }: ICustomButtonProps) => {
+
     const [anchorElement, setAnchorElement] = useState<HTMLButtonElement | null>(null);
     const theme = useTheme();
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        if (menuItems) {
+        if (menuItems || menuComponent) {
             setAnchorElement(event.currentTarget);
-            return;
+            return
         }
 
         onClick();
@@ -34,12 +36,15 @@ const CustomButton = ({ onClick, menuItems, icon, sx }: ICustomButtonProps) => {
         onClick(item);
     };
 
+
     const popDownStyle = {
         backgroundColor: theme.palette.primary.lighter,
         '&:hover': {
-            backgroundColor: theme.palette.secondary.main
-        }
-    };
+            backgroundColor: theme.palette.secondary.main,
+        },
+        marginTop: '0',
+    }
+
 
     return (
         <>
@@ -51,18 +56,28 @@ const CustomButton = ({ onClick, menuItems, icon, sx }: ICustomButtonProps) => {
                 sx={sx}
             >
                 {icon}
-                {menuItems && <ArrowDropDownIcon />}
+                {(menuItems || menuComponent) && <ArrowDropDownIcon />}
+
             </StyledIconButton>
 
-            {menuItems && (
-                <Menu anchorEl={anchorElement} open={Boolean(anchorElement)} onClose={handleCloseMenu}>
-                    {menuItems.map((item: string, index: number) => (
-                        <MenuItem sx={popDownStyle} key={index} onClick={() => handleMenuItemClick(item)}>
-                            {item}
-                        </MenuItem>
-                    ))}
-                </Menu>
-            )}
+            {/*if menuItems or menuComponent is not null, then render the Menu component*/}
+            {/*check which one is not null and render it*/}
+            {
+                (menuItems || menuComponent) && (
+                    <StyledMenu
+                        anchorEl={anchorElement}
+                        open={Boolean(anchorElement)}
+                        onClose={handleCloseMenu}
+                    >
+                        { menuItems && menuItems.map((item: string, index: number) => (
+                            <MenuItem sx={popDownStyle} key={index} onClick={() => handleMenuItemClick(item)}>
+                                {item}
+                            </MenuItem>
+                        ))}
+                        { menuComponent }
+                    </StyledMenu>)
+            }
+
         </>
     );
 };

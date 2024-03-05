@@ -15,6 +15,7 @@ import InputRange from './InputRange/InputRange.tsx';
 import Label from './Label/Label.tsx';
 import Logo from './Logo/Logo.tsx';
 import Modal from './Modals/Modal.tsx';
+import StyledMenu from './Menu/StyledMenu.tsx';
 import Notification from './Notification/Notification.tsx';
 import PanelSection from './PanelSection/PanelSection.tsx';
 // import SegmentationGroupTable from './SegmentationGroupTable/SegmentationGroupTable.tsx';
@@ -40,6 +41,7 @@ export {
     Label,
     Logo,
     Modal,
+    StyledMenu,
     Notification,
     PanelSection,
     // SegmentationGroupTable,

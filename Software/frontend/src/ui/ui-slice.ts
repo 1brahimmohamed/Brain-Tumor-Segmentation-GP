@@ -3,6 +3,7 @@ import { IStoreUISlice, INotification } from '@/models';
 
 const initialState: IStoreUISlice = {
     notification: null,
+    notifications: [],
     isLoading: false,
     themeMode: 'dark',
     isDisplayingDicomStudies: true,
@@ -18,6 +19,7 @@ const uiSlice = createSlice({
                 ...action.payload,
                 id: new Date().toISOString()
             };
+            state.notifications.push(state.notification);
         },
         clearNotification(state) {
             state.notification = null;

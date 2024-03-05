@@ -46,6 +46,7 @@ const ViewerTopBar = () => {
                             onClick={button.onClick}
                             icon={button.icon}
                             menuItems={button.menuItems}
+                            menuComponent={button.menuComponent}
                         />
                     ))}
                 </Box>
