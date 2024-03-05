@@ -8,7 +8,6 @@ import { Login, NotFound404 } from '@/pages';
 
 import DicomStudies from '@features/studies-table/dicom-studies-table/DicomStudies.tsx';
 import MainViewer from '@/features/viewer/MainViewer';
-import Testing from '@features/Testing.tsx';
 
 const AppRouter = createBrowserRouter([
     {
@@ -44,10 +43,6 @@ const AppRouter = createBrowserRouter([
                 element: <MainViewer />
             }
         ]
-    },
-    {
-        path: 'test',
-        element: <Testing />
     },
     {
         path: '*',
