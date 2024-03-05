@@ -19,3 +19,7 @@ export const toggleFullScreen = () => {
         });
     }
 };
+
+export const toggleViewportOverlayShown = () => {
+    store.dispatch(viewerSliceActions.toggleInfoOnViewports());
+};

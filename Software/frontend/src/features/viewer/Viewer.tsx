@@ -7,7 +7,7 @@ import {useState} from "react";
 const Viewer = () => {
 
     const { numRows, numCols } = useSelector((store: IStore) => store.viewer.layout);
-    const [selectedViewportId, setSelectedViewportId] = useState<number>(0);
+    const [selectedViewportId, setSelectedViewportId] = useState<number|null>(null);
 
     const handleViewportClick = (id: number) => {
         console.log('Viewport clicked', id);

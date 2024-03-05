@@ -29,7 +29,7 @@ import {
 } from '@features/top-bars/topbars-actions.ts';
 import { AnnotationToolsNames } from '@features/viewer/AnnotationTool/AnnotationClass';
 import LayoutSelector from '@features/viewer/components/LayoutSelector.tsx';
-import { toggleFullScreen } from '@features/viewer/ViewerTopBar/viewer-top-bar-actions.ts';
+import {toggleFullScreen, toggleViewportOverlayShown} from '@features/viewer/ViewerTopBar/viewer-top-bar-actions.ts';
 import NotificationsMenu from "@features/notifications/NotificationsMenu.tsx";
 export const VIEWER_SETTINGS_MENU_ITEMS = ['About', 'License Agreement', 'Help', 'Shortcuts'];
 
@@ -89,7 +89,8 @@ const VIEWER_TOOLS_BUTTONS = [
     },
     {
         icon: <InfoIcon />,
-        title: 'Info'
+        title: 'Info',
+        onClick: toggleViewportOverlayShown
     },
     {
         icon: <ThreeDIcon />,

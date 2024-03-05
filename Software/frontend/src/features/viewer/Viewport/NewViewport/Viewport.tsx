@@ -2,7 +2,7 @@ import ViewportOverlay from "@features/viewer/Viewport/ViewportOverlay/ViewportO
 
 type TViewportProps = {
     onClick: (idx: number) => void;
-    selectedViewportId?: number | string;
+    selectedViewportId?: number | string | null;
     id: string | number;
 };
 
