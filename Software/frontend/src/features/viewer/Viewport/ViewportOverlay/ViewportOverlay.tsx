@@ -1,18 +1,17 @@
-import {ReactNode} from 'react';
+import { ReactNode } from 'react';
 import './ViewportOverlay.scss';
-import {IStore} from "@/models";
-import {useSelector} from "react-redux";
+import { IStore } from '@/models';
+import { useSelector } from 'react-redux';
 
 type TViewportOverlayProps = {
     topLeft: ReactNode;
     topRight: ReactNode;
     bottomRight: ReactNode;
     bottomLeft: ReactNode;
-}
+};
 
-const ViewportOverlay = ({topLeft, topRight, bottomRight, bottomLeft}: TViewportOverlayProps) => {
-
-    const {isInfoOnViewportsShown} = useSelector((store: IStore) => store.viewer);
+const ViewportOverlay = ({ topLeft, topRight, bottomRight, bottomLeft }: TViewportOverlayProps) => {
+    const { isInfoOnViewportsShown } = useSelector((store: IStore) => store.viewer);
 
     const metadataOverlay = () => {
         return (
@@ -28,10 +27,10 @@ const ViewportOverlay = ({topLeft, topRight, bottomRight, bottomLeft}: TViewport
                 <div className="absolute top-0 left-1/2 bg-yellow-500 text-white p-2">P</div>
                 <div className="absolute bottom-0 left-1/2 bg-yellow-500 text-white p-2">A</div>
             </>
-        )
-    }
+        );
+    };
 
-    return (isInfoOnViewportsShown? metadataOverlay() : <></>);
+    return isInfoOnViewportsShown ? metadataOverlay() : <></>;
 };
 
 export default ViewportOverlay;

@@ -12,22 +12,9 @@ import {
 
 import NotificationsMenu from '@features/notifications/NotificationsMenu.tsx';
 
+export const HOME_SETTINGS_MENU_ITEMS = ['About', 'License Agreement', 'Help', 'Logout'];
 
-export const HOME_SETTINGS_MENU_ITEMS = [
-    'About',
-    'License Agreement',
-    'Help',
-    'Logout'
-];
-
-export const LANGUAGE_MENU_ITEMS = [
-    'EN',
-    'AR',
-    'ES',
-    'DE',
-    'FR',
-    'IT'
-];
+export const LANGUAGE_MENU_ITEMS = ['EN', 'AR', 'ES', 'DE', 'FR', 'IT'];
 
 export const TIME_INTERVALS = [
     { id: 0, label: '1d' },
@@ -72,4 +59,3 @@ export const OPTIONS = [
         menuItems: HOME_SETTINGS_MENU_ITEMS
     }
 ];
-

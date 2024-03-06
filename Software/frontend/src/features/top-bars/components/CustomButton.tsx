@@ -14,14 +14,13 @@ interface ICustomButtonProps {
 }
 
 const CustomButton = ({ onClick, menuItems, icon, sx, menuComponent }: ICustomButtonProps) => {
-
     const [anchorElement, setAnchorElement] = useState<HTMLButtonElement | null>(null);
     const theme = useTheme();
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         if (menuItems || menuComponent) {
             setAnchorElement(event.currentTarget);
-            return
+            return;
         }
 
         onClick();
@@ -36,15 +35,13 @@ const CustomButton = ({ onClick, menuItems, icon, sx, menuComponent }: ICustomBu
         onClick(item);
     };
 
-
     const popDownStyle = {
         backgroundColor: theme.palette.primary.lighter,
         '&:hover': {
-            backgroundColor: theme.palette.secondary.main,
+            backgroundColor: theme.palette.secondary.main
         },
-        marginTop: '0',
-    }
-
+        marginTop: '0'
+    };
 
     return (
         <>
@@ -57,27 +54,21 @@ const CustomButton = ({ onClick, menuItems, icon, sx, menuComponent }: ICustomBu
             >
                 {icon}
                 {(menuItems || menuComponent) && <ArrowDropDownIcon />}
-
             </StyledIconButton>
 
             {/*if menuItems or menuComponent is not null, then render the Menu component*/}
             {/*check which one is not null and render it*/}
-            {
-                (menuItems || menuComponent) && (
-                    <StyledMenu
-                        anchorEl={anchorElement}
-                        open={Boolean(anchorElement)}
-                        onClose={handleCloseMenu}
-                    >
-                        { menuItems && menuItems.map((item: string, index: number) => (
+            {(menuItems || menuComponent) && (
+                <StyledMenu anchorEl={anchorElement} open={Boolean(anchorElement)} onClose={handleCloseMenu}>
+                    {menuItems &&
+                        menuItems.map((item: string, index: number) => (
                             <MenuItem sx={popDownStyle} key={index} onClick={() => handleMenuItemClick(item)}>
                                 {item}
                             </MenuItem>
                         ))}
-                        { menuComponent }
-                    </StyledMenu>)
-            }
-
+                    {menuComponent}
+                </StyledMenu>
+            )}
         </>
     );
 };

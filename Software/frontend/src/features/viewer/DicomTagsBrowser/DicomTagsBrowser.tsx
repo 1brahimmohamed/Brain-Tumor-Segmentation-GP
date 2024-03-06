@@ -4,7 +4,6 @@ import { Box, Typography } from '@mui/material';
 import { Select } from '@ui/library';
 import DicomTagTable from '@features/viewer/DicomTagsBrowser/DicomTagTable.tsx';
 
-
 // type TSeriesData = {
 //     seriesName: string;
 //     numberOfInstances: number;
@@ -16,7 +15,6 @@ const DicomTagsBrowser = () => {
     const onClose = () => {
         setIsOpen(false);
     };
-
 
     const options = [
         { value: 'one', label: 'One' },
@@ -40,9 +38,7 @@ const DicomTagsBrowser = () => {
         >
             <Box className={'h-[53vh] flex flex-col gap-y-4'}>
                 <Box className={'flex gap-x-10'}>
-
                     <Box className={'flex gap-x-5 w-1/2'}>
-
                         <Box className={'flex items-center'}>
                             <Typography variant="h5" color="primaryLight">
                                 Series
@@ -58,10 +54,8 @@ const DicomTagsBrowser = () => {
                                 onChange={handleSelectedSeriesChange}
                             />
                         </Box>
-
                     </Box>
                     <Box className={'flex gap-x-3 w-1/2'}>
-
                         <Box className={'flex items-center'}>
                             <Typography variant="h5" color="primaryLight">
                                 Instance Number
@@ -83,9 +77,8 @@ const DicomTagsBrowser = () => {
                             />
                         </Box>
                     </Box>
-
                 </Box>
-                <Box className={"overflow-y-scroll"}>
+                <Box className={'overflow-y-scroll'}>
                     <DicomTagTable />
                 </Box>
             </Box>

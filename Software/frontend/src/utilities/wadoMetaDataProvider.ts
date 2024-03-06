@@ -24,7 +24,7 @@ const get = (type: string, imageId: string) => {
             patientID: dicomData['patientID'],
             patientBirthDate: dicomData['patientBirthDate'],
             patientSex: dicomData['patientSex'],
-            accessionNumber: dicomData['accessionNumber'],
+            accessionNumber: dicomData['accessionNumber']
         };
     }
     if (type === 'generalStudyModule') {
@@ -33,7 +33,7 @@ const get = (type: string, imageId: string) => {
             studyDate: dicomData['studyDate'],
             studyTime: dicomData['studyTime'],
             accessionNumber: dicomData['accessionNumber'],
-            studyDescription: dicomData['studyDescription'],
+            studyDescription: dicomData['studyDescription']
         };
     }
     if (type === 'generalSeriesModule') {
@@ -41,14 +41,14 @@ const get = (type: string, imageId: string) => {
             modality: dicomData['modality'],
             seriesInstanceUID: dicomData['seriesInstanceUID'],
             seriesNumber: dicomData['seriesNumber'],
-            seriesDescription: dicomData['seriesDescription'],
+            seriesDescription: dicomData['seriesDescription']
         };
     }
     if (type === 'generalEquipmentModule') {
         return {
             manufacturer: dicomData['manufacturer'],
             manufacturerModelName: dicomData['manufacturerModelName'],
-            softwareVersion: dicomData['softwareVersion'],
+            softwareVersion: dicomData['softwareVersion']
         };
     }
     if (type === 'imagePlaneModule') {
@@ -56,7 +56,7 @@ const get = (type: string, imageId: string) => {
             pixelSpacing: dicomData['pixelSpacing'],
             sliceThickness: dicomData['sliceThickness'],
             imageOrientationPatient: dicomData['imageOrientationPatient'],
-            imagePositionPatient: dicomData['imagePositionPatient'],
+            imagePositionPatient: dicomData['imagePositionPatient']
         };
     }
 

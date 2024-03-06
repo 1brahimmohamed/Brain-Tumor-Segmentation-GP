@@ -24,7 +24,7 @@ const Modal = ({
     title,
     onClose,
     children,
-    shouldCloseOnOverlayClick,
+    shouldCloseOnOverlayClick
 }: TModalProps) => {
     const renderHeader = () => {
         return (

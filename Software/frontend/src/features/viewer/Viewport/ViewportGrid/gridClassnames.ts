@@ -1,6 +1,3 @@
-
-
-
 const gridClassnames: { [key: string]: string } = {
     '1x1': 'grid grid-rows-1 grid-cols-1',
     '1x2': 'grid grid-rows-1 grid-cols-2',
@@ -20,12 +17,11 @@ const gridClassnames: { [key: string]: string } = {
     '4x1': 'grid grid-rows-4 grid-cols-1',
     '4x2': 'grid grid-rows-4 grid-cols-2',
     '4x3': 'grid grid-rows-4 grid-cols-3',
-    '4x4': 'grid grid-rows-4 grid-cols-4',
-}
+    '4x4': 'grid grid-rows-4 grid-cols-4'
+};
 
 const getGridClassnames = (numRows: number, numCols: number) => {
     return gridClassnames[`${numRows}x${numCols}`];
-}
+};
 
 export default getGridClassnames;
-

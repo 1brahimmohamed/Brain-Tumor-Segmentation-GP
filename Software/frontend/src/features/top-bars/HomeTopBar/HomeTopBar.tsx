@@ -17,30 +17,29 @@ const HomeTopBar = () => {
     const dispatch = useDispatch<TAppDispatch>();
 
     const rangePickerChangeHandler = (data: any) => {
-
         if (!data) {
-            dispatch(studiesSliceActions.setDateFilter({
-                startDate: null,
-                endDate: null,
-            }));
+            dispatch(
+                studiesSliceActions.setDateFilter({
+                    startDate: null,
+                    endDate: null
+                })
+            );
 
             return;
         }
 
-        dispatch(studiesSliceActions.setDateFilter({
-            startDate: new Date(data[0]).toISOString(),
-            endDate: new Date(data[1]).toISOString(),
-        }));
-
+        dispatch(
+            studiesSliceActions.setDateFilter({
+                startDate: new Date(data[0]).toISOString(),
+                endDate: new Date(data[1]).toISOString()
+            })
+        );
     };
-
 
     return (
         <Box className={'flex justify-between w-full h-full'}>
-
             {/* Left Side */}
             <Box className={'flex'}>
-
                 <Box className={'flex'}>
                     <RangePicker
                         className={`createDateRangePicker ${theme.palette.mode === 'light' ? 'light-mode' : ''}`}
@@ -50,11 +49,9 @@ const HomeTopBar = () => {
                     />
                 </Box>
 
-
                 <Box className={'flex ml-2 h-full'}>
                     <PeriodButtons />
                 </Box>
-
 
                 <Box className={'flex ml-2 '}>
                     <ModalityButtons />
@@ -63,17 +60,15 @@ const HomeTopBar = () => {
 
             {/* Right Side */}
             <Box className={'flex space-x-1'}>
-                {
-                    OPTIONS.map((option, index) => (
-                        <CustomButton
-                            key={index}
-                            onClick={option.onClick}
-                            icon={option.icon}
-                            menuItems={option?.menuItems}
-                            menuComponent={option?.menuComponent}
-                        />
-                    ))
-                }
+                {OPTIONS.map((option, index) => (
+                    <CustomButton
+                        key={index}
+                        onClick={option.onClick}
+                        icon={option.icon}
+                        menuItems={option?.menuItems}
+                        menuComponent={option?.menuComponent}
+                    />
+                ))}
             </Box>
         </Box>
     );

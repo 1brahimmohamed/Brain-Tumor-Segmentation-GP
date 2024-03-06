@@ -4,15 +4,7 @@ import {
     StyledTableRow
 } from '@features/studies-table/components/StyledTableComponents.tsx';
 import StudiesTableHeaderSearchInput from '@features/studies-table/components/StudiesTableHeaderSearchInput.tsx';
-import {
-    Table,
-    TableBody,
-    TableContainer,
-    TableHead,
-    TableRow,
-    useTheme,
-    Box,
-} from '@mui/material';
+import { Table, TableBody, TableContainer, TableHead, TableRow, useTheme, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 const tableColumnHeadings = [
@@ -35,7 +27,7 @@ const tableColumnHeadings = [
         key: 'value',
         displayName: 'Value',
         searchable: true
-    },
+    }
 ];
 
 const rows = [
@@ -134,11 +126,10 @@ const rows = [
         tag: '00100040',
         vr: 'CS',
         value: ['M']
-    },
-]
+    }
+];
 
 const DicomTagTable = ({}) => {
-
     const [searchValues, setSearchValues] = useState(Array(tableColumnHeadings.length).fill(''));
     const theme = useTheme();
 
@@ -146,7 +137,7 @@ const DicomTagTable = ({}) => {
         const newSearchValues = [...searchValues];
         newSearchValues[index] = value;
         setSearchValues(newSearchValues);
-    }
+    };
 
     const filterRows = () => {
         return rows.filter((row: any) => {
@@ -156,18 +147,14 @@ const DicomTagTable = ({}) => {
                 return cellValue.includes(searchValue);
             });
         });
-    }
+    };
 
     let filteredRows = filterRows();
 
     return (
         <Box className={'h-[50vh]'}>
             <TableContainer component={Box} className={'overflow-auto'}>
-                <Table
-                    sx={{ minWidth: 500, boxShadow: 'none' }}
-                    aria-label="customized table"
-                    size={'small'}
-                >
+                <Table sx={{ minWidth: 500, boxShadow: 'none' }} aria-label="customized table" size={'small'}>
                     <TableHead>
                         <TableRow>
                             {tableColumnHeadings.map((column, index) => {
@@ -213,14 +200,14 @@ const DicomTagTable = ({}) => {
                                     <StyledTableCell component="th" align="left" sx={{ width: '50%' }}>
                                         {row.value[0]}
                                     </StyledTableCell>
-
                                 </StyledTableRow>
                             );
                         })}
                     </TableBody>
                 </Table>
             </TableContainer>
-        </Box>);
+        </Box>
+    );
 };
 
 export default DicomTagTable;

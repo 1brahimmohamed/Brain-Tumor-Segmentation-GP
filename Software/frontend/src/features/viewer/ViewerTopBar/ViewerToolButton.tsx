@@ -4,7 +4,7 @@ import { StyledDiv } from '@features/top-bars/components/StyledDiv.tsx';
 import SvgIcon from '@mui/material/SvgIcon';
 import { Box } from '@mui/material';
 import { useTheme } from '@mui/material';
-import {StyledMenu} from "@ui/library";
+import { StyledMenu } from '@ui/library';
 
 interface ICustomButtonProps {
     title: string;
@@ -56,11 +56,7 @@ const ViewerToolButton = ({ title, onClick, menuComponent, icon, sx }: ICustomBu
             </StyledDiv>
 
             {menuComponent && (
-                <StyledMenu
-                    anchorEl={anchorElement}
-                    open={Boolean(anchorElement)}
-                    onClose={handleCloseMenu}
-                >
+                <StyledMenu anchorEl={anchorElement} open={Boolean(anchorElement)} onClose={handleCloseMenu}>
                     {menuComponent}
                 </StyledMenu>
             )}

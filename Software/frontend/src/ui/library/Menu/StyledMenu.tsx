@@ -18,7 +18,7 @@ const StyledBarMenu = styled((props: MenuProps) => (
         borderRadius: 5,
         marginTop: theme.spacing(1),
         minWidth: 80,
-        backgroundColor: theme.palette.primary.light,
+        backgroundColor: theme.palette.primary.light
     }
 }));
 
