@@ -4,7 +4,7 @@ import NewViewport from "@features/viewer/Viewport/NewViewport/Viewport.tsx";
 import ViewportGrid from "@features/viewer/Viewport/ViewportGrid/ViewportGrid.tsx";
 import {useState} from "react";
 
-const Viewer = () => {
+const ViewportsManager = () => {
 
     const { numRows, numCols } = useSelector((store: IStore) => store.viewer.layout);
     const [selectedViewportId, setSelectedViewportId] = useState<number|null>(null);
@@ -28,4 +28,4 @@ const Viewer = () => {
     );
 };
 
-export default Viewer;
+export default ViewportsManager;

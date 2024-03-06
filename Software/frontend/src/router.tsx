@@ -8,6 +8,7 @@ import { Login, NotFound404 } from '@/pages';
 
 import DicomStudies from '@features/studies-table/dicom-studies-table/DicomStudies.tsx';
 import MainViewer from '@/features/viewer/MainViewer';
+import ViewportsManager from "@features/viewer/Viewport/ViewportsManager.tsx";
 
 const AppRouter = createBrowserRouter([
     {

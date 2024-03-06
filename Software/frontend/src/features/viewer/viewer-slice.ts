@@ -6,8 +6,8 @@ const initialState: IStoreViewerSlice = {
     // ui
     isFullScreen: false,
     layout: {
-        numRows: 2,
-        numCols: 2
+        numRows: 1,
+        numCols: 1
     },
     isRightPanelOpen: true,
     isStudiesPanelOpen: false,
