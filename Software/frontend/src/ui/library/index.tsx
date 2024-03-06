@@ -19,7 +19,7 @@ import StyledMenu from './Menu/StyledMenu.tsx';
 import Notification from './Notification/Notification.tsx';
 import PanelSection from './PanelSection/PanelSection.tsx';
 // import SegmentationGroupTable from './SegmentationGroupTable/SegmentationGroupTable.tsx';
-import Select from './Select/Select.tsx';
+// import Select from './Select/Select.tsx';
 import Spinner from './Spinner/Spinner.tsx';
 import Tooltip from './Tooltip/Tooltip.tsx';
 
@@ -45,7 +45,7 @@ export {
     Notification,
     PanelSection,
     // SegmentationGroupTable,
-    Select,
+    // Select,
     Spinner,
     Tooltip
 };
