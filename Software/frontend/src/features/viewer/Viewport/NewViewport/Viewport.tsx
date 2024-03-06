@@ -36,7 +36,7 @@ const Viewport = ({ onClick, selectedViewportId, id }: TViewportProps) => {
             viewport.setVolumes([{ volumeId }], true);
 
             // This is the method of setting the OrientationAxis based on the metaData
-            viewport.setOrientation(cornerstone.Enums.OrientationAxis.ACQUISITION);
+            // viewport.setOrientation(cornerstone.Enums.OrientationAxis.AXIAL);
 
             viewport.render();
 
