@@ -13,7 +13,7 @@ const getDICOMMetaData = (imageId: string) => {
 
     try {
         const metadata = cornerstoneDICOMImageLoader.wadors.metaDataManager.get(imageId);
-        console.log(metadata);
+
         if (!metadata) {
             return dicomData;
         }

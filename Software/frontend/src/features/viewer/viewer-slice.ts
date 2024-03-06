@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IStoreViewerSlice } from '@models/store.ts';
 import viewerUiReducer from '@features/viewer/viewer-ui-reducers.ts';
+import viewerViewportReducer from '@features/viewer/viewer-viewport-reducers.ts';
 
 const initialState: IStoreViewerSlice = {
     // ui
@@ -19,10 +20,11 @@ const initialState: IStoreViewerSlice = {
     middleMouseTool: 'pan',
     mouseWheelTool: 'stackScroll',
 
-    // ismail
+    // viewport
     viewports: [],
-    clickedViewportId: null,
-    clickedSeriesInstanceUid: null,
+    renderingEngineId: 'myRenderingEngine',
+    selectedViewportId: '',
+    selectedSeriesInstanceUid: '',
     studyData: null
 };
 
@@ -30,7 +32,8 @@ const viewportsSlice = createSlice({
     name: 'viewer',
     initialState,
     reducers: {
-        ...viewerUiReducer
+        ...viewerUiReducer,
+        ...viewerViewportReducer
     }
 });
 

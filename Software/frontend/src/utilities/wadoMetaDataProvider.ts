@@ -1,11 +1,5 @@
 import getDICOMMetaData from './dicomMetaDataParser.ts';
 
-interface DICOMInfo {
-    label: string | undefined;
-    tag: string;
-    vr: string;
-    value: string;
-}
 
 /**
  * Retrieves DICOM metadata for the given image ID and maps DICOM tags to their corresponding labels.

@@ -1,13 +1,13 @@
-import Viewport from './Viewport/Viewport';
 import { createImageIdsAndCacheMetaData, initCornerstone } from '@utilities/helpers/index';
 import { useEffect, useState } from 'react';
 import * as cornerstone from '@cornerstonejs/core';
-import { useSelector, useDispatch } from 'react-redux';
-import { removeClickedViewport, removeClickedSeries } from './Viewport/viewports-slice';
-import { get } from '@utilities/wadoMetaDataProvider';
+import { useSelector } from 'react-redux';
 
-// Initialize the rendering engine
-const renderingEngineId = 'myRenderingEngine';
+import ViewportsManager from "@features/viewer/Viewport/ViewportsManager.tsx";
+import { get } from '@utilities/wadoMetaDataProvider';
+import {IStore} from "@/models";
+
+
 const wadoRsRoot = 'http://localhost:8042/dicom-web';
 
 // Function to create and return volume
@@ -27,7 +27,7 @@ const createDicomVolumes = async (studyInstanceUID: string | null, seriesInstanc
             // console.log(cornerstone.metaData.get('all', imageIds[0]));
 
             // Uncomment the following line to see the metadata of the first image in the series without the need for the provider
-            // console.log(get('all', imageIds[0]));
+            console.log(get('all', imageIds[0]));
 
             if (imageIds.length > 0) {
                 // @TODO: Handle Stack of Images as well as volumes.
@@ -42,22 +42,17 @@ const createDicomVolumes = async (studyInstanceUID: string | null, seriesInstanc
 const MainViewer = () => {
     const urlParams = new URLSearchParams(location.search);
     const studyInstanceUID = urlParams.get('StudyInstanceUID');
-    const dispatch = useDispatch();
 
     // Initialize the state with a type of null or an array of strings
-    const [renderingEngine, setRenderingEngine] = useState<cornerstone.RenderingEngine | null>(null);
     const [volumes, setVolumes] = useState<any[]>([]);
 
-    // Select the current states from the Redux state
-    const viewports = useSelector((state: any) => state.viewports.viewports);
-    const clickedSeriesId = useSelector((state: any) => state.viewports.clickedSeriesInstanceUid);
-    const clickedViewportId = useSelector((state: any) => state.viewports.clickedViewportId);
     const currentStudyData = useSelector((state: any) => state.viewports.studyData);
+    const { renderingEngineId} = useSelector((store: IStore) => store.viewer);
 
     useEffect(() => {
         const setupImageIdsAndVolumes = async () => {
             await initCornerstone(); // Initialize the cornerstone library
-            setRenderingEngine(new cornerstone.RenderingEngine(renderingEngineId));
+            new cornerstone.RenderingEngine(renderingEngineId); // Create a new rendering engine
             setVolumes(
                 await createDicomVolumes(
                     studyInstanceUID,
@@ -75,31 +70,29 @@ const MainViewer = () => {
         volumes.forEach((volume) => volume?.load());
     }, [volumes]);
 
-    useEffect(() => {
-        if (renderingEngine && clickedViewportId && clickedSeriesId) {
-            renderingEngine?.setViewports(viewports);
 
-            setVolumeToViewport(clickedViewportId, clickedSeriesId);
-            dispatch(removeClickedViewport());
-            dispatch(removeClickedSeries());
+    // useEffect(() => {
+    //     if (renderingEngine && clickedViewportId && clickedSeriesId) {
+    //         renderingEngine?.setViewports(viewports);
+    //
+    //         setVolumeToViewport(clickedViewportId, clickedSeriesId);
+    //         dispatch(removeClickedViewport());
+    //         dispatch(removeClickedSeries());
+    //
+    //         console.log('Setting volume to viewport');
+    //     }
+    // }, [renderingEngine, clickedViewportId, clickedSeriesId, volumes]); // Dependencies array ensures this effect runs when these variables change
 
-            console.log('Setting volume to viewport');
-        }
-    }, [renderingEngine, clickedViewportId, clickedSeriesId, volumes]); // Dependencies array ensures this effect runs when these variables change
-
-    const setVolumeToViewport = (viewportId: string, seriesInstanceUID: string) => {
-        if (renderingEngine && viewports.length > 0) {
-            const volumeId = `cornerstoneStreamingImageVolume:${seriesInstanceUID}`;
-            cornerstone.setVolumesForViewports(renderingEngine, [{ volumeId }], [viewportId]);
-            renderingEngine.render();
-        }
-    };
+    // const setVolumeToViewport = (viewportId: string, seriesInstanceUID: string) => {
+    //     if (renderingEngine && viewports.length > 0) {
+    //         const volumeId = `cornerstoneStreamingImageVolume:${seriesInstanceUID}`;
+    //         cornerstone.setVolumesForViewports(renderingEngine, [{ volumeId }], [viewportId]);
+    //         renderingEngine.render();
+    //     }
+    // };
 
     return (
-        <div className={'w-full'}>
-            {/* Viewport */}
-            <Viewport />
-        </div>
+        <ViewportsManager></ViewportsManager>
     );
 };
 

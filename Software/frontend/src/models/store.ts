@@ -43,8 +43,9 @@ export interface IStoreViewerSlice {
 
     // ismail
     viewports: [];
-    clickedViewportId: null;
-    clickedSeriesInstanceUid: null;
+    renderingEngineId: string;
+    selectedViewportId: string;
+    selectedSeriesInstanceUid: string;
     studyData: null;
 }
 

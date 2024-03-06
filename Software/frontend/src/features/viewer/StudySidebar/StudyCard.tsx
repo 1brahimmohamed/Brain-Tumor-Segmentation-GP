@@ -6,7 +6,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import CloseIcon from '@mui/icons-material/Close';
 import PermMediaIcon from '@mui/icons-material/PermMedia';
 import { useDispatch } from 'react-redux';
-import { setClickedSeries, setStudyData } from '../Viewport/viewports-slice.js';
+import { viewerSliceActions } from '@features/viewer/viewer-slice.ts';
 import { IDicomSeriesData, IDicomStudyData } from '@/models';
 import { useTheme } from '@mui/material/styles';
 
@@ -23,12 +23,11 @@ const StudyCard = ({ studyData }: { studyData: IDicomStudyData }) => {
     };
 
     useEffect(() => {
-        dispatch(setStudyData(studyData.series));
+        dispatch(viewerSliceActions.setStudyData(studyData.series));
     }, [studyData]);
 
     const seriesSelectHandler = (index: number, seriesInstanceUid: string) => {
-        dispatch(setClickedSeries(seriesInstanceUid));
-        // @TODO: fire action to view clicked series
+        dispatch(viewerSliceActions.setClickedSeries(seriesInstanceUid));
         console.log(seriesInstanceUid);
         setSelectedSeries(index);
     };
