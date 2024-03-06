@@ -31,6 +31,7 @@ const Viewport = ({ onClick, selectedViewportId, id }: TViewportProps) => {
             const viewport: Types.IVolumeViewport = renderingEngine.getViewport(
                 selectedViewportId
             ) as Types.IVolumeViewport;
+            console.log('viewport', viewport);
 
             const volumeId = `cornerstoneStreamingImageVolume:${selectedSeriesInstanceUid}`;
             viewport.setVolumes([{ volumeId }], true);
