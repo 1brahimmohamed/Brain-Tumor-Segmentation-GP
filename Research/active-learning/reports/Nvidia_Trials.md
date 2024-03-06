@@ -1,6 +1,6 @@
 ## First Trial
 
-## Active Learning with BraTS Africa
+## Active Learning with BraTS Africa Dataset
 
 All Checkpoints can be found [here](https://drive.google.com/drive/folders/17GD2gx6FPrk4PJbMimwGQrBYEIyK9MGc?usp=drive_link).
 
@@ -43,3 +43,17 @@ Trained for 15 epochs on only BraTS2021 dataset with batch size 1 (due to GPU me
 ### Conclusion:
 - diversity sampling needed
 - proportionate ratio in retraining data needed
+
+-------------------------------------------------------------
+## Second Trial
+
+## Active Learning with BraTS Pediatric Dataset
+
+All Checkpoints can be found [here](https://drive.google.com/drive/folders/1UwmRpeU4YLPkuqy5brPkonUwvshRaLmD?usp=drive_link).
+
+
+1. preparing the data to match BraTS2021 dataset: [naming_map](https://drive.google.com/file/d/1jbRu2yu-OlwjZ79Q1zxy6fLOIHiDlJ4h/view?usp=drive_link)
+2. Testing optmized nnUNet performance on the dataset: [results](https://drive.google.com/file/d/1hNxFxDDZhCCsTnMjpvYuV82JpNlWmyer/view?usp=sharing)
+
+
+
