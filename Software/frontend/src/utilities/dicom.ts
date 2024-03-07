@@ -1,6 +1,7 @@
-import { format, parse } from 'date-fns';
+import {format, parse} from 'date-fns';
 import store from '@/redux/store';
-import { uiSliceActions } from '@ui/ui-slice';
+import {uiSliceActions} from '@ui/ui-slice';
+import {Enums} from '@cornerstonejs/core'
 
 class DicomUtil {
     public static formatDate(date: string, strFormat: string = 'MMM dd, yyyy') {
@@ -53,7 +54,7 @@ class DicomUtil {
 
     public static detectImageOrientation(
         orientation: number[]
-    ): 'Axial' | 'Sagittal' | 'Coronal' | 'Unknown' {
+    ): 'axial' | 'sagittal' | 'coronal' | 'Unknown' {
         // Convert orientation values to numbers and take absolute values
         const orientation_array = orientation.map(Number).map(Math.abs);
 
@@ -70,11 +71,11 @@ class DicomUtil {
         // Determine the orientation based on the maximum dot product
         const max_dot = Math.max(dot_axial, dot_sagittal, dot_coronal);
         if (max_dot === dot_axial) {
-            return 'Axial';
+            return Enums.OrientationAxis.AXIAL;
         } else if (max_dot === dot_sagittal) {
-            return 'Sagittal';
+            return Enums.OrientationAxis.SAGITTAL;
         } else if (max_dot === dot_coronal) {
-            return 'Coronal';
+            return Enums.OrientationAxis.CORONAL;
         } else {
             return 'Unknown';
         }

@@ -1,10 +1,12 @@
 import ViewportOverlay from '@features/viewer/Viewport/ViewportOverlay/ViewportOverlay.tsx';
 import { IStore } from '@/models';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import {useEffect, useRef} from 'react';
 import * as cornerstone from '@cornerstonejs/core';
 import { Types } from '@cornerstonejs/core';
 import { viewerSliceActions } from '@features/viewer/viewer-slice.ts';
+import useResizeObserver from "@hooks/useResizeObserver.tsx";
+import {DicomUtil} from "@/utilities";
 
 type TViewportProps = {
     onClick: (idx: number) => void;
@@ -34,20 +36,54 @@ const Viewport = ({ onClick, selectedViewportId, id }: TViewportProps) => {
             console.log('viewport', viewport);
 
             const volumeId = `cornerstoneStreamingImageVolume:${selectedSeriesInstanceUid}`;
+
             viewport.setVolumes([{ volumeId }], true);
 
             // This is the method of setting the OrientationAxis based on the metaData
             // viewport.setOrientation(cornerstone.Enums.OrientationAxis.AXIAL);
 
-            viewport.render();
+            const direction = (viewport.getImageData()?.imageData.getDirection()) as number[];
+            console.log("eff dir", direction);
 
+            const or = DicomUtil.detectImageOrientation(direction? direction.slice(0,6) : [1, 0, 0, 0, 1, 0] );
+            viewport.setOrientation(or);
+
+            console.log("eff", or);
+
+            viewport.render();
             dispatch(viewerSliceActions.removeClickedSeries());
         }
     }, [selectedSeriesInstanceUid, selectedViewportId]);
 
+    const viewportRef = useRef<HTMLDivElement>(null);
+
+    const handleResize = (width: number, height: number) => {
+        const renderingEngine = cornerstone.getRenderingEngine(renderingEngineId);
+        const viewport = (renderingEngine?.getViewport(id)) as Types.IVolumeViewport;
+
+        if (viewport) {
+            // console.log('viewport resized', id);
+            viewport.resetCamera(false, true);
+            viewport.render();
+        }
+    };
+
+    // useEffect(() => {
+    //     const renderingEngine = cornerstone.getRenderingEngine(renderingEngineId);
+    //     const viewport = (renderingEngine?.getViewport(id)) as Types.IVolumeViewport;
+    //
+    //     if (viewport) {
+    //         console.log(viewport.getImageData()?.imageData.getState());
+    //     }
+    //
+    // });
+
+    useResizeObserver(viewportRef, handleResize);
+
     return (
         <div
             id={id}
+            ref={viewportRef}
             onClick={() => onClick(1)}
             className={`h-full w-full relative bg-black ${selectedViewportId === id ? 'ring-2 ring-AAPrimary' : ''}`}
         >

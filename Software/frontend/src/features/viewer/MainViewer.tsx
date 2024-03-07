@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import * as cornerstone from '@cornerstonejs/core';
 import { useSelector } from 'react-redux';
 import ViewportsManager from '@features/viewer/Viewport/ViewportsManager.tsx';
-import { get } from '@utilities/wadoMetaDataProvider';
+// import { get } from '@utilities/wadoMetaDataProvider';
 import { IStore } from '@/models';
 
 
@@ -26,7 +26,7 @@ const createDicomVolumes = async (studyInstanceUID: string | null, seriesInstanc
             // console.log(cornerstone.metaData.get('all', imageIds[0]));
 
             // Uncomment the following line to see the metadata of the first image in the series without the need for the provider
-            console.log(get('all', imageIds[0]));
+            // console.log(get('all', imageIds[0]));
 
             if (imageIds.length > 0) {
                 // @TODO: Handle Stack of Images as well as volumes.
@@ -52,7 +52,7 @@ const MainViewer = () => {
         const setupImageIdsAndVolumes = async () => {
             await initCornerstone(); // Initialize the cornerstone library
             new cornerstone.RenderingEngine(renderingEngineId); // Create a new rendering engine
-            console.log(currentStudyData);
+            // console.log(currentStudyData);
             setVolumes(
                 await createDicomVolumes(
                     studyInstanceUID,
