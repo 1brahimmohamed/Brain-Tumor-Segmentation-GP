@@ -44,10 +44,10 @@ const SeriesCard = ({ seriesData, seriesIndex, selectedIndex, onSelectedSeriesCh
                     className={`border cursor-pointer ${selectedIndex === seriesIndex ? 'border-AAPrimary' : ''}`}
                     src={imageSrc}
                     alt="Series Image"
-                    onClick={() => {
+                    onDoubleClick={() => {
                         onSelectedSeriesChange(seriesIndex, seriesData.seriesInstanceUid);
                     }}
-                />
+                />  
             </Box>
         </Box>
     );

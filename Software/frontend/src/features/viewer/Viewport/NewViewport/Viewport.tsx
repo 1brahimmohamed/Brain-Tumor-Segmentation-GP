@@ -1,12 +1,12 @@
 import ViewportOverlay from '@features/viewer/Viewport/ViewportOverlay/ViewportOverlay.tsx';
 import { IStore } from '@/models';
 import { useSelector, useDispatch } from 'react-redux';
-import {useEffect, useRef} from 'react';
+import { useEffect, useRef } from 'react';
 import * as cornerstone from '@cornerstonejs/core';
 import { Types } from '@cornerstonejs/core';
 import { viewerSliceActions } from '@features/viewer/viewer-slice.ts';
-import useResizeObserver from "@hooks/useResizeObserver.tsx";
-import {DicomUtil} from "@/utilities";
+import useResizeObserver from '@hooks/useResizeObserver.tsx';
+import { DicomUtil } from '@/utilities';
 
 type TViewportProps = {
     onClick: (idx: number) => void;
@@ -28,55 +28,48 @@ const Viewport = ({ onClick, selectedViewportId, id }: TViewportProps) => {
     useEffect(() => {
         const renderingEngine = cornerstone.getRenderingEngine(renderingEngineId);
 
-        if (selectedViewportId === id && selectedSeriesInstanceUid && renderingEngine) {
-            console.log('Adding volume to viewport and rendering');
-            const viewport: Types.IVolumeViewport = renderingEngine.getViewport(
-                selectedViewportId
-            ) as Types.IVolumeViewport;
-            console.log('viewport', viewport);
+        const updateViewport = async () => {
+            if (selectedViewportId === id && selectedSeriesInstanceUid && renderingEngine) {
+                console.log('Adding volume to viewport and rendering');
+                const viewport: Types.IVolumeViewport = renderingEngine.getViewport(
+                    selectedViewportId
+                ) as Types.IVolumeViewport;
+                console.log('viewport', viewport);
 
-            const volumeId = `cornerstoneStreamingImageVolume:${selectedSeriesInstanceUid}`;
+                const volumeId = `cornerstoneStreamingImageVolume:${selectedSeriesInstanceUid}`;
 
-            viewport.setVolumes([{ volumeId }], true);
+                await viewport.setVolumes([{ volumeId }], true);
 
-            // This is the method of setting the OrientationAxis based on the metaData
-            // viewport.setOrientation(cornerstone.Enums.OrientationAxis.AXIAL);
+                const direction = viewport.getImageData()?.imageData.getDirection() as number[];
+                console.log('eff dir', direction);
 
-            const direction = (viewport.getImageData()?.imageData.getDirection()) as number[];
-            console.log("eff dir", direction);
+                const or = DicomUtil.detectImageOrientation(
+                    direction ? direction.slice(0, 6) : [1, 0, 0, 0, 1, 0]
+                );
+                viewport.setOrientation(or);
 
-            const or = DicomUtil.detectImageOrientation(direction? direction.slice(0,6) : [1, 0, 0, 0, 1, 0] );
-            viewport.setOrientation(or);
+                console.log('eff', or);
 
-            console.log("eff", or);
+                viewport.render();
+                dispatch(viewerSliceActions.removeClickedSeries());
+            }
+        };
 
-            viewport.render();
-            dispatch(viewerSliceActions.removeClickedSeries());
-        }
+        updateViewport();
     }, [selectedSeriesInstanceUid, selectedViewportId]);
 
     const viewportRef = useRef<HTMLDivElement>(null);
 
     const handleResize = (width: number, height: number) => {
         const renderingEngine = cornerstone.getRenderingEngine(renderingEngineId);
-        const viewport = (renderingEngine?.getViewport(id)) as Types.IVolumeViewport;
+        const viewport = renderingEngine?.getViewport(id) as Types.IVolumeViewport;
 
         if (viewport) {
             // console.log('viewport resized', id);
-            viewport.resetCamera(false, true);
+            viewport.resetCamera(true, true, true, true);
             viewport.render();
         }
     };
-
-    // useEffect(() => {
-    //     const renderingEngine = cornerstone.getRenderingEngine(renderingEngineId);
-    //     const viewport = (renderingEngine?.getViewport(id)) as Types.IVolumeViewport;
-    //
-    //     if (viewport) {
-    //         console.log(viewport.getImageData()?.imageData.getState());
-    //     }
-    //
-    // });
 
     useResizeObserver(viewportRef, handleResize);
 
