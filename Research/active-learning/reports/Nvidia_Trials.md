@@ -54,6 +54,30 @@ All Checkpoints can be found [here](https://drive.google.com/drive/folders/1UwmR
 
 1. preparing the data to match BraTS2021 dataset: [naming_map](https://drive.google.com/file/d/1jbRu2yu-OlwjZ79Q1zxy6fLOIHiDlJ4h/view?usp=drive_link)
 2. Testing optmized nnUNet performance on the dataset: [results](https://drive.google.com/file/d/1hNxFxDDZhCCsTnMjpvYuV82JpNlWmyer/view?usp=sharing)
+3. BraTS_PED investigation: [ppt](https://docs.google.com/presentation/d/1Bk36ZAJ5kMIjvizbqm74k8EntvvvV4Az/edit?usp=drive_link&ouid=100634944823545967799&rtpof=true&sd=true)
 
+### Experiments:
 
+#### i- [Pre-trained model](https://drive.google.com/drive/folders/15WuKaY2M_GNmDKmO05UXM6WBgZPggffS?usp=sharing):
+Trained for 15 epochs on only BraTS2021 dataset with batch size 1 (due to GPU memory limitation).
+**Dataset Size:**
+- Training set: 100 (all BraTS2021)
+- Validation set: 251 (BraTS2021)
+#### ii- Fine-Tuning all pre-trained model parameters for 15 epochs:
 
+**Sampling Strategies:**
+1. [Uncertainty sampling](https://drive.google.com/drive/folders/1Dbqk9PyACKG1wFvn56MzhenyYZbT0Wbt?usp=drive_link): Selected 20 samples from BraTS PED to add to the training data.
+2. [Random sampling](https://drive.google.com/drive/folders/1Xhk3q-0Z-mqzW0CNV7cg7BEvs8IB4dty?usp=drive_link): Selected 20 samples from BraTS PED to add to the training data.
+
+**Dataset Size after Sampling:**
+- Training set: 120 (100 BraTS2021 + 20 BraTS PED)
+- Validation set: 251 (BraTS2021)
+
+**Results:**
+- ![Test Set Results](/Research/active-learning/reports/figures/nvidia_PED_FineTuning_test.jpg)
+
+### next steps:
+- trying different numbers of BraTS2021 training data and evaluate
+- add 20  more samples from BraTS PED and evaluate
+- use diversity sampling method
+------------------------------
