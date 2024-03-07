@@ -1,0 +1,32 @@
+MMMAI/
+│
+├── InteractiveSegmentation/
+│ ├── __pycache__/
+│ │ │ 
+│ │ └── InteractiveSegmentation.cpython-39.pyc
+│ ├── input/
+│ │ ├── subject1.nii.gz
+│ │ └── ...
+| ├── model/
+│ │ └──v2
+│ │   ├── nnunet.py
+│ │   ├── utils.py
+│ │   └── ...
+│ │  
+│ ├── nnunet_util/
+│ │ ├── subject1.nii.gz
+│ │ └── ...
+│ ├── Resources/
+| |
+│ ├── Testing/
+| ├── CMakeLists.txt
+│ └── InteractiveSegmentation.py
+│
+├── nnUNet-1/
+│ ├── exploratory_data_analysis.ipynb
+│ └── model_training.ipynb
+│
+├── CMakeLists.txt
+├── MMMAI.png
+├── project_structure.txt
+└── readme.md
