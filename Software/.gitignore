@@ -16,7 +16,7 @@
 ## Services
 
 ### Orthanc
-/backend/Services/Orthanc/config/Scripts/starter_script.sh
+/backend/Services/Orthanc/config/scripts/starter_script.sh
 
 
 ### Nifti PACS

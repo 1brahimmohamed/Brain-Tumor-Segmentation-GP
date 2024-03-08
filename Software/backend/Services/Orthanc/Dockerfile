@@ -3,7 +3,7 @@ FROM ubuntu:20.04
 
 # Update the package repository and install required packages
 RUN apt-get update
-RUN apt install -y orthanc 
+RUN apt install -y orthanc
 RUN apt install -y nano
 RUN apt install -y wget
 
@@ -25,8 +25,8 @@ RUN wget https://orthanc.uclouvain.be/downloads/linux-standard-base/orthanc-post
 # Expose the default Orthanc port (4242) if needed
 EXPOSE 4242
 
-# Expose the Https server 
+# Expose the Https server
 EXPOSE 8042
 
-# Start Orthanc
+## Start Orthanc
 CMD ["/usr/share/orthanc/scripts/starter_script.sh"]

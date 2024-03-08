@@ -10,3 +10,4 @@ python-dotenv==1.0.1
 python_environ==0.4.54
 Requests==2.31.0
 SQLAlchemy==2.0.28
+httplib2==0.22.0

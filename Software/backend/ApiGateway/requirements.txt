@@ -1,6 +1,7 @@
 dicomweb_client==0.59.1
 Django==5.0.1
 djangorestframework==3.14.0
+django-cors-headers==4.3.1
 environ==1.0
 python_environ==0.4.54
 Requests==2.31.0
