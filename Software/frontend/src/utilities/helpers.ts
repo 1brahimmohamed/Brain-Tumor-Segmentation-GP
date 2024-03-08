@@ -6,11 +6,9 @@ class HelpersUtil {
 
     public static isValidNumber = (value: any) => {
         return value !== null && value !== undefined && typeof value === 'number' && !isNaN(value);
-    }
+    };
     public static formatNumberPrecision(number: number | string, precision: number) {
-
         if (number !== null) {
-
             if (typeof number === 'string') {
                 number = parseFloat(number);
             }

@@ -7,7 +7,7 @@ import { HomeLayout, ViewerLayout, LoginLayout } from '@ui/layouts';
 import { Login, NotFound404 } from '@/pages';
 
 import DicomStudies from '@features/studies-table/dicom-studies-table/DicomStudies.tsx';
-import MainViewer from "@features/viewer/MainViewer";
+import MainViewer from '@features/viewer/MainViewer';
 
 const AppRouter = createBrowserRouter([
     {

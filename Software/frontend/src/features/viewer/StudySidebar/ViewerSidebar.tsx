@@ -16,7 +16,6 @@ const ViewerSidebar = ({ className }: { className?: string }) => {
         const studyInstanceUID = urlParams.get('StudyInstanceUID');
 
         if (studyInstanceUID) {
-            console.log(studyInstanceUID);
             dispatch(fetchDicomStudyByIdThunk(studyInstanceUID));
         }
     }, []);

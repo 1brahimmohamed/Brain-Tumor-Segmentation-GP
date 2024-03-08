@@ -47,7 +47,7 @@ const SeriesCard = ({ seriesData, seriesIndex, selectedIndex, onSelectedSeriesCh
                     onDoubleClick={() => {
                         onSelectedSeriesChange(seriesIndex, seriesData.seriesInstanceUid);
                     }}
-                />  
+                />
             </Box>
         </Box>
     );

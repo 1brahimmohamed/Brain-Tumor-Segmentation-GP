@@ -1,8 +1,8 @@
-import {format, parse} from 'date-fns';
+import { format, parse } from 'date-fns';
 import store from '@/redux/store';
-import {uiSliceActions} from '@ui/ui-slice';
-import {Enums, metaData} from '@cornerstonejs/core'
-import {OrientationAxis} from "@cornerstonejs/core/src/enums";
+import { uiSliceActions } from '@ui/ui-slice';
+import { Enums, metaData } from '@cornerstonejs/core';
+import { OrientationAxis } from '@cornerstonejs/core/src/enums';
 
 class DicomUtil {
     public static formatDate(date: string, strFormat: string = 'MMM dd, yyyy') {
@@ -60,9 +60,9 @@ class DicomUtil {
 
         let cleaned = patientName;
 
-        if (typeof patientName === "object") {
+        if (typeof patientName === 'object') {
             if (patientName.Alphabetic) {
-                cleaned =  patientName.Alphabetic;
+                cleaned = patientName.Alphabetic;
             }
         }
 
@@ -107,7 +107,7 @@ class DicomUtil {
     public static getDicomCompressionType(imageId: string) {
         const lossyImageCompression = metaData.get('x00282110', imageId);
         const lossyImageCompressionRatio = metaData.get('x00282112', imageId);
-        const lossyImageCompressionMethod = metaData.get('x00282114',imageId);
+        const lossyImageCompressionMethod = metaData.get('x00282114', imageId);
 
         if (lossyImageCompression === '01' && lossyImageCompressionRatio !== '') {
             const compressionMethod = lossyImageCompressionMethod || 'Lossy: ';

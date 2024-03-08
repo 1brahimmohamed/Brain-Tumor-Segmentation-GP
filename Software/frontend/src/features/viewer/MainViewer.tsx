@@ -6,7 +6,6 @@ import ViewportsManager from '@features/viewer/Viewport/ViewportsManager.tsx';
 // import { get } from '@utilities/wadoMetaDataProvider';
 import { IStore } from '@/models';
 
-
 const wadoRsRoot = 'http://localhost:8042/dicom-web';
 
 // Function to create and return volume
@@ -67,7 +66,6 @@ const MainViewer = () => {
 
     useEffect(() => {
         volumes.forEach((volume) => volume?.load());
-        console.log(volumes);
     }, [volumes]);
 
     return <ViewportsManager></ViewportsManager>;

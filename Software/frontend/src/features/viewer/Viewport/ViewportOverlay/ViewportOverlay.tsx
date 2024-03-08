@@ -1,52 +1,37 @@
 import './ViewportOverlay.scss';
-import {IStore} from '@/models';
-import {useSelector} from 'react-redux';
-import getMetadataByImageId from "@utilities/wadoMetaDataProvider.ts";
-import {DicomUtil, HelpersUtil} from "@/utilities";
-import {IVolumeViewport} from "@cornerstonejs/core/dist/cjs/types";
+import { IStore } from '@/models';
+import { useSelector } from 'react-redux';
+import getMetadataByImageId from '@utilities/wadoMetaDataProvider.ts';
+import { DicomUtil, HelpersUtil } from '@/utilities';
+import { IVolumeViewport } from '@cornerstonejs/core/dist/cjs/types';
 
 type TViewportOverlayProps = {
     currentImageId: string;
     viewport: IVolumeViewport | null;
 };
 
-const ViewportOverlay = ({currentImageId, viewport}: TViewportOverlayProps) => {
-    const {isInfoOnViewportsShown} = useSelector((store: IStore) => store.viewer);
+const ViewportOverlay = ({ currentImageId, viewport }: TViewportOverlayProps) => {
 
-    if (!currentImageId || !viewport)
-        return null;
+    if (!currentImageId || !viewport) return null;
 
-    const fontSize = `text-sm`;
+    const { isInfoOnViewportsShown } = useSelector((store: IStore) => store.viewer);
 
-    const {rows, columns, sliceThickness, sliceLocation} = getMetadataByImageId('imagePlaneModule',currentImageId);
-    const {seriesNumber, seriesDescription } = getMetadataByImageId('generalSeriesModule',currentImageId);
-    const {studyDate, studyTime, studyDescription } = getMetadataByImageId('generalStudyModule',currentImageId);
-    const {patientId, patientName} = getMetadataByImageId('patientStudyModule',currentImageId);
-    const {instanceNumber, frameTime } = getMetadataByImageId('imageModule',currentImageId);
+
+    const { rows, columns, sliceThickness, sliceLocation } = getMetadataByImageId(
+        'imagePlaneModule',
+        currentImageId
+    );
+    const { seriesNumber, seriesDescription } = getMetadataByImageId('generalSeriesModule', currentImageId);
+    const { studyDate, studyTime, studyDescription } = getMetadataByImageId(
+        'generalStudyModule',
+        currentImageId
+    );
+    const { patientId, patientName } = getMetadataByImageId('patientStudyModule', currentImageId);
+    const { instanceNumber, frameTime } = getMetadataByImageId('imageModule', currentImageId);
     const compression = DicomUtil.getDicomCompressionType(currentImageId);
 
-
-    // console.log({
-    //     rows: rows?.value,
-    //     columns: columns?.value,
-    //     pixelSpacing: pixelSpacing?.value,
-    //     sliceThickness: sliceThickness?.value,
-    //     sliceLocation: sliceLocation?.value,
-    //     seriesNumber: seriesNumber?.value,
-    //     seriesDescription: seriesDescription?.value,
-    //     studyDate: DicomUtil.formatDate(studyDate?.value),
-    //     studyTime: studyTime?.value,
-    //     studyDescription: studyDescription?.value,
-    //     patientId: patientId?.value,
-    //     patientName: DicomUtil.formatPatientName(patientName?.value),
-    //     instanceNumber: instanceNumber?.value,
-    //     frameTime: frameTime?.value,
-    //     compression
-    // })
-
-    const frameRate = HelpersUtil.formatNumberPrecision(1000 / (frameTime), 1);
+    const frameRate = HelpersUtil.formatNumberPrecision(1000 / frameTime, 1);
     const windowWidth = 0;
-    console.log(viewport)
     const windowCenter = 0;
     const wwwc = `W: ${HelpersUtil.formatNumberPrecision(windowWidth, 0)} L: ${HelpersUtil.formatNumberPrecision(windowCenter, 0)}`;
     const imageDimensions = `${columns?.value} x ${rows?.value}`;
@@ -59,21 +44,20 @@ const ViewportOverlay = ({currentImageId, viewport}: TViewportOverlayProps) => {
     const metadataOverlay = () => {
         return (
             <>
-                <div className={`absolute top-0 left-0 ${fontSize} text-white p-2`}>
+                <div className={`absolute top-0 left-0 text-sm text-white p-2`}>
                     <div>{DicomUtil.formatPatientName(patientName?.value)}</div>
                     <div>{patientId?.value}</div>
                 </div>
 
-                <div className={`absolute top-0 right-0 text-right ${fontSize} text-white p-2`}>
+                <div className={`absolute top-0 right-0 text-right text-sm text-white p-2`}>
                     <div>{studyDescription?.value}</div>
                     <div>
                         {DicomUtil.formatDate(studyDate?.value)} {DicomUtil.formatTime(studyTime?.value)}
                     </div>
                     <div>{seriesDescription?.value}</div>
-
                 </div>
 
-                <div className={`absolute bottom-0 left-0 ${fontSize} text-white p-2`}>
+                <div className={`absolute bottom-0 left-0 text-sm text-white p-2`}>
                     <div>{seriesNumber?.value >= 0 ? `Ser: ${seriesNumber?.value}` : ''}</div>
 
                     <div>
@@ -87,13 +71,13 @@ const ViewportOverlay = ({currentImageId, viewport}: TViewportOverlayProps) => {
                                 ? `Loc: ${HelpersUtil.formatNumberPrecision(sliceLocation?.value, 2)} mm `
                                 : ''}
                             {sliceThickness
-                                ? `Thick: ${HelpersUtil.formatNumberPrecision(sliceThickness?.value ,2)} mm`
+                                ? `Thick: ${HelpersUtil.formatNumberPrecision(sliceThickness?.value, 2)} mm`
                                 : ''}
                         </div>
                     </div>
                 </div>
 
-                <div className={`absolute bottom-0 right-0 text-right ${fontSize} text-white p-2`}>
+                <div className={`absolute bottom-0 right-0 text-right text-sm text-white p-2`}>
                     <div>Zoom: {HelpersUtil.formatNumberPrecision(zoom, 0)}%</div>
                     <div>{wwwc}</div>
                     <div className="compressionIndicator">{compression}</div>
@@ -108,7 +92,7 @@ const ViewportOverlay = ({currentImageId, viewport}: TViewportOverlayProps) => {
         );
     };
 
-    return isInfoOnViewportsShown ? metadataOverlay() : <></>;
+    return isInfoOnViewportsShown? metadataOverlay() : <></>;
 };
 
 export default ViewportOverlay;

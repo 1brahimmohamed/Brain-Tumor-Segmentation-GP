@@ -6,8 +6,7 @@ import getDICOMMetaData from './dicomMetaDataParser.ts';
  * @param {string} imageId The ID of the DICOM image.
  * @returns An object containing DICOM metadata based on the specified type.
  */
-const getMetadataByImageId = (type: string, imageId: string) : any => {
-
+const getMetadataByImageId = (type: string, imageId: string): any => {
     const dicomData = getDICOMMetaData(imageId);
     if (!dicomData) {
         return {};
@@ -60,12 +59,11 @@ const getMetadataByImageId = (type: string, imageId: string) : any => {
     if (type === 'imageModule') {
         return {
             instanceNumber: dicomData['Instance Number'],
-            frameTime: dicomData['Frame Time'],
-        }
+            frameTime: dicomData['Frame Time']
+        };
     }
 
-    if (type === 'all')
-        return dicomData;
+    if (type === 'all') return dicomData;
 };
 
 export default getMetadataByImageId;

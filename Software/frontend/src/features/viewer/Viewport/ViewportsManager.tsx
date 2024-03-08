@@ -1,9 +1,9 @@
-import {useSelector} from 'react-redux';
-import {useEffect} from 'react';
-import {IStore} from '@/models';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { IStore } from '@/models';
 import NewViewport from '@features/viewer/Viewport/NewViewport/Viewport.tsx';
 import ViewportGrid from '@features/viewer/Viewport/ViewportGrid/ViewportGrid.tsx';
-import {useState} from 'react';
+import { useState } from 'react';
 import * as cornerstone from '@cornerstonejs/core';
 
 const createViewportInput = (
@@ -23,11 +23,9 @@ const createViewportInput = (
 };
 
 const ViewportsManager = () => {
-
-    const [viewportInputArray, setViewportInputArray] =
-        useState<cornerstone.Types.PublicViewportInput[]>([]);
-    const {numRows, numCols} = useSelector((store: IStore) => store.viewer.layout);
-    const {renderingEngineId} = useSelector((store: IStore) => store.viewer);
+    const [viewportInputArray, setViewportInputArray] = useState<cornerstone.Types.PublicViewportInput[]>([]);
+    const { numRows, numCols } = useSelector((store: IStore) => store.viewer.layout);
+    const { renderingEngineId } = useSelector((store: IStore) => store.viewer);
 
     const renderingEngine = cornerstone.getRenderingEngine(renderingEngineId);
 
@@ -82,11 +80,8 @@ const ViewportsManager = () => {
 
     // Dynamically generate the cornerstone elements based on rows and cols
     const renderCornerstoneElements = () => {
-        return Array.from({length: numRows * numCols}, (_, idx) => (
-            <NewViewport
-                id={`viewport-${idx}`}
-                key={idx}
-            />
+        return Array.from({ length: numRows * numCols }, (_, idx) => (
+            <NewViewport id={`viewport-${idx}`} key={idx} />
         ));
     };
 
