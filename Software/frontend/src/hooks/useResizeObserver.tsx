@@ -1,6 +1,7 @@
 import React,{ useEffect, useRef, useState } from 'react';
 
-
+let lastWidth = 0;
+let lastHeight = 0;
 
 const useResizeObserver = (ref: React.RefObject<HTMLDivElement> | null, onResize: (width: number, height: number) => void) => {
     useEffect(() => {
@@ -8,7 +9,12 @@ const useResizeObserver = (ref: React.RefObject<HTMLDivElement> | null, onResize
             const entry = entries[0];
             if (entry) {
                 const { width, height } = entry.contentRect;
-                onResize(width, height);
+                // make tolerance for 5px difference
+                if (Math.abs(width - lastWidth) > 5 || Math.abs(height - lastHeight) > 5) {
+                    lastWidth = width;
+                    lastHeight = height;
+                    onResize(width, height);
+                }
             }
         });
 

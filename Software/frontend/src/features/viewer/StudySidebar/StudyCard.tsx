@@ -28,7 +28,6 @@ const StudyCard = ({ studyData }: { studyData: IDicomStudyData }) => {
 
     const seriesSelectHandler = (index: number, seriesInstanceUid: string) => {
         dispatch(viewerSliceActions.setClickedSeries(seriesInstanceUid));
-        console.log(seriesInstanceUid);
         setSelectedSeries(index);
     };
 

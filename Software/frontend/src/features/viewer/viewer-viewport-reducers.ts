@@ -9,7 +9,7 @@ const viewerViewportReducer = {
         state.selectedSeriesInstanceUid = '';
     },
 
-    setClickedViewport(state: IStoreViewerSlice, action: PayloadAction<string>) {
+    setSelectedViewport(state: IStoreViewerSlice, action: PayloadAction<string>) {
         state.selectedViewportId = action.payload;
     },
     removeClickedViewport(state: IStoreViewerSlice) {

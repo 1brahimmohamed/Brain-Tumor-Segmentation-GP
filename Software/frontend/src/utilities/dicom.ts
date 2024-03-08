@@ -1,7 +1,8 @@
 import {format, parse} from 'date-fns';
 import store from '@/redux/store';
 import {uiSliceActions} from '@ui/ui-slice';
-import {Enums} from '@cornerstonejs/core'
+import {Enums, metaData} from '@cornerstonejs/core'
+import {OrientationAxis} from "@cornerstonejs/core/src/enums";
 
 class DicomUtil {
     public static formatDate(date: string, strFormat: string = 'MMM dd, yyyy') {
@@ -52,9 +53,27 @@ class DicomUtil {
         }
     }
 
-    public static detectImageOrientation(
-        orientation: number[]
-    ): 'axial' | 'sagittal' | 'coronal' | 'Unknown' {
+    public static formatPatientName(patientName: any) {
+        if (!patientName) {
+            return;
+        }
+
+        let cleaned = patientName;
+
+        if (typeof patientName === "object") {
+            if (patientName.Alphabetic) {
+                cleaned =  patientName.Alphabetic;
+            }
+        }
+
+        const commaBetweenFirstAndLast = cleaned.replace('^', ', ');
+
+        cleaned = commaBetweenFirstAndLast.replace(/\^/g, ' ');
+
+        return cleaned.trim();
+    }
+
+    public static detectImageOrientation(orientation: number[]): OrientationAxis {
         // Convert orientation values to numbers and take absolute values
         const orientation_array = orientation.map(Number).map(Math.abs);
 
@@ -77,12 +96,25 @@ class DicomUtil {
         } else if (max_dot === dot_coronal) {
             return Enums.OrientationAxis.CORONAL;
         } else {
-            return 'Unknown';
+            return Enums.OrientationAxis.ACQUISITION;
         }
     }
 
     private static dotProduct(a: number[], b: number[]) {
         return a.map((_, i) => a[i] * b[i]).reduce((m, n) => m + n);
+    }
+
+    public static getDicomCompressionType(imageId: string) {
+        const lossyImageCompression = metaData.get('x00282110', imageId);
+        const lossyImageCompressionRatio = metaData.get('x00282112', imageId);
+        const lossyImageCompressionMethod = metaData.get('x00282114',imageId);
+
+        if (lossyImageCompression === '01' && lossyImageCompressionRatio !== '') {
+            const compressionMethod = lossyImageCompressionMethod || 'Lossy: ';
+            return compressionMethod + lossyImageCompressionRatio + ' : 1';
+        }
+
+        return 'Lossless / Uncompressed';
     }
 }
 
