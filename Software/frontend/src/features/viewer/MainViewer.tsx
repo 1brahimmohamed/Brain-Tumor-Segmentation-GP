@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import * as cornerstone from '@cornerstonejs/core';
 import { useSelector } from 'react-redux';
 import ViewportsManager from '@features/viewer/Viewport/ViewportsManager.tsx';
+import InitCornerstoneAnnotationTool from '@features/viewer/AnnotationTool/InitCornerstoneAnnotationTool';
+
 // import { get } from '@utilities/wadoMetaDataProvider';
 import { IStore } from '@/models';
 
@@ -60,6 +62,7 @@ const MainViewer = () => {
                     })
                 )
             );
+            await InitCornerstoneAnnotationTool(); // Initialize the cornerstone annotation tool
         };
         setupImageIdsAndVolumes();
     }, [currentStudyData]);

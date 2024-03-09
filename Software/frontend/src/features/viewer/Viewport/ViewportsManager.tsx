@@ -5,6 +5,7 @@ import NewViewport from '@features/viewer/Viewport/NewViewport/Viewport.tsx';
 import ViewportGrid from '@features/viewer/Viewport/ViewportGrid/ViewportGrid.tsx';
 import { useState } from 'react';
 import * as cornerstone from '@cornerstonejs/core';
+import * as cornerstoneTools from '@cornerstonejs/tools';
 
 const createViewportInput = (
     viewportId: string,
@@ -26,16 +27,20 @@ const ViewportsManager = () => {
     const [viewportInputArray, setViewportInputArray] = useState<cornerstone.Types.PublicViewportInput[]>([]);
     const { numRows, numCols } = useSelector((store: IStore) => store.viewer.layout);
     const { renderingEngineId } = useSelector((store: IStore) => store.viewer);
+    const { annotationToolGroupId } = useSelector((store: IStore) => store.viewer);
 
     const renderingEngine = cornerstone.getRenderingEngine(renderingEngineId);
+    const annotationToolGroup = cornerstoneTools.ToolGroupManager.getToolGroup(annotationToolGroupId);
 
     useEffect(() => {
         updateViewportInputArray();
+        updateAnnotationToolsOnViewports();
     }, []);
 
     // Set up the viewports for the rendering engine
     useEffect(() => {
         updateViewportInputArray();
+        updateAnnotationToolsOnViewports();
     }, [numRows, numCols, renderingEngine]);
 
     // Update the viewport input array based on the number of rows and columns.
@@ -75,6 +80,16 @@ const ViewportsManager = () => {
 
             // Update the state with the new viewport input array
             setViewportInputArray(newViewportInputArray);
+        }
+    };
+
+    // Update the annotation tools on the viewports
+    const updateAnnotationToolsOnViewports = () => {
+        if (renderingEngine && annotationToolGroup) {
+            const viewports = renderingEngine.getViewports();
+            viewports.forEach((viewport) => {
+                annotationToolGroup.addViewport(viewport.id, renderingEngineId);
+            });
         }
     };
 

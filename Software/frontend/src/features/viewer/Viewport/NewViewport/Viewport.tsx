@@ -8,6 +8,7 @@ import { IStore } from '@/models';
 import useResizeObserver from '@hooks/useResizeObserver.tsx';
 import ViewportOverlay from '@features/viewer/Viewport/ViewportOverlay/ViewportOverlay.tsx';
 
+
 type TViewportProps = {
     onClick?: (idx: string) => void;
     selectedViewportId?: number | string | null;

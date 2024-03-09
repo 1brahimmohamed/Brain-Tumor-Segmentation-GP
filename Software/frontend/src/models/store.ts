@@ -1,5 +1,6 @@
 import { INotification, IUserInfo, IDicomStudyData, IDicomTableStudy, ILayout } from '@/models';
 import { TModeType } from '@assets/theme/theme';
+import * as cornerstoneTools from '@cornerstonejs/tools';
 
 export interface IStoreUISlice {
     notification: INotification | null;
@@ -47,6 +48,11 @@ export interface IStoreViewerSlice {
     selectedViewportId: string;
     selectedSeriesInstanceUid: string;
     studyData: null;
+    annotationToolGroupId: string;
+    selectedAnnotationTools: Array<{
+        toolName: string;
+        mouseBinding: number;
+    }>;
 }
 
 export interface IStore {

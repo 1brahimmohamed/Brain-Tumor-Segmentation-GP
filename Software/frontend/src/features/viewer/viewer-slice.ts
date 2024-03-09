@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { IStoreViewerSlice } from '@models/store.ts';
 import viewerUiReducer from '@features/viewer/viewer-ui-reducers.ts';
 import viewerViewportReducer from '@features/viewer/viewer-viewport-reducers.ts';
+import viewerAnnotationReducer from './viewer-annotation-reducers';
 
 const initialState: IStoreViewerSlice = {
     // ui
@@ -25,7 +26,9 @@ const initialState: IStoreViewerSlice = {
     renderingEngineId: 'myRenderingEngine',
     selectedViewportId: '',
     selectedSeriesInstanceUid: '',
-    studyData: null
+    studyData: null,
+    annotationToolGroupId: 'AnnotationTools',
+    selectedAnnotationTools: []
 };
 
 const viewportsSlice = createSlice({
@@ -33,7 +36,8 @@ const viewportsSlice = createSlice({
     initialState,
     reducers: {
         ...viewerUiReducer,
-        ...viewerViewportReducer
+        ...viewerViewportReducer,
+        ...viewerAnnotationReducer
     }
 });
 

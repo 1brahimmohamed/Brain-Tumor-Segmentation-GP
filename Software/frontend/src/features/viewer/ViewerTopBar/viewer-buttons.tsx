@@ -27,7 +27,7 @@ import {
     handleLanguageChange,
     handleSettingsItemClick
 } from '@features/top-bars/topbars-actions.ts';
-import { AnnotationToolsNames } from '@features/viewer/AnnotationTool/AnnotationClass';
+import { AnnotationToolsNames } from '@/features/viewer/AnnotationTool/AnnotationToolsNames';
 import LayoutSelector from '@features/viewer/components/LayoutSelector.tsx';
 import {
     toggleFullScreen,
@@ -35,29 +35,33 @@ import {
 } from '@features/viewer/ViewerTopBar/viewer-top-bar-actions.ts';
 import NotificationsMenu from '@features/notifications/NotificationsMenu.tsx';
 export const VIEWER_SETTINGS_MENU_ITEMS = ['About', 'License Agreement', 'Help', 'Shortcuts'];
+import { SetToolActive } from '@/features/viewer/AnnotationTool/SetAnnotationToolActive';
+import * as cornerstoneTools from '@cornerstonejs/tools';
 
 const VIEWER_TOOLS_BUTTONS = [
     {
         title: AnnotationToolsNames.window,
-        onClick: () => console.log('contrast'),
+        onClick: () =>
+            SetToolActive(AnnotationToolsNames.window, cornerstoneTools.Enums.MouseBindings.Primary),
         icon: <ContrastIcon />,
         menuComponent: <WindowButtonItems />
     },
     {
         title: AnnotationToolsNames.pan,
-        onClick: () => console.log('Pan'),
+        onClick: () => SetToolActive(AnnotationToolsNames.pan, cornerstoneTools.Enums.MouseBindings.Primary),
         icon: <PanToolIcon />,
         menuComponent: <WindowButtonItems />
     },
     {
         title: AnnotationToolsNames.zoom,
-        onClick: () => console.log('Zoom'),
+        onClick: () => SetToolActive(AnnotationToolsNames.zoom, cornerstoneTools.Enums.MouseBindings.Primary),
         icon: <ZoomToolIcon />,
         menuComponent: <WindowButtonItems />
     },
     {
         title: 'Measurement',
-        onClick: () => console.log('Measurement'),
+        onClick: () =>
+            SetToolActive(AnnotationToolsNames.length, cornerstoneTools.Enums.MouseBindings.Primary),
         icon: <MeasurementToolIcon />,
         menuComponent: <WindowButtonItems />
     },
