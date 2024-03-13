@@ -27,7 +27,8 @@ const initialState: IStoreViewerSlice = {
     selectedViewportId: '',
     selectedSeriesInstanceUid: '',
     studyData: null,
-    annotationToolGroupId: 'AnnotationTools',
+    annotationToolGroupIds: [],
+    currentAnnotationToolGroupId: '',
     selectedAnnotationTools: []
 };
 

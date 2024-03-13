@@ -23,3 +23,9 @@ export const toggleFullScreen = () => {
 export const toggleViewportOverlayShown = () => {
     store.dispatch(viewerSliceActions.toggleInfoOnViewports());
 };
+
+
+export const handleToolClick = (toolName: string, mouseEvent: any)=> {
+    console.log('handleToolClick', toolName, mouseEvent)
+}
+

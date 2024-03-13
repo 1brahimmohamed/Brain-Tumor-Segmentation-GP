@@ -1,30 +1,36 @@
-import { ReactNode, useState } from 'react';
+import {ReactNode, useState} from 'react';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { StyledDiv } from '@features/top-bars/components/StyledDiv.tsx';
+import {StyledDiv} from '@features/top-bars/components/StyledDiv.tsx';
 import SvgIcon from '@mui/material/SvgIcon';
-import { Box } from '@mui/material';
-import { useTheme } from '@mui/material';
-import { StyledMenu } from '@ui/library';
+import {Box} from '@mui/material';
+import {useTheme} from '@mui/material';
+import {StyledMenu} from '@ui/library';
 
 interface ICustomButtonProps {
     title: string;
-    onClick?: () => void;
+    onClick?: (title: string, e: any) => void;
     menuComponent?: ReactNode;
     icon: ReactNode;
     sx?: any;
 }
 
-const ViewerToolButton = ({ title, onClick, menuComponent, icon, sx }: ICustomButtonProps) => {
+const ViewerToolButton = ({title, onClick, menuComponent, icon, sx}: ICustomButtonProps) => {
     const [anchorElement, setAnchorElement] = useState<HTMLButtonElement | null>(null);
     const theme = useTheme();
 
-    const handleClick = (event: any) => {
+    const handleDropdownClick = (event: any) => {
         if (menuComponent) {
             setAnchorElement(event.target?.parentElement.parentElement);
             return;
         }
         return;
     };
+
+    const handleClick = (e: any) => {
+        if (onClick) {
+            onClick(title, e);
+        }
+    }
 
     const handleCloseMenu = () => {
         setAnchorElement(null);
@@ -37,7 +43,7 @@ const ViewerToolButton = ({ title, onClick, menuComponent, icon, sx }: ICustomBu
                     className={
                         'flex flex-col items-center justify-center cursor-pointer w-4/5 overflow-hidden'
                     }
-                    onClick={onClick}
+                    onClick={handleClick}
                     title={title}
                 >
                     <div className={'text-2xl'}>
@@ -47,16 +53,28 @@ const ViewerToolButton = ({ title, onClick, menuComponent, icon, sx }: ICustomBu
                 </div>
 
                 <Box
-                    onClick={handleClick}
+                    onClick={handleDropdownClick}
                     className={'cursor-pointer'}
-                    sx={{ color: theme.palette.secondary.main }}
+                    sx={{color: theme.palette.secondary.main}}
                 >
-                    {menuComponent && <ArrowDropDownIcon />}
+                    {menuComponent && <ArrowDropDownIcon/>}
                 </Box>
             </StyledDiv>
 
             {menuComponent && (
-                <StyledMenu anchorEl={anchorElement} open={Boolean(anchorElement)} onClose={handleCloseMenu}>
+                <StyledMenu
+                    anchorEl={anchorElement}
+                    open={Boolean(anchorElement)}
+                    onClose={handleCloseMenu}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left'
+                    }}
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'left'
+                    }}
+                >
                     {menuComponent}
                 </StyledMenu>
             )}

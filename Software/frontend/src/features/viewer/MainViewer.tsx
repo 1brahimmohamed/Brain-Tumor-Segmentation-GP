@@ -3,9 +3,8 @@ import { useEffect, useState } from 'react';
 import * as cornerstone from '@cornerstonejs/core';
 import { useSelector } from 'react-redux';
 import ViewportsManager from '@features/viewer/Viewport/ViewportsManager.tsx';
-import InitCornerstoneAnnotationTool from '@features/viewer/AnnotationTool/InitCornerstoneAnnotationTool';
+import AnnotationTools from '@features/viewer/AnnotationTool/AnnotationTools';
 
-// import { get } from '@utilities/wadoMetaDataProvider';
 import { IStore } from '@/models';
 
 const wadoRsRoot = 'http://localhost:8042/dicom-web';
@@ -62,7 +61,10 @@ const MainViewer = () => {
                     })
                 )
             );
-            await InitCornerstoneAnnotationTool(); // Initialize the cornerstone annotation tool
+
+            AnnotationTools.initCornerstoneAnnotationTool(); // Initialize the cornerstone annotation tool
+            new AnnotationTools('AnnotationTools' , cornerstone.Enums.ViewportType.ORTHOGRAPHIC);
+            AnnotationTools.setCurrentAnnotationToolGroupId('AnnotationTools');
         };
         setupImageIdsAndVolumes();
     }, [currentStudyData]);
@@ -71,7 +73,7 @@ const MainViewer = () => {
         volumes.forEach((volume) => volume?.load());
     }, [volumes]);
 
-    return <ViewportsManager></ViewportsManager>;
+    return <ViewportsManager/>;
 };
 
 export default MainViewer;

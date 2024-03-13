@@ -27,10 +27,10 @@ const ViewportsManager = () => {
     const [viewportInputArray, setViewportInputArray] = useState<cornerstone.Types.PublicViewportInput[]>([]);
     const { numRows, numCols } = useSelector((store: IStore) => store.viewer.layout);
     const { renderingEngineId } = useSelector((store: IStore) => store.viewer);
-    const { annotationToolGroupId } = useSelector((store: IStore) => store.viewer);
+    const { currentAnnotationToolGroupId } = useSelector((store: IStore) => store.viewer);
 
     const renderingEngine = cornerstone.getRenderingEngine(renderingEngineId);
-    const annotationToolGroup = cornerstoneTools.ToolGroupManager.getToolGroup(annotationToolGroupId);
+    const annotationToolGroup = cornerstoneTools.ToolGroupManager.getToolGroup(currentAnnotationToolGroupId);
 
     useEffect(() => {
         updateViewportInputArray();

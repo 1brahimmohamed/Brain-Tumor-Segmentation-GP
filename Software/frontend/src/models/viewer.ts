@@ -20,3 +20,8 @@ export interface ILayout {
     numRows: number;
     numCols: number;
 }
+
+export interface IAnnotationTool {
+    toolName: string;
+    mouseBinding: number;
+}

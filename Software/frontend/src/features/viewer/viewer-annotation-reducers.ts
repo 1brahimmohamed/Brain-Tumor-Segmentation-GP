@@ -19,7 +19,16 @@ const viewerAnnotationReducer = {
         } else {
             state.selectedAnnotationTools.push(action.payload);
         }
-    }
+    },
+
+    addAnnotationToolGroupId(state: IStoreViewerSlice, action: PayloadAction<{ annotationToolGroupId: string }>) {
+        state.annotationToolGroupIds.push(action.payload.annotationToolGroupId);
+    },
+
+    setCurrentAnnotationToolGroupId(state: IStoreViewerSlice, action: PayloadAction<{ currentAnnotationToolGroupId: string }>) {
+        state.currentAnnotationToolGroupId = action.payload.currentAnnotationToolGroupId;
+    },
+
 };
 
 export default viewerAnnotationReducer;

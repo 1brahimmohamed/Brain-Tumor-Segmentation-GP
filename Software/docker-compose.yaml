@@ -1,23 +1,13 @@
 version: "3.8"
 services:
 
-  frontend:
-    build: ./frontend
-    container_name: gp_frontend
-    ports:
-      - "5000:5000"
-    depends_on:
-      - api_gateway
-
-  backend:
-    build: ./backend/Gateway
-    container_name: gp_gateway
-    ports:
-      - "4000:4000"
-    volumes:
-      - ./backend/Gateway:/api
-    depends_on:
-      - orthanc
+#  frontend:
+#    build: ./frontend
+#    container_name: gp_frontend
+#    ports:
+#      - "5000:5000"
+#    depends_on:
+#      - api_gateway
 
   api_gateway:
     build: ./backend/ApiGateway
