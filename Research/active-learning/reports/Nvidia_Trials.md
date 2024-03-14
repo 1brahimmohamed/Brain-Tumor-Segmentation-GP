@@ -81,3 +81,26 @@ Trained for 15 epochs on only BraTS2021 dataset with batch size 1 (due to GPU me
 - add 20  more samples from BraTS PED and evaluate
 - use diversity sampling method
 ------------------------------
+
+## Second Trial - Active iterations
+
+## Active Learning with BraTS Pediatric Dataset
+
+All Checkpoints can be found [here](https://drive.google.com/drive/folders/1VQEBdiEKKnanxh1sgiZxiLiPRF-PhbYC?usp=drive_link).
+
+### Experiments:
+1. Adding another 20 samples after active iteration 1 from unlabelled pool without deleting the selected data (repeated selected data)
+**Results:**
+- ![Test Set Results](/Research/active-learning/reports/figures/nvidia_PED_ActiveIteration_Approach.jpg)
+
+2. Adding from unlabelled pool and deleting the selected data (3 more active iterations)
+**Sampling Strategies:**
+
+
+**Results:**
+- ![Test Set Results](/Research/active-learning/reports/figures/nvidia_PED_ActiveIterations.jpg)
+
+### next steps:
+- trying different numbers of BraTS2021 training data and evaluate
+- use diversity sampling method
+------------------------------
