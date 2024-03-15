@@ -29,7 +29,8 @@ const initialState: IStoreViewerSlice = {
     studyData: null,
     annotationToolGroupIds: [],
     currentAnnotationToolGroupId: '',
-    selectedAnnotationTools: []
+    selectedAnnotationTools: [],
+    viewportsWithCinePlayer: [],
 };
 
 const viewportsSlice = createSlice({

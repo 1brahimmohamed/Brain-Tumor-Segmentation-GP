@@ -1,13 +1,11 @@
 import {
     Contrast as ContrastIcon,
-    PanTool as PanToolIcon,
     ZoomIn as ZoomToolIcon,
     Straighten as MeasurementToolIcon,
     RotateLeft as RotationToolIcon,
-    Polyline as SegmentationToolIcon,
     GridView as LayoutIcon,
     ZoomOutMap as FullScreenIcon,
-    ViewComfy as ThumbnailIcon,
+    ImageSearch as MagnifyIcon,
     VerticalAlignBottom as ExportIcon,
     Info as InfoIcon,
     ViewInAr as ThreeDIcon,
@@ -18,15 +16,17 @@ import {
     Translate as LanguagesIcon,
     SettingsOutlined as SettingsOutlinedIcon
 } from '@mui/icons-material';
+import { LuAxis3D } from "react-icons/lu";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faLayerGroup, faUpDownLeftRight, faCirclePlay} from "@fortawesome/free-solid-svg-icons";
 
 import store from '@/redux/store.ts';
-import WindowButtonItems from '@features/viewer/ViewerTopBar/options-menu-items/WindowButtonItems.tsx';
 import {
     handleColorModeChange,
     handleLanguageChange,
     handleSettingsItemClick
 } from '@features/top-bars/topbars-actions.ts';
-import AnnotationTools ,{ANNOTATION_TOOLS} from "@features/viewer/AnnotationTool/AnnotationTools.ts";
+import {ANNOTATION_TOOLS} from "@features/viewer/AnnotationTool/AnnotationTools.ts";
 import LayoutSelector from '@features/viewer/components/LayoutSelector.tsx';
 import {
     handleToolClick,
@@ -34,44 +34,58 @@ import {
     toggleViewportOverlayShown
 } from '@features/viewer/ViewerTopBar/viewer-top-bar-actions.ts';
 import NotificationsMenu from '@features/notifications/NotificationsMenu.tsx';
+import ViewerButtonMenu from "@features/viewer/components/ViewerButtonMenu.tsx";
 import {LANGUAGE_MENU_ITEMS} from '@features/top-bars/HomeTopBar/home-buttons.tsx';
+import {
+    MeasurementsButtonItems,
+    PanButtonItems,
+    RotateButtonItems,
+    ZoomButtonItems,
+    WindowButtonItems
+} from "@features/viewer/ViewerTopBar/options-menu-items"
+
 
 export const VIEWER_SETTINGS_MENU_ITEMS = ['About', 'License Agreement', 'Help', 'Shortcuts'];
 
 const VIEWER_TOOLS_BUTTONS = [
     {
         title: ANNOTATION_TOOLS['Window'].toolName,
-        onClick: () => AnnotationTools.setToolActive(ANNOTATION_TOOLS['Window'].toolName, 1),
+        onClick: handleToolClick,
         icon: <ContrastIcon/>,
-        menuComponent: <WindowButtonItems/>
+        menuComponent: <ViewerButtonMenu items={WindowButtonItems}/>
     },
     {
         title: ANNOTATION_TOOLS['Pan'].toolName,
-        onClick: () => AnnotationTools.setToolActive(ANNOTATION_TOOLS['Pan'].toolName, 1),
-        icon: <PanToolIcon/>,
-        menuComponent: <WindowButtonItems/>
+        onClick: handleToolClick,
+        icon: <FontAwesomeIcon icon={faUpDownLeftRight} />,
+        menuComponent: <ViewerButtonMenu items={PanButtonItems}/>
     },
     {
         title: ANNOTATION_TOOLS['Zoom'].toolName,
-        onClick: () => AnnotationTools.setToolActive(ANNOTATION_TOOLS['Zoom'].toolName, 1),
+        onClick: handleToolClick,
         icon: <ZoomToolIcon/>,
-        menuComponent: <WindowButtonItems/>
+        menuComponent: <ViewerButtonMenu items={ZoomButtonItems}/>
     },
     {
-        title: 'Measurement',
-        onClick: () => AnnotationTools.setToolActive(ANNOTATION_TOOLS['Length'].toolName, 1),
+        title: 'Measurements',
+        onClick: handleToolClick,
         icon: <MeasurementToolIcon/>,
-        menuComponent: <WindowButtonItems/>
+        menuComponent: <ViewerButtonMenu items={MeasurementsButtonItems}/>
     },
     {
         title: 'Rotate',
         onClick: handleToolClick,
         icon: <RotationToolIcon/>,
-        menuComponent: <WindowButtonItems/>
+        menuComponent: <ViewerButtonMenu items={RotateButtonItems}/>
+    },
+    {
+        title: 'Magnify',
+        onClick: handleToolClick,
+        icon: <MagnifyIcon/>,
     },
     {
         title: 'Scroll',
-        icon: <SegmentationToolIcon/>,
+        icon: <FontAwesomeIcon icon={faLayerGroup} />,
         onClick: handleToolClick,
     },
     {
@@ -80,13 +94,14 @@ const VIEWER_TOOLS_BUTTONS = [
         menuComponent: <LayoutSelector rows={4} columns={4}/>
     },
     {
+        title: 'Cine',
+        icon: <FontAwesomeIcon icon={faCirclePlay} />,
+        onClick: handleToolClick
+    },
+    {
         title: 'Full Screen',
         icon: <FullScreenIcon/>,
         onClick: toggleFullScreen
-    },
-    {
-        title: 'Thumbnails',
-        icon: <ThumbnailIcon/>
     },
     {
         title: 'Export',
@@ -96,6 +111,10 @@ const VIEWER_TOOLS_BUTTONS = [
         icon: <InfoIcon/>,
         title: 'Info',
         onClick: toggleViewportOverlayShown
+    },
+    {
+        title: 'MPR',
+        icon: <LuAxis3D/>
     },
     {
         icon: <ThreeDIcon/>,

@@ -4,6 +4,11 @@ import ViewerTopBar from '@features/viewer/ViewerTopBar/ViewerTopBar.tsx';
 import ViewerSidebar from '@features/viewer/StudySidebar/ViewerSidebar.tsx';
 
 const ViewerLayout = () => {
+
+    window.addEventListener('contextmenu', function (event) {
+        event.preventDefault(); // Prevent the default context menu from appearing
+    }, false);
+
     return (
         <div className={'w-full'}>
             <Helmet>

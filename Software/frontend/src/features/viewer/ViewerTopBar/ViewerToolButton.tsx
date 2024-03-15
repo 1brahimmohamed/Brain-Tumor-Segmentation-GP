@@ -43,7 +43,7 @@ const ViewerToolButton = ({title, onClick, menuComponent, icon, sx}: ICustomButt
                     className={
                         'flex flex-col items-center justify-center cursor-pointer w-4/5 overflow-hidden'
                     }
-                    onClick={handleClick}
+                    onMouseUp={handleClick}
                     title={title}
                 >
                     <div className={'text-2xl'}>
