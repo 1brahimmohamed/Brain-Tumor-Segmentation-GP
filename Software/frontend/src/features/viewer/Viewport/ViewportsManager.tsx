@@ -96,7 +96,7 @@ const ViewportsManager = () => {
     // Dynamically generate the cornerstone elements based on rows and cols
     const renderCornerstoneElements = () => {
         return Array.from({ length: numRows * numCols }, (_, idx) => (
-            <NewViewport id={`viewport-${idx}`} key={idx} />
+            <NewViewport id={`viewport-${idx}`} key={idx} vNeighbours={numRows} />
         ));
     };
 
