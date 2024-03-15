@@ -12,11 +12,16 @@ const ANNOTATION_TOOLS = {
     "Cross-hairs": cornerstoneTools.CrosshairsTool,
     "Elliptical ROI": cornerstoneTools.EllipticalROITool,
     "Length": cornerstoneTools.LengthTool,
+    "Livewire Contour": cornerstoneTools.LivewireContourTool,
+    "Magnify": cornerstoneTools.MagnifyTool,
     "Pan": cornerstoneTools.PanTool,
     "Probe": cornerstoneTools.ProbeTool,
+    "Planar Freehand ROI": cornerstoneTools.PlanarFreehandROITool,
+    "Planar Rotate": cornerstoneTools.PlanarRotateTool,
     "Rectangle ROI": cornerstoneTools.RectangleROITool,
     "Stack Scroll": cornerstoneTools.StackScrollMouseWheelTool,
-    "Trackball Rotate Tool": cornerstoneTools.TrackballRotateTool,
+    "Spline ROI Tool": cornerstoneTools.SplineROITool,
+    "Trackball Rotate": cornerstoneTools.TrackballRotateTool,
     "Window": cornerstoneTools.WindowLevelTool,
     "Zoom": cornerstoneTools.ZoomTool,
 };
@@ -122,6 +127,8 @@ class AnnotationTools {
             if (existingToolIndex !== -1) {
                 annotationToolGroup.setToolPassive(selectedAnnotationTools[existingToolIndex].toolName);
             }
+
+            console.log(`Setting tool '${toolName}' as active for mouse button ${mouseButton}`)
 
             annotationToolGroup.setToolActive(toolName, {
                 bindings: [{mouseButton}]
