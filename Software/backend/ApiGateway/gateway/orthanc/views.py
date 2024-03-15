@@ -12,27 +12,22 @@ service_url = env('ORTHANC_URL')
 
 
 @api_view(['GET'])
-def orthanc_dicomweb_proxy(request):
+def orthanc_dicomweb_proxy(request, dicom_web_path):
 
-    # get the orthanc url as param
-    orthanc_url = request.query_params.get('orthanc_url')\
-
-    if not orthanc_url:
+    if not dicom_web_path:
         return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'orthanc url is required'})
 
     # send request to orthanc server
     try:
-        resp = requests.get(service_url + '/dicom-web/' + orthanc_url)
+        resp = requests.get(service_url + '/dicom-web/' + dicom_web_path)
     except Exception as e:
-        print(e)
-        return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data={'message': 'hima'})
 
 
-    # check if data is json
-    if 'application/dicom+json' in resp.headers['Content-Type']:
-        return Response(status=status.HTTP_200_OK, data=resp.json())
-    else:
-        return HttpResponse(resp.content, content_type=resp.headers['Content-Type'])
+    return HttpResponse(
+        resp.content,
+        headers=resp.headers,
+    )
 
 
 
