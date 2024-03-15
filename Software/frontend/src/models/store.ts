@@ -53,6 +53,7 @@ export interface IStoreViewerSlice {
         toolName: string;
         mouseBinding: number;
     }>;
+    viewportsWithCinePlayer: string[];
 }
 
 export interface IStore {

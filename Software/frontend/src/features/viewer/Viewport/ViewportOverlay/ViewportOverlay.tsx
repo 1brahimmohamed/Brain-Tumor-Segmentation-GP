@@ -36,10 +36,11 @@ const ViewportOverlay = ({ currentImageId, viewport }: TViewportOverlayProps) =>
     const wwwc = `W: ${HelpersUtil.formatNumberPrecision(windowWidth, 0)} L: ${HelpersUtil.formatNumberPrecision(windowCenter, 0)}`;
     const imageDimensions = `${columns?.value} x ${rows?.value}`;
 
-    const zoom = viewport.getZoom();
+    const zoom = viewport.getZoom() * 100;
     const imageIds = viewport.getImageIds();
     const imageIndex = imageIds.indexOf(currentImageId) + 1;
     const numImages = imageIds.length;
+
 
     const metadataOverlay = () => {
         return (

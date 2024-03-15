@@ -29,6 +29,23 @@ const viewerAnnotationReducer = {
         state.currentAnnotationToolGroupId = action.payload.currentAnnotationToolGroupId;
     },
 
+    toggleCine(state: IStoreViewerSlice) {
+
+        if (!state.selectedViewportId) {
+            return;
+        }
+
+        // if the current viewport has a cine player, remove it
+        if (state.viewportsWithCinePlayer.includes(state.selectedViewportId)) {
+            state.viewportsWithCinePlayer = state.viewportsWithCinePlayer.filter(
+                (viewportId) => viewportId !== state.selectedViewportId
+            );
+        }
+        // if the viewport does not have a cine player, add it
+        else {
+            state.viewportsWithCinePlayer.push(state.selectedViewportId);
+        }
+    }
 };
 
 export default viewerAnnotationReducer;

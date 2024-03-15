@@ -7,6 +7,7 @@ import { DicomUtil } from '@/utilities';
 import { IStore } from '@/models';
 import useResizeObserver from '@hooks/useResizeObserver.tsx';
 import ViewportOverlay from '@features/viewer/Viewport/ViewportOverlay/ViewportOverlay.tsx';
+import CinePlayer from "@features/viewer/Viewport/CinePlayer/CinePlayer.tsx";
 
 
 type TViewportProps = {
@@ -21,11 +22,17 @@ const Viewport = ({ onClick, id }: TViewportProps) => {
     const [currentImageId, setCurrentImageId] = useState<string>('');
     const [thisViewport, setThisViewport] = useState<Types.IVolumeViewport | null>(null);
     const [thisViewportImageIds, setThisViewportImageIds] = useState<string[]>([]);
+    const [hasCinePlayer, setHasCinePlayer] = useState<boolean>(false);
     const viewportRef = useRef<HTMLDivElement>(null);
 
-    const { selectedSeriesInstanceUid } = useSelector((store: IStore) => store.viewer);
-    const { selectedViewportId } = useSelector((store: IStore) => store.viewer);
-    const { renderingEngineId } = useSelector((store: IStore) => store.viewer);
+    const {
+        selectedSeriesInstanceUid,
+        selectedViewportId,
+        renderingEngineId,
+        viewportsWithCinePlayer
+    } = useSelector((store: IStore) => store.viewer);
+
+
 
     const dispatch = useDispatch();
 
@@ -45,7 +52,6 @@ const Viewport = ({ onClick, id }: TViewportProps) => {
                 const viewport: Types.IVolumeViewport = renderingEngine!.getViewport(
                     selectedViewportId
                 ) as Types.IVolumeViewport;
-
 
                 const volumeId = `cornerstoneStreamingImageVolume:${selectedSeriesInstanceUid}`;
                 await viewport.setVolumes([{ volumeId }], true);
@@ -72,6 +78,30 @@ const Viewport = ({ onClick, id }: TViewportProps) => {
         }
     }, [thisViewportImageIds]);
 
+    // add event listener for slice scrolling
+    useEffect(() => {
+        const handleSliceScroll = () => {
+            if (thisViewport) {
+                setCurrentImageId(thisViewportImageIds[thisViewport.getCurrentImageIdIndex()]);
+            }
+        };
+
+        viewportRef.current?.addEventListener('wheel', handleSliceScroll);
+
+        return () => {
+            viewportRef.current?.removeEventListener('wheel', handleSliceScroll);
+        };
+
+    }, []);
+
+    useEffect(() => {
+        if (viewportsWithCinePlayer.includes(id)) {
+            setHasCinePlayer(true);
+        } else {
+            setHasCinePlayer(false);
+        }
+    }, [viewportsWithCinePlayer]);
+
     const handleResize = (_: number, __: number) => {
         const renderingEngine = cornerstone.getRenderingEngine(renderingEngineId);
         const viewport = renderingEngine?.getViewport(id) as Types.IVolumeViewport;
@@ -85,13 +115,18 @@ const Viewport = ({ onClick, id }: TViewportProps) => {
     useResizeObserver(viewportRef, handleResize);
 
     return (
-        <div
-            id={id}
-            ref={viewportRef}
-            onClick={() => handleViewportClick(id)}
-            className={`h-full w-full relative bg-black ${selectedViewportId === id ? 'ring-2 ring-AAPrimary' : ''}`}
-        >
-            <ViewportOverlay viewport={thisViewport} currentImageId={currentImageId} />
+        <div className={"flex-col"}>
+            <div
+                id={id}
+                ref={viewportRef}
+                onClick={() => handleViewportClick(id)}
+                className={`h-[92%] min w-full relative bg-black ${selectedViewportId === id ? 'ring-2 ring-AAPrimary' : ''}`}
+            >
+                <ViewportOverlay viewport={thisViewport} currentImageId={currentImageId}/>
+            </div>
+            <div className={`${hasCinePlayer ? '' : ''}`}>
+                {hasCinePlayer && <CinePlayer viewportElementRef={viewportRef} /> }
+            </div>
         </div>
     );
 };
