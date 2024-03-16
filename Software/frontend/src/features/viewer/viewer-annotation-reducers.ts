@@ -8,29 +8,41 @@ const viewerAnnotationReducer = {
     ) {
         if (state.selectedAnnotationTools.length === 0) {
             state.selectedAnnotationTools.push(action.payload);
+            return;
         }
 
-        const toolIndex = state.selectedAnnotationTools.findIndex(
+        const updatedTools = state.selectedAnnotationTools.filter(
+            (tool) => tool.toolName !== action.payload.toolName
+        );
+
+        const mouseBindingIndex = updatedTools.findIndex(
             (tool) => tool.mouseBinding === action.payload.mouseBinding
         );
 
-        if (toolIndex !== -1) {
-            state.selectedAnnotationTools[toolIndex] = action.payload;
+        if (mouseBindingIndex !== -1) {
+            updatedTools[mouseBindingIndex] = action.payload; // Update the existing tool with the same mouseBinding
         } else {
-            state.selectedAnnotationTools.push(action.payload);
+            updatedTools.push(action.payload); // Add the new tool if no matching mouseBinding found
         }
+
+        state.selectedAnnotationTools = updatedTools;
     },
 
-    addAnnotationToolGroupId(state: IStoreViewerSlice, action: PayloadAction<{ annotationToolGroupId: string }>) {
+    addAnnotationToolGroupId(
+        state: IStoreViewerSlice,
+        action: PayloadAction<{ annotationToolGroupId: string }>
+    ) {
         state.annotationToolGroupIds.push(action.payload.annotationToolGroupId);
     },
 
-    setCurrentAnnotationToolGroupId(state: IStoreViewerSlice, action: PayloadAction<{ currentAnnotationToolGroupId: string }>) {
+    setCurrentAnnotationToolGroupId(
+        state: IStoreViewerSlice,
+        action: PayloadAction<{ currentAnnotationToolGroupId: string }>
+    ) {
         state.currentAnnotationToolGroupId = action.payload.currentAnnotationToolGroupId;
     },
 
     toggleCine(state: IStoreViewerSlice) {
-
         if (!state.selectedViewportId) {
             return;
         }
