@@ -16,9 +16,10 @@ import {
     Translate as LanguagesIcon,
     SettingsOutlined as SettingsOutlinedIcon
 } from '@mui/icons-material';
-import { LuAxis3D } from "react-icons/lu";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faLayerGroup, faUpDownLeftRight, faCirclePlay} from "@fortawesome/free-solid-svg-icons";
+import { LuAxis3D } from 'react-icons/lu';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLayerGroup, faUpDownLeftRight, faCirclePlay } from '@fortawesome/free-solid-svg-icons';
+import { FaPaintBrush } from 'react-icons/fa';
 
 import store from '@/redux/store.ts';
 import {
@@ -26,7 +27,10 @@ import {
     handleLanguageChange,
     handleSettingsItemClick
 } from '@features/top-bars/topbars-actions.ts';
-import {ANNOTATION_TOOLS} from "@features/viewer/AnnotationTool/AnnotationTools.ts";
+import {
+    ANNOTATION_TOOLS,
+    SEGMENTATION_TOOLS
+} from '@/features/viewer/CornerstoneToolManager/CornerstoneToolManager';
 import LayoutSelector from '@features/viewer/components/LayoutSelector.tsx';
 import {
     handleToolClick,
@@ -34,16 +38,16 @@ import {
     toggleViewportOverlayShown
 } from '@features/viewer/ViewerTopBar/viewer-top-bar-actions.ts';
 import NotificationsMenu from '@features/notifications/NotificationsMenu.tsx';
-import ViewerButtonMenu from "@features/viewer/components/ViewerButtonMenu.tsx";
-import {LANGUAGE_MENU_ITEMS} from '@features/top-bars/HomeTopBar/home-buttons.tsx';
+import ViewerButtonMenu from '@features/viewer/components/ViewerButtonMenu.tsx';
+import { LANGUAGE_MENU_ITEMS } from '@features/top-bars/HomeTopBar/home-buttons.tsx';
 import {
     MeasurementsButtonItems,
     PanButtonItems,
     RotateButtonItems,
     ZoomButtonItems,
     WindowButtonItems
-} from "@features/viewer/ViewerTopBar/options-menu-items"
-
+} from '@features/viewer/ViewerTopBar/options-menu-items';
+import SegmentationButtonItems from './options-menu-items/segmentation-button-items';
 
 export const VIEWER_SETTINGS_MENU_ITEMS = ['About', 'License Agreement', 'Help', 'Shortcuts'];
 
@@ -51,47 +55,53 @@ const VIEWER_TOOLS_BUTTONS = [
     {
         title: ANNOTATION_TOOLS['Window'].toolName,
         onClick: handleToolClick,
-        icon: <ContrastIcon/>,
-        menuComponent: <ViewerButtonMenu items={WindowButtonItems}/>
+        icon: <ContrastIcon />,
+        menuComponent: <ViewerButtonMenu items={WindowButtonItems} />
     },
     {
         title: ANNOTATION_TOOLS['Pan'].toolName,
         onClick: handleToolClick,
         icon: <FontAwesomeIcon icon={faUpDownLeftRight} />,
-        menuComponent: <ViewerButtonMenu items={PanButtonItems}/>
+        menuComponent: <ViewerButtonMenu items={PanButtonItems} />
     },
     {
         title: ANNOTATION_TOOLS['Zoom'].toolName,
         onClick: handleToolClick,
-        icon: <ZoomToolIcon/>,
-        menuComponent: <ViewerButtonMenu items={ZoomButtonItems}/>
+        icon: <ZoomToolIcon />,
+        menuComponent: <ViewerButtonMenu items={ZoomButtonItems} />
     },
     {
         title: 'Measurements',
         onClick: handleToolClick,
-        icon: <MeasurementToolIcon/>,
-        menuComponent: <ViewerButtonMenu items={MeasurementsButtonItems}/>
+        icon: <MeasurementToolIcon />,
+        menuComponent: <ViewerButtonMenu items={MeasurementsButtonItems} />
     },
     {
         title: 'Rotate',
         onClick: handleToolClick,
-        icon: <RotationToolIcon/>,
-        menuComponent: <ViewerButtonMenu items={RotateButtonItems}/>
+        icon: <RotationToolIcon />,
+        menuComponent: <ViewerButtonMenu items={RotateButtonItems} />
     },
     {
         title: 'Magnify',
         onClick: handleToolClick,
-        icon: <MagnifyIcon/>,
+        icon: <MagnifyIcon />
+    },
+    {
+        title: SEGMENTATION_TOOLS['Brush'].toolName,
+        icon: <FaPaintBrush />,
+        onClick: handleToolClick,
+        menuComponent: <ViewerButtonMenu items={SegmentationButtonItems} />
     },
     {
         title: 'Scroll',
         icon: <FontAwesomeIcon icon={faLayerGroup} />,
-        onClick: handleToolClick,
+        onClick: handleToolClick
     },
     {
         title: 'Layout',
-        icon: <LayoutIcon/>,
-        menuComponent: <LayoutSelector rows={4} columns={4}/>
+        icon: <LayoutIcon />,
+        menuComponent: <LayoutSelector rows={4} columns={4} />
     },
     {
         title: 'Cine',
@@ -100,52 +110,51 @@ const VIEWER_TOOLS_BUTTONS = [
     },
     {
         title: 'Full Screen',
-        icon: <FullScreenIcon/>,
+        icon: <FullScreenIcon />,
         onClick: toggleFullScreen
     },
     {
         title: 'Export',
-        icon: <ExportIcon/>
+        icon: <ExportIcon />
     },
     {
-        icon: <InfoIcon/>,
+        icon: <InfoIcon />,
         title: 'Info',
         onClick: toggleViewportOverlayShown
     },
     {
         title: 'MPR',
-        icon: <LuAxis3D/>
+        icon: <LuAxis3D />
     },
     {
-        icon: <ThreeDIcon/>,
+        icon: <ThreeDIcon />,
         title: '3D'
     },
     {
-        icon: <ResetIcon/>,
+        icon: <ResetIcon />,
         title: 'Reset'
     }
 ];
 
 const VIEWER_OPTION_BUTTONS = [
     {
-        onClick: () => {
-        },
-        icon: <NotificationOutlinedIcon/>,
-        menuComponent: <NotificationsMenu/>
+        onClick: () => {},
+        icon: <NotificationOutlinedIcon />,
+        menuComponent: <NotificationsMenu />
     },
     {
         onClick: handleColorModeChange,
-        icon: store.getState().ui.themeMode === 'light' ? <DarkModeOutlinedIcon/> : <LightModeOutlinedIcon/>
+        icon: store.getState().ui.themeMode === 'light' ? <DarkModeOutlinedIcon /> : <LightModeOutlinedIcon />
     },
     {
         onClick: handleLanguageChange,
-        icon: <LanguagesIcon/>,
+        icon: <LanguagesIcon />,
         menuItems: LANGUAGE_MENU_ITEMS
     },
     {
         onClick: handleSettingsItemClick,
-        icon: <SettingsOutlinedIcon/>,
+        icon: <SettingsOutlinedIcon />,
         menuItems: VIEWER_SETTINGS_MENU_ITEMS
     }
 ];
-export {VIEWER_TOOLS_BUTTONS, VIEWER_OPTION_BUTTONS};
+export { VIEWER_TOOLS_BUTTONS, VIEWER_OPTION_BUTTONS };

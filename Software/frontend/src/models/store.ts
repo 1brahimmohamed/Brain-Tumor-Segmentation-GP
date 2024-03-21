@@ -48,12 +48,13 @@ export interface IStoreViewerSlice {
     selectedSeriesInstanceUid: string;
     studyData: null;
     annotationToolGroupIds: string[];
-    currentAnnotationToolGroupId: string;
-    selectedAnnotationTools: Array<{
+    currentToolGroupId: string;
+    selectedCornerstoneTools: Array<{
         toolName: string;
         mouseBinding: number;
     }>;
     viewportsWithCinePlayer: string[];
+    segmentationItems: any[];
 }
 
 export interface IStore {

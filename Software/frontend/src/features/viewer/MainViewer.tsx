@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import * as cornerstone from '@cornerstonejs/core';
 import { useSelector } from 'react-redux';
 import ViewportsManager from '@features/viewer/Viewport/ViewportsManager.tsx';
-import AnnotationTools from '@features/viewer/AnnotationTool/AnnotationTools';
+import CornerstoneToolManager from '@/features/viewer/CornerstoneToolManager/CornerstoneToolManager';
+import getMetadataByImageId from '@utilities/wadoMetaDataProvider';
 
 import { IStore } from '@/models';
 
@@ -26,7 +27,7 @@ const createDicomVolumes = async (studyInstanceUID: string | null, seriesInstanc
             // console.log(cornerstone.metaData.get('all', imageIds[0]));
 
             // Uncomment the following line to see the metadata of the first image in the series without the need for the provider
-            // console.log(get('all', imageIds[0]));
+            // console.log(getMetadataByImageId('all', imageIds[0]));
 
             if (imageIds.length > 0) {
                 // @TODO: Handle Stack of Images as well as volumes.
@@ -62,9 +63,10 @@ const MainViewer = () => {
                 )
             );
 
-            AnnotationTools.initCornerstoneAnnotationTool(); // Initialize the cornerstone annotation tool
-            new AnnotationTools('AnnotationTools' , cornerstone.Enums.ViewportType.ORTHOGRAPHIC);
-            AnnotationTools.setCurrentAnnotationToolGroupId('AnnotationTools');
+            CornerstoneToolManager.initCornerstoneAnnotationTool(); // Initialize the cornerstone annotation tool
+            CornerstoneToolManager.initCornerstoneSegmentationTool();
+            new CornerstoneToolManager('AnnotationTools', cornerstone.Enums.ViewportType.ORTHOGRAPHIC);
+            CornerstoneToolManager.setCurrentAnnotationToolGroupId('AnnotationTools');
         };
         setupImageIdsAndVolumes();
     }, [currentStudyData]);
@@ -73,7 +75,7 @@ const MainViewer = () => {
         volumes.forEach((volume) => volume?.load());
     }, [volumes]);
 
-    return <ViewportsManager/>;
+    return <ViewportsManager />;
 };
 
 export default MainViewer;

@@ -3,6 +3,7 @@ import { IStoreViewerSlice } from '@models/store.ts';
 import viewerUiReducer from '@features/viewer/viewer-ui-reducers.ts';
 import viewerViewportReducer from '@features/viewer/viewer-viewport-reducers.ts';
 import viewerAnnotationReducer from './viewer-annotation-reducers';
+import viewerSegmentationReducer from './viewer-segmentation-reducers';
 
 const initialState: IStoreViewerSlice = {
     // ui
@@ -28,9 +29,10 @@ const initialState: IStoreViewerSlice = {
     selectedSeriesInstanceUid: '',
     studyData: null,
     annotationToolGroupIds: [],
-    currentAnnotationToolGroupId: '',
-    selectedAnnotationTools: [],
+    currentToolGroupId: '',
+    selectedCornerstoneTools: [],
     viewportsWithCinePlayer: [],
+    segmentationItems: []
 };
 
 const viewportsSlice = createSlice({
@@ -39,7 +41,8 @@ const viewportsSlice = createSlice({
     reducers: {
         ...viewerUiReducer,
         ...viewerViewportReducer,
-        ...viewerAnnotationReducer
+        ...viewerAnnotationReducer,
+        ...viewerSegmentationReducer
     }
 });
 

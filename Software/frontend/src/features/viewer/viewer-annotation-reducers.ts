@@ -6,12 +6,12 @@ const viewerAnnotationReducer = {
         state: IStoreViewerSlice,
         action: PayloadAction<{ toolName: string; mouseBinding: number }>
     ) {
-        if (state.selectedAnnotationTools.length === 0) {
-            state.selectedAnnotationTools.push(action.payload);
+        if (state.selectedCornerstoneTools.length === 0) {
+            state.selectedCornerstoneTools.push(action.payload);
             return;
         }
 
-        const updatedTools = state.selectedAnnotationTools.filter(
+        const updatedTools = state.selectedCornerstoneTools.filter(
             (tool) => tool.toolName !== action.payload.toolName
         );
 
@@ -25,7 +25,7 @@ const viewerAnnotationReducer = {
             updatedTools.push(action.payload); // Add the new tool if no matching mouseBinding found
         }
 
-        state.selectedAnnotationTools = updatedTools;
+        state.selectedCornerstoneTools = updatedTools;
     },
 
     addAnnotationToolGroupId(
@@ -39,7 +39,7 @@ const viewerAnnotationReducer = {
         state: IStoreViewerSlice,
         action: PayloadAction<{ currentAnnotationToolGroupId: string }>
     ) {
-        state.currentAnnotationToolGroupId = action.payload.currentAnnotationToolGroupId;
+        state.currentToolGroupId = action.payload.currentAnnotationToolGroupId;
     },
 
     toggleCine(state: IStoreViewerSlice) {
