@@ -107,6 +107,7 @@ class DicomMapper {
         '00200011': 'Series Number',
         '00200012': 'Acquisition Number',
         '00200013': 'Instance Number',
+        '00200020': 'Patient Orientation',
         '00200032': 'Image Position Patient',
         '00200037': 'Image Orientation Patient',
         '00200052': 'Frame of Reference UID',

@@ -1,4 +1,8 @@
-import { AlignHorizontalRight as AlignRight } from '@mui/icons-material';
+import {
+    AlignHorizontalRight as AlignRight,
+    Upload as UploadIcon,
+    Download as DownloadIcon
+} from '@mui/icons-material';
 import { TViewerButtonItems } from '../../components/ViewerButtonMenu';
 import {
     PanoramaFishEye as EllipseIcon,
@@ -77,7 +81,18 @@ const MeasurementsButtonItems: TViewerButtonItems[] = [
     {
         icon: <AlignRight />,
         label: ANNOTATION_TOOLS['Livewire Contour'].toolName,
-        onClick: () => CornerstoneToolManager.setToolActive(ANNOTATION_TOOLS['Livewire Contour'].toolName, 1)
+        onClick: () => CornerstoneToolManager.setToolActive(ANNOTATION_TOOLS['Livewire Contour'].toolName, 1),
+        divider: true
+    },
+    {
+        label: 'Save Measurments',
+        icon: <DownloadIcon />,
+        onClick: () => CornerstoneToolManager.downloadAnnotations()
+    },
+    {
+        label: 'Load Measurments',
+        icon: <UploadIcon />,
+        onClick: () => CornerstoneToolManager.loadAnnotations()
     }
 ];
 

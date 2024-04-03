@@ -65,12 +65,15 @@ const SEGMENTATION_TOOLS = {
     PaintFill: cornerstoneTools.PaintFillTool
 };
 
+// Class that manages the cornerstone tools and tool groups for the viewer
 class CornerstoneToolManager {
     toolGroupId: string;
     toolGroup: cornerstoneTools.Types.IToolGroup | undefined;
     viewportsType?: any;
     static segmentationCounter: number = 1;
 
+    // Constructor for the CornerstoneToolManager class that initializes the tool group
+    // and adds all the annotation and segmentation tools to it based on the provided tool group ID
     constructor(toolGroupId: string, viewportsType?: string) {
         this.toolGroupId = toolGroupId;
         this.toolGroup = cornerstoneTools.ToolGroupManager.createToolGroup(toolGroupId);
@@ -146,18 +149,21 @@ class CornerstoneToolManager {
         }
     }
 
+    // Initialize the cornerstone annotation tools
     static initCornerstoneAnnotationTool() {
         Object.values(ANNOTATION_TOOLS).forEach((tool) => {
             cornerstoneTools.addTool(tool);
         });
     }
 
+    // Initialize the cornerstone segmentation tools
     static initCornerstoneSegmentationTool() {
         Object.values(SEGMENTATION_TOOLS).forEach((tool) => {
             cornerstoneTools.addTool(tool);
         });
     }
 
+    // Add a new segmentation to the viewer state
     static async addSegmentation() {
         const state = store.getState();
         const { segmentationItems, selectedViewportId, renderingEngineId, currentToolGroupId } = state.viewer;
@@ -222,6 +228,7 @@ class CornerstoneToolManager {
         );
     };
 
+    // Set the active tool for a specific mouse button
     static setToolActive = (toolName: string, mouseButton: number, toolGroupId?: string) => {
         const state = store.getState();
         const { currentToolGroupId: currentAnnotationToolGroupId } = state.viewer;
@@ -266,12 +273,93 @@ class CornerstoneToolManager {
         }
     };
 
+    // Set the current annotation tool group ID in the store
     static setCurrentAnnotationToolGroupId = (toolGroupId: string) => {
         store.dispatch(
             viewerSliceActions.setCurrentAnnotationToolGroupId({
                 currentAnnotationToolGroupId: toolGroupId
             })
         );
+    };
+
+    // Download the current annotations as a JSON file and remove all the annotations from the rendering engine
+    // and re-renders the viewport
+    static downloadAnnotations = () => {
+        const state = store.getState();
+        const { renderingEngineId } = state.viewer;
+        const renderingEngine = cornerstone.getRenderingEngine(renderingEngineId);
+
+        const annotations = cornerstoneTools.annotation.state.getAllAnnotations();
+        console.log(annotations);
+        const annotationsString = JSON.stringify(annotations);
+        // Create a Blob from the JSON string
+        const blob = new Blob([annotationsString], {
+            type: 'application/json'
+        });
+
+        // Create a download link
+        const downloadLink = document.createElement('a');
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.download = 'annotations.json';
+
+        // Append the link to the document
+        document.body.appendChild(downloadLink);
+
+        // Trigger a click on the link to start the download
+        downloadLink.click();
+
+        // Remove the link from the document
+        document.body.removeChild(downloadLink);
+
+        cornerstoneTools.annotation.state.removeAllAnnotations();
+
+        renderingEngine?.render();
+    };
+
+    // Load annotations from a JSON file and add them to the rendering engine
+    static loadAnnotations = () => {
+        const inputElement = document.createElement('input');
+        inputElement.type = 'file';
+        inputElement.accept = '.json';
+
+        inputElement.addEventListener('change', (event) => {
+            const reader = new FileReader();
+
+            reader.onload = (event) => {
+                const state = store.getState();
+                const { renderingEngineId } = state.viewer;
+                const renderingEngine = cornerstone.getRenderingEngine(renderingEngineId);
+
+                const annotationsString = event.target?.result as string;
+                const annotations = JSON.parse(annotationsString);
+                console.log(annotations);
+
+                try {
+                    annotations.forEach((annotation: cornerstoneTools.Types.Annotation) => {
+                        cornerstoneTools.annotation.state.addAnnotation(
+                            annotation,
+                            annotation.metadata.FrameOfReferenceUID
+                        );
+                    });
+
+                    CornerstoneToolManager.setToolActive(
+                        ANNOTATION_TOOLS['Length'].toolName,
+                        1
+                    );
+                    cornerstoneTools.annotation.visibility.showAllAnnotations();
+
+                } catch (error) {
+                    console.error(`Failed to load annotations: ${error}`);
+                }
+
+                renderingEngine?.render();
+            };
+
+            reader.readAsText(event.target.files[0]);
+        });
+
+        // Trigger a click on the input element to open the file dialog
+        inputElement.click();
     };
 }
 
