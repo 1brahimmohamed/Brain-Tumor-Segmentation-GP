@@ -14,7 +14,7 @@ import {
     DarkModeOutlined as DarkModeOutlinedIcon,
     LightModeOutlined as LightModeOutlinedIcon,
     Translate as LanguagesIcon,
-    SettingsOutlined as SettingsOutlinedIcon,
+    SettingsOutlined as SettingsOutlinedIcon
 } from '@mui/icons-material';
 import { LuAxis3D } from 'react-icons/lu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -27,10 +27,12 @@ import {
     handleLanguageChange,
     handleSettingsItemClick
 } from '@features/top-bars/topbars-actions.ts';
-import CornerstoneToolManager, {
+import {
+    CornerstoneToolManager,
     ANNOTATION_TOOLS,
     SEGMENTATION_TOOLS
-} from '@/features/viewer/CornerstoneToolManager/CornerstoneToolManager';
+} from '@/features/viewer/CornerstoneToolManager/';
+
 import LayoutSelector from '@features/viewer/components/LayoutSelector.tsx';
 import {
     handleToolClick,
@@ -133,7 +135,7 @@ const VIEWER_TOOLS_BUTTONS = [
     {
         icon: <ResetIcon />,
         title: 'Reset'
-    },
+    }
 ];
 
 const VIEWER_OPTION_BUTTONS = [

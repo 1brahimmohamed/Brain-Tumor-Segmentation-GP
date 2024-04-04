@@ -1,69 +1,12 @@
 import store from '@/redux/store.ts';
 import * as cornerstoneTools from '@cornerstonejs/tools';
-import * as cornerstone from '@cornerstonejs/core';
 import { Enums } from '@cornerstonejs/core';
 import { viewerSliceActions } from '@features/viewer/viewer-slice.ts';
-import { optionCSS } from 'react-select/dist/declarations/src/components/Option';
-import { log } from 'console';
+import { ANNOTATION_TOOLS, SEGMENTATION_TOOLS } from './tools';
+import { downloadAnnotations, loadAnnotations } from './annotationMethods';
+import { addSegmentToSegmentation, addSegmentation, downloadSegmentation } from './segmentationMethods';
+import { setToolActive, setCurrentToolGroupId } from './toolsMethods';
 
-//---------------------------------Annotation Tools--------------------------------
-const ANNOTATION_TOOLS = {
-    Angle: cornerstoneTools.AngleTool,
-    'Arrow Annotate': cornerstoneTools.ArrowAnnotateTool,
-    Bidirectional: cornerstoneTools.BidirectionalTool,
-    'Circle ROI': cornerstoneTools.CircleROITool,
-    'Cobb Angle': cornerstoneTools.CobbAngleTool,
-    'Cross-hairs': cornerstoneTools.CrosshairsTool,
-    'Elliptical ROI': cornerstoneTools.EllipticalROITool,
-    Length: cornerstoneTools.LengthTool,
-    'Livewire Contour': cornerstoneTools.LivewireContourTool,
-    Magnify: cornerstoneTools.MagnifyTool,
-    Pan: cornerstoneTools.PanTool,
-    Probe: cornerstoneTools.ProbeTool,
-    'Planar Freehand ROI': cornerstoneTools.PlanarFreehandROITool,
-    'Planar Rotate': cornerstoneTools.PlanarRotateTool,
-    'Rectangle ROI': cornerstoneTools.RectangleROITool,
-    'Stack Scroll': cornerstoneTools.StackScrollMouseWheelTool,
-    'Spline ROI Tool': cornerstoneTools.SplineROITool,
-    'Trackball Rotate': cornerstoneTools.TrackballRotateTool,
-    Window: cornerstoneTools.WindowLevelTool,
-    Zoom: cornerstoneTools.ZoomTool
-};
-
-//---------------------------------Segmentation Tools--------------------------------
-const BRUSH_INSTANCE_NAMES = {
-    CircularBrush: 'CircularBrush',
-    CircularEraser: 'CircularEraser',
-    SphereBrush: 'SphereBrush',
-    SphereEraser: 'SphereEraser',
-    ThresholdCircle: 'ThresholdCircle',
-    ScissorsEraser: 'ScissorsEraser'
-};
-
-const BRUSH_STRATEGIES = {
-    [BRUSH_INSTANCE_NAMES.CircularBrush]: 'FILL_INSIDE_CIRCLE',
-    [BRUSH_INSTANCE_NAMES.CircularEraser]: 'ERASE_INSIDE_CIRCLE',
-    [BRUSH_INSTANCE_NAMES.SphereBrush]: 'FILL_INSIDE_SPHERE',
-    [BRUSH_INSTANCE_NAMES.SphereEraser]: 'ERASE_INSIDE_SPHERE',
-    [BRUSH_INSTANCE_NAMES.ThresholdCircle]: 'THRESHOLD_INSIDE_CIRCLE',
-    [BRUSH_INSTANCE_NAMES.ScissorsEraser]: 'ERASE_INSIDE'
-};
-
-const BRUSH_VALUES = [
-    BRUSH_INSTANCE_NAMES.CircularBrush,
-    BRUSH_INSTANCE_NAMES.CircularEraser,
-    BRUSH_INSTANCE_NAMES.SphereBrush,
-    BRUSH_INSTANCE_NAMES.SphereEraser,
-    BRUSH_INSTANCE_NAMES.ThresholdCircle
-];
-const SEGMENTATION_TOOLS = {
-    SegmentationDisplay: cornerstoneTools.SegmentationDisplayTool,
-    Brush: cornerstoneTools.BrushTool,
-    RectangleScissors: cornerstoneTools.RectangleScissorsTool,
-    CircleScissors: cornerstoneTools.CircleScissorsTool,
-    SphereScissors: cornerstoneTools.SphereScissorsTool,
-    PaintFill: cornerstoneTools.PaintFillTool
-};
 
 // Class that manages the cornerstone tools and tool groups for the viewer
 class CornerstoneToolManager {
@@ -91,10 +34,10 @@ class CornerstoneToolManager {
 
         // Add all the annotation and segmentation tools to the tool group
         Object.values(ANNOTATION_TOOLS).forEach((tool) => {
-            this.toolGroup.addTool(tool.toolName);
+            this.toolGroup?.addTool(tool.toolName);
         });
         Object.values(SEGMENTATION_TOOLS).forEach((tool) => {
-            this.toolGroup.addTool(tool.toolName);
+            this.toolGroup?.addTool(tool.toolName);
         });
         this.toolGroup.setToolEnabled(cornerstoneTools.SegmentationDisplayTool.toolName);
 
@@ -164,204 +107,26 @@ class CornerstoneToolManager {
     }
 
     // Add a new segmentation to the viewer state
-    static async addSegmentation() {
-        const state = store.getState();
-        const { segmentationItems, selectedViewportId, renderingEngineId, currentToolGroupId } = state.viewer;
-        const renderingEngine = cornerstone.getRenderingEngine(renderingEngineId);
-        const viewport = renderingEngine.getViewport(selectedViewportId);
-        CornerstoneToolManager.segmentationCounter = 1;
-
-        if (!viewport) {
-            console.error(`Failed to add segmentation: viewport with ID '${selectedViewportId}' not found`);
-            return;
-        }
-
-        const volumeId = viewport.getActorUIDs()[0];
-        const newSegmentationId = `SEGMENTATION_${segmentationItems.length + 1}`;
-
-        await cornerstone.volumeLoader.createAndCacheDerivedVolume(volumeId, {
-            volumeId: newSegmentationId
-        });
-
-        cornerstoneTools.segmentation.state.addSegmentation({
-            segmentationId: newSegmentationId,
-            representation: {
-                type: cornerstoneTools.Enums.SegmentationRepresentations.Labelmap,
-                data: {
-                    volumeId: newSegmentationId
-                }
-            }
-        });
-
-        const [uid] = await cornerstoneTools.segmentation.addSegmentationRepresentations(currentToolGroupId, [
-            {
-                segmentationId: newSegmentationId,
-                type: cornerstoneTools.Enums.SegmentationRepresentations.Labelmap
-            }
-        ]);
-
-        await cornerstoneTools.segmentation.activeSegmentation.setActiveSegmentationRepresentation(
-            currentToolGroupId,
-            uid
-        );
-
-        cornerstoneTools.segmentation.segmentIndex.setActiveSegmentIndex(
-            newSegmentationId,
-            CornerstoneToolManager.segmentationCounter
-        );
-
-        store.dispatch(
-            viewerSliceActions.addSegmentation({
-                newSegmentationId
-            })
-        );
-
-        viewport.render();
-    }
+    static addSegmentation = addSegmentation;
 
     // Add Segment to a specific segmentation representation
-    static addSegmentToSegmentation = () => {
-        CornerstoneToolManager.segmentationCounter++;
-        cornerstoneTools.segmentation.segmentIndex.setActiveSegmentIndex(
-            'SEGMENTATION_1',
-            CornerstoneToolManager.segmentationCounter
-        );
-    };
+    static addSegmentToSegmentation = addSegmentToSegmentation;
 
     // Set the active tool for a specific mouse button
-    static setToolActive = (toolName: string, mouseButton: number, toolGroupId?: string) => {
-        const state = store.getState();
-        const { currentToolGroupId: currentAnnotationToolGroupId } = state.viewer;
-        const currentToolGroupId = toolGroupId || currentAnnotationToolGroupId;
-        const toolGroup = cornerstoneTools.ToolGroupManager.getToolGroup(currentToolGroupId);
-        const { selectedCornerstoneTools } = state.viewer;
-
-        try {
-            if (!toolGroup) {
-                console.error('tool group is not initialized');
-                return;
-            }
-
-            // Set the tool as passive if it is already active
-            toolGroup.setToolPassive(toolName, { removeAllBindings: true });
-
-            // get the index of the existing tool with the same mouse binding and set the tool indexed to it as passive
-            const existingToolIndex = selectedCornerstoneTools.findIndex(
-                (tool) => tool.mouseBinding === mouseButton
-            );
-            if (existingToolIndex !== -1) {
-                console.log(selectedCornerstoneTools[existingToolIndex].toolName);
-                toolGroup.setToolPassive(selectedCornerstoneTools[existingToolIndex].toolName, {
-                    removeAllBindings: true
-                });
-            }
-
-            console.log(`Setting tool '${toolName}' as active for mouse button ${mouseButton}`);
-
-            toolGroup.setToolActive(toolName, {
-                bindings: [{ mouseButton }]
-            });
-
-            store.dispatch(
-                viewerSliceActions.setSelectedAnnotationTool({
-                    toolName,
-                    mouseBinding: mouseButton
-                })
-            );
-        } catch (error) {
-            console.error(`Failed to set tool '${toolName}' as active: ${error}`);
-        }
-    };
+    static setToolActive = setToolActive;
 
     // Set the current annotation tool group ID in the store
-    static setCurrentAnnotationToolGroupId = (toolGroupId: string) => {
-        store.dispatch(
-            viewerSliceActions.setCurrentAnnotationToolGroupId({
-                currentAnnotationToolGroupId: toolGroupId
-            })
-        );
-    };
+    static setCurrentToolGroupId = setCurrentToolGroupId;
 
     // Download the current annotations as a JSON file and remove all the annotations from the rendering engine
     // and re-renders the viewport
-    static downloadAnnotations = () => {
-        const state = store.getState();
-        const { renderingEngineId } = state.viewer;
-        const renderingEngine = cornerstone.getRenderingEngine(renderingEngineId);
-
-        const annotations = cornerstoneTools.annotation.state.getAllAnnotations();
-        console.log(annotations);
-        const annotationsString = JSON.stringify(annotations);
-        // Create a Blob from the JSON string
-        const blob = new Blob([annotationsString], {
-            type: 'application/json'
-        });
-
-        // Create a download link
-        const downloadLink = document.createElement('a');
-        downloadLink.href = URL.createObjectURL(blob);
-        downloadLink.download = 'annotations.json';
-
-        // Append the link to the document
-        document.body.appendChild(downloadLink);
-
-        // Trigger a click on the link to start the download
-        downloadLink.click();
-
-        // Remove the link from the document
-        document.body.removeChild(downloadLink);
-
-        cornerstoneTools.annotation.state.removeAllAnnotations();
-
-        renderingEngine?.render();
-    };
+    static downloadAnnotations = downloadAnnotations;
 
     // Load annotations from a JSON file and add them to the rendering engine
-    static loadAnnotations = () => {
-        const inputElement = document.createElement('input');
-        inputElement.type = 'file';
-        inputElement.accept = '.json';
+    static loadAnnotations = loadAnnotations;
 
-        inputElement.addEventListener('change', (event) => {
-            const reader = new FileReader();
-
-            reader.onload = (event) => {
-                const state = store.getState();
-                const { renderingEngineId } = state.viewer;
-                const renderingEngine = cornerstone.getRenderingEngine(renderingEngineId);
-
-                const annotationsString = event.target?.result as string;
-                const annotations = JSON.parse(annotationsString);
-                console.log(annotations);
-
-                try {
-                    annotations.forEach((annotation: cornerstoneTools.Types.Annotation) => {
-                        cornerstoneTools.annotation.state.addAnnotation(
-                            annotation,
-                            annotation.metadata.FrameOfReferenceUID
-                        );
-                    });
-
-                    CornerstoneToolManager.setToolActive(
-                        ANNOTATION_TOOLS['Length'].toolName,
-                        1
-                    );
-                    cornerstoneTools.annotation.visibility.showAllAnnotations();
-
-                } catch (error) {
-                    console.error(`Failed to load annotations: ${error}`);
-                }
-
-                renderingEngine?.render();
-            };
-
-            reader.readAsText(event.target.files[0]);
-        });
-
-        // Trigger a click on the input element to open the file dialog
-        inputElement.click();
-    };
+    // Download the current segmentation mask as a dcm file
+    static downloadSegmentation = downloadSegmentation;
 }
 
 export default CornerstoneToolManager;
-export { ANNOTATION_TOOLS, SEGMENTATION_TOOLS };

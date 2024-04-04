@@ -55,6 +55,7 @@ export interface IStoreViewerSlice {
     }>;
     viewportsWithCinePlayer: string[];
     segmentationItems: any[];
+    segmentationUIDs: string[];
 }
 
 export interface IStore {

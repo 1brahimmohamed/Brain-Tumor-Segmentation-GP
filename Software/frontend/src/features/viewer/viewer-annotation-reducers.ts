@@ -35,11 +35,8 @@ const viewerAnnotationReducer = {
         state.annotationToolGroupIds.push(action.payload.annotationToolGroupId);
     },
 
-    setCurrentAnnotationToolGroupId(
-        state: IStoreViewerSlice,
-        action: PayloadAction<{ currentAnnotationToolGroupId: string }>
-    ) {
-        state.currentToolGroupId = action.payload.currentAnnotationToolGroupId;
+    setCurrentToolGroupId(state: IStoreViewerSlice, action: PayloadAction<{ currentToolGroupId: string }>) {
+        state.currentToolGroupId = action.payload.currentToolGroupId;
     },
 
     toggleCine(state: IStoreViewerSlice) {

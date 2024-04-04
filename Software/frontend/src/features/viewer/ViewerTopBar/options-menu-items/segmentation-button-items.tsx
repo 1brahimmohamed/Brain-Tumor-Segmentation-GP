@@ -1,8 +1,10 @@
 import { TViewerButtonItems } from '../../components/ViewerButtonMenu';
 import { IoMdAddCircle } from 'react-icons/io';
-import CornerstoneToolManager, {
-    SEGMENTATION_TOOLS
-} from '@/features/viewer/CornerstoneToolManager/CornerstoneToolManager';
+import {
+    CornerstoneToolManager,
+} from '@/features/viewer/CornerstoneToolManager/';
+
+import { Download as DownloadIcon } from '@mui/icons-material';
 
 const SegmentationButtonItems: TViewerButtonItems[] = [
     {
@@ -17,7 +19,15 @@ const SegmentationButtonItems: TViewerButtonItems[] = [
         onClick: () => {
             CornerstoneToolManager.addSegmentToSegmentation();
         },
-        icon: <IoMdAddCircle />
+        icon: <IoMdAddCircle />,
+        divider: true
+    },
+    {
+        label: 'Download Segmentation Mask',
+        onClick: () => {
+            CornerstoneToolManager.downloadSegmentation();
+        },
+        icon: <DownloadIcon />
     }
 ];
 

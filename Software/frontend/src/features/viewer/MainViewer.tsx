@@ -66,7 +66,7 @@ const MainViewer = () => {
             CornerstoneToolManager.initCornerstoneAnnotationTool(); // Initialize the cornerstone annotation tool
             CornerstoneToolManager.initCornerstoneSegmentationTool();
             new CornerstoneToolManager('AnnotationTools', cornerstone.Enums.ViewportType.ORTHOGRAPHIC);
-            CornerstoneToolManager.setCurrentAnnotationToolGroupId('AnnotationTools');
+            CornerstoneToolManager.setCurrentToolGroupId('AnnotationTools');
         };
         setupImageIdsAndVolumes();
     }, [currentStudyData]);

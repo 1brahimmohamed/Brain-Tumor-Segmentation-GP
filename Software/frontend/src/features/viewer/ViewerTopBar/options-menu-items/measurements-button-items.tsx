@@ -9,9 +9,7 @@ import {
     Crop75 as RectangleIcon,
     CallReceived as ArrowIcon
 } from '@mui/icons-material';
-import CornerstoneToolManager, {
-    ANNOTATION_TOOLS
-} from '@/features/viewer/CornerstoneToolManager/CornerstoneToolManager';
+import { CornerstoneToolManager, ANNOTATION_TOOLS } from '@/features/viewer/CornerstoneToolManager/';
 
 const MeasurementsButtonItems: TViewerButtonItems[] = [
     {
