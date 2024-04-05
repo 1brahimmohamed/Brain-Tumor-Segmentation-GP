@@ -45,7 +45,7 @@ export const addSegmentation = async () => {
     const volumeId = viewport.getActorUIDs()[0];
     const newSegmentationId = `SEGMENTATION_${segmentation.segmentations.length}`;
 
-    await cornerstone.volumeLoader.createAndCacheDerivedVolume(volumeId, {
+    const segmentationVolume = await cornerstone.volumeLoader.createAndCacheDerivedVolume(volumeId, {
         volumeId: newSegmentationId
     });
 
@@ -77,12 +77,23 @@ export const addSegmentation = async () => {
     //     0
     // );
 
+    const segmentationMaskData = {
+        volumeId: volumeId,
+        segmentationId: newSegmentationId,
+        uid: uid
+    };
+
     store.dispatch(
         viewerSliceActions.addSegmentation({
             uid,
             id: newSegmentationId,
             segmentsCount: 1,
             activeSegment: 1,
+        })
+    );
+    store.dispatch(
+        viewerSliceActions.addSegmentationMapper({
+            segmentationMaskData
         })
     );
 
@@ -93,46 +104,53 @@ export const addSegmentation = async () => {
 // Download the current segmentation mask as a dcm file
 export const downloadSegmentation = async () => {
     const state = store.getState();
-    const { renderingEngineId, currentToolGroupId, segmentationUIDs } = state.viewer;
+    const { renderingEngineId, currentToolGroupId, segmentationMap, selectedViewportId } = state.viewer;
     const renderingEngine = cornerstone.getRenderingEngine(renderingEngineId);
 
-    const segmentationData = cornerstoneTools.segmentation.state.getSegmentations();
-
-    if (!segmentationData.length) {
-        console.error('No segmentation data available');
+    const viewport: cornerstone.Types.IVolumeViewport = renderingEngine?.getViewport(
+        selectedViewportId
+    ) as cornerstone.Types.IVolumeViewport;
+    if (!viewport) {
+        console.error(`Failed to download segmentation: viewport with ID '${selectedViewportId}' not found`);
         return;
     }
 
-    segmentationData.forEach(async (segmentation, index) => {
-        const { segmentationId } = segmentation;
-        const volumeId = segmentationId;
-        const volume = cornerstone.cache.getVolume(volumeId);
-        const imageIds = volume.imageIds;
+    const viewportVolumeId = viewport.getActorUIDs()[0];
+    const volume = cornerstone.cache.getVolume(viewportVolumeId);
+    const images = volume.getCornerstoneImages();
+    console.log(images);
 
-        const labelmapObj = Cornerstone3D.Segmentation.generateLabelMaps2DFrom3D(volume);
+    segmentationMap.forEach((element: any) => {
+        const { volumeId, segmentationId, uid } = element;
 
-        // Generate fake metadata as an example
+        if (volumeId !== viewportVolumeId) {
+            return;
+        }
+
+        const segmentationVolume = cornerstone.cache.getVolume(segmentationId);
+
+        const labelmapObj = Cornerstone3D.Segmentation.generateLabelMaps2DFrom3D(segmentationVolume);
+
         labelmapObj.metadata = [];
         labelmapObj.segmentsOnLabelmap.forEach((segmentIndex) => {
             const color = cornerstoneTools.segmentation.config.color.getColorForSegmentIndex(
                 currentToolGroupId,
-                segmentationUIDs[index],
+                uid,
                 segmentIndex
             );
-
             const segmentMetadata = generateMockMetadata(segmentIndex, color);
             labelmapObj.metadata[segmentIndex] = segmentMetadata;
         });
 
         const generatedSegmentation = Cornerstone3D.Segmentation.generateSegmentation(
-            imageIds,
+            images,
             labelmapObj,
             cornerstone.metaData
         );
 
         console.log(generatedSegmentation);
 
-        // downloadDICOMData(generatedSegmentation.dataset, "mySEG.dcm");
+        downloadDICOMData(generatedSegmentation.dataset, `${volumeId} SEG.dcm`);
     });
 };
 

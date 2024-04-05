@@ -89,6 +89,9 @@ const viewerSegmentationReducer = {
 
         segmentation.activeSegment = action.payload.segmentIndex;
     },
+    addSegmentationMapper(state: IStoreViewerSlice, action: PayloadAction<any>) {
+        state.segmentationMap.push(action.payload.segmentationMaskData);
+    }
 };
 
 export default viewerSegmentationReducer;

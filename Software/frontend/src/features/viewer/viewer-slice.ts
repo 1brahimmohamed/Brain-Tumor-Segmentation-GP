@@ -30,6 +30,8 @@ const initialState: IStoreViewerSlice = {
         currentSegmentationId: null,
         segmentations: []
     }
+    segmentationItems: [],
+    segmentationMap: []
 };
 
 const viewportsSlice = createSlice({

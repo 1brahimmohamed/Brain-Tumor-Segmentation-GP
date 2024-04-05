@@ -52,6 +52,8 @@ export interface IStoreViewerSlice {
         currentSegmentationId: string | null;
         segmentations: Array<ISegmentation>;
     }
+    segmentationItems: any[];
+    segmentationMap: any[];
 }
 
 export interface IStore {
