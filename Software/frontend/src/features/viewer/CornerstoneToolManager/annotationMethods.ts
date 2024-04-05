@@ -33,8 +33,6 @@ export const downloadAnnotations = () => {
     // Remove the link from the document
     document.body.removeChild(downloadLink);
 
-    cornerstoneTools.annotation.state.removeAllAnnotations();
-
     renderingEngine?.render();
 };
 

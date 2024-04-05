@@ -33,7 +33,7 @@ const initialState: IStoreViewerSlice = {
     selectedCornerstoneTools: [],
     viewportsWithCinePlayer: [],
     segmentationItems: [],
-    segmentationUIDs: []
+    segmentationMap: []
 };
 
 const viewportsSlice = createSlice({

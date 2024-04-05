@@ -5,8 +5,8 @@ const viewerSegmentationReducer = {
     addSegmentation(state: IStoreViewerSlice, action: PayloadAction<any>) {
         state.segmentationItems.push(action.payload);
     },
-    addSegmentationUID(state: IStoreViewerSlice, action: PayloadAction<any>) {
-        state.segmentationUIDs.push(action.payload);
+    addSegmentationMapper(state: IStoreViewerSlice, action: PayloadAction<any>) {
+        state.segmentationMap.push(action.payload.segmentationMaskData);
     }
 };
 
