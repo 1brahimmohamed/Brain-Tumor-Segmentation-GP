@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { IStoreViewerSlice } from '@models/store.ts';
+import {createSlice} from '@reduxjs/toolkit';
+import {IStoreViewerSlice} from '@models/store.ts';
 import viewerUiReducer from '@features/viewer/viewer-ui-reducers.ts';
 import viewerViewportReducer from '@features/viewer/viewer-viewport-reducers.ts';
 import viewerAnnotationReducer from './viewer-annotation-reducers';
@@ -16,12 +16,6 @@ const initialState: IStoreViewerSlice = {
     isStudiesPanelOpen: false,
     isInfoOnViewportsShown: true,
 
-    // tools
-    rightMouseTool: 'zoom',
-    leftMouseTool: 'wwwc',
-    middleMouseTool: 'pan',
-    mouseWheelTool: 'stackScroll',
-
     // viewport
     viewports: [],
     renderingEngineId: 'myRenderingEngine',
@@ -32,8 +26,10 @@ const initialState: IStoreViewerSlice = {
     currentToolGroupId: '',
     selectedCornerstoneTools: [],
     viewportsWithCinePlayer: [],
-    segmentationItems: [],
-    segmentationUIDs: []
+    segmentation: {
+        currentSegmentationId: null,
+        segmentations: []
+    }
 };
 
 const viewportsSlice = createSlice({

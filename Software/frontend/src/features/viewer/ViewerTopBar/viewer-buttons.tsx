@@ -28,7 +28,6 @@ import {
     handleSettingsItemClick
 } from '@features/top-bars/topbars-actions.ts';
 import {
-    CornerstoneToolManager,
     ANNOTATION_TOOLS,
     SEGMENTATION_TOOLS
 } from '@/features/viewer/CornerstoneToolManager/';

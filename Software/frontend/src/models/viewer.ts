@@ -25,3 +25,10 @@ export interface IAnnotationTool {
     toolName: string;
     mouseBinding: number;
 }
+
+export interface ISegmentation {
+    uid: string,
+    id: string,
+    segmentsCount: number,
+    activeSegment: number,
+}

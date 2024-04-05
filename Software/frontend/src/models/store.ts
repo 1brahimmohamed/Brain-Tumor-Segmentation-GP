@@ -1,5 +1,6 @@
-import { INotification, IUserInfo, IDicomStudyData, IDicomTableStudy, ILayout } from '@/models';
-import { TModeType } from '@assets/theme/theme';
+import {INotification, IUserInfo, IDicomStudyData, IDicomTableStudy, ILayout} from '@/models';
+import {TModeType} from '@assets/theme/theme';
+import {ISegmentation} from "@models/viewer.ts";
 
 export interface IStoreUISlice {
     notification: INotification | null;
@@ -35,13 +36,6 @@ export interface IStoreViewerSlice {
     isStudiesPanelOpen: boolean;
     isInfoOnViewportsShown: boolean;
 
-    // tools
-    rightMouseTool: string;
-    leftMouseTool: string;
-    middleMouseTool: string;
-    mouseWheelTool: string;
-
-    // ismail
     viewports: [];
     renderingEngineId: string;
     selectedViewportId: string;
@@ -54,8 +48,10 @@ export interface IStoreViewerSlice {
         mouseBinding: number;
     }>;
     viewportsWithCinePlayer: string[];
-    segmentationItems: any[];
-    segmentationUIDs: string[];
+    segmentation: {
+        currentSegmentationId: string | null;
+        segmentations: Array<ISegmentation>;
+    }
 }
 
 export interface IStore {

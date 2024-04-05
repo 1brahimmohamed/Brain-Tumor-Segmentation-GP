@@ -124,7 +124,7 @@ const Viewport = ({onClick, id, vNeighbours}: TViewportProps) => {
                 id={id}
                 ref={viewportRef}
                 onClick={() => handleViewportClick(id)}
-                className={`${hasCinePlayer ? `${cineHeight[0]}` : 'h-full'} w-full relative bg-black ${selectedViewportId === id ? 'ring-2 ring-AAPrimary' : ''}`}
+                className={`${hasCinePlayer ? `${cineHeight[0]}` : 'h-full'} w-full relative bg-black ${selectedViewportId === id ? 'border-2 border-AAPrimary' : ''}`}
             >
                 <ViewportOverlay viewport={thisViewport} currentImageId={currentImageId}/>
             </div>

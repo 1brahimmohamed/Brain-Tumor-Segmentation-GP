@@ -4,7 +4,6 @@ import * as cornerstone from '@cornerstonejs/core';
 import { useSelector } from 'react-redux';
 import ViewportsManager from '@features/viewer/Viewport/ViewportsManager.tsx';
 import CornerstoneToolManager from '@/features/viewer/CornerstoneToolManager/CornerstoneToolManager';
-import getMetadataByImageId from '@utilities/wadoMetaDataProvider';
 
 import { IStore } from '@/models';
 
