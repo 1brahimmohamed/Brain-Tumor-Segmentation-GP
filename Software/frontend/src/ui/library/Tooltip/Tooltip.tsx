@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import classnames from 'classnames';
-
 import './tooltip.scss';
 
 const arrowPositionStyle = {

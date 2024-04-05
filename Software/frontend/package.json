@@ -11,6 +11,7 @@
         "prepare": "cd ../.. && husky Software/frontend/.husky"
     },
     "dependencies": {
+        "@cornerstonejs/adapters": "^1.68.0",
         "@cornerstonejs/calculate-suv": "^1.1.0",
         "@cornerstonejs/core": "^1.58.0",
         "@cornerstonejs/dicom-image-loader": "^1.58.5",
@@ -31,7 +32,7 @@
         "antd": "^5.14.0",
         "axios": "^1.6.7",
         "date-fns": "^3.3.1",
-        "dcmjs": "^0.30.1",
+        "dcmjs": "^0.30.3",
         "dicom-parser": "^1.8.21",
         "dicomweb-client": "^0.10.4",
         "install": "^0.13.0",

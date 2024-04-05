@@ -23,10 +23,10 @@ const PanelSection = ({ title, children, actionIcons }: TPanelSectionProps) => {
     return (
         <>
             <div
-                className="bg-AAPrimary mt-2 flex h-7 cursor-pointer select-none items-center justify-between rounded-sm pl-2.5 text-md"
+                className="bg-AAPrimaryLight flex h-7 cursor-pointer select-none items-center justify-between rounded-sm pl-2.5 text-md"
                 onClick={handleHeaderClick}
             >
-                <div className="text-white">{title}</div>
+                <div className="text-base font-bold text-white">{title}</div>
                 <div className="flex items-center space-x-1">
                     {actionIcons?.map((icon, index) => (
                         <FontAwesomeIcon
@@ -48,7 +48,7 @@ const PanelSection = ({ title, children, actionIcons }: TPanelSectionProps) => {
             </div>
             {areChildrenVisible && (
                 <>
-                    <div className="bg-red-800 rounded-b-xl">{children}</div>
+                    <div className="rounded-b-xl">{children}</div>
                 </>
             )}
         </>

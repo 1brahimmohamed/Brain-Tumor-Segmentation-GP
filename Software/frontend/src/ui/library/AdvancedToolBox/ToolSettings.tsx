@@ -48,7 +48,7 @@ function ToolSettings({ options }: TToolSettingsProps) {
                                     minValue={option.min!}
                                     maxValue={option.max!}
                                     step={option.step!}
-                                    value={option.value!}
+                                    value={parseFloat(option.value as string)}
                                     onChange={(e) => option.onChange!(e)}
                                     allowNumberEdit={true}
                                     showAdjustmentArrows={false}

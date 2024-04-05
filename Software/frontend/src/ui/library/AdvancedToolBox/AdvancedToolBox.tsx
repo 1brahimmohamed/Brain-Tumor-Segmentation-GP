@@ -6,12 +6,12 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import ToolSettings from './ToolSettings.tsx';
 
 export type TOption = {
-    id: string;
+    id?: string;
     name: string;
     type: string;
     min?: number;
     max?: number;
-    value?: number;
+    value?: number | string;
     step?: number;
     values?: { label: string; value: string }[];
     onChange?: (value: number | string) => void;
@@ -28,7 +28,7 @@ export type TItem = {
     disabled?: boolean;
 };
 
-type TAdvancedToolboxProps = {
+export type TAdvancedToolboxProps = {
     title: string;
     items: TItem[];
 };

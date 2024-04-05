@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import ViewerTopBar from '@features/viewer/ViewerTopBar/ViewerTopBar.tsx';
 import ViewerSidebar from '@features/viewer/StudySidebar/ViewerSidebar.tsx';
+import ViewerToolPanel from "@features/viewer/ViewerToolPanel/ViewerToolPanel.tsx";
 
 const ViewerLayout = () => {
 
@@ -24,8 +25,11 @@ const ViewerLayout = () => {
                 <div className={'h-[93vh] w-2/12 max-w-52'}>
                     <ViewerSidebar className={'h-full'} />
                 </div>
-                <div className={'h-auto w-11/12'}>
+                <div className={'h-auto flex-grow w-11/12'}>
                     <Outlet />
+                </div>
+                <div>
+                    <ViewerToolPanel />
                 </div>
             </div>
         </div>

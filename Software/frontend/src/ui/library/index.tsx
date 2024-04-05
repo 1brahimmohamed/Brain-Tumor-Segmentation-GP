@@ -14,12 +14,14 @@ import InputNumber from './InputNumber/InputNumber.tsx';
 import InputRange from './InputRange/InputRange.tsx';
 import Label from './Label/Label.tsx';
 import Logo from './Logo/Logo.tsx';
+import MeasurementTable from "./MeasurementTable/MeasurementTable.tsx";
 import Modal from './Modals/Modal.tsx';
 import StyledMenu from './Menu/StyledMenu.tsx';
 import Notification from './Notification/Notification.tsx';
 import PanelSection from './PanelSection/PanelSection.tsx';
 // import SegmentationGroupTable from './SegmentationGroupTable/SegmentationGroupTable.tsx';
-// import Select from './Select/Select.tsx';
+import Select from './Select/Select.tsx';
+import SidePanel from "./SidePanel/SidePanel.tsx";
 import Spinner from './Spinner/Spinner.tsx';
 import Tooltip from './Tooltip/Tooltip.tsx';
 
@@ -40,12 +42,14 @@ export {
     InputRange,
     Label,
     Logo,
+    MeasurementTable,
     Modal,
     StyledMenu,
     Notification,
     PanelSection,
     // SegmentationGroupTable,
-    // Select,
+    Select,
+    SidePanel,
     Spinner,
     Tooltip
 };

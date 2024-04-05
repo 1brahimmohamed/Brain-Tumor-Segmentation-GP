@@ -71,7 +71,7 @@ const Dropdown = ({
                 <div
                     key={title}
                     className={classnames(
-                        'hover:bg-secondary-main flex cursor-pointer items-center px-4 py-2 transition duration-300 ',
+                        'hover:bg-AAPrimary flex cursor-pointer items-center px-4 py-2 transition duration-300 ',
                         titleClassName,
                         showBorders && borderStyle
                     )}
@@ -129,7 +129,7 @@ const Dropdown = ({
         return (
             <div
                 className={classnames(
-                    'top-100 border-secondary-main absolute z-10 mt-2 transform rounded border bg-black shadow transition duration-300',
+                    'top-100 border-AAPrimary border-opacity-50 absolute z-10 mt-2 transform rounded border-2 bg-AAFirstShade shadow transition duration-300',
                     {
                         'right-0 origin-top-right': alignment === 'right',
                         'left-0 origin-top-left': alignment === 'left',

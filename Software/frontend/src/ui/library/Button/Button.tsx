@@ -56,7 +56,7 @@ const defaults = {
 };
 
 type TButtonProps = {
-    children: React.ReactNode;
+    children?: React.ReactNode;
     size?: ButtonEnums.size;
     disabled?: boolean;
     type?: ButtonEnums.type;
