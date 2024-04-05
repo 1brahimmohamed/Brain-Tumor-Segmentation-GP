@@ -1,11 +1,11 @@
 import store from '@/redux/store.ts';
 import * as cornerstoneTools from '@cornerstonejs/tools';
-import { Enums } from '@cornerstonejs/core';
-import { viewerSliceActions } from '@features/viewer/viewer-slice.ts';
-import { ANNOTATION_TOOLS, SEGMENTATION_TOOLS } from './tools';
-import { downloadAnnotations, loadAnnotations } from './annotationMethods';
-import { addSegmentToSegmentation, addSegmentation, downloadSegmentation } from './segmentationMethods';
-import { setToolActive, setCurrentToolGroupId } from './toolsMethods';
+import {Enums} from '@cornerstonejs/core';
+import {viewerSliceActions} from '@features/viewer/viewer-slice.ts';
+import {ANNOTATION_TOOLS, SEGMENTATION_TOOLS, BRUSH_STRATEGIES, BRUSH_INSTANCE_NAMES} from './tools';
+import {downloadAnnotations, loadAnnotations} from './annotationMethods';
+import {addSegmentToSegmentation, addSegmentation, downloadSegmentation} from './segmentationMethods';
+import {setToolActive, setCurrentToolGroupId} from './toolsMethods';
 
 
 // Class that manages the cornerstone tools and tool groups for the viewer
@@ -13,7 +13,6 @@ class CornerstoneToolManager {
     toolGroupId: string;
     toolGroup: cornerstoneTools.Types.IToolGroup | undefined;
     viewportsType?: any;
-    static segmentationCounter: number = 1;
 
     // Constructor for the CornerstoneToolManager class that initializes the tool group
     // and adds all the annotation and segmentation tools to it based on the provided tool group ID
@@ -39,6 +38,18 @@ class CornerstoneToolManager {
         Object.values(SEGMENTATION_TOOLS).forEach((tool) => {
             this.toolGroup?.addTool(tool.toolName);
         });
+
+        // add the segmentation brush instances
+        Object.values(BRUSH_INSTANCE_NAMES).forEach((instance: string) => {
+            this.toolGroup?.addToolInstance(
+                BRUSH_INSTANCE_NAMES[instance],
+                cornerstoneTools.BrushTool.toolName,
+                {
+                    activeStrategy: BRUSH_STRATEGIES[instance]
+                }
+            )
+        });
+
         this.toolGroup.setToolEnabled(cornerstoneTools.SegmentationDisplayTool.toolName);
 
         switch (this.viewportsType) {

@@ -25,7 +25,7 @@ const ANNOTATION_TOOLS = {
 };
 
 //---------------------------------Segmentation Tools--------------------------------
-const BRUSH_INSTANCE_NAMES = {
+const BRUSH_INSTANCE_NAMES: { [key: string]: string } = {
     CircularBrush: 'CircularBrush',
     CircularEraser: 'CircularEraser',
     SphereBrush: 'SphereBrush',
@@ -59,4 +59,10 @@ const SEGMENTATION_TOOLS = {
     PaintFill: cornerstoneTools.PaintFillTool
 };
 
-export { ANNOTATION_TOOLS, SEGMENTATION_TOOLS };
+export {
+    ANNOTATION_TOOLS,
+    SEGMENTATION_TOOLS,
+    BRUSH_STRATEGIES,
+    BRUSH_INSTANCE_NAMES,
+    BRUSH_VALUES
+};

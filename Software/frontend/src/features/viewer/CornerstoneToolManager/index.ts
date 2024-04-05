@@ -1,4 +1,4 @@
-import CornerstoneToolManager from './CornerstoneToolManager';
+import CornerstoneToolManager from './CornerstoneToolManager.ts';
 import { ANNOTATION_TOOLS, SEGMENTATION_TOOLS } from './tools';
 
 

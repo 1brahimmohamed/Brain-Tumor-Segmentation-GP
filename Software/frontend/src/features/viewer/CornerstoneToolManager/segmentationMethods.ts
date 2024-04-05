@@ -2,29 +2,40 @@ import store from '@/redux/store.ts';
 import * as cornerstoneTools from '@cornerstonejs/tools';
 import * as cornerstone from '@cornerstonejs/core';
 import { viewerSliceActions } from '@features/viewer/viewer-slice.ts';
-import CornerstoneToolManager from './CornerstoneToolManager';
 import { adaptersSEG, helpers } from '@cornerstonejs/adapters';
 import dcmjs from 'dcmjs';
+import label from "@ui/library/Label/Label.tsx";
 
 const { downloadDICOMData } = helpers;
 const { Cornerstone3D } = adaptersSEG;
 
 // Add Segment to a specific segmentation representation
 export const addSegmentToSegmentation = () => {
-    CornerstoneToolManager.segmentationCounter++;
-    cornerstoneTools.segmentation.segmentIndex.setActiveSegmentIndex(
-        'SEGMENTATION_1',
-        CornerstoneToolManager.segmentationCounter
-    );
+
+    const { segmentation: segState } = store.getState().viewer;
+    if (segState.currentSegmentationId) {
+
+        // get the current segmententation
+        const segmentation = segState.segmentations.find(
+            (segmentation) => segmentation.id === segState.currentSegmentationId
+        );
+
+        store.dispatch(viewerSliceActions.addSegment(segState.currentSegmentationId!));
+
+        cornerstoneTools.segmentation.segmentIndex.setActiveSegmentIndex(
+            segState.currentSegmentationId!,
+            segmentation!.segmentsCount
+        );
+    }
 };
 
 // Add a new segmentation to the viewer state
 export const addSegmentation = async () => {
     const state = store.getState();
-    const { segmentationItems, selectedViewportId, renderingEngineId, currentToolGroupId } = state.viewer;
+    const { segmentation, selectedViewportId, renderingEngineId, currentToolGroupId } = state.viewer;
     const renderingEngine = cornerstone.getRenderingEngine(renderingEngineId);
     const viewport = renderingEngine?.getViewport(selectedViewportId);
-    CornerstoneToolManager.segmentationCounter = 1;
+
 
     if (!viewport) {
         console.error(`Failed to add segmentation: viewport with ID '${selectedViewportId}' not found`);
@@ -32,7 +43,7 @@ export const addSegmentation = async () => {
     }
 
     const volumeId = viewport.getActorUIDs()[0];
-    const newSegmentationId = `SEGMENTATION_${segmentationItems.length + 1}`;
+    const newSegmentationId = `SEGMENTATION_${segmentation.segmentations.length}`;
 
     await cornerstone.volumeLoader.createAndCacheDerivedVolume(volumeId, {
         volumeId: newSegmentationId
@@ -43,10 +54,11 @@ export const addSegmentation = async () => {
         representation: {
             type: cornerstoneTools.Enums.SegmentationRepresentations.Labelmap,
             data: {
-                volumeId: newSegmentationId
+                volumeId: newSegmentationId,
             }
         }
     });
+
 
     const [uid] = await cornerstoneTools.segmentation.addSegmentationRepresentations(currentToolGroupId, [
         {
@@ -55,29 +67,28 @@ export const addSegmentation = async () => {
         }
     ]);
 
-    await cornerstoneTools.segmentation.activeSegmentation.setActiveSegmentationRepresentation(
+    cornerstoneTools.segmentation.activeSegmentation.setActiveSegmentationRepresentation(
         currentToolGroupId,
-        uid
+        uid,
     );
 
-    cornerstoneTools.segmentation.segmentIndex.setActiveSegmentIndex(
-        newSegmentationId,
-        CornerstoneToolManager.segmentationCounter
-    );
+    // cornerstoneTools.segmentation.segmentIndex.setActiveSegmentIndex(
+    //     newSegmentationId,
+    //     0
+    // );
 
     store.dispatch(
         viewerSliceActions.addSegmentation({
-            newSegmentationId
-        })
-    );
-    store.dispatch(
-        viewerSliceActions.addSegmentationUID({
-            uid
+            uid,
+            id: newSegmentationId,
+            segmentsCount: 1,
+            activeSegment: 1,
         })
     );
 
     viewport.render();
 };
+
 
 // Download the current segmentation mask as a dcm file
 export const downloadSegmentation = async () => {

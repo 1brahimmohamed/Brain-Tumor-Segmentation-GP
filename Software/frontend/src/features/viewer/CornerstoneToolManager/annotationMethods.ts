@@ -1,7 +1,6 @@
 import store from '@/redux/store.ts';
 import * as cornerstoneTools from '@cornerstonejs/tools';
 import * as cornerstone from '@cornerstonejs/core';
-import { ANNOTATION_TOOLS } from './tools';
 import CornerstoneToolManager from './CornerstoneToolManager';
 
 // Download the current annotations as a JSON file and remove all the annotations from the rendering engine
@@ -12,7 +11,6 @@ export const downloadAnnotations = () => {
     const renderingEngine = cornerstone.getRenderingEngine(renderingEngineId);
 
     const annotations = cornerstoneTools.annotation.state.getAllAnnotations();
-    console.log(annotations);
     const annotationsString = JSON.stringify(annotations);
     // Create a Blob from the JSON string
     const blob = new Blob([annotationsString], {
@@ -33,8 +31,6 @@ export const downloadAnnotations = () => {
     // Remove the link from the document
     document.body.removeChild(downloadLink);
 
-    cornerstoneTools.annotation.state.removeAllAnnotations();
-
     renderingEngine?.render();
 };
 
@@ -51,10 +47,8 @@ export const loadAnnotations = () => {
             const state = store.getState();
             const { renderingEngineId } = state.viewer;
             const renderingEngine = cornerstone.getRenderingEngine(renderingEngineId);
-
             const annotationsString = event.target?.result as string;
             const annotations = JSON.parse(annotationsString);
-            console.log(annotations);
 
             try {
                 annotations.forEach((annotation: cornerstoneTools.Types.Annotation) => {
@@ -62,10 +56,12 @@ export const loadAnnotations = () => {
                         annotation,
                         annotation.metadata.FrameOfReferenceUID
                     );
+
+                    CornerstoneToolManager.setToolActive(annotation.metadata.toolName, 1);
                 });
 
-                CornerstoneToolManager.setToolActive(ANNOTATION_TOOLS['Length'].toolName, 1);
                 cornerstoneTools.annotation.visibility.showAllAnnotations();
+
             } catch (error) {
                 console.error(`Failed to load annotations: ${error}`);
             }
@@ -73,7 +69,12 @@ export const loadAnnotations = () => {
             renderingEngine?.render();
         };
 
-        reader.readAsText(event.target?.files[0]);
+        let eventTarget = event.target as HTMLInputElement || null;
+
+        if (eventTarget?.files) {
+            reader.readAsText(eventTarget.files[0]);
+        }
+
     });
 
     // Trigger a click on the input element to open the file dialog
