@@ -1,8 +1,14 @@
 import {AdvancedToolBox} from "@ui/library";
 import SegmentationGroupTable from "@ui/library/SegmentationGroupTable/SegmentationGroupTable.tsx";
-import advancedToolConfig from "@features/viewer/ViewerToolPanel/segmentation-config.ts";
+import advancedToolConfig, {
+    handleSegmentationDelete,
+    handleSegmentationVisibilityToggle, handleSegmentClick,
+    handleSegmentLockToggle,
+    handleSegmentVisibilityToggle
+} from "@features/viewer/ViewerToolPanel/segmentation-config.ts";
 import {CornerstoneToolManager} from "../CornerstoneToolManager";
 import * as cornerstoneTools from '@cornerstonejs/tools';
+
 
 const SegmentationTab = () => {
 
@@ -18,7 +24,7 @@ const SegmentationTab = () => {
                     {
                         "id": "4be5-b9b2-ed33-fa86970568e7",
                         "volumeId": "a3b0f15f-4be5-b9b2-ed33-fa86970568e7",
-                        "activeSegmentIndex": 2,
+                        "activeSegmentIndex": 1,
                         "label": "Segmentation 1",
                         "type": "LABELMAP",
                         "segments": [
@@ -33,7 +39,7 @@ const SegmentationTab = () => {
                                 "opacity": 255,
                                 "isVisible": false,
                                 "isLocked": true,
-                                isActive: true
+                                isActive: false
                             },
                             {
                                 "label": "Segment 2",
@@ -46,7 +52,7 @@ const SegmentationTab = () => {
                                 "opacity": 255,
                                 "isVisible": true,
                                 "isLocked": false,
-                                isActive: false
+                                isActive: true
 
                             },
                             {
@@ -97,13 +103,13 @@ const SegmentationTab = () => {
                 showAddSegmentation={true}
                 showAddSegment={true}
                 segmentationConfig={{
-                    "fillAlpha": 0.5,
-                    "fillAlphaInactive": 0.5,
-                    "outlineWidthActive": 2,
-                    "outlineOpacityActive": 1,
-                    "renderFill": true,
-                    "renderInactiveSegmentations": true,
-                    "renderOutline": true
+                    fillAlpha: 0.5,
+                    fillAlphaInactive: 0.5,
+                    outlineWidthActive: 2,
+                    outlineOpacityActive: 1,
+                    renderFill: true,
+                    renderInactiveSegmentations: true,
+                    renderOutline: false
                 }}
                 setFillAlpha={() => {
                 }}
@@ -115,35 +121,25 @@ const SegmentationTab = () => {
                 }}
                 setRenderFill={() => {
                 }}
-                onSegmentAdd={() => {
-                    CornerstoneToolManager.addSegmentToSegmentation();
-                }}
-                onSegmentClick={() => {
-                }}
-                onSegmentationAdd={async () => {
-                    await CornerstoneToolManager.addSegmentation();
-                }}
+                onSegmentAdd={() => CornerstoneToolManager.addSegmentToSegmentation()}
+                onSegmentClick={handleSegmentClick}
+                onSegmentationAdd={async () => await CornerstoneToolManager.addSegmentation()}
                 onSegmentationClick={() => {
                 }}
-                onSegmentationDelete={() => {
-                }}
+                onSegmentationDelete={handleSegmentationDelete}
                 onSegmentationDownload={() => {
                     console.log(cornerstoneTools.segmentation.state.getSegmentations())
                 }}
                 onSegmentationEdit={() => {
                 }}
-                onSegmentDelete={() => {
-                }}
+                onSegmentDelete={()=>{}}
                 onSegmentEdit={() => {
                 }}
-                onToggleSegmentationVisibility={() => {
-                }}
+                onToggleSegmentationVisibility={handleSegmentationVisibilityToggle}
                 onSegmentColorClick={() => {
                 }}
-                onToggleSegmentLock={() => {
-                }}
-                onToggleSegmentVisibility={() => {
-                }}
+                onToggleSegmentLock={handleSegmentLockToggle}
+                onToggleSegmentVisibility={handleSegmentVisibilityToggle}
                 setRenderInactiveSegmentations={() => {
                 }}
                 setRenderOutline={() => {

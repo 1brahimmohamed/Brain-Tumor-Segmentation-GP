@@ -10,6 +10,7 @@ const {
 
 const {segmentation: segmentationUtils} = cstUtils;
 
+// ---------------------- Toolbox Functions ---------------------- //
 const handleToolChange = async (tool: string) => {
     // get cornerstone segmentations
     const segmentations = cornerstoneTools.segmentation.state.getSegmentations();
@@ -86,13 +87,13 @@ const advancedToolConfig: TItem[] = [
                 max: 10,
                 value: 5,
                 step: 1,
-                onChange: (num: number| string) => handleBrushSizeChange(num as number)
+                onChange: (num: number | string) => handleBrushSizeChange(num as number)
             },
             {
                 name: "Mode",
                 type: "radio",
                 value: "Circle",
-                onChange: (mode:  number| string ) => handleSegModeChange(mode as string),
+                onChange: (mode: number | string) => handleSegModeChange(mode as string),
                 values: [
                     {
                         value: "Circle",
@@ -120,13 +121,13 @@ const advancedToolConfig: TItem[] = [
                 max: 10,
                 value: 5,
                 step: 1,
-                onChange: (num:  number| string) => handleBrushSizeChange(num as number)
+                onChange: (num: number | string) => handleBrushSizeChange(num as number)
             },
             {
                 name: "Mode",
                 type: "radio",
                 value: "Circle",
-                onChange: (mode:  number| string) => handleEraserModeChange(mode as string),
+                onChange: (mode: number | string) => handleEraserModeChange(mode as string),
                 values: [
                     {
                         value: "Circle",
@@ -150,7 +151,7 @@ const advancedToolConfig: TItem[] = [
                 name: "Mode",
                 type: "radio",
                 value: "Circle",
-                onChange: (mode:  number| string) => handleShapeChange(mode as string),
+                onChange: (mode: number | string) => handleShapeChange(mode as string),
                 values: [
                     {
                         value: "Circle",
@@ -170,4 +171,81 @@ const advancedToolConfig: TItem[] = [
     }
 ]
 
+
+// ---------------------- Segmentation Table Functions ---------------------- //
+
+const handleSegmentationVisibilityToggle = (segmentationId: string) => {
+
+    const currentToolGroupId = store.getState().viewer.currentToolGroupId;
+
+    const currentVisibility =
+        cornerstoneTools
+            .segmentation
+            .config
+            .visibility
+            .getSegmentationVisibility(currentToolGroupId, segmentationId)
+
+    cornerstoneTools
+        .segmentation
+        .config
+        .visibility
+        .setSegmentationVisibility(currentToolGroupId, segmentationId, !currentVisibility)
+}
+
+const handleSegmentVisibilityToggle = (segmentationId: string, segmentIndex: number) => {
+    const currentToolGroupId = store.getState().viewer.currentToolGroupId;
+
+    const currentVisibility =
+        cornerstoneTools
+            .segmentation
+            .config
+            .visibility
+            .getSegmentVisibility(currentToolGroupId, segmentationId, segmentIndex);
+
+    cornerstoneTools
+        .segmentation
+        .config
+        .visibility
+        .setSegmentVisibility(currentToolGroupId, segmentationId, segmentIndex, !currentVisibility);
+
+}
+
+const handleSegmentLockToggle = (segmentationId: string, segmentIndex: number) => {
+
+    const currentLock =
+        cornerstoneTools
+            .segmentation
+            .segmentLocking
+            .isSegmentIndexLocked(segmentationId, segmentIndex);
+
+    cornerstoneTools
+        .segmentation
+        .segmentLocking
+        .setSegmentIndexLocked(segmentationId, segmentIndex, !currentLock);
+
+}
+
+const handleSegmentationDelete = (segmentationId: string) => {
+    const currentToolGroupId = store.getState().viewer.currentToolGroupId;
+
+    cornerstoneTools
+        .segmentation
+        .removeSegmentationsFromToolGroup(currentToolGroupId, [segmentationId]);
+
+}
+
+const handleSegmentClick = (segmentationId: string, segmentIndex: number) => {
+
+    console.log("Segment Clicked", segmentationId, segmentIndex);
+}
+
+export {
+    handleSegmentationVisibilityToggle,
+    handleSegmentVisibilityToggle,
+    handleSegmentLockToggle,
+    handleSegmentationDelete,
+    handleSegmentClick,
+
+
+}
 export default advancedToolConfig;

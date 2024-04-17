@@ -35,15 +35,15 @@ type SegmentationGroupTableProps = {
     onSegmentationAdd: () => void;
     onSegmentationEdit: () => void;
     onSegmentationClick: (segmentationId: string) => void;
-    onSegmentationDelete: () => void;
+    onSegmentationDelete: (segmentationId: string) => void;
     onSegmentationDownload: () => void;
-    onSegmentClick: () => void;
+    onSegmentClick: (segmentationId: string, segmentIndex: number) => void;
     onSegmentAdd: (segmentId: string) => void;
     onSegmentDelete: () => void;
     onSegmentEdit: () => void;
-    onToggleSegmentationVisibility: () => void;
-    onToggleSegmentVisibility: () => void;
-    onToggleSegmentLock: () => void;
+    onToggleSegmentationVisibility: (segmentationId: string) => void;
+    onToggleSegmentVisibility: (segmentationId: string, segmentIndex: number) => void;
+    onToggleSegmentLock: (segmentationId: string, segmentIndex: number) => void;
     onSegmentColorClick: () => void;
     setFillAlpha: () => void;
     setFillAlphaInactive: () => void;
@@ -95,6 +95,7 @@ const SegmentationGroupTable = ({
         onSegmentationClick(segmentationId);
         setActiveSegmentationId(segmentationId);
     };
+
 
     useEffect(() => {
         // find the first active segmentation to set

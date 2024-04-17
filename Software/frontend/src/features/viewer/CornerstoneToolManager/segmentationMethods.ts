@@ -4,7 +4,6 @@ import * as cornerstone from '@cornerstonejs/core';
 import { viewerSliceActions } from '@features/viewer/viewer-slice.ts';
 import { adaptersSEG, helpers } from '@cornerstonejs/adapters';
 import dcmjs from 'dcmjs';
-import label from "@ui/library/Label/Label.tsx";
 
 const { downloadDICOMData } = helpers;
 const { Cornerstone3D } = adaptersSEG;

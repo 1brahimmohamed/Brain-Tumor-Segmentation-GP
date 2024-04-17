@@ -3,7 +3,7 @@ import { InputRange, InputNumber, CheckBox } from '@ui/library';
 import classNames from 'classnames';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAdd } from '@fortawesome/free-solid-svg-icons';
+import {faChevronDown} from '@fortawesome/free-solid-svg-icons';
 
 const getRoundedValue = (value: number) => {
     return Math.round(value * 100) / 100;
@@ -27,36 +27,36 @@ const ActiveSegmentationConfig = ({
     setFillAlpha
 }: TActiveSegmentationConfig) => {
     return (
-        <div className="flex justify-between px-3 pt-[13px] text-[12px]">
+        <div className="flex justify-between px-3 pt-3 text-md">
             <div className="flex flex-col items-start">
-                <div className="mb-[12px] text-white">{'Active'}</div>
+                <div className="mb-2 text-white">{'Active'}</div>
                 <CheckBox
                     label={'Outline'}
                     checked={config.renderOutline}
-                    labelClassName="text-[12px] pl-1 pt-1"
-                    className="mb-[9px]"
+                    labelClassName="text-md pl-1 pt-1"
+                    className="mb-2"
                     onChange={setRenderOutline}
                 />
                 <CheckBox
                     label={'Fill'}
                     checked={config.renderFill}
-                    labelClassName="text-[12px] pl-1 pt-1"
-                    className="mb-[9px]"
+                    labelClassName="text-md pl-1 pt-1"
+                    className="mb-2"
                     onChange={setRenderFill}
                 />
             </div>
 
-            <div className="col-span-2 flex flex-col items-center">
-                <div className="mb-[12px] text-[10px] text-[#b3b3b3]">{'Opacity'}</div>
+            <div className="col-span-2 flex flex-col items-center text-md">
+                <div className="mb-2 text-white">{'Opacity'}</div>
                 <InputRange
                     minValue={0}
                     maxValue={100}
                     value={getRoundedValue(config.outlineOpacity * 100)}
                     onChange={setOutlineOpacityActive}
                     step={1}
-                    containerClassName="mt-[4px] mb-[9px]"
-                    inputClassName="w-[64px]"
-                    labelClassName="text-white text-[12px]"
+                    containerClassName="mt-1 mb-3"
+                    inputClassName="w-20"
+                    labelClassName="text-white"
                     unit="%"
                 />
                 <InputRange
@@ -65,21 +65,21 @@ const ActiveSegmentationConfig = ({
                     value={getRoundedValue(config.fillAlpha * 100)}
                     onChange={setFillAlpha}
                     step={1}
-                    containerClassName="mt-[4px] mb-[9px]"
-                    inputClassName="w-[64px]"
-                    labelClassName="text-white text-[12px]"
+                    containerClassName="mt-1 mb-3"
+                    inputClassName="w-20"
+                    labelClassName="text-white text-md"
                     unit="%"
                 />
             </div>
 
             <div className="flex flex-col items-center">
-                <div className="mb-[12px] text-[10px] text-[#b3b3b3]">{'Size'}</div>
+                <div className="mb-1 text-md text-gray-400">{'Size'}</div>
                 <InputNumber
                     value={config.outlineWidthActive}
                     onChange={setOutlineWidthActive}
                     minValue={0}
                     maxValue={10}
-                    className="-mt-1"
+                    className="mt-1"
                 />
             </div>
         </div>
@@ -102,22 +102,22 @@ const InactiveSegmentationConfig = ({
             <CheckBox
                 label={'Display inactive segmentations'}
                 checked={config.renderInactiveSegmentations}
-                labelClassName="text-[12px]"
-                className="mb-[9px]"
+                labelClassName="text-md"
+                className="mb-2"
                 onChange={setRenderInactiveSegmentations}
             />
 
             <div className="flex items-center space-x-2 pl-4">
-                <span className="text-[10px] text-[#b3b3b3]">{'Opacity'}</span>
+                <span className="text-md text-gray-400">{'Opacity'}</span>
                 <InputRange
                     minValue={0}
                     maxValue={100}
                     value={getRoundedValue(config.fillAlphaInactive * 100)}
                     onChange={setFillAlphaInactive}
                     step={1}
-                    containerClassName="mt-[4px]"
-                    inputClassName="w-[64px]"
-                    labelClassName="text-white text-[12px]"
+                    containerClassName="mt-1 mb-3"
+                    inputClassName="w-20"
+                    labelClassName="text-white"
                     unit="%"
                 />
             </div>
@@ -146,43 +146,45 @@ const SegmentationConfig = ({
     setRenderInactiveSegmentations,
     setRenderOutline
 }: TSegmentationConfig) => {
-    const { initialConfig } = segmentationConfig;
+
     const [isMinimized, setIsMinimized] = useState(true);
     return (
         <div className="bg-primary-dark select-none">
             <div>
                 <ActiveSegmentationConfig
-                    config={initialConfig}
+                    config={segmentationConfig}
                     setFillAlpha={setFillAlpha}
                     setOutlineWidthActive={setOutlineWidthActive}
                     setOutlineOpacityActive={setOutlineOpacityActive}
                     setRenderFill={setRenderFill}
                     setRenderOutline={setRenderOutline}
                 />
-                <div className="mx-1 mb-[8px] h-[1px] bg-[#212456]"></div>
+                <hr className={"border-AAPrimary m-2"}/>
                 <div
                     onClick={() => setIsMinimized(!isMinimized)}
-                    className="flex cursor-pointer items-center pl-2 pb-[9px]"
+                    className="flex cursor-pointer items-center pl-2 pb-2 space-x-2"
                 >
                     <FontAwesomeIcon
-                        icon={faAdd}
+                        icon={faChevronDown}
                         name="panel-group-open-close"
-                        className={classNames('h-5 w-5 cursor-pointer text-white transition duration-300', {
-                            'rotate-90 transform': !isMinimized
+                        className={classNames('h-3 w-3 cursor-pointer text-white transition duration-300 -rotate-90 transform', {
+                            'rotate-0 transform': !isMinimized
                         })}
                     />
 
-                    <span className="text-[12px] font-[300] text-[#d8d8d8]">{'Inactive segmentations'}</span>
+                    <span className="text-md font-[300] text-gray-300">{'Inactive segmentations'}</span>
                 </div>
                 {!isMinimized && (
                     <InactiveSegmentationConfig
-                        config={initialConfig}
+                        config={segmentationConfig}
                         setRenderInactiveSegmentations={setRenderInactiveSegmentations}
                         setFillAlphaInactive={setFillAlphaInactive}
                     />
                 )}
             </div>
-            <div className="h-[6px] bg-black "></div>
+
+            <hr className={"border-AASecondShade border-2 my-2"}/>
+
         </div>
     );
 };

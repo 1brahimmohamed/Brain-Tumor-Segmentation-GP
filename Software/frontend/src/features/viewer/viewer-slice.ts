@@ -29,7 +29,7 @@ const initialState: IStoreViewerSlice = {
     segmentation: {
         currentSegmentationId: null,
         segmentations: []
-    }
+    },
     segmentationItems: [],
     segmentationMap: []
 };

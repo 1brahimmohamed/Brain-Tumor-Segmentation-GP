@@ -29,7 +29,7 @@ type TSegmentationDropDownRow = {
     };
     onActiveSegmentationChange: (state: any) => void;
     disableEditing?: boolean;
-    onToggleSegmentationVisibility?: (state: any) => void;
+    onToggleSegmentationVisibility?: (segmentationId: string) => void;
     onSegmentationEdit?: (state: any) => void;
     onSegmentationDownload?: (state: any) => void;
     onSegmentationDownloadRTSS?: (state: any) => void;
@@ -46,7 +46,6 @@ function SegmentationDropDownRow({
                                      onToggleSegmentationVisibility,
                                      onSegmentationEdit,
                                      onSegmentationDownload,
-
                                      onSegmentationDelete,
                                      onSegmentationAdd
                                  }: TSegmentationDropDownRow) {
