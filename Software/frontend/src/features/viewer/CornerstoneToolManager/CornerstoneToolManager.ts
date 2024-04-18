@@ -4,7 +4,12 @@ import {Enums} from '@cornerstonejs/core';
 import {viewerSliceActions} from '@features/viewer/viewer-slice.ts';
 import {ANNOTATION_TOOLS, SEGMENTATION_TOOLS, BRUSH_STRATEGIES, BRUSH_INSTANCE_NAMES} from './tools';
 import {downloadAnnotations, loadAnnotations} from './annotationMethods';
-import {addSegmentToSegmentation, addSegmentation, downloadSegmentation} from './segmentationMethods';
+import {
+    addSegmentToSegmentation,
+    addSegmentation,
+    downloadSegmentation,
+    uploadSegmentation
+} from './segmentationMethods';
 import {setToolActive, setCurrentToolGroupId} from './toolsMethods';
 
 
@@ -138,6 +143,9 @@ class CornerstoneToolManager {
 
     // Download the current segmentation mask as a dcm file
     static downloadSegmentation = downloadSegmentation;
+
+    // Upload segmentation mask from a dcm file
+    static uploadSegmentation = uploadSegmentation;
 }
 
 export default CornerstoneToolManager;

@@ -14,7 +14,8 @@ import {
     DarkModeOutlined as DarkModeOutlinedIcon,
     LightModeOutlined as LightModeOutlinedIcon,
     Translate as LanguagesIcon,
-    SettingsOutlined as SettingsOutlinedIcon
+    SettingsOutlined as SettingsOutlinedIcon,
+    Upload as UploadIcon
 } from '@mui/icons-material';
 import { LuAxis3D } from 'react-icons/lu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -27,10 +28,7 @@ import {
     handleLanguageChange,
     handleSettingsItemClick
 } from '@features/top-bars/topbars-actions.ts';
-import {
-    ANNOTATION_TOOLS,
-    SEGMENTATION_TOOLS
-} from '@/features/viewer/CornerstoneToolManager/';
+import { ANNOTATION_TOOLS, SEGMENTATION_TOOLS } from '@/features/viewer/CornerstoneToolManager/';
 
 import LayoutSelector from '@features/viewer/components/LayoutSelector.tsx';
 import {
@@ -48,7 +46,7 @@ import {
     ZoomButtonItems,
     WindowButtonItems
 } from '@features/viewer/ViewerTopBar/options-menu-items';
-import SegmentationButtonItems from './options-menu-items/segmentation-button-items';
+import CornerstoneToolManager from '@/features/viewer/CornerstoneToolManager/CornerstoneToolManager';
 
 export const VIEWER_SETTINGS_MENU_ITEMS = ['About', 'License Agreement', 'Help', 'Shortcuts'];
 
@@ -89,12 +87,6 @@ const VIEWER_TOOLS_BUTTONS = [
         icon: <MagnifyIcon />
     },
     {
-        title: SEGMENTATION_TOOLS['Brush'].toolName,
-        icon: <FaPaintBrush />,
-        onClick: handleToolClick,
-        menuComponent: <ViewerButtonMenu items={SegmentationButtonItems} />
-    },
-    {
         title: 'Scroll',
         icon: <FontAwesomeIcon icon={faLayerGroup} />,
         onClick: handleToolClick
@@ -115,8 +107,11 @@ const VIEWER_TOOLS_BUTTONS = [
         onClick: toggleFullScreen
     },
     {
-        title: 'Export',
-        icon: <ExportIcon />
+        title: 'SEG',
+        onClick: () => {
+            CornerstoneToolManager.uploadSegmentation();
+        },
+        icon: <UploadIcon />
     },
     {
         icon: <InfoIcon />,
