@@ -4,7 +4,7 @@ import { INotification } from './notification.ts';
 import { IStore, IStoreUISlice, IStoreStudiesSlice, IStoreViewerSlice, IStoreAuthSlice } from './store.ts';
 import { IDicomTableColumnHead, IDicomTableRow } from './studies-table.ts';
 import { IDicomTableStudy, IDicomSeriesData, IDicomStudyData } from './study.ts';
-import { IViewportConfig, IViewportSliceState, ILayout } from './viewer.ts';
+import { IViewportConfig, IViewportSliceState, ILayout, ISegmentation } from './viewer.ts';
 
 export type {
     NotFoundProps,
@@ -24,5 +24,6 @@ export type {
     IDicomStudyData,
     IViewportConfig,
     IViewportSliceState,
-    ILayout
+    ILayout,
+    ISegmentation
 };

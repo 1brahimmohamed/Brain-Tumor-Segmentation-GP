@@ -1,5 +1,5 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {IStoreViewerSlice} from '@models/store.ts';
+import { createSlice } from '@reduxjs/toolkit';
+import { IStoreViewerSlice } from '@models/store.ts';
 import viewerUiReducer from '@features/viewer/viewer-ui-reducers.ts';
 import viewerViewportReducer from '@features/viewer/viewer-viewport-reducers.ts';
 import viewerAnnotationReducer from './viewer-annotation-reducers';
@@ -26,12 +26,7 @@ const initialState: IStoreViewerSlice = {
     currentToolGroupId: '',
     selectedCornerstoneTools: [],
     viewportsWithCinePlayer: [],
-    segmentation: {
-        currentSegmentationId: null,
-        segmentations: []
-    },
-    segmentationItems: [],
-    segmentationMap: []
+    segmentations: []
 };
 
 const viewportsSlice = createSlice({

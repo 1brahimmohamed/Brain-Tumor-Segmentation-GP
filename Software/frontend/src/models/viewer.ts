@@ -27,8 +27,22 @@ export interface IAnnotationTool {
 }
 
 export interface ISegmentation {
-    uid: string,
-    id: string,
-    segmentsCount: number,
-    activeSegment: number,
+    volumeId?: string;
+    uid: string;
+    activeSegmentIndex: number;
+    id: string;
+    isActive: boolean;
+    label: string;
+    type?: string;
+    colorLUTIndex?: number;
+    isVisible: boolean;
+    segments: {
+        opacity: number;
+        isActive: boolean;
+        segmentIndex: number;
+        color: number[];
+        label: string;
+        isVisible: boolean;
+        isLocked: boolean;
+    }[];
 }

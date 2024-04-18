@@ -1,6 +1,6 @@
-import {INotification, IUserInfo, IDicomStudyData, IDicomTableStudy, ILayout} from '@/models';
-import {TModeType} from '@assets/theme/theme';
-import {ISegmentation} from "@models/viewer.ts";
+import { INotification, IUserInfo, IDicomStudyData, IDicomTableStudy, ILayout } from '@/models';
+import { TModeType } from '@assets/theme/theme';
+import { ISegmentation } from '@models/viewer.ts';
 
 export interface IStoreUISlice {
     notification: INotification | null;
@@ -48,13 +48,32 @@ export interface IStoreViewerSlice {
         mouseBinding: number;
     }>;
     viewportsWithCinePlayer: string[];
-    segmentation: {
-        currentSegmentationId: string | null;
-        segmentations: Array<ISegmentation>;
-    }
-    segmentationItems: any[];
-    segmentationMap: any[];
+    segmentations: ISegmentation[];
 }
+
+export const initialState: IStoreViewerSlice = {
+    // ui
+    isFullScreen: false,
+    layout: {
+        numRows: 1,
+        numCols: 1
+    },
+    isRightPanelOpen: true,
+    isStudiesPanelOpen: false,
+    isInfoOnViewportsShown: true,
+
+    // viewport
+    viewports: [],
+    renderingEngineId: 'myRenderingEngine',
+    selectedViewportId: '',
+    selectedSeriesInstanceUid: '',
+    studyData: null,
+    annotationToolGroupIds: [],
+    currentToolGroupId: '',
+    selectedCornerstoneTools: [],
+    viewportsWithCinePlayer: [],
+    segmentations: []
+};
 
 export interface IStore {
     ui: IStoreUISlice;
