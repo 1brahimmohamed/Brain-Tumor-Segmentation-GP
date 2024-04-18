@@ -20,14 +20,14 @@ const getRenderingAndViewport = (selectedViewportId: string) => {
 };
 
 // Add Segment to a specific segmentation representation
-export const addSegmentToSegmentation = () => {
+export const addSegmentToSegmentation = (numberOfSegments: number) => {
     const { segmentations } = store.getState().viewer;
     // get the current segmententation
     const segmentation = segmentations.find((segmentation) => segmentation.isActive == true);
 
     if (segmentation) {
         // Dispatch action to add segment
-        store.dispatch(viewerSliceActions.addSegment(segmentation.id));
+        store.dispatch(viewerSliceActions.addSegment({ segmentationId: segmentation.id, numberOfSegments }));
 
         // Set active segment index
         cornerstoneTools.segmentation.segmentIndex.setActiveSegmentIndex(
@@ -45,7 +45,7 @@ export const addSegmentation = async () => {
 
     const newSegmentationId = `SEGMENTATION_${segmentations.length}`;
 
-    addSegmentationsToState(newSegmentationId, viewport, currentToolGroupId);
+    addSegmentationsToState(newSegmentationId, viewport, currentToolGroupId, 1);
 
     viewport.render();
 };
@@ -177,7 +177,12 @@ async function loadSegmentation(arrayBuffer: ArrayBuffer) {
     );
 
     // Add the segmentation to the state
-    const derivedVolume = await addSegmentationsToState(newSegmentationId, viewport, currentToolGroupId);
+    const derivedVolume = await addSegmentationsToState(
+        newSegmentationId,
+        viewport,
+        currentToolGroupId,
+        generateToolState.segMetadata.data.length - 1
+    );
     const derivedVolumeScalarData = derivedVolume.getScalarData();
     derivedVolumeScalarData.set(new Uint8Array(generateToolState.labelmapBufferArray[0]));
 
@@ -188,7 +193,8 @@ async function loadSegmentation(arrayBuffer: ArrayBuffer) {
 async function addSegmentationsToState(
     segmentationId: string,
     viewport: cornerstone.Types.IVolumeViewport,
-    currentToolGroupId: string
+    currentToolGroupId: string,
+    numberOfSegments: number
 ) {
     const viewportVolumeId = viewport.getActorUIDs()[0];
 
@@ -237,7 +243,7 @@ async function addSegmentationsToState(
         })
     );
 
-    addSegmentToSegmentation();
+    addSegmentToSegmentation(numberOfSegments);
 
     return derivedVolume;
 }

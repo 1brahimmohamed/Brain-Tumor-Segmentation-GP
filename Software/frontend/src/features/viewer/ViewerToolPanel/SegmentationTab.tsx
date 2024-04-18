@@ -36,7 +36,7 @@ const SegmentationTab = () => {
                 setOutlineWidthActive={() => {}}
                 setOutlineOpacityActive={() => {}}
                 setRenderFill={() => {}}
-                onSegmentAdd={() => CornerstoneToolManager.addSegmentToSegmentation()}
+                onSegmentAdd={() => CornerstoneToolManager.addSegmentToSegmentation(1)}
                 onSegmentClick={handleSegmentClick}
                 onSegmentationAdd={async () => await CornerstoneToolManager.addSegmentation()}
                 onSegmentationClick={onSegmentationClick}

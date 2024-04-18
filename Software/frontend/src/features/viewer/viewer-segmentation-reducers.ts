@@ -51,30 +51,41 @@ const viewerSegmentationReducer = {
         state.segmentations.splice(segmentationIndex, 1);
     },
 
-    addSegment(state: IStoreViewerSlice, action: PayloadAction<string>) {
+    addSegment(
+        state: IStoreViewerSlice,
+        action: PayloadAction<{ segmentationId: string; numberOfSegments: number }>
+    ) {
         return {
             ...state,
             segmentations: state.segmentations.map((segmentation) => {
-                if (segmentation.id === action.payload) {
+                if (segmentation.id === action.payload.segmentationId) {
                     const updatedSegments = segmentation.segments.map((segment) => ({
                         ...segment,
                         isActive: false
                     }));
+
+                    const segmentsToAdd = [];
+                    for (
+                        let i = segmentation.segments.length + 1;
+                        i < action.payload.numberOfSegments + segmentation.segments.length + 1;
+                        i++
+                    ) {
+                        segmentsToAdd.push({
+                            opacity: 255,
+                            isActive:
+                                i === action.payload.numberOfSegments + segmentation.segments.length + 1,
+                            segmentIndex: i,
+                            color: [0, 0, 0], // You can replace this with a color generation function
+                            label: `Segment ${i}`,
+                            isVisible: true,
+                            isLocked: false
+                        });
+                    }
+
                     return {
                         ...segmentation,
-                        activeSegmentIndex: segmentation.segments.length + 1,
-                        segments: [
-                            ...updatedSegments,
-                            {
-                                opacity: 255,
-                                isActive: true,
-                                segmentIndex: segmentation.segments.length + 1,
-                                color: [0, 0, 0], // TODO: generate color according to the index!
-                                label: `Segment ${segmentation.segments.length + 1}`,
-                                isVisible: true,
-                                isLocked: false
-                            }
-                        ]
+                        activeSegmentIndex: segmentation.segments.length + action.payload.numberOfSegments,
+                        segments: [...updatedSegments, ...segmentsToAdd]
                     };
                 }
                 return segmentation;
