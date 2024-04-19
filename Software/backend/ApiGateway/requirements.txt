@@ -6,3 +6,4 @@ environ==1.0
 python_environ==0.4.54
 Requests==2.31.0
 psycopg2==2.9.9
+pika==1.3.2
