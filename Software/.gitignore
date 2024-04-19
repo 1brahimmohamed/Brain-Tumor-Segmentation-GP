@@ -24,5 +24,11 @@
 /backend/Services/NiftiPACS/venv
 /backend/Services/NiftiPACS/uploads
 
+### RabbitMQ
+/backend/Services/RabbitMQ/**
+
+### Inference
+/backend/Services/Inference/studies/**
+
 **/__pycache__
 *.env
