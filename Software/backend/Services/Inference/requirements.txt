@@ -1,0 +1,2 @@
+pika==1.3.2
+dicomweb-client==0.59.1
