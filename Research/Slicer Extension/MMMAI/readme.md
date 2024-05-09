@@ -4,6 +4,19 @@
 
 This project implements a 3D Slicer extension for brain tumor segmentation using an AI models. The extension allows users to interactively edit the segmentation resulting from the models and retrain them to improve performance.
 
+## Useful links
+
+
+https://www.slicer.org/wiki/Documentation/Nightly/Developers/ExtensionWizard
+Extension wizard simplifies the process of creating extensions by providing a mechanism to create extensions and modules from templates.
+
+https://slicer.readthedocs.io/en/latest/developer_guide/script_repository.html
+Provides python code to handle nodes 
+
+https://slicer.readthedocs.io/en/latest/developer_guide/script_repository.html#segmentations
+https://discourse.slicer.org/t/setting-up-the-qmrml-segment-editor-widget-in-ui/24486
+Provides python code to add segment editor module within your own module
+
 ## Features
 
 - 3D Slicer extension for brain tumor segmentation
@@ -40,9 +53,9 @@ MMMAI/
 │   │                   └── Task501_BraTS2021
 │   │                       └── nnUNetTrainerV2__nnUNetPlansv2.1
 │   │                            └── fold_0
-│   │                                └── model chechPoint
+│   │                                └── model checkPoint
 │   ├── nvidia_util/
-│   │   └── model chechPoint
+│   │   └── model checkPoint
 │   │
 │   ├── Resources/
 │   │   └── ...
@@ -95,7 +108,7 @@ git clone https://github.com/MRCWirtz/nnUNet-1.git
 #### In slicer python console:
 
 #### For Vanilla nnunet model:
-
+checkpoint link https://drive.google.com/drive/folders/1vt1qO4dca5Wzo5rKwG10iA-iJPMpTKTB?usp=sharing
 1- 
 ```bash
 pip_install("nnunet")
@@ -113,7 +126,9 @@ pip_install(f"--index-url {index_url} torch=={torch_version} torchvision=={torch
 ```
 
 #### For NVIDIA nnunet model:
-STILL NOT WORKING
+STILL NOT WORKING 
+
+checkpoint link https://drive.google.com/drive/folders/1KF8PbHhGKyRfHzoCVIyiaPPjWTaUJA0w?usp=sharing
 ```bash
 pip_uinstall("torch==2.1.0")
 pip_uinstall("scikit-image")
@@ -132,8 +147,4 @@ torch_version = "2.1.0+cu118"
 
 # Install the packages without specifying versions for torchvision and torchaudio
 pip_install(f"--index-url {index_url} torch=={torch_version} torchvision torchaudio")
-```
-```bash
-pip_uninstall("scikit-learn")
-pip_install("scikit-learn")
 ```
