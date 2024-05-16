@@ -1,5 +1,4 @@
-import { AdvancedToolBox } from '@ui/library';
-import SegmentationGroupTable from '@ui/library/SegmentationGroupTable/SegmentationGroupTable.tsx';
+import {ActiveLearning, AdvancedToolBox, AISegmentation, SegmentationGroupTable} from '@ui/library';
 import advancedToolConfig, {
     handleSegmentationDelete,
     handleSegmentationVisibilityToggle,
@@ -8,16 +7,15 @@ import advancedToolConfig, {
     handleSegmentVisibilityToggle,
     onSegmentationClick
 } from '@features/viewer/ViewerToolPanel/segmentation-config.ts';
-import { CornerstoneToolManager } from '../CornerstoneToolManager';
-import * as cornerstoneTools from '@cornerstonejs/tools';
-import { useSelector } from 'react-redux';
-import { IStore } from '@/models';
+import {CornerstoneToolManager} from '../CornerstoneToolManager';
+import {useSelector} from 'react-redux';
+import {IStore} from '@/models';
 
 const SegmentationTab = () => {
     const segmentations = useSelector((store: IStore) => store.viewer.segmentations);
     return (
         <div>
-            <AdvancedToolBox title={'Segmentation Tools'} items={advancedToolConfig} />
+            <AdvancedToolBox title={'Segmentation Tools'} items={advancedToolConfig}/>
             <SegmentationGroupTable
                 segmentations={segmentations}
                 showAddSegmentation={true}
@@ -31,11 +29,16 @@ const SegmentationTab = () => {
                     renderInactiveSegmentations: true,
                     renderOutline: false
                 }}
-                setFillAlpha={() => {}}
-                setFillAlphaInactive={() => {}}
-                setOutlineWidthActive={() => {}}
-                setOutlineOpacityActive={() => {}}
-                setRenderFill={() => {}}
+                setFillAlpha={() => {
+                }}
+                setFillAlphaInactive={() => {
+                }}
+                setOutlineWidthActive={() => {
+                }}
+                setOutlineOpacityActive={() => {
+                }}
+                setRenderFill={() => {
+                }}
                 onSegmentAdd={() => CornerstoneToolManager.addSegmentToSegmentation(1)}
                 onSegmentClick={handleSegmentClick}
                 onSegmentationAdd={async () => await CornerstoneToolManager.addSegmentation()}
@@ -44,16 +47,26 @@ const SegmentationTab = () => {
                 onSegmentationDownload={() => {
                     CornerstoneToolManager.downloadSegmentation();
                 }}
-                onSegmentationEdit={() => {}}
-                onSegmentDelete={() => {}}
-                onSegmentEdit={() => {}}
+                onSegmentationEdit={() => {
+                }}
+                onSegmentDelete={() => {
+                }}
+                onSegmentEdit={() => {
+                }}
                 onToggleSegmentationVisibility={handleSegmentationVisibilityToggle}
-                onSegmentColorClick={() => {}}
+                onSegmentColorClick={() => {
+                }}
                 onToggleSegmentLock={handleSegmentLockToggle}
                 onToggleSegmentVisibility={handleSegmentVisibilityToggle}
-                setRenderInactiveSegmentations={() => {}}
-                setRenderOutline={() => {}}
+                setRenderInactiveSegmentations={() => {
+                }}
+                setRenderOutline={() => {
+                }}
             />
+
+            <ActiveLearning/>
+            <AISegmentation />
+
         </div>
     );
 };
