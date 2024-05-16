@@ -17,6 +17,12 @@ class HelpersUtil {
             return Math.floor(number * multiplier) / multiplier;
         }
     }
+
+    public static toProperCase(str: string): string {
+        return str.replace(/\w\S*/g, (txt) => {
+            return txt.charAt(0).toUpperCase() + txt.slice(1).toLowerCase();
+        });
+    }
 }
 
 export default HelpersUtil;
