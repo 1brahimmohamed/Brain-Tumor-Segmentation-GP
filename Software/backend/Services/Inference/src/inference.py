@@ -1,9 +1,19 @@
 import pika
-import time
 import processing
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 connection = pika.BlockingConnection(
-    pika.ConnectionParameters(host='rabbitmq', port=5672, credentials=pika.PlainCredentials('guest', 'guest')))
+    pika.ConnectionParameters(
+        host=os.getenv('RABBITMQ_HOST'),
+        port=os.getenv('RABBITMQ_PORT'),
+        credentials=pika.PlainCredentials(
+            os.getenv('RABBITMQ_USERNAME'),
+            os.getenv('RABBITMQ_PASSWORD')
+        ))
+)
 channel = connection.channel()
 
 channel.queue_declare(queue='inference', durable=True)
