@@ -6,29 +6,13 @@
 # Dependences
 **/node_modules/
 
-# ORTHANC Storage
-/backend/Services/Orthanc/storage
-
 # Backend
 **/pgdata
 **/venv/
 
-## Services
-
-### Orthanc
-/backend/Services/Orthanc/config/scripts/starter_script.sh
-
-
-### Nifti PACS
-/backend/Services/NiftiPACS/NiftiPACS/pgdata
-/backend/Services/NiftiPACS/venv
-/backend/Services/NiftiPACS/uploads
-
 ### RabbitMQ
 /backend/Services/RabbitMQ/**
 
-### Inference
-/backend/Services/Inference/studies/**
 
 **/__pycache__
 *.env
