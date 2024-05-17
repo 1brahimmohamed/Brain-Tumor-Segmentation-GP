@@ -1,4 +1,11 @@
-import {INotification, IUserInfo, IDicomStudyData, IDicomTableStudy, ILayout, IDicomSeriesData} from '@/models';
+import {
+    INotification,
+    IUserInfo,
+    IDicomStudyData,
+    IDicomTableStudy,
+    ILayout,
+    IDicomSeriesData
+} from '@/models';
 import { TModeType } from '@assets/theme/theme';
 import { ISegmentation } from '@models/viewer.ts';
 

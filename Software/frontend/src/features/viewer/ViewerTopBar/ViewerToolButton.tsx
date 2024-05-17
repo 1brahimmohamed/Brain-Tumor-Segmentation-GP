@@ -1,10 +1,10 @@
-import {ReactNode, useState} from 'react';
+import { ReactNode, useState } from 'react';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import {StyledDiv} from '@features/top-bars/components/StyledDiv.tsx';
+import { StyledDiv } from '@features/top-bars/components/StyledDiv.tsx';
 import SvgIcon from '@mui/material/SvgIcon';
-import {Box} from '@mui/material';
-import {useTheme} from '@mui/material';
-import {StyledMenu} from '@ui/library';
+import { Box } from '@mui/material';
+import { useTheme } from '@mui/material';
+import { StyledMenu } from '@ui/library';
 
 interface ICustomButtonProps {
     title: string;
@@ -14,7 +14,7 @@ interface ICustomButtonProps {
     sx?: any;
 }
 
-const ViewerToolButton = ({title, onClick, menuComponent, icon, sx}: ICustomButtonProps) => {
+const ViewerToolButton = ({ title, onClick, menuComponent, icon, sx }: ICustomButtonProps) => {
     const [anchorElement, setAnchorElement] = useState<HTMLButtonElement | null>(null);
     const theme = useTheme();
 
@@ -30,7 +30,7 @@ const ViewerToolButton = ({title, onClick, menuComponent, icon, sx}: ICustomButt
         if (onClick) {
             onClick(title, e);
         }
-    }
+    };
 
     const handleCloseMenu = () => {
         setAnchorElement(null);
@@ -55,9 +55,9 @@ const ViewerToolButton = ({title, onClick, menuComponent, icon, sx}: ICustomButt
                 <Box
                     onClick={handleDropdownClick}
                     className={'cursor-pointer'}
-                    sx={{color: theme.palette.secondary.main}}
+                    sx={{ color: theme.palette.secondary.main }}
                 >
-                    {menuComponent && <ArrowDropDownIcon/>}
+                    {menuComponent && <ArrowDropDownIcon />}
                 </Box>
             </StyledDiv>
 

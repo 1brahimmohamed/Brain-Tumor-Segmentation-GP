@@ -61,7 +61,6 @@ export const loadAnnotations = () => {
                 });
 
                 cornerstoneTools.annotation.visibility.showAllAnnotations();
-
             } catch (error) {
                 console.error(`Failed to load annotations: ${error}`);
             }
@@ -69,12 +68,11 @@ export const loadAnnotations = () => {
             renderingEngine?.render();
         };
 
-        let eventTarget = event.target as HTMLInputElement || null;
+        let eventTarget = (event.target as HTMLInputElement) || null;
 
         if (eventTarget?.files) {
             reader.readAsText(eventTarget.files[0]);
         }
-
     });
 
     // Trigger a click on the input element to open the file dialog

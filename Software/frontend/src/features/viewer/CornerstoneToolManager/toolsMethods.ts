@@ -2,7 +2,6 @@ import store from '@/redux/store.ts';
 import * as cornerstoneTools from '@cornerstonejs/tools';
 import { viewerSliceActions } from '@features/viewer/viewer-slice.ts';
 
-
 // Set the active tool for a specific mouse button
 export const setToolActive = (toolName: string, mouseButton: number, toolGroupId?: string) => {
     const state = store.getState();

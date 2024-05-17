@@ -1,6 +1,6 @@
-import {Dispatch} from '@reduxjs/toolkit';
-import {AxiosUtil} from '@/utilities';
-import {uiSliceActions} from "@ui/ui-slice.ts";
+import { Dispatch } from '@reduxjs/toolkit';
+import { AxiosUtil } from '@/utilities';
+import { uiSliceActions } from '@ui/ui-slice.ts';
 
 /**
  * Generate a new synthesis request using the provided model URL, study instance UID, and sequences.
@@ -13,8 +13,8 @@ import {uiSliceActions} from "@ui/ui-slice.ts";
 export const postNewSynthesisRequestThunk = (
     modelUrl: string,
     studyInstanceUid: string,
-    sequences: { [key: string]: string }) => {
-
+    sequences: { [key: string]: string }
+) => {
     return async (dispatch: Dispatch) => {
         const res = await AxiosUtil.sendRequest({
             method: 'POST',
@@ -32,8 +32,8 @@ export const postNewSynthesisRequestThunk = (
         dispatch(
             uiSliceActions.setNotification({
                 type: 'success',
-                content: "Synthesis request has been sent successfully!"
+                content: 'Synthesis request has been sent successfully!'
             })
         );
-    }
-}
+    };
+};

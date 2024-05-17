@@ -3,7 +3,7 @@ import { InputRange, InputNumber, CheckBox } from '@ui/library';
 import classNames from 'classnames';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faChevronDown} from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 const getRoundedValue = (value: number) => {
     return Math.round(value * 100) / 100;
@@ -146,7 +146,6 @@ const SegmentationConfig = ({
     setRenderInactiveSegmentations,
     setRenderOutline
 }: TSegmentationConfig) => {
-
     const [isMinimized, setIsMinimized] = useState(true);
     return (
         <div className="bg-primary-dark select-none">
@@ -159,7 +158,7 @@ const SegmentationConfig = ({
                     setRenderFill={setRenderFill}
                     setRenderOutline={setRenderOutline}
                 />
-                <hr className={"border-AAPrimary m-2"}/>
+                <hr className={'border-AAPrimary m-2'} />
                 <div
                     onClick={() => setIsMinimized(!isMinimized)}
                     className="flex cursor-pointer items-center pl-2 pb-2 space-x-2"
@@ -167,9 +166,12 @@ const SegmentationConfig = ({
                     <FontAwesomeIcon
                         icon={faChevronDown}
                         name="panel-group-open-close"
-                        className={classNames('h-3 w-3 cursor-pointer text-white transition duration-300 -rotate-90 transform', {
-                            'rotate-0 transform': !isMinimized
-                        })}
+                        className={classNames(
+                            'h-3 w-3 cursor-pointer text-white transition duration-300 -rotate-90 transform',
+                            {
+                                'rotate-0 transform': !isMinimized
+                            }
+                        )}
                     />
 
                     <span className="text-md font-[300] text-gray-300">{'Inactive segmentations'}</span>
@@ -183,8 +185,7 @@ const SegmentationConfig = ({
                 )}
             </div>
 
-            <hr className={"border-AASecondShade border-2 my-2"}/>
-
+            <hr className={'border-AASecondShade border-2 my-2'} />
         </div>
     );
 };

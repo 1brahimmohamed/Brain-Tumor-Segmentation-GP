@@ -1,5 +1,5 @@
-import settings from "@assets/settings.json";
-import {Button} from "@mui/material";
+import settings from '@assets/settings.json';
+import { Button } from '@mui/material';
 
 const SynthesisModels = () => {
     return (
@@ -11,36 +11,29 @@ const SynthesisModels = () => {
                 </p>
 
                 <dl className="mt-6 space-y-6 divide-y divide-AASecondShade border-t border-AAPrimary text-sm leading-6">
-                    {
-                        settings.synthesisModels.map((model) => (
-                            <div className="pt-6 flex" key={model.name}>
-                                <dt className="font-medium text-gray-300 sm:w-64 sm:flex-none sm:pr-6">{model.name}</dt>
-                                <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                                    <div className="text-gray-300">{model.url}</div>
-                                </dd>
-                                <Button
-                                    variant="outlined"
-                                    color="secondary"
-                                    size="small"
-                                >
-                                    Edit
-                                </Button>
-                            </div>
-                        ))
-                    }
+                    {settings.synthesisModels.map((model) => (
+                        <div className="pt-6 flex" key={model.name}>
+                            <dt className="font-medium text-gray-300 sm:w-64 sm:flex-none sm:pr-6">
+                                {model.name}
+                            </dt>
+                            <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
+                                <div className="text-gray-300">{model.url}</div>
+                            </dd>
+                            <Button variant="outlined" color="secondary" size="small">
+                                Edit
+                            </Button>
+                        </div>
+                    ))}
                 </dl>
 
-               <div className={"pt-10"}>
-                   <Button
-                       variant="contained"
-                       color="secondary"
-                   >
-                       Add
-                   </Button>
-               </div>
+                <div className={'pt-10'}>
+                    <Button variant="contained" color="secondary">
+                        Add
+                    </Button>
+                </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default SynthesisModels;

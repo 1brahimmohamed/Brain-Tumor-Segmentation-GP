@@ -1,8 +1,8 @@
-import {Box} from "@mui/material";
-import {OPTIONS} from "@features/top-bars/HomeTopBar/home-buttons.tsx";
-import CustomButton from "@features/top-bars/components/CustomButton.tsx";
-import {Link} from "react-router-dom";
-import {Logo} from "@ui/library";
+import { Box } from '@mui/material';
+import { OPTIONS } from '@features/top-bars/HomeTopBar/home-buttons.tsx';
+import CustomButton from '@features/top-bars/components/CustomButton.tsx';
+import { Link } from 'react-router-dom';
+import { Logo } from '@ui/library';
 
 const NeutralTopBar = () => {
     return (
@@ -29,7 +29,7 @@ const NeutralTopBar = () => {
                 ))}
             </Box>
         </Box>
-    )
-}
+    );
+};
 
 export default NeutralTopBar;

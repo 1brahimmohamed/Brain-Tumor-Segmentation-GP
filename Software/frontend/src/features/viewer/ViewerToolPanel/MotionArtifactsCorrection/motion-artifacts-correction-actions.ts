@@ -1,6 +1,6 @@
-import {Dispatch} from '@reduxjs/toolkit';
-import {AxiosUtil} from '@/utilities';
-import {uiSliceActions} from "@ui/ui-slice.ts";
+import { Dispatch } from '@reduxjs/toolkit';
+import { AxiosUtil } from '@/utilities';
+import { uiSliceActions } from '@ui/ui-slice.ts';
 
 /**
  * Sends a new motion correction request to the specified model URL.
@@ -14,7 +14,6 @@ export const postNewMotionCorrectionRequestThunk = (
     studyInstanceUid: string,
     seriesInstanceUid: string
 ) => {
-
     return async (dispatch: Dispatch) => {
         const res = await AxiosUtil.sendRequest({
             method: 'POST',
@@ -32,8 +31,8 @@ export const postNewMotionCorrectionRequestThunk = (
         dispatch(
             uiSliceActions.setNotification({
                 type: 'success',
-                content: "Motion Correction request has been sent successfully!"
+                content: 'Motion Correction request has been sent successfully!'
             })
         );
-    }
-}
+    };
+};

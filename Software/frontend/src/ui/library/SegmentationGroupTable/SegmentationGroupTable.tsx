@@ -1,11 +1,11 @@
-import {useEffect, useState} from 'react';
-import {PanelSection} from '@ui/library';
+import { useEffect, useState } from 'react';
+import { PanelSection } from '@ui/library';
 import SegmentationConfig from './SegmentationConfig';
 import SegmentationDropDownRow from './SegmentationDropDownRow';
 import NoSegmentationRow from './NoSegmentationRow';
 import AddSegmentRow from './AddSegmentRow';
 import SegmentationGroupSegment from './SegmentationGroupSegment';
-import {faCog} from "@fortawesome/free-solid-svg-icons";
+import { faCog } from '@fortawesome/free-solid-svg-icons';
 
 type SegmentationGroupTableProps = {
     segmentations: {
@@ -55,39 +55,39 @@ type SegmentationGroupTableProps = {
 };
 
 const SegmentationGroupTable = ({
-                                    segmentations,
-                                    // segmentation initial config
-                                    segmentationConfig,
-                                    // UI show/hide
-                                    disableEditing,
-                                    showAddSegmentation,
-                                    showAddSegment,
-                                    showDeleteSegment,
-                                    // segmentation/segment handlers
-                                    onSegmentationAdd,
-                                    onSegmentationEdit,
-                                    onSegmentationClick,
-                                    onSegmentationDelete,
-                                    onSegmentationDownload,
+    segmentations,
+    // segmentation initial config
+    segmentationConfig,
+    // UI show/hide
+    disableEditing,
+    showAddSegmentation,
+    showAddSegment,
+    showDeleteSegment,
+    // segmentation/segment handlers
+    onSegmentationAdd,
+    onSegmentationEdit,
+    onSegmentationClick,
+    onSegmentationDelete,
+    onSegmentationDownload,
 
-                                    // segment handlers
-                                    onSegmentClick,
-                                    onSegmentAdd,
-                                    onSegmentDelete,
-                                    onSegmentEdit,
-                                    onToggleSegmentationVisibility,
-                                    onToggleSegmentVisibility,
-                                    onToggleSegmentLock,
-                                    onSegmentColorClick,
-                                    // segmentation config handlers
-                                    setFillAlpha,
-                                    setFillAlphaInactive,
-                                    setOutlineWidthActive,
-                                    setOutlineOpacityActive,
-                                    setRenderFill,
-                                    setRenderInactiveSegmentations,
-                                    setRenderOutline
-                                }: SegmentationGroupTableProps) => {
+    // segment handlers
+    onSegmentClick,
+    onSegmentAdd,
+    onSegmentDelete,
+    onSegmentEdit,
+    onToggleSegmentationVisibility,
+    onToggleSegmentVisibility,
+    onToggleSegmentLock,
+    onSegmentColorClick,
+    // segmentation config handlers
+    setFillAlpha,
+    setFillAlphaInactive,
+    setOutlineWidthActive,
+    setOutlineOpacityActive,
+    setRenderFill,
+    setRenderInactiveSegmentations,
+    setRenderOutline
+}: SegmentationGroupTableProps) => {
     const [isConfigOpen, setIsConfigOpen] = useState<boolean>(false);
     const [activeSegmentationId, setActiveSegmentationId] = useState<string>('');
 
@@ -95,7 +95,6 @@ const SegmentationGroupTable = ({
         onSegmentationClick(segmentationId);
         setActiveSegmentationId(segmentationId);
     };
-
 
     useEffect(() => {
         // find the first active segmentation to set
@@ -150,7 +149,7 @@ const SegmentationGroupTable = ({
                     {segmentations?.length === 0 ? (
                         <div className="select-none bg-AAPrimary">
                             {showAddSegmentation && !disableEditing && (
-                                <NoSegmentationRow onSegmentationAdd={onSegmentationAdd}/>
+                                <NoSegmentationRow onSegmentationAdd={onSegmentationAdd} />
                             )}
                         </div>
                     ) : (
@@ -167,7 +166,7 @@ const SegmentationGroupTable = ({
                                 onToggleSegmentationVisibility={onToggleSegmentationVisibility}
                             />
                             {!disableEditing && showAddSegment && (
-                                <AddSegmentRow onClick={() => onSegmentAdd(activeSegmentationId)}/>
+                                <AddSegmentRow onClick={() => onSegmentAdd(activeSegmentationId)} />
                             )}
                         </div>
                     )}
@@ -179,7 +178,7 @@ const SegmentationGroupTable = ({
                                 return null;
                             }
 
-                            const {segmentIndex, color, label, isVisible, isLocked} = segment;
+                            const { segmentIndex, color, label, isVisible, isLocked } = segment;
                             return (
                                 <div className="mb-[1px]" key={segmentIndex}>
                                     <SegmentationGroupSegment

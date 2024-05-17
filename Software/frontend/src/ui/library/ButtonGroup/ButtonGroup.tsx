@@ -17,7 +17,7 @@ const ButtonGroup = ({
     className,
     orientation = ButtonEnums.orientation.horizontal,
     defaultActiveIndex = 0,
-                         activeTabColor
+    activeTabColor
 }: TButtonGroupProps) => {
     const [activeIndex, setActiveIndex] = useState(defaultActiveIndex);
 
@@ -49,7 +49,9 @@ const ButtonGroup = ({
                         key={index}
                         className={classnames(
                             'rounded-md px-2 py-1',
-                            isActive ? `text-white ${activeTabColor? activeTabColor: 'bg-AAPrimary'}` : 'text-primary-active bg-AAFirstShade'
+                            isActive
+                                ? `text-white ${activeTabColor ? activeTabColor : 'bg-AAPrimary'}`
+                                : 'text-primary-active bg-AAFirstShade'
                         )}
                         onClick={(e) => handleButtonClick(e, index)}
                     />

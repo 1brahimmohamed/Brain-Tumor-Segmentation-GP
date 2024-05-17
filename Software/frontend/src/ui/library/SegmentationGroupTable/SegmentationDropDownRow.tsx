@@ -1,6 +1,6 @@
-import {Select, Dropdown} from '@ui/library';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faEllipsis, faEye, faEyeSlash, faChevronDown} from '@fortawesome/free-solid-svg-icons';
+import { Select, Dropdown } from '@ui/library';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEllipsis, faEye, faEyeSlash, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 type TSegmentationDropDownRow = {
     segmentations: {
@@ -16,16 +16,16 @@ type TSegmentationDropDownRow = {
         }[];
     }[];
     activeSegmentation: {
-        id: string,
-        isActive: boolean,
-        label: string,
+        id: string;
+        isActive: boolean;
+        label: string;
         segments: {
-            segmentIndex: number,
-            color: number[],
-            label: string,
-            isVisible: boolean,
-            isLocked: boolean
-        }[]
+            segmentIndex: number;
+            color: number[];
+            label: string;
+            isVisible: boolean;
+            isLocked: boolean;
+        }[];
     };
     onActiveSegmentationChange: (state: any) => void;
     disableEditing?: boolean;
@@ -39,16 +39,16 @@ type TSegmentationDropDownRow = {
 };
 
 function SegmentationDropDownRow({
-                                     segmentations = [],
-                                     activeSegmentation,
-                                     onActiveSegmentationChange,
-                                     disableEditing,
-                                     onToggleSegmentationVisibility,
-                                     onSegmentationEdit,
-                                     onSegmentationDownload,
-                                     onSegmentationDelete,
-                                     onSegmentationAdd
-                                 }: TSegmentationDropDownRow) {
+    segmentations = [],
+    activeSegmentation,
+    onActiveSegmentationChange,
+    disableEditing,
+    onToggleSegmentationVisibility,
+    onSegmentationEdit,
+    onSegmentationDownload,
+    onSegmentationDelete,
+    onSegmentationAdd
+}: TSegmentationDropDownRow) {
     const handleChange = (option: any) => {
         onActiveSegmentationChange(option.value); // Notify the parent
     };
@@ -79,24 +79,24 @@ function SegmentationDropDownRow({
                     list={[
                         ...(!disableEditing
                             ? [
-                                {
-                                    title: 'Add new segmentation',
-                                    onClick: () => {
-                                        if (onSegmentationAdd) onSegmentationAdd();
-                                    }
-                                }
-                            ]
+                                  {
+                                      title: 'Add new segmentation',
+                                      onClick: () => {
+                                          if (onSegmentationAdd) onSegmentationAdd();
+                                      }
+                                  }
+                              ]
                             : []),
                         ...(!disableEditing
                             ? [
-                                {
-                                    title: 'Rename',
-                                    onClick: () => {
-                                        if (activeSegmentation && onSegmentationEdit)
-                                            onSegmentationEdit(activeSegmentation.id);
-                                    }
-                                }
-                            ]
+                                  {
+                                      title: 'Rename',
+                                      onClick: () => {
+                                          if (activeSegmentation && onSegmentationEdit)
+                                              onSegmentationEdit(activeSegmentation.id);
+                                      }
+                                  }
+                              ]
                             : []),
                         {
                             title: 'Delete',
@@ -111,13 +111,12 @@ function SegmentationDropDownRow({
                                 onClick: () => {
                                     if (onSegmentationDownload) onSegmentationDownload(activeSegmentation.id);
                                 }
-                            },
+                            }
                         ]
                     ]}
                 >
-                    <div
-                        className="hover:bg-AAPrimaryDark hover:bg-opacity-15 mx-1 grid h-[28px] w-[28px]  cursor-pointer place-items-center rounded-[4px]">
-                        <FontAwesomeIcon icon={faEllipsis}/>
+                    <div className="hover:bg-AAPrimaryDark hover:bg-opacity-15 mx-1 grid h-[28px] w-[28px]  cursor-pointer place-items-center rounded-[4px]">
+                        <FontAwesomeIcon icon={faEllipsis} />
                     </div>
                 </Dropdown>
             </div>
@@ -127,7 +126,7 @@ function SegmentationDropDownRow({
                     isClearable={false}
                     onChange={handleChange}
                     components={{
-                        DropdownIndicator: () => <FontAwesomeIcon icon={faChevronDown} className="mr-2"/>
+                        DropdownIndicator: () => <FontAwesomeIcon icon={faChevronDown} className="mr-2" />
                     }}
                     isSearchable={false}
                     options={selectOptions}
@@ -145,9 +144,9 @@ function SegmentationDropDownRow({
                     }
                 >
                     {activeSegmentation.segments[0].isVisible ? (
-                        <FontAwesomeIcon icon={faEye} className="text-white"/>
+                        <FontAwesomeIcon icon={faEye} className="text-white" />
                     ) : (
-                        <FontAwesomeIcon icon={faEyeSlash} className="text-white text-opacity-50"/>
+                        <FontAwesomeIcon icon={faEyeSlash} className="text-white text-opacity-50" />
                     )}
                 </div>
             </div>

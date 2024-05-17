@@ -8,11 +8,11 @@ import { Login, NotFound404 } from '@/pages';
 
 import DicomStudies from '@features/studies-table/dicom-studies-table/DicomStudies.tsx';
 import MainViewer from '@features/viewer/MainViewer';
-import Settings from "@ui/layouts/SettingsLayout.tsx";
-import General from "@features/settings/pages/General.tsx";
-import SegmentationModels from "@features/settings/pages/SegmentationModels.tsx";
-import MotionArtifactsModels from "@features/settings/pages/MotionArtifactsModels.tsx";
-import SynthesisModels from "@features/settings/pages/SynthesisModels.tsx";
+import Settings from '@ui/layouts/SettingsLayout.tsx';
+import General from '@features/settings/pages/General.tsx';
+import SegmentationModels from '@features/settings/pages/SegmentationModels.tsx';
+import MotionArtifactsModels from '@features/settings/pages/MotionArtifactsModels.tsx';
+import SynthesisModels from '@features/settings/pages/SynthesisModels.tsx';
 
 const AppRouter = createBrowserRouter([
     {

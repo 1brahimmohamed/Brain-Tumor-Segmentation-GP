@@ -1,6 +1,10 @@
 import store from '@/redux/store.ts';
 import { viewerSliceActions } from '@features/viewer/viewer-slice.ts';
-import {CornerstoneToolManager, ANNOTATION_TOOLS, SEGMENTATION_TOOLS} from '@/features/viewer/CornerstoneToolManager/';
+import {
+    CornerstoneToolManager,
+    ANNOTATION_TOOLS,
+    SEGMENTATION_TOOLS
+} from '@/features/viewer/CornerstoneToolManager/';
 
 export const toggleFullScreen = () => {
     const state = store.getState();

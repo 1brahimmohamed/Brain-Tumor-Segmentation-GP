@@ -1,6 +1,6 @@
-import {Dispatch} from '@reduxjs/toolkit';
-import {AxiosUtil} from '@/utilities';
-import {uiSliceActions} from "@ui/ui-slice.ts";
+import { Dispatch } from '@reduxjs/toolkit';
+import { AxiosUtil } from '@/utilities';
+import { uiSliceActions } from '@ui/ui-slice.ts';
 
 /**
  * Sends a new segmentation request using the provided model URL, study instance UID, and sequences.
@@ -12,8 +12,8 @@ import {uiSliceActions} from "@ui/ui-slice.ts";
 export const postNewSegmentationRequestThunk = (
     modelUrl: string,
     studyInstanceUid: string,
-    sequences: { [key: string]: string }) => {
-
+    sequences: { [key: string]: string }
+) => {
     return async (dispatch: Dispatch) => {
         const res = await AxiosUtil.sendRequest({
             method: 'POST',
@@ -31,8 +31,8 @@ export const postNewSegmentationRequestThunk = (
         dispatch(
             uiSliceActions.setNotification({
                 type: 'success',
-                content: "Segmentation request has been sent successfully!"
+                content: 'Segmentation request has been sent successfully!'
             })
         );
-    }
-}
+    };
+};
