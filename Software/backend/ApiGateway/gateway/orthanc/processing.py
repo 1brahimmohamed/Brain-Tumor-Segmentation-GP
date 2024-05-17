@@ -1,11 +1,14 @@
 from pydicom import Dataset
 import json
 
+studies_dic = {}
+
 
 def clean_patient_name(patient_name):
     if patient_name:
         return patient_name.replace("^", " ")
     return ''
+
 
 def extract_studies_metadata(studies_metadata_arr, first_series_metadata_arr):
     extracted_metadata = []
@@ -13,9 +16,11 @@ def extract_studies_metadata(studies_metadata_arr, first_series_metadata_arr):
     for i, study_metadata, in enumerate(studies_metadata_arr):
         main_dicom_tags = study_metadata['MainDicomTags']
         patient_main_dicom_tags = study_metadata['PatientMainDicomTags']
+        studies_dic[main_dicom_tags.get('StudyInstanceUID', '')] = study_metadata.get('ID', '')
         extracted_metadata.append({
             'studyInstanceUid': main_dicom_tags.get('StudyInstanceUID', ''),
             'studyDate': main_dicom_tags.get('StudyDate', ''),
+            'studyOrthancId': study_metadata.get('ID', ''),
             'studyId': main_dicom_tags.get('StudyID', ''),
             'studyTime': main_dicom_tags.get('StudyTime', ''),
             'studyDescription': main_dicom_tags.get('StudyDescription', ''),
@@ -48,17 +53,16 @@ def extract_study_metadata(study):
 
         # append the series data
         series_related_data.append({
-                    'studyInstanceUid': getattr(dataset, 'StudyInstanceUID', ''),
-                    'seriesModality': getattr(dataset, 'Modality', ''),
-                    'seriesDescription': getattr(dataset, 'SeriesDescription', ''),
-                    'seriesNumber': getattr(dataset, 'SeriesNumber', ''),
-                    'seriesId': getattr(dataset, 'SeriesInstanceUID', ''),
-                    'seriesInstanceUid': getattr(dataset, 'SeriesInstanceUID', ''),
-                    'seriesNumber': getattr(dataset, 'SeriesNumber', ''),
-                    'numberOfInstances': dataset.get((0x0020, 0x1209)).value,
-                    'retrieveUrl': getattr(dataset, 'RetrieveURL', ''),
+            'studyInstanceUid': getattr(dataset, 'StudyInstanceUID', ''),
+            'studyOrthancId': studies_dic.get(getattr(dataset, 'StudyInstanceUID', ''), ''),
+            'seriesModality': getattr(dataset, 'Modality', ''),
+            'seriesDescription': getattr(dataset, 'SeriesDescription', ''),
+            'seriesNumber': getattr(dataset, 'SeriesNumber', ''),
+            'seriesId': getattr(dataset, 'SeriesInstanceUID', ''),
+            'seriesInstanceUid': getattr(dataset, 'SeriesInstanceUID', ''),
+            'numberOfInstances': dataset.get((0x0020, 0x1209)).value,
+            'retrieveUrl': getattr(dataset, 'RetrieveURL', ''),
         })
-
 
         # append the study data + patient data to the object
         study_data = {
@@ -72,6 +76,6 @@ def extract_study_metadata(study):
             'studyTotalInstances': total_instances,
             'modality': getattr(series_datasets[0], 'Modality', ''),
             "series": series_related_data,
-            }
+        }
 
     return study_data

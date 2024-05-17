@@ -1,14 +1,14 @@
 import * as cornerstone from '@cornerstonejs/core';
-import {useEffect, useRef, useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {viewerSliceActions} from '@features/viewer/viewer-slice.ts';
-import {Types} from '@cornerstonejs/core';
-import {DicomUtil} from '@/utilities';
-import {IStore} from '@/models';
+import { useEffect, useRef, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { viewerSliceActions } from '@features/viewer/viewer-slice.ts';
+import { Types } from '@cornerstonejs/core';
+import { DicomUtil } from '@/utilities';
+import { IStore } from '@/models';
 import useResizeObserver from '@hooks/useResizeObserver.tsx';
 import ViewportOverlay from '@features/viewer/Viewport/ViewportOverlay/ViewportOverlay.tsx';
-import CinePlayer from "@features/viewer/Viewport/CinePlayer/CinePlayer.tsx";
-import {detectCineHeight} from "@features/viewer/Viewport/CinePlayer/detectCineHeight";
+import CinePlayer from '@features/viewer/Viewport/CinePlayer/CinePlayer.tsx';
+import { detectCineHeight } from '@features/viewer/Viewport/CinePlayer/detectCineHeight';
 
 type TViewportProps = {
     onClick?: (idx: string) => void;
@@ -19,8 +19,7 @@ type TViewportProps = {
     hNeighbours?: number;
 };
 
-const Viewport = ({onClick, id, vNeighbours}: TViewportProps) => {
-
+const Viewport = ({ onClick, id, vNeighbours }: TViewportProps) => {
     const [currentImageId, setCurrentImageId] = useState<string>('');
     const [thisViewport, setThisViewport] = useState<Types.IVolumeViewport | null>(null);
     const [thisViewportImageIds, setThisViewportImageIds] = useState<string[]>([]);
@@ -28,13 +27,8 @@ const Viewport = ({onClick, id, vNeighbours}: TViewportProps) => {
 
     const viewportRef = useRef<HTMLDivElement>(null);
     const cineRef = useRef<HTMLDivElement>(null);
-    const {
-        selectedSeriesInstanceUid,
-        selectedViewportId,
-        renderingEngineId,
-        viewportsWithCinePlayer
-    } = useSelector((store: IStore) => store.viewer);
-
+    const { selectedSeriesInstanceUid, selectedViewportId, renderingEngineId, viewportsWithCinePlayer } =
+        useSelector((store: IStore) => store.viewer);
 
     const dispatch = useDispatch();
 
@@ -56,7 +50,7 @@ const Viewport = ({onClick, id, vNeighbours}: TViewportProps) => {
                 ) as Types.IVolumeViewport;
 
                 const volumeId = `cornerstoneStreamingImageVolume:${selectedSeriesInstanceUid}`;
-                await viewport.setVolumes([{volumeId}], true);
+                await viewport.setVolumes([{ volumeId }], true);
 
                 const direction = viewport.getImageData()?.imageData.getDirection() as number[];
                 const orientation = DicomUtil.detectImageOrientation(
@@ -72,7 +66,6 @@ const Viewport = ({onClick, id, vNeighbours}: TViewportProps) => {
 
         updateViewport();
     }, [selectedSeriesInstanceUid, selectedViewportId]);
-
 
     useEffect(() => {
         if (thisViewport) {
@@ -93,7 +86,6 @@ const Viewport = ({onClick, id, vNeighbours}: TViewportProps) => {
         return () => {
             viewportRef.current?.removeEventListener('wheel', handleSliceScroll);
         };
-
     }, []);
 
     useEffect(() => {
@@ -119,20 +111,20 @@ const Viewport = ({onClick, id, vNeighbours}: TViewportProps) => {
     const cineHeight = detectCineHeight(vNeighbours || 1);
 
     return (
-        <div className={"flex-col"}>
+        <div className={'flex-col'}>
             <div
                 id={id}
                 ref={viewportRef}
                 onClick={() => handleViewportClick(id)}
                 className={`${hasCinePlayer ? `${cineHeight[0]}` : 'h-full'} w-full relative bg-black ${selectedViewportId === id ? 'border-2 border-AAPrimary' : ''}`}
             >
-                <ViewportOverlay viewport={thisViewport} currentImageId={currentImageId}/>
+                <ViewportOverlay viewport={thisViewport} currentImageId={currentImageId} />
             </div>
-            {
-                hasCinePlayer && <div ref={cineRef} className={`${cineHeight[1]}`} >
-                    <CinePlayer viewportElementRef={viewportRef}/>
+            {hasCinePlayer && (
+                <div ref={cineRef} className={`${cineHeight[1]}`}>
+                    <CinePlayer viewportElementRef={viewportRef} />
                 </div>
-            }
+            )}
         </div>
     );
 };

@@ -1,17 +1,16 @@
 import store from '@/redux/store.ts';
 import * as cornerstoneTools from '@cornerstonejs/tools';
-import {Enums} from '@cornerstonejs/core';
-import {viewerSliceActions} from '@features/viewer/viewer-slice.ts';
-import {ANNOTATION_TOOLS, SEGMENTATION_TOOLS, BRUSH_STRATEGIES, BRUSH_INSTANCE_NAMES} from './tools';
-import {downloadAnnotations, loadAnnotations} from './annotationMethods';
+import { Enums } from '@cornerstonejs/core';
+import { viewerSliceActions } from '@features/viewer/viewer-slice.ts';
+import { ANNOTATION_TOOLS, SEGMENTATION_TOOLS, BRUSH_STRATEGIES, BRUSH_INSTANCE_NAMES } from './tools';
+import { downloadAnnotations, loadAnnotations } from './annotationMethods';
 import {
     addSegmentToSegmentation,
     addSegmentation,
     downloadSegmentation,
     uploadSegmentation
 } from './segmentationMethods';
-import {setToolActive, setCurrentToolGroupId} from './toolsMethods';
-
+import { setToolActive, setCurrentToolGroupId } from './toolsMethods';
 
 // Class that manages the cornerstone tools and tool groups for the viewer
 class CornerstoneToolManager {
@@ -52,7 +51,7 @@ class CornerstoneToolManager {
                 {
                     activeStrategy: BRUSH_STRATEGIES[instance]
                 }
-            )
+            );
         });
 
         this.toolGroup.setToolEnabled(cornerstoneTools.SegmentationDisplayTool.toolName);

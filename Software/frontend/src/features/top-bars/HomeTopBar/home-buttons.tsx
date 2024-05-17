@@ -12,7 +12,7 @@ import {
 
 import NotificationsMenu from '@features/notifications/NotificationsMenu.tsx';
 
-export const HOME_SETTINGS_MENU_ITEMS = ['About', 'License Agreement', 'Help', 'Logout'];
+export const HOME_SETTINGS_MENU_ITEMS = ['Settings', 'License Agreement', 'Help', 'Logout'];
 
 export const LANGUAGE_MENU_ITEMS = ['EN', 'AR', 'ES', 'DE', 'FR', 'IT'];
 

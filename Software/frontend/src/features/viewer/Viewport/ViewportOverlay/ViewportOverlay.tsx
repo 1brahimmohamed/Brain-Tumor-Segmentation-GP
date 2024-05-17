@@ -11,11 +11,9 @@ type TViewportOverlayProps = {
 };
 
 const ViewportOverlay = ({ currentImageId, viewport }: TViewportOverlayProps) => {
-
     if (!currentImageId || !viewport) return null;
 
     const { isInfoOnViewportsShown } = useSelector((store: IStore) => store.viewer);
-
 
     const { rows, columns, sliceThickness, sliceLocation } = getMetadataByImageId(
         'imagePlaneModule',
@@ -40,7 +38,6 @@ const ViewportOverlay = ({ currentImageId, viewport }: TViewportOverlayProps) =>
     const imageIds = viewport.getImageIds();
     const imageIndex = imageIds.indexOf(currentImageId) + 1;
     const numImages = imageIds.length;
-
 
     const metadataOverlay = () => {
         return (
@@ -93,7 +90,7 @@ const ViewportOverlay = ({ currentImageId, viewport }: TViewportOverlayProps) =>
         );
     };
 
-    return isInfoOnViewportsShown? metadataOverlay() : <></>;
+    return isInfoOnViewportsShown ? metadataOverlay() : <></>;
 };
 
 export default ViewportOverlay;

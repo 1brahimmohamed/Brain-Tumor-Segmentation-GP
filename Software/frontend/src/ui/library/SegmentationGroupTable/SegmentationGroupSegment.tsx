@@ -64,10 +64,14 @@ const SegmentItem = ({
             data-cy={'segment-item'}
         >
             <div
-                className={classnames('bg-AAFirstShade rounded-l group/number grid w-[32px] p-2 place-items-center', {
-                    'bg-AAPrimary border border-AAPrimary rounded-l-[4px] border-r-0 text-black': isActive,
-                    'bg-AASecondShade': !isActive
-                })}
+                className={classnames(
+                    'bg-AAFirstShade rounded-l group/number grid w-[32px] p-2 place-items-center',
+                    {
+                        'bg-AAPrimary border border-AAPrimary rounded-l-[4px] border-r-0 text-black':
+                            isActive,
+                        'bg-AASecondShade': !isActive
+                    }
+                )}
                 onMouseEnter={() => setIsNumberBoxHovering(true)}
                 onMouseLeave={() => setIsNumberBoxHovering(false)}
             >
@@ -91,7 +95,8 @@ const SegmentItem = ({
             </div>
             <div
                 className={classnames('relative flex w-full', {
-                    'bg-AASecondShade  rounded-r-2 rounded-r-[4px]  border border-l-0  border-AAPrimary': isActive,
+                    'bg-AASecondShade  rounded-r-2 rounded-r-[4px]  border border-l-0  border-AAPrimary':
+                        isActive,
                     'border-transparent': !isActive
                 })}
             >

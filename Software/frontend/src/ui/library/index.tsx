@@ -13,15 +13,17 @@ import InputFilterText from './InputFilterText/InputFilterText.tsx';
 import InputNumber from './InputNumber/InputNumber.tsx';
 import InputRange from './InputRange/InputRange.tsx';
 import Label from './Label/Label.tsx';
+import LinearProgressWithLabel from './LinearProgress/LinearProgress.tsx';
 import Logo from './Logo/Logo.tsx';
-import MeasurementTable from "./MeasurementTable/MeasurementTable.tsx";
+import MeasurementTable from './MeasurementTable/MeasurementTable.tsx';
 import Modal from './Modals/Modal.tsx';
 import StyledMenu from './Menu/StyledMenu.tsx';
 import Notification from './Notification/Notification.tsx';
 import PanelSection from './PanelSection/PanelSection.tsx';
-// import SegmentationGroupTable from './SegmentationGroupTable/SegmentationGroupTable.tsx';
+import SegmentationGroupTable from './SegmentationGroupTable/SegmentationGroupTable.tsx';
 import Select from './Select/Select.tsx';
-import SidePanel from "./SidePanel/SidePanel.tsx";
+import ServerSelection from './ServerSelection/ServerSelection.tsx';
+import SidePanel from './SidePanel/SidePanel.tsx';
 import Spinner from './Spinner/Spinner.tsx';
 import Tooltip from './Tooltip/Tooltip.tsx';
 
@@ -41,14 +43,16 @@ export {
     InputNumber,
     InputRange,
     Label,
+    LinearProgressWithLabel,
     Logo,
     MeasurementTable,
     Modal,
     StyledMenu,
     Notification,
     PanelSection,
-    // SegmentationGroupTable,
+    SegmentationGroupTable,
     Select,
+    ServerSelection,
     SidePanel,
     Spinner,
     Tooltip

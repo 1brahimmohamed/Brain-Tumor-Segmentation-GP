@@ -11,8 +11,8 @@ const handleLanguageChange = (lang: string) => {
 
 const handleSettingsItemClick = (setting: string) => {
     switch (setting) {
-        case 'About':
-            // TODO: Add about modal.
+        case 'Settings':
+            location.href = '/settings';
             break;
         case 'License Agreement':
             // TODO: Add license agreement modal.

@@ -1,5 +1,4 @@
-import { AdvancedToolBox } from '@ui/library';
-import SegmentationGroupTable from '@ui/library/SegmentationGroupTable/SegmentationGroupTable.tsx';
+import { AdvancedToolBox, SegmentationGroupTable } from '@ui/library';
 import advancedToolConfig, {
     handleSegmentationDelete,
     handleSegmentationVisibilityToggle,
@@ -8,8 +7,9 @@ import advancedToolConfig, {
     handleSegmentVisibilityToggle,
     onSegmentationClick
 } from '@features/viewer/ViewerToolPanel/segmentation-config.ts';
-import { CornerstoneToolManager } from '../CornerstoneToolManager';
-import * as cornerstoneTools from '@cornerstonejs/tools';
+import AISegmentation from './AISegmentation.tsx';
+import ActiveLearning from './ActiveLearning.tsx';
+import { CornerstoneToolManager } from '@features/viewer/CornerstoneToolManager';
 import { useSelector } from 'react-redux';
 import { IStore } from '@/models';
 
@@ -18,6 +18,8 @@ const SegmentationTab = () => {
     return (
         <div>
             <AdvancedToolBox title={'Segmentation Tools'} items={advancedToolConfig} />
+            <ActiveLearning />
+            <AISegmentation />
             <SegmentationGroupTable
                 segmentations={segmentations}
                 showAddSegmentation={true}
