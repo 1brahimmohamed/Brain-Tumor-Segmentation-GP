@@ -14,6 +14,7 @@ export interface IDicomTableStudy {
 
 export interface IDicomSeriesData {
     studyInstanceUid: string;
+    studyOrthancId: string;
     seriesModality: string;
     seriesDescription: string;
     seriesNumber: string;

@@ -154,7 +154,7 @@ const SegmentationGroupTable = ({
                             )}
                         </div>
                     ) : (
-                        <div className="mt-1 select-none ">
+                        <div className="mt-1 select-none">
                             <SegmentationDropDownRow
                                 segmentations={segmentations}
                                 disableEditing={disableEditing}
@@ -173,7 +173,7 @@ const SegmentationGroupTable = ({
                     )}
                 </div>
                 {activeSegmentation && (
-                    <div className="ohif-scrollbar mt-1.5 flex min-h-0 flex-col overflow-y-hidden bg-AASecondShade bg-opacity-40">
+                    <div className="ohif-scrollbar pb-5 mt-1.5 flex min-h-0 flex-col overflow-y-hidden bg-AASecondShade bg-opacity-40">
                         {activeSegmentation?.segments?.map((segment) => {
                             if (!segment) {
                                 return null;

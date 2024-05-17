@@ -1,4 +1,4 @@
-import { INotification, IUserInfo, IDicomStudyData, IDicomTableStudy, ILayout } from '@/models';
+import {INotification, IUserInfo, IDicomStudyData, IDicomTableStudy, ILayout, IDicomSeriesData} from '@/models';
 import { TModeType } from '@assets/theme/theme';
 import { ISegmentation } from '@models/viewer.ts';
 
@@ -40,7 +40,7 @@ export interface IStoreViewerSlice {
     renderingEngineId: string;
     selectedViewportId: string;
     selectedSeriesInstanceUid: string;
-    studyData: null;
+    studyData: IDicomSeriesData[] | null;
     annotationToolGroupIds: string[];
     currentToolGroupId: string;
     selectedCornerstoneTools: Array<{

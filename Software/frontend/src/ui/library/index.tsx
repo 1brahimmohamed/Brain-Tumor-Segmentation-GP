@@ -1,6 +1,4 @@
 import AdvancedToolBox from './AdvancedToolBox/AdvancedToolBox.tsx';
-import ActiveLearning from "@ui/library/AISegmentation/ActiveLearning.tsx";
-import AISegmentation from "@ui/library/AISegmentation/AISegmentation.tsx";
 import ToolSettings from './AdvancedToolBox/ToolSettings.tsx';
 import Backdrop from './Backdrop/Backdrop.tsx';
 import Button from './Button/Button.tsx';
@@ -31,8 +29,6 @@ import Tooltip from './Tooltip/Tooltip.tsx';
 
 export {
     AdvancedToolBox,
-    ActiveLearning,
-    AISegmentation,
     ToolSettings,
     Backdrop,
     Button,

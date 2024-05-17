@@ -4,6 +4,7 @@ import {
 } from '@mui/icons-material';
 import { FaBrain } from "react-icons/fa";
 import { BsBrushFill } from "react-icons/bs";
+import NeutralTopBar from "@features/top-bars/NeutralTopBar/NeutralTopBar.tsx";
 
 
 const navigation = [
@@ -29,8 +30,11 @@ const Settings =  () => {
     return (
         <>
 
-            <div className="mx-auto max-w-7xl pt-16 lg:flex lg:gap-x-16 lg:px-8">
+            <div className={"h-10 mt-2 mx-7"}>
+               <NeutralTopBar />
+            </div>
 
+            <div className="mx-auto max-w-7xl pt-16 lg:flex lg:gap-x-16 lg:px-8">
 
                 <aside
                     className="flex overflow-x-auto border-b border-gray-900/5 py-4 lg:block lg:w-64 lg:flex-none lg:border-0 lg:py-20">
