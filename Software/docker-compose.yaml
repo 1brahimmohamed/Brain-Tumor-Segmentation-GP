@@ -1,13 +1,13 @@
 version: "3.8"
 services:
 
-#  frontend:
-#    build: ./frontend
-#    container_name: gp_frontend
-#    ports:
-#      - "5000:5000"
-#    depends_on:
-#      - api_gateway
+  frontend:
+    build: ./frontend
+    container_name: gp_frontend
+    ports:
+      - "5000:5000"
+    depends_on:
+      - api_gateway
 
   api_gateway:
     build: ./backend/ApiGateway
@@ -66,25 +66,12 @@ services:
     depends_on:
       - rabbitmq
 
-  # nifti_pacs:
-  #   build: ./backend/Services/NiftiPACS/NiftiPACS
-  #   container_name: gp_nifti_pacs
-  #   ports:
-  #     - "8080:8080"
-  #   volumes:
-  #     - ./backend/Services/NiftiPACS/:/usr/src/app
-  #   depends_on:
-  #     - nifti_pacs_db
+  nifti_storage:
+    build: ./backend/Services/NiftiStorage/
+    container_name: gp_nifti_storage
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend/Services/NiftiStorage:/usr/src/app
 
-  # nifti_pacs_db:
-  #   image: postgres:latest
-  #   container_name: gp_nifti_pacs_db
-  #   ports:
-  #     - "5433:5432"
-  #   environment:
-  #     - POSTGRES_USER=nifti_user
-  #     - POSTGRES_PASSWORD=postgres
-  #     - POSTGRES_DB=nifti
-  #   volumes:
-  #     - ./backend/Services/NiftiPACS/pgdata:/var/lib/postgresql/data
-  #   restart: always
+
