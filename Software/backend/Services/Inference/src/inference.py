@@ -1,6 +1,9 @@
 import pika
-import processing
 from dotenv import load_dotenv
+from segmentation.callback import segmentation_callback
+from motioncorrection.callback import motion_correction_callback
+from synthesis.callback import synthesis_callback
+
 import os
 
 load_dotenv()
@@ -14,21 +17,18 @@ connection = pika.BlockingConnection(
             os.getenv('RABBITMQ_PASSWORD')
         ))
 )
-channel = connection.channel()
 
-channel.queue_declare(queue='inference', durable=True)
+channel = connection.channel()
+channel.queue_declare(queue='inf_segmentation', durable=True)
+channel.queue_declare(queue='inf_motion_correction', durable=True)
+channel.queue_declare(queue='inf_sequence_synthesis', durable=True)
 
 print(' [*] Waiting for messages. To exit press CTRL+C')
 
-
-def callback(ch, method, properties, body):
-    print(f" [x] Received {body.decode()}, starting processing...")
-    processing.download_study(body.decode())
-    print(" [x] Inference done!")
-    ch.basic_ack(delivery_tag=method.delivery_tag)
-
-
 channel.basic_qos(prefetch_count=1)
-channel.basic_consume(queue='inference', on_message_callback=callback)
+channel.basic_consume(queue='inf_segmentation', on_message_callback=segmentation_callback)
+channel.basic_consume(queue='inf_motion_correction', on_message_callback=motion_correction_callback)
+channel.basic_consume(queue='inf_sequence_synthesis', on_message_callback=synthesis_callback)
+
 
 channel.start_consuming()
