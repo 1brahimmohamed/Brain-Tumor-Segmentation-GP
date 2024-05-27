@@ -2,7 +2,6 @@ import { utilities as csUtils } from '@cornerstonejs/core';
 
 const scalingPerImageId: { [key: string]: object } = {};
 
-
 /**
  * Adds an instance of scaling metadata to the scalingPerImageId object using the provided image ID and scaling metadata.
  *

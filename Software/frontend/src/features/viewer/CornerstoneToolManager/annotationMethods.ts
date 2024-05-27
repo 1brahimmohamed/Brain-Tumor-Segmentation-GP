@@ -68,7 +68,7 @@ export const loadAnnotations = () => {
             renderingEngine?.render();
         };
 
-        let eventTarget = (event.target as HTMLInputElement) || null;
+        const eventTarget = (event.target as HTMLInputElement) || null;
 
         if (eventTarget?.files) {
             reader.readAsText(eventTarget.files[0]);

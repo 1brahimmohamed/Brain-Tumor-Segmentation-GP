@@ -8,7 +8,6 @@ import { Notification } from '@ui/library';
 import { Spinner } from '@ui/library';
 
 function App() {
-
     // Get the notification from the store
     const notification = useSelector((store: IStore) => {
         return store.ui.notification;

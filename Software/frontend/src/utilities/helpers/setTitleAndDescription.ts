@@ -1,4 +1,3 @@
-
 /**
  * Sets the title and description of the demo.
  *

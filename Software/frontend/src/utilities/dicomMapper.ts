@@ -180,7 +180,6 @@ class DicomMapper {
         '00402400': 'Imaging Service Request Comments'
     };
 
-
     /**
      * Retrieves the label associated with the given tag from the tag map.
      *

@@ -6,8 +6,8 @@ module.exports = {
     parser: '@typescript-eslint/parser',
     plugins: ['react-refresh', 'prettier'],
     rules: {
-        'react-refresh/only-export-components': ['warn', { allowConstantExport: true }]
-        // 'prettier/prettier': 'error',
+        'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+        'prettier/prettier': 'error'
     },
     settings: {
         react: { version: 'detect' }

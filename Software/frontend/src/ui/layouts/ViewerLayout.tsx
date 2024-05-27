@@ -4,9 +4,7 @@ import ViewerTopBar from '@features/viewer/ViewerTopBar/ViewerTopBar.tsx';
 import ViewerSidebar from '@features/viewer/StudySidebar/ViewerSidebar.tsx';
 import ViewerToolPanel from '@features/viewer/ViewerToolPanel/ViewerToolPanel.tsx';
 
-
 const ViewerLayout = () => {
-
     // Disable the context menu (right-click menu) on the viewer page
     window.addEventListener(
         'contextmenu',

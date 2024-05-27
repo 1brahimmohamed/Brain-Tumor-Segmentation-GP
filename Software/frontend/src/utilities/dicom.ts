@@ -5,7 +5,6 @@ import { Enums, metaData } from '@cornerstonejs/core';
 import { OrientationAxis } from '@cornerstonejs/core/src/enums';
 
 class DicomUtil {
-
     /**
      * Formats a given dicom date string into the specified format.
      *
@@ -67,7 +66,6 @@ class DicomUtil {
             );
         }
     }
-
 
     /**
      * Formats the given dicom patient name by cleaning it and adding a comma between the first and last name.

@@ -1,7 +1,6 @@
 const EPSILON = 1e-6;
 
 class MathUtils {
-
     /**
      * Check if two numbers are equal within a certain epsilon
      * @param {number} first - first number

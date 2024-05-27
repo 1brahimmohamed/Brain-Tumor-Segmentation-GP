@@ -1,9 +1,8 @@
-import {MathUtils} from '@/utilities';
-import {HelpersUtil} from '@/utilities';
+import { MathUtils } from '@/utilities';
+import { HelpersUtil } from '@/utilities';
 
 export default class Matrix {
     rows: number[][];
-
 
     /**
      * Creates a new matrix.
@@ -37,7 +36,7 @@ export default class Matrix {
      * @param {Matrix} other - The other matrix to apply the operation to.
      * @return {Matrix} A new matrix with the result of the component-wise operation.
      */
-    componentWiseOperation(func: (row: number, el: number) => number, {rows}: Matrix): Matrix {
+    componentWiseOperation(func: (row: number, el: number) => number, { rows }: Matrix): Matrix {
         const newRows = rows.map((row, i) => row.map((element, j) => func(this.rows[i][j], element)));
         return new Matrix(...newRows);
     }
@@ -170,7 +169,6 @@ export default class Matrix {
     map(func: (e: number, i: number, j: number) => number): Matrix {
         return new Matrix(...this.rows.map((row, i) => row.map((element, j) => func(element, i, j))));
     }
-
 
     /**
      * Calculates the minor of a matrix at the specified row and column indices.

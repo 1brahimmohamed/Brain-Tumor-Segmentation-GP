@@ -149,7 +149,7 @@ const DicomTagTable = ({}) => {
         });
     };
 
-    let filteredRows = filterRows();
+    const filteredRows = filterRows();
 
     return (
         <Box className={'h-[50vh]'}>

@@ -126,7 +126,7 @@ export const uploadSegmentation = async () => {
     inputElement.accept = '.dcm';
 
     inputElement.addEventListener('change', async (event) => {
-        let eventTarget = (event.target as HTMLInputElement) || null;
+        const eventTarget = (event.target as HTMLInputElement) || null;
         if (eventTarget?.files) {
             for (let i = 0; i < eventTarget.files.length; i++) {
                 const file = eventTarget.files[i];

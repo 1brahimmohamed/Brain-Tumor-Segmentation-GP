@@ -1,15 +1,14 @@
 import { InputAdornment, OutlinedInput, SvgIcon, Theme } from '@mui/material';
-import { ReactNode } from 'react';
 
-interface LoginInputFieldProps {
+interface ILoginInputFieldProps {
     name: string;
     autoComplete: string;
     placeholder: string;
-    Icon: (props: any) => ReactNode;
+    Icon: typeof SvgIcon;
     theme: Theme;
 }
 
-const LoginInputField = ({ name, autoComplete, placeholder, Icon, theme }: LoginInputFieldProps) => {
+const LoginInputField = ({ name, autoComplete, placeholder, Icon, theme }: ILoginInputFieldProps) => {
     return (
         <OutlinedInput
             defaultValue=""

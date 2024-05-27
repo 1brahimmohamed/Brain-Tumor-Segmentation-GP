@@ -1,6 +1,6 @@
-import {useNavigate} from 'react-router-dom';
-import {Container, Typography, Button, Box} from '@mui/material';
-import {useTheme} from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+import { Container, Typography, Button, Box } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import Illustration from '@ui/Illustration404';
 const NotFound404 = () => {
     const theme = useTheme();
@@ -13,7 +13,7 @@ const NotFound404 = () => {
                     {/* 404 Illustration */}
                     <Illustration
                         className={'absolute inset-0 opacity-75'}
-                        style={{color: theme.palette.primary.lighter}}
+                        style={{ color: theme.palette.primary.lighter }}
                     />
 
                     {/* 404 Text */}
@@ -22,7 +22,7 @@ const NotFound404 = () => {
 
                         <Typography variant={'h5'} className={'mt-20 mb-28 text-center'}>
                             The Page you are trying to open does not exist. You may have mistyped the address,
-                            <br/> or the page has been moved to another URL. If you think this is an error
+                            <br /> or the page has been moved to another URL. If you think this is an error
                             contact support.
                         </Typography>
 

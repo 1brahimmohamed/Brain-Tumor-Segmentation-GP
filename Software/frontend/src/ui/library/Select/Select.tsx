@@ -82,7 +82,7 @@ const Select = ({
     let _components = isMulti ? { Option, MultiValue } : {};
     _components = noIcons ? { ..._components, ...noIconComponents } : { ..._components, ...components };
 
-    let selectedOptions: TOptionType[] = [];
+    const selectedOptions: TOptionType[] = [];
 
     // Map array of values to an array of selected options
     if (value && Array.isArray(value)) {

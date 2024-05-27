@@ -1,5 +1,4 @@
 class HelpersUtil {
-
     /**
      * Returns a new array with the element at the specified index removed.
      * @param {any[]} arr - The array to remove the element from.

@@ -18,7 +18,6 @@ const store = configureStore({
     middleware: (getDefaultMiddleware) => getDefaultMiddleware()
 });
 
-
 // Export the store type
 export type TAppDispatch = typeof store.dispatch;
 export default store;

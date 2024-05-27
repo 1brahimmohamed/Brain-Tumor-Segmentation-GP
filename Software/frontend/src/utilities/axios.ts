@@ -4,9 +4,7 @@ import store from '@/redux/store';
 import { uiSliceActions } from '@ui/ui-slice';
 import { authSliceActions } from '@features/authentication/auth-slice';
 
-
 class AxiosUtil {
-
     /**
      * Sends an asynchronous request using Axios with the provided configuration and options.
      *
