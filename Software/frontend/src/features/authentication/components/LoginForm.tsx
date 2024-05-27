@@ -1,9 +1,12 @@
-import { FormEvent, useRef } from 'react';
-import { Button, Theme } from '@mui/material';
+import {FormEvent, useRef} from 'react';
+import {Button, Theme} from '@mui/material';
 import LoginInputField from '@features/authentication/components/LoginInputField.tsx';
-import { Person as UsernameIcon, Lock as PasswordIcon } from '@mui/icons-material';
+import {
+    Person as UsernameIcon,
+    Lock as PasswordIcon
+} from '@mui/icons-material';
 
-const LoginForm = ({ theme }: { theme: Theme }) => {
+const LoginForm = ({theme}: { theme: Theme }) => {
     // const navigate = useNavigate();
     const loginFormRef = useRef<HTMLFormElement>(null);
 
@@ -41,7 +44,7 @@ const LoginForm = ({ theme }: { theme: Theme }) => {
                 size="large"
                 color="primary"
                 className={'h-12 text-2'}
-                style={{ backgroundColor: theme.palette.secondary.main }}
+                style={{backgroundColor: theme.palette.secondary.main}}
             >
                 Login
             </Button>

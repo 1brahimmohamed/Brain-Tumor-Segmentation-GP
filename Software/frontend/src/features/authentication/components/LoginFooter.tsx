@@ -1,14 +1,9 @@
-// MUI imports
-import { IconButton, Tooltip, useTheme } from '@mui/material';
-
-// icons
-
 import {
     DarkModeOutlined as DarkModeOutlinedIcon,
     LightModeOutlined as LightModeOutlinedIcon,
     HelpOutlineOutlined as HelpOutlineOutlinedIcon
 } from '@mui/icons-material';
-
+import { IconButton, Tooltip, useTheme } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { TAppDispatch } from '@/redux/store.ts';
 import { uiSliceActions } from '@ui/ui-slice.ts';

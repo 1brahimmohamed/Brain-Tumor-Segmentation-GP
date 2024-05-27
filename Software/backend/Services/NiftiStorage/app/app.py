@@ -27,7 +27,7 @@ UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 @app.get("/")
 async def read_root():
     """
-    :return:
+    :return: A welcome message
     """
     return {
         "Welcome to": "Nifti Storage Service",

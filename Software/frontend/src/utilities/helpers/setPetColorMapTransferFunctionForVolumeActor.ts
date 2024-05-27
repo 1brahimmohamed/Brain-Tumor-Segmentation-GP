@@ -2,7 +2,15 @@ import vtkColorMaps from '@kitware/vtk.js/Rendering/Core/ColorTransferFunction/C
 import vtkColorTransferFunction from '@kitware/vtk.js/Rendering/Core/ColorTransferFunction';
 import vtkPiecewiseFunction from '@kitware/vtk.js/Common/DataModel/PiecewiseFunction';
 
-export default function setPetColorMapTransferFunctionForVolumeActor(volumeInfo: any) {
+/**
+ * Sets the color map transfer function for a volume actor based on the provided volume information.
+ *
+ * @param {any} volumeInfo - An object containing the volume actor and an optional preset.
+ * @param {vtkVolume} volumeInfo.volumeActor - The volume actor to set the color map transfer function for.
+ * @param {string} [volumeInfo.preset] - The preset to use for the color map transfer function. If not provided, the 'hsv' preset will be used.
+ * @return {void} This function does not return anything.
+ */
+export default function setPetColorMapTransferFunctionForVolumeActor(volumeInfo: any): void {
     const { volumeActor, preset } = volumeInfo;
     const mapper = volumeActor.getMapper();
     mapper.setSampleDistance(1.0);

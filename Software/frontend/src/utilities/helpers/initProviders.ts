@@ -4,7 +4,15 @@ import * as wadoMetaDataProvider from '@utilities/wadoMetaDataProvider';
 
 const { calibratedPixelSpacingMetadataProvider } = cornerstone.utilities;
 
-const initProviders = () => {
+/**
+ * Initializes the providers for the application.
+ *
+ * This function adds the necessary providers to the cornerstone.metaData object.
+ * The providers include ptScalingMetaDataProvider and calibratedPixelSpacingMetadataProvider.
+ *
+ * @return {void} This function does not return anything.
+ */
+const initProviders = (): void => {
     // cornerstone.metaData.addProvider(wadoMetaDataProvider.get.bind(wadoMetaDataProvider), 10001);
     cornerstone.metaData.addProvider(ptScalingMetaDataProvider.get.bind(ptScalingMetaDataProvider), 10000);
     cornerstone.metaData.addProvider(

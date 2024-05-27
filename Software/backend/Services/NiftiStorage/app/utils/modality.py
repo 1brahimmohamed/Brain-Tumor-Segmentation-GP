@@ -2,6 +2,8 @@ from enum import Enum
 
 
 class BDISModalityType(str, Enum):
+    """ Enum class for Brain Imaging Data Structure (BDIS) modality types  """
+
     anat = 'anat'
     func = 'func'
     dwi = 'dwi'

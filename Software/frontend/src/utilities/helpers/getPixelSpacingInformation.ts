@@ -1,5 +1,26 @@
 // See https://github.com/OHIF/Viewers/blob/94a9067fe3d291d30e25a1bda5913511388edea2/platform/core/src/utils/metadataProvider/getPixelSpacingInformation.js
 
+/**
+ * Retrieves pixel spacing information from an instance.
+ *
+ * @param {any} instance - The instance from which to retrieve pixel spacing information.
+ * @return {Object | Array} - The pixel spacing information. If the instance is not a projection radiograph,
+ *                            returns the PixelSpacing value. If the instance is a projection radiograph and
+ *                            ImagerPixelSpacing is not present, returns an object with PixelSpacing and type set to
+ *                            UNKNOWN. If PixelSpacing and ImagerPixelSpacing have the same values, returns an object
+ *                            with PixelSpacing, type set to DETECTOR, and isProjection set to true. If PixelSpacing
+ *                            and ImagerPixelSpacing have different values, returns an object with PixelSpacing, type
+ *                            set to CALIBRATED, isProjection set to true, PixelSpacingCalibrationType, and
+ *                            PixelSpacingCalibrationDescription. If PixelSpacing is not present and ImagerPixelSpacing
+ *                            is present, returns an object with CorrectedImagerPixelSpacing and isProjection set to
+ *                            true. If SequenceOfUltrasoundRegions is present and contains PhysicalDeltaX and
+ *                            PhysicalDeltaY, returns an object with USPixelSpacing. If SequenceOfUltrasoundRegions
+ *                            contains more than one entry, logs a warning. If neither PixelSpacing nor ImagerPixelSpacing
+ *                            is present and the instance is not a projection radiograph, returns an object with
+ *                            PixelSpacing, type set to NOT_APPLICABLE, and isProjection set to false. If the instance
+ *                            is a projection radiograph and none of the above conditions are met, logs a warning.
+ */
+
 export default function getPixelSpacingInformation(instance: any) {
     // See http://gdcm.sourceforge.net/wiki/index.php/Imager_Pixel_Spacing
 

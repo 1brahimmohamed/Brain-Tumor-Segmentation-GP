@@ -8,10 +8,13 @@ import { Notification } from '@ui/library';
 import { Spinner } from '@ui/library';
 
 function App() {
+
+    // Get the notification from the store
     const notification = useSelector((store: IStore) => {
         return store.ui.notification;
     });
 
+    // Get the loading state from the store
     const isLoading = useSelector((store: IStore) => store.ui.isLoading);
 
     const dispatch = useDispatch<TAppDispatch>();

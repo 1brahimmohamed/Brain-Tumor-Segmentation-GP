@@ -3,16 +3,24 @@ import DicomMapper from './dicomMapper';
 
 interface DICOMInfo {
     tag: string;
-    vr: string;
+    valueRepresentation: string;
     value?: string | string[];
     BulkDataURI?: string;
 }
 
-const getDICOMMetaData = (imageId: string) => {
+/**
+ * Retrieves the DICOM metadata for a given image ID.
+ *
+ * @param {string} imageId - The ID of the image.
+ * @return {Object} An object containing the DICOM metadata for the image, with labels as keys and DICOMInfo objects as values.
+ */
+const getDICOMMetaData = (imageId: string): object => {
     const dicomData: { [key: string]: DICOMInfo } = {};
 
     try {
+        // Get the metadata for the image
         const metadata = cornerstoneDICOMImageLoader.wadors.metaDataManager.get(imageId);
+
         if (!metadata) {
             return dicomData;
         }
@@ -24,9 +32,11 @@ const getDICOMMetaData = (imageId: string) => {
                 continue;
             }
 
+            // Get the label for the tag
             const label = DicomMapper.getLabel(tag);
 
-            const vr = tagData.vr;
+            // get the value representation for the tag and the bulk data URI
+            const valueRepresentation = tagData.vr;
             const BulkDataURI = tagData.BulkDataURI;
 
             if (tagData.Value && tagData.Value.length >= 1 && label) {
@@ -46,7 +56,7 @@ const getDICOMMetaData = (imageId: string) => {
                     value = tagData.Value;
                 }
 
-                dicomData[label] = { tag, vr, value, BulkDataURI };
+                dicomData[label] = { tag, valueRepresentation, value, BulkDataURI };
             }
         }
     } catch (error) {

@@ -1,5 +1,6 @@
 import { metaData } from '@cornerstonejs/core';
 import cornerstoneDICOMImageLoader from '@cornerstonejs/dicom-image-loader';
+
 /**
  * preloads imageIds metadata in memory
  **/
@@ -9,6 +10,12 @@ async function prefetchMetadataInformation(imageIdsToPrefetch) {
     }
 }
 
+/**
+ * Retrieves the frame information from the given image ID.
+ *
+ * @param {string} imageId - The image ID from which to retrieve the frame information.
+ * @return {Object} An object containing the frame index and the image ID without the frame information.
+ */
 function getFrameInformation(imageId) {
     if (imageId.includes('wadors:')) {
         const frameIndex = imageId.indexOf('/frames/');

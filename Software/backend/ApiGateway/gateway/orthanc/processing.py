@@ -5,18 +5,35 @@ studies_dic = {}
 
 
 def clean_patient_name(patient_name):
+    """
+    Clean the patient name from the dicom file
+    :param patient_name: the patient name from the dicom file
+    :return: the cleaned patient name
+    """
+
     if patient_name:
         return patient_name.replace("^", " ")
     return ''
 
 
 def extract_studies_metadata(studies_metadata_arr, first_series_metadata_arr):
+    """
+    Extract the metadata from the orthanc studies metadata
+    :param studies_metadata_arr: array of studies metadata
+    :param first_series_metadata_arr:  array of first series metadata
+    :return: the extracted metadata
+    """
+
     extracted_metadata = []
 
     for i, study_metadata, in enumerate(studies_metadata_arr):
+
+        # metadata is divided into two parts, main dicom tags and patient main dicom tags
         main_dicom_tags = study_metadata['MainDicomTags']
         patient_main_dicom_tags = study_metadata['PatientMainDicomTags']
+
         studies_dic[main_dicom_tags.get('StudyInstanceUID', '')] = study_metadata.get('ID', '')
+
         extracted_metadata.append({
             'studyInstanceUid': main_dicom_tags.get('StudyInstanceUID', ''),
             'studyDate': main_dicom_tags.get('StudyDate', ''),
@@ -35,14 +52,23 @@ def extract_studies_metadata(studies_metadata_arr, first_series_metadata_arr):
 
 
 def extract_study_metadata(study):
+    """
+    Extract the metadata from the study
+    :param study: raw metadata
+    :return: the extracted metadata
+    """
+
     series_related_data = []
     series_datasets = []
     total_instances = 0
+    study_data = {}
 
     for series in study:
+
         # make a dataset from json
         dataset = Dataset().from_json(series)
 
+        # check if the modality is SR or PR and skip it as it is not an image series
         if getattr(dataset, 'Modality', '') in ['SR', 'PR']:
             continue
 

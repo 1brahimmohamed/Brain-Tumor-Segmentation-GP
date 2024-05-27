@@ -3,6 +3,10 @@ interface DicomTagMap {
 }
 
 class DicomMapper {
+    /**
+     * Map of DICOM tags to their corresponding labels.
+     * @private
+     */
     private static tagMap: DicomTagMap = {
         '7FE00010': 'Pixel Data',
         '001021B0': 'Additional Patient History',
@@ -176,6 +180,13 @@ class DicomMapper {
         '00402400': 'Imaging Service Request Comments'
     };
 
+
+    /**
+     * Retrieves the label associated with the given tag from the tag map.
+     *
+     * @param {string} tag - The dicom tag to retrieve the label for.
+     * @return {string | undefined} - The label associated with the tag, or undefined if the tag is not found.
+     */
     static getLabel(tag: string): string | undefined {
         return this.tagMap[tag];
     }

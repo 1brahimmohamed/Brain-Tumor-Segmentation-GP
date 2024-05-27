@@ -1,6 +1,13 @@
 import { metaData } from '@cornerstonejs/core';
 import type { InstanceMetadata } from '@cornerstonejs/calculate-suv';
 
+/**
+ * Retrieves the instance metadata for a given image ID.
+ *
+ * @param {string} imageId - The ID of the image.
+ * @return {InstanceMetadata} The instance metadata for the image.
+ * @throws {Error} If the petSequenceModule metadata is missing or if required metadata are missing.
+ */
 export default function getPTImageIdInstanceMetadata(imageId: string): InstanceMetadata {
     const petSequenceModule = metaData.get('petIsotopeModule', imageId);
     const generalSeriesModule = metaData.get('generalSeriesModule', imageId);
@@ -161,6 +168,12 @@ export default function getPTImageIdInstanceMetadata(imageId: string): InstanceM
     return instanceMetadata;
 }
 
+/**
+ * Converts an interface representing a time into a string representation.
+ *
+ * @param {any} time - The interface representing the time.
+ * @return {string} The string representation of the time.
+ */
 function convertInterfaceTimeToString(time: any): string {
     const hours = `${time.hours || '00'}`.padStart(2, '0');
     const minutes = `${time.minutes || '00'}`.padStart(2, '0');
@@ -172,6 +185,12 @@ function convertInterfaceTimeToString(time: any): string {
     return timeString;
 }
 
+/**
+ * Converts an interface representing a date into a string representation.
+ *
+ * @param {any} date - The interface representing the date.
+ * @return {string} The string representation of the date.
+ */
 function convertInterfaceDateToString(date: any): string {
     const month = `${date.month}`.padStart(2, '0');
     const day = `${date.day}`.padStart(2, '0');

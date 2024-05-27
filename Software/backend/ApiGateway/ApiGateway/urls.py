@@ -19,7 +19,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('dicom/', include('gateway.orthanc.urls')),
-    path('users/', include('gateway.users.urls')),
-    path('inference/', include('gateway.inference.urls')),
+    path('dicom/', include('gateway.orthanc.urls')),        # Orthanc APIs
+    path('users/', include('gateway.users.urls')),          # User APIs
+    path('inference/', include('gateway.inference.urls')),  # Inference APIs
 ]

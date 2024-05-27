@@ -3,6 +3,12 @@ import { createTheme } from '@mui/material/styles';
 
 export type TModeType = 'light' | 'dark';
 
+/**
+ * Returns an object containing color tokens based on the specified mode.
+ *
+ * @param {TModeType} mode - The mode to determine the color tokens for. Can be 'light' or 'dark'.
+ * @return {Object} An object containing color tokens for different categories like 'grey', 'primary', 'blue', and 'text'.
+ */
 export const tokens = (mode: TModeType) => ({
     ...(mode === 'dark'
         ? {
@@ -61,6 +67,12 @@ export const tokens = (mode: TModeType) => ({
           })
 });
 
+/**
+ * Generates the theme settings based on the specified mode.
+ *
+ * @param {TModeType} mode - The mode to determine the theme settings for. Can be 'light' or 'dark'.
+ * @return {Object} An object containing the theme settings for the specified mode.
+ */
 export const themeSettings = (mode: TModeType) => {
     const colors = tokens(mode);
 
@@ -142,10 +154,20 @@ export const themeSettings = (mode: TModeType) => {
     };
 };
 
+/**
+ * Context for color mode
+ * @type {React.Context<{toggleColorMode: () => void}>}
+ */
 export const ColorModeContext = createContext({
     toggleColorMode: () => {}
 });
 
-export const useMode = (mode: TModeType) => {
+/**
+ * Custom hook to get the theme based on the specified mode.
+ *
+ * @param {TModeType} mode - The mode to determine the theme for. Can be 'light' or 'dark'.
+ * @return {Object} The theme based on the specified mode.
+ */
+export const useMode = (mode: TModeType): object => {
     return useMemo(() => createTheme(themeSettings(mode)), [mode]);
 };

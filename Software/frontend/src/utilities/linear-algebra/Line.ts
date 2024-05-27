@@ -6,6 +6,12 @@ class Line {
     m: number;
     c: number;
 
+    /**
+     * Constructs a Line object with the given start and end points.
+     *
+     * @param {Point} p1 - The start point of the line.
+     * @param {Point} p2 - The end point of the line.
+     */
     constructor(p1: Point, p2: Point) {
         this.p1 = p1;
         this.p2 = p2;
@@ -13,11 +19,22 @@ class Line {
         this.c = p1.y - this.m * p1.x;
     }
 
-    length() {
+    /**
+     * Returns the length of the line.
+     *
+     * @returns {number} The length of the line.
+     */
+    length(): number {
         return this.p1.distance(this.p2);
     }
 
-    distance(line: Line) {
+    /**
+     * Returns the distance between the line and the given point.
+     *
+     * @param {Line} line - The line to calculate the distance to.
+     * @returns {number} The distance between the line and the point.
+     */
+    distance(line: Line): number {
         const d = Math.abs(line.c - this.c) / Math.sqrt(1 + Math.pow(this.m, 2));
         if (isNaN(d)) return 0;
         else return d;

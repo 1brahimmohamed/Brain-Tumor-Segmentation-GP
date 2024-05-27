@@ -136,6 +136,11 @@ const sopInstanceUIDs: string[][] = [
     ['1.3.6.1.4.1.14519.5.2.1.7009.2403.113692692484570386248172588190']
 ];
 
+/**
+ * Generates an array of WADO-URI image IDs based on the provided series and study UIDs.
+ *
+ * @return {string[]} An array of WADO-URI image IDs.
+ */
 export default function wadoURICreateImageIds() {
     const seriesUID = '1.3.6.1.4.1.14519.5.2.1.7009.2403.226151125820845824875394858561';
     const studyUID = '1.3.6.1.4.1.14519.5.2.1.7009.2403.334240657131972136850343327463';

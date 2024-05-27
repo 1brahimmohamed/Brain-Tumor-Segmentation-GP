@@ -4,7 +4,7 @@ import os
 def check_is_nifti(file):
     """
     Check if the uploaded file is a NIfTI file
-    :param file:
+    :param file: the uploaded file
     :return: boolean
     """
     allowed_extensions = {'.nii', '.nii.gz'}  # Define the allowed NIfTI file extensions
@@ -51,5 +51,3 @@ def edit_file_name(file_name, sub):
     new_file_name = '_'.join(chunks)
 
     return f'sub-{new_file_name}'
-
-

@@ -8,7 +8,12 @@ import environ
 env = environ.Env()
 
 
-def start_connection():
+def start_mq_connection():
+    """
+    Start a connection with rabbitmq server and return the connection and channel
+    :return: connection, channel
+    """
+
     # establish connection with rabbitmq server
     connection = pika.BlockingConnection(pika.ConnectionParameters(
         host=env('RABBITMQ_HOST'),
@@ -39,7 +44,7 @@ def segmentation_inference(request):
             data={'message': 'studyInstanceUid is required'}
         )
 
-    connection, channel = start_connection()
+    connection, channel = start_mq_connection()
 
     message = {
         'studyInstanceUid': study_uid,
@@ -76,7 +81,7 @@ def motion_inference(request):
             data={'message': 'studyInstanceUid and seriesInstanceUid are required'}
         )
 
-    connection, channel = start_connection()
+    connection, channel = start_mq_connection()
 
     message = {
         'studyInstanceUid': study_uid,
@@ -96,7 +101,10 @@ def motion_inference(request):
 
     connection.close()
 
-    return Response(status=status.HTTP_200_OK, data={'message': 'motion inference'})
+    return Response(
+        status=status.HTTP_200_OK,
+        data={'message': 'motion inference'}
+    )
 
 
 @api_view(['POST'])
@@ -110,7 +118,7 @@ def synthesis_inference(request):
             data={'message': 'studyInstanceUid and sequences are required'}
         )
 
-    connection, channel = start_connection()
+    connection, channel = start_mq_connection()
 
     message = {
         'studyInstanceUid': study_uid,
@@ -128,4 +136,7 @@ def synthesis_inference(request):
 
     print(f" [x] Sent {study_uid} to synthesis inference queue")
 
-    return Response(status=status.HTTP_200_OK, data={'message': 'synthesis inference'})
+    return Response(
+        status=status.HTTP_200_OK,
+        data={'message': 'synthesis inference'}
+    )

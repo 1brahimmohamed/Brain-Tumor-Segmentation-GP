@@ -5,7 +5,15 @@ import { Enums, metaData } from '@cornerstonejs/core';
 import { OrientationAxis } from '@cornerstonejs/core/src/enums';
 
 class DicomUtil {
-    public static formatDate(date: string, strFormat: string = 'MMM dd, yyyy') {
+
+    /**
+     * Formats a given dicom date string into the specified format.
+     *
+     * @param {string} date - The date string to be formatted.
+     * @param {string} [strFormat='MMM dd, yyyy'] - The format to be applied to the date string. Defaults to 'MMM dd, yyyy'.
+     * @return {string | undefined} - The formatted date string, or undefined if the input date is falsy.
+     */
+    public static formatDate(date: string, strFormat: string = 'MMM dd, yyyy'): string | undefined {
         if (!date) {
             return;
         }
@@ -24,7 +32,14 @@ class DicomUtil {
         }
     }
 
-    public static formatTime(time: string, strFormat: string = 'HH:mm:ss') {
+    /**
+     * Formats a given dicom time string into the specified format.
+     *
+     * @param {string} time - The time string to be formatted.
+     * @param {string} [strFormat='HH:mm:ss'] - The format to be applied to the time string. Defaults to 'HH:mm:ss'.
+     * @return {string | undefined} - The formatted time string, or undefined if the input time is falsy.
+     */
+    public static formatTime(time: string, strFormat: string = 'HH:mm:ss'): string | undefined {
         if (!time) {
             return;
         }
@@ -53,7 +68,14 @@ class DicomUtil {
         }
     }
 
-    public static formatPatientName(patientName: any) {
+
+    /**
+     * Formats the given dicom patient name by cleaning it and adding a comma between the first and last name.
+     *
+     * @param {any} patientName - The patient name to be formatted.
+     * @return {string | undefined} - The formatted patient name, or undefined if the input is falsy.
+     */
+    public static formatPatientName(patientName: any): string | undefined {
         if (!patientName) {
             return;
         }
@@ -73,6 +95,12 @@ class DicomUtil {
         return cleaned.trim();
     }
 
+    /**
+     * Detects the orientation of an image based on its dicom orientation array values.
+     *
+     * @param {number[]} orientation - An array of numbers representing the orientation values of the image.
+     * @return {OrientationAxis} The orientation axis of the image. Returns OrientationAxis.AXIAL if the image is oriented axially, OrientationAxis.SAGITTAL if the image is oriented sagittally, OrientationAxis.CORONAL if the image is oriented coronally, and OrientationAxis.ACQUISITION if the orientation cannot be determined.
+     */
     public static detectImageOrientation(orientation: number[]): OrientationAxis {
         // Convert orientation values to numbers and take absolute values
         const orientation_array = orientation.map(Number).map(Math.abs);
@@ -100,11 +128,24 @@ class DicomUtil {
         }
     }
 
-    private static dotProduct(a: number[], b: number[]) {
+    /**
+     * Calculates the dot product of two arrays of numbers.
+     *
+     * @param {number[]} a - The first array of numbers.
+     * @param {number[]} b - The second array of numbers.
+     * @return {number} The dot product of the two arrays.
+     */
+    private static dotProduct(a: number[], b: number[]): number {
         return a.map((_, i) => a[i] * b[i]).reduce((m, n) => m + n);
     }
 
-    public static getDicomCompressionType(imageId: string) {
+    /**
+     * Gets the DICOM compression type of image.
+     *
+     * @param {string} imageId - The cornerstone image ID of the image.
+     * @return {string} The DICOM compression type of the image.
+     */
+    public static getDicomCompressionType(imageId: string): string {
         const lossyImageCompression = metaData.get('x00282110', imageId);
         const lossyImageCompressionRatio = metaData.get('x00282112', imageId);
         const lossyImageCompressionMethod = metaData.get('x00282114', imageId);
