@@ -1,0 +1,17 @@
+Django==5.0.1
+djangorestframework==3.14.0
+django-cors-headers==4.3.1
+psycopg2==2.9.9
+environ==1.0
+pydicom==2.3.1
+python-dotenv==1.0.1
+python_environ==0.4.54
+Requests==2.31.0
+SQLAlchemy==2.0.28
+httplib2==0.22.0
+fastapi==0.111.0
+pydantic==1.10.15
+python-decouple==3.8
+uvicorn==0.29.0
+dicomweb_client==0.59.1
+python-dotenv==1.0.1

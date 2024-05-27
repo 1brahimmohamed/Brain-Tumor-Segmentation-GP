@@ -1,0 +1,34 @@
+{
+    "motionArtifactsModels": [
+        {
+            "name": "MMM.AI nnUNet Model",
+            "url": "http://localhost:8000/inference/motion"
+        },
+        {
+            "name": "Harvard DynamicUnet Model",
+            "url": "http://localhost:8081"
+        }
+    ],
+    "segmentationModels": [
+        {
+            "name": "MMM.AI UNet Model",
+            "url": "http://localhost:8000/inference/segmentation",
+            "neededSequences": ["t1", "t1c", "t2", "flair"]
+        },
+        {
+            "name": "Oxford RNN Model",
+            "url": "http://localhost:8081",
+            "neededSequences": ["t1", "t2", "flair"]
+        }
+    ],
+    "synthesisModels": [
+        {
+            "name": "MMM.AI nnUNet Model",
+            "url": "http://localhost:8000/inference/synthesis"
+        },
+        {
+            "name": "Johns Hopkins CNN Model",
+            "url": "http://localhost:8081"
+        }
+    ]
+}

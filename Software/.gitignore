@@ -1,0 +1,18 @@
+
+# IDEs
+.idea/
+
+
+# Dependences
+**/node_modules/
+
+# Backend
+**/pgdata
+**/venv/
+
+### RabbitMQ
+/backend/Services/RabbitMQ/**
+
+
+**/__pycache__
+*.env

@@ -1,0 +1,30 @@
+input[type='text'],
+input[type='number'] {
+    -webkit-appearance: none;
+    -moz-appearance: none; // For Firefox
+}
+
+/* For most modern browsers */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.input-number:focus {
+    border: none;
+    outline: none;
+}
+
+.up-arrowsize svg {
+    width: 15px;
+    height: 15px;
+
+    path {
+        fill: #726f7e;
+    }
+}
+
+.input-small {
+    height: 26px;
+}

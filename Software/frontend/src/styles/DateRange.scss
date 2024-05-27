@@ -1,0 +1,239 @@
+// dark mode
+$primary-color-dark: #10a9e2;
+$body-background-dark: #383842;
+$text-color-dark: #ffffff;
+
+// dark mode
+$primary-color-light: #10a9e2;
+$body-input-light: #d5d5d6;
+$body-background-light: #ffffff;
+$text-color-light: #333333;
+
+/*
+THE INPUT FIELD
+*/
+.createDateRangePicker {
+    /* Background Color of Input filed  */
+    background-color: $body-background-dark;
+    border: 1px solid #27272b;
+
+    &:hover {
+        border: 1px solid $primary-color-dark;
+        background: $body-background-dark;
+    }
+
+    /* Input filed when foucsed */
+    &:focus {
+        border: 1px solid $primary-color-dark;
+        background: $body-background-dark;
+    }
+
+    /* The bar under the selection  */
+    .ant-picker-active-bar {
+        background-color: $primary-color-dark;
+    }
+
+    /* The Icon in the middle between the start and end date */
+    .ant-picker-separator {
+        color: $primary-color-dark;
+    }
+
+    /* The icon after the end date */
+    .ant-picker-suffix {
+        color: $text-color-dark;
+    }
+
+    /* The clear icon */
+    .ant-picker-clear {
+        background-color: $body-background-dark;
+        color: $primary-color-dark;
+
+        &:hover {
+            background-color: $body-background-dark;
+            color: #94bdd2;
+        }
+    }
+
+    .ant-picker-input {
+        color: $text-color-dark;
+    }
+
+    /* The color of input when it has data and when it doesn't */
+    input {
+        color: $text-color-dark !important;
+        &::placeholder {
+            color: rgba(256, 256, 256, 0.6) !important;
+        }
+    }
+}
+
+/*
+THE POP UP FILED
+*/
+.createDateRangePickerPopup {
+    /* The background color of the popup */
+    .ant-picker-panel-container {
+        background-color: $body-background-dark;
+
+        /* The Header of the date picker */
+        .ant-picker-header {
+            color: $text-color-dark;
+
+            button {
+                color: $text-color-dark;
+            }
+        }
+
+        /* The body of the date picker */
+        thead > tr > th {
+            color: $text-color-dark;
+        }
+
+        /* the cells color */
+        .ant-picker-cell-inner {
+            color: $text-color-dark;
+        }
+
+        /* the start and end selected dates   */
+        .ant-picker-cell-range-start,
+        .ant-picker-cell-range-end {
+            div {
+                background: $primary-color-dark !important;
+                color: $text-color-dark;
+            }
+        }
+
+        /* the selected dates */
+        .ant-picker-cell-in-view.ant-picker-cell-range-start .ant-picker-cell-inner {
+            background-color: $primary-color-dark !important;
+        }
+
+        .ant-picker-cell-in-view.ant-picker-cell-range-end .ant-picker-cell-inner {
+            background-color: $primary-color-dark !important;
+        }
+
+        /* the border of the suggested date */
+
+        .ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner::before {
+            border-color: $primary-color-dark !important;
+        }
+
+        /* The dates in between the start and end dates */
+        .ant-picker-cell-in-view.ant-picker-cell-range-start:not(.ant-picker-cell-range-start-single)::before,
+        .ant-picker-cell-in-view.ant-picker-cell-in-range::before,
+        .ant-picker-cell-in-view.ant-picker-cell-range-end:not(.ant-picker-cell-range-end-single)::before,
+        .ant-picker-time-panel-column
+            > li.ant-picker-time-panel-cell-selected
+            .ant-picker-time-panel-cell-inner {
+            background: rgba(190, 196, 197, 0.2) !important;
+        }
+    }
+}
+
+.light-mode.createDateRangePicker {
+    /* Background Color of Input filed  */
+    background-color: $body-input-light;
+    border: 1px solid #c5c5bc;
+
+    /* Input filed when foucsed */
+    &:focus {
+        border: 1px solid $primary-color-light;
+    }
+
+    /* The bar under the selection  */
+    .ant-picker-active-bar {
+        background-color: $primary-color-light;
+    }
+
+    /* The Icon in the middle between the start and end date */
+    .ant-picker-separator {
+        color: $primary-color-light;
+    }
+
+    /* The icon after the end date */
+    .ant-picker-suffix {
+        color: $text-color-light;
+    }
+
+    /* The clear icon */
+    .ant-picker-clear {
+        background-color: $body-input-light;
+        color: $primary-color-light;
+
+        &:hover {
+            color: #0a6686;
+        }
+    }
+
+    .ant-picker-input {
+        color: $text-color-light;
+    }
+
+    /* The color of input when it has data and when it doesn't */
+    input {
+        color: $text-color-light !important;
+        &::placeholder {
+            color: rgba(0, 0, 0, 0.6) !important;
+        }
+    }
+}
+
+.light-mode.createDateRangePickerPopup {
+    /* The background color of the popup */
+    .ant-picker-panel-container {
+        background-color: $body-background-light;
+
+        /* The Header of the date picker */
+        .ant-picker-header {
+            color: $text-color-light;
+
+            button {
+                color: $text-color-light;
+            }
+        }
+
+        /* The body of the date picker */
+        thead > tr > th {
+            color: $text-color-light;
+        }
+
+        /* the cells color */
+        .ant-picker-cell-inner {
+            color: $text-color-light;
+        }
+
+        /* the start and end selected dates   */
+        .ant-picker-cell-range-start,
+        .ant-picker-cell-range-end {
+            div {
+                background: $primary-color-light !important;
+                color: $text-color-light;
+            }
+        }
+
+        /* the selected dates */
+        .ant-picker-cell-in-view.ant-picker-cell-range-start .ant-picker-cell-inner {
+            background-color: $primary-color-light !important;
+        }
+
+        .ant-picker-cell-in-view.ant-picker-cell-range-end .ant-picker-cell-inner {
+            background-color: $primary-color-light !important;
+        }
+
+        /* the border of the suggested date */
+
+        .ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner::before {
+            border-color: $primary-color-light !important;
+        }
+
+        /* The dates in between the start and end dates */
+        .ant-picker-cell-in-view.ant-picker-cell-range-start:not(.ant-picker-cell-range-start-single)::before,
+        .ant-picker-cell-in-view.ant-picker-cell-in-range::before,
+        .ant-picker-cell-in-view.ant-picker-cell-range-end:not(.ant-picker-cell-range-end-single)::before,
+        .ant-picker-time-panel-column
+            > li.ant-picker-time-panel-cell-selected
+            .ant-picker-time-panel-cell-inner {
+            background: rgba(190, 196, 197, 0.6) !important;
+        }
+    }
+}
