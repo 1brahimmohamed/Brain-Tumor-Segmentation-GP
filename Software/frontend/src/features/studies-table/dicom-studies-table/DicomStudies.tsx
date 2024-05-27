@@ -7,16 +7,13 @@ import { TAppDispatch } from '@/redux/store.ts';
 import DicomStudiesTable from '@features/studies-table/dicom-studies-table/DicomStudiesTable.tsx';
 
 const DicomStudies = () => {
-
     const dispatch = useDispatch<TAppDispatch>();
 
     useEffect(() => {
         dispatch(fetchDicomStudiesThunk());
     }, []);
 
-    const {
-        dicomStudies,
-    } = useSelector((store: IStore) => store.studies);
+    const { dicomStudies } = useSelector((store: IStore) => store.studies);
 
     return (
         <Box className={'flex-col mt-4 space-y-5'}>

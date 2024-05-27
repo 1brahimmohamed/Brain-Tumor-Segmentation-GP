@@ -1,6 +1,6 @@
-import { NotFoundProps } from "@models/404.ts";
+import { NotFoundProps } from '@/models';
 
-const Illustration = (props : NotFoundProps ) => {
+const Illustration = (props: NotFoundProps) => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 362 145" {...props}>
             <path
@@ -9,6 +9,6 @@ const Illustration = (props : NotFoundProps ) => {
             />
         </svg>
     );
-}
+};
 
 export default Illustration;

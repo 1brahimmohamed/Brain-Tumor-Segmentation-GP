@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('dicom/', include('gateway.orthanc.urls')),
     path('users/', include('gateway.users.urls')),
+    path('inference/', include('gateway.inference.urls')),
 ]

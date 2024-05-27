@@ -1,0 +1,36 @@
+input[type='range'] {
+    -webkit-appearance: none;
+    appearance: none; // Non-vendor-prefixed version for other browsers
+}
+
+input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    @apply border-AAPrimary bg-AAPrimary border-[2px] border-solid;
+    // Assuming you're using some CSS preprocessor to use @apply
+    height: 13px;
+    width: 13px;
+    border-radius: 50%;
+}
+
+input[type='range']::-moz-range-thumb {
+    // Assuming you're using some CSS preprocessor to use @apply
+    @apply border-AAPrimary bg-AAError border-[2px] border-solid;
+    height: 13px;
+    width: 13px;
+    border-radius: 50%;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+    border: none !important;
+}
+
+input[type='range']::-moz-range-track {
+    border: none !important;
+}
+
+.range-track {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}

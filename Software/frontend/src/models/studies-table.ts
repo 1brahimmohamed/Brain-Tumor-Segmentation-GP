@@ -4,6 +4,4 @@ export interface IDicomTableColumnHead {
     searchable: boolean;
 }
 
-export interface IDicomTableRow {
-
-}
+export interface IDicomTableRow {}

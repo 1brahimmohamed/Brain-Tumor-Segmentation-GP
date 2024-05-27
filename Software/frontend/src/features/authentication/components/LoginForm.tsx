@@ -1,13 +1,9 @@
 import { FormEvent, useRef } from 'react';
-// import { useNavigate } from 'react-router-dom';
 import { Button, Theme } from '@mui/material';
-import PersonIcon from '@mui/icons-material/Person';
-import LockIcon from '@mui/icons-material/Lock';
 import LoginInputField from '@features/authentication/components/LoginInputField.tsx';
-
+import { Person as UsernameIcon, Lock as PasswordIcon } from '@mui/icons-material';
 
 const LoginForm = ({ theme }: { theme: Theme }) => {
-
     // const navigate = useNavigate();
     const loginFormRef = useRef<HTMLFormElement>(null);
 
@@ -23,12 +19,21 @@ const LoginForm = ({ theme }: { theme: Theme }) => {
 
     return (
         <form ref={loginFormRef} onSubmit={handleSubmit}>
+            <LoginInputField
+                theme={theme}
+                name={'username'}
+                autoComplete={'username'}
+                placeholder={'Username'}
+                Icon={UsernameIcon}
+            />
 
-            <LoginInputField theme={theme} name={'username'} autoComplete={'username'} placeholder={'Username'}
-                             Icon={PersonIcon} />
-
-            <LoginInputField theme={theme} name={'password'} autoComplete={'current-password'} placeholder={'Password'}
-                             Icon={LockIcon} />
+            <LoginInputField
+                theme={theme}
+                name={'password'}
+                autoComplete={'current-password'}
+                placeholder={'Password'}
+                Icon={PasswordIcon}
+            />
 
             <Button
                 type={'submit'}

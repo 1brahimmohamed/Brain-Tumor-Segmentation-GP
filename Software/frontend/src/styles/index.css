@@ -9,37 +9,34 @@ body,
 #root,
 .app,
 .content {
-  height: 100%;
-  width: 100%;
-  font-family: "Source Sans Pro", sans-serif;
-  overflow: hidden;
+    height: 100%;
+    width: 100%;
+    font-family: 'Source Sans Pro', sans-serif;
+    overflow: hidden;
 }
 
-
-
-::-webkit-scrollbar{
-  width: 0.5rem;
+::-webkit-scrollbar {
+    width: 0.5rem;
 }
 
 /* Track */
-::-webkit-scrollbar-track{
-  background: #e0e0e0;
+::-webkit-scrollbar-track {
+    background: #e0e0e0;
 }
 
 /* Handle */
-::-webkit-scrollbar-thumb{
-  background: #10a8e0;
+::-webkit-scrollbar-thumb {
+    background: #10a8e0;
 }
 
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover{
-  background: rgba(16, 168, 224, 0.42);
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(16, 168, 224, 0.42);
 }
 
 .ant-picker-input {
-  color: green !important;
+    color: green !important;
 }
-
 
 /*:root {*/
 /*  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;*/

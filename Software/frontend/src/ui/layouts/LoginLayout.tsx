@@ -1,5 +1,5 @@
-import {Outlet} from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import { Outlet } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const LoginLayout = () => {
     return (
@@ -8,12 +8,12 @@ const LoginLayout = () => {
                 <title>MMM.AI Login</title>
                 <meta
                     name="description"
-                    content="Multimodal Medical Viewer for brain tumor segmentation and MRI sequence synthesis"
+                    content="Multimodal Medical Viewer for brain tumor segmentation and MRI Motion Artifacts Correction."
                 />
             </Helmet>
             <Outlet />
         </div>
-    )
+    );
 };
 
 export default LoginLayout;

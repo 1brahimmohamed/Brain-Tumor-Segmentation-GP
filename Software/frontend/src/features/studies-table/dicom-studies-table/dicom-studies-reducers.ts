@@ -1,7 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { IStoreStudiesSlice } from '@models/store.ts';
-import { IDicomTableStudy } from '@models/study.ts';
-
+import { IStoreStudiesSlice, IDicomStudyData, IDicomTableStudy } from '@/models';
 
 const dicomStudiesReducers = {
     addStudies: (state: IStoreStudiesSlice, action: PayloadAction<IDicomTableStudy[]>) => {
@@ -13,10 +11,9 @@ const dicomStudiesReducers = {
     removeStudy: (state: IStoreStudiesSlice, action: PayloadAction<string>) => {
         state.dicomStudies = state.dicomStudies.filter((study) => study.studyId !== action.payload);
     },
-    setSelectedDicomStudy: (state: IStoreStudiesSlice, action: PayloadAction<IDicomTableStudy>) => {
+    setSelectedDicomStudy: (state: IStoreStudiesSlice, action: PayloadAction<IDicomStudyData>) => {
         state.selectedDicomStudy = action.payload;
-    },
+    }
 };
 
 export default dicomStudiesReducers;
-

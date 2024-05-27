@@ -7,17 +7,7 @@ services:
     ports:
       - "5000:5000"
     depends_on:
-      - backend
-
-  backend:
-    build: ./backend/Gateway
-    container_name: gp_gateway
-    ports:
-      - "4000:4000"
-    volumes:
-      - ./backend/Gateway:/api
-    depends_on:
-      - orthanc
+      - api_gateway
 
   api_gateway:
     build: ./backend/ApiGateway
@@ -28,6 +18,7 @@ services:
       - ./backend/ApiGateway:/usr/src/app
     depends_on:
       - api_gateway_db
+      - orthanc
 
   api_gateway_db:
     image: postgres:latest
@@ -48,33 +39,39 @@ services:
     ports:
       - "8042:8042"
       - "4242:4242"
-    stdin_open: true
     tty: true
     volumes:
       - ./backend/Services/Orthanc/config/orthanc.json:/etc/orthanc/orthanc.json
       - ./backend/Services/Orthanc/config/dicomweb.json:/etc/orthanc/dicomweb.json
-      - ./backend/Services/Orthanc/config/Scripts/starter_script.sh:/usr/share/orthanc/scripts/starter_script.sh
+      - ./backend/Services/Orthanc/config/scripts:/usr/share/orthanc/scripts
       - ./backend/Services/Orthanc/storage:/var/lib/orthanc/db-v6
 
-  # nifti_pacs:
-  #   build: ./backend/Services/NiftiPACS/NiftiPACS
-  #   container_name: gp_nifti_pacs
-  #   ports:
-  #     - "8080:8080"
-  #   volumes:
-  #     - ./backend/Services/NiftiPACS/:/usr/src/app
-  #   depends_on:
-  #     - nifti_pacs_db
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: gp_rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=mmm_ai
+      - RABBITMQ_DEFAULT_PASS=mmm_mq_ai_p
+    volumes:
+      - ./backend/Services/RabbitMQ:/var/lib/rabbitmq
 
-  # nifti_pacs_db:
-  #   image: postgres:latest
-  #   container_name: gp_nifti_pacs_db
-  #   ports:
-  #     - "5433:5432"
-  #   environment:
-  #     - POSTGRES_USER=nifti_user
-  #     - POSTGRES_PASSWORD=postgres
-  #     - POSTGRES_DB=nifti
-  #   volumes:
-  #     - ./backend/Services/NiftiPACS/pgdata:/var/lib/postgresql/data
-  #   restart: always
+  inference:
+    build: ./backend/Services/Inference
+    container_name: gp_inference
+    volumes:
+      - ./backend/Services/Inference:/usr/src/app
+    depends_on:
+      - rabbitmq
+
+  nifti_storage:
+    build: ./backend/Services/NiftiStorage/
+    container_name: gp_nifti_storage
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend/Services/NiftiStorage:/usr/src/app
+
+
