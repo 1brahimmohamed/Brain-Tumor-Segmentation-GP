@@ -1,6 +1,18 @@
 import { metaData } from '@cornerstonejs/core';
 import type { InstanceMetadata } from '@cornerstonejs/calculate-suv';
 
+interface IDateObject {
+    year: number;
+    month: number;
+    day: number;
+}
+
+interface ITimeObject {
+    hours?: number;
+    minutes?: number;
+    seconds?: number;
+    fractionalSeconds?: number;
+}
 /**
  * Retrieves the instance metadata for a given image ID.
  *
@@ -38,7 +50,7 @@ export default function getPTImageIdInstanceMetadata(imageId: string): InstanceM
         radiopharmaceuticalInfo.radionuclideTotalDose === undefined ||
         radiopharmaceuticalInfo.radionuclideHalfLife === undefined ||
         (radiopharmaceuticalInfo.radiopharmaceuticalStartDateTime === undefined &&
-            seriesDate === undefined &&
+            false &&
             radiopharmaceuticalInfo.radiopharmaceuticalStartTime === undefined)
         //
     ) {
@@ -60,7 +72,6 @@ export default function getPTImageIdInstanceMetadata(imageId: string): InstanceM
 
     if (
         radiopharmaceuticalInfo.radiopharmaceuticalStartDateTime &&
-        radiopharmaceuticalInfo.radiopharmaceuticalStartDateTime !== undefined &&
         typeof radiopharmaceuticalInfo.radiopharmaceuticalStartDateTime === 'string'
     ) {
         instanceMetadata.RadiopharmaceuticalStartDateTime =
@@ -69,7 +80,6 @@ export default function getPTImageIdInstanceMetadata(imageId: string): InstanceM
 
     if (
         radiopharmaceuticalInfo.radiopharmaceuticalStartDateTime &&
-        radiopharmaceuticalInfo.radiopharmaceuticalStartDateTime !== undefined &&
         typeof radiopharmaceuticalInfo.radiopharmaceuticalStartDateTime !== 'string'
     ) {
         const dateString = convertInterfaceDateToString(
@@ -78,27 +88,18 @@ export default function getPTImageIdInstanceMetadata(imageId: string): InstanceM
         instanceMetadata.RadiopharmaceuticalStartDateTime = dateString;
     }
 
-    if (
-        instanceMetadata.AcquisitionDate &&
-        instanceMetadata.AcquisitionDate !== undefined &&
-        typeof instanceMetadata.AcquisitionDate !== 'string'
-    ) {
+    if (instanceMetadata.AcquisitionDate && typeof instanceMetadata.AcquisitionDate !== 'string') {
         const dateString = convertInterfaceDateToString(instanceMetadata.AcquisitionDate);
         instanceMetadata.AcquisitionDate = dateString;
     }
 
-    if (
-        instanceMetadata.SeriesDate &&
-        instanceMetadata.SeriesDate !== undefined &&
-        typeof instanceMetadata.SeriesDate !== 'string'
-    ) {
+    if (instanceMetadata.SeriesDate && typeof instanceMetadata.SeriesDate !== 'string') {
         const dateString = convertInterfaceDateToString(instanceMetadata.SeriesDate);
         instanceMetadata.SeriesDate = dateString;
     }
 
     if (
         radiopharmaceuticalInfo.radiopharmaceuticalStartTime &&
-        radiopharmaceuticalInfo.radiopharmaceuticalStartTime !== undefined &&
         typeof radiopharmaceuticalInfo.radiopharmaceuticalStartTime === 'string'
     ) {
         instanceMetadata.RadiopharmaceuticalStartTime = radiopharmaceuticalInfo.radiopharmaceuticalStartTime;
@@ -106,7 +107,6 @@ export default function getPTImageIdInstanceMetadata(imageId: string): InstanceM
 
     if (
         radiopharmaceuticalInfo.radiopharmaceuticalStartTime &&
-        radiopharmaceuticalInfo.radiopharmaceuticalStartTime !== undefined &&
         typeof radiopharmaceuticalInfo.radiopharmaceuticalStartTime !== 'string'
     ) {
         const timeString = convertInterfaceTimeToString(radiopharmaceuticalInfo.radiopharmaceuticalStartTime);
@@ -131,7 +131,7 @@ export default function getPTImageIdInstanceMetadata(imageId: string): InstanceM
         instanceMetadata.SeriesTime = timeString;
     }
 
-    if (ptImageModule.frameReferenceTime && ptImageModule.frameReferenceTime !== undefined) {
+    if (ptImageModule.frameReferenceTime) {
         instanceMetadata.FrameReferenceTime = ptImageModule.frameReferenceTime;
     }
 
@@ -139,11 +139,11 @@ export default function getPTImageIdInstanceMetadata(imageId: string): InstanceM
         instanceMetadata.ActualFrameDuration = ptImageModule.actualFrameDuration;
     }
 
-    if (patientStudyModule.patientSex && patientStudyModule.patientSex !== undefined) {
+    if (patientStudyModule.patientSex) {
         instanceMetadata.PatientSex = patientStudyModule.patientSex;
     }
 
-    if (patientStudyModule.patientSize && patientStudyModule.patientSize !== undefined) {
+    if (patientStudyModule.patientSize) {
         instanceMetadata.PatientSize = patientStudyModule.patientSize;
     }
 
@@ -174,7 +174,7 @@ export default function getPTImageIdInstanceMetadata(imageId: string): InstanceM
  * @param {any} time - The interface representing the time.
  * @return {string} The string representation of the time.
  */
-function convertInterfaceTimeToString(time: any): string {
+function convertInterfaceTimeToString(time: ITimeObject): string {
     const hours = `${time.hours || '00'}`.padStart(2, '0');
     const minutes = `${time.minutes || '00'}`.padStart(2, '0');
     const seconds = `${time.seconds || '00'}`.padStart(2, '0');
@@ -191,7 +191,7 @@ function convertInterfaceTimeToString(time: any): string {
  * @param {any} date - The interface representing the date.
  * @return {string} The string representation of the date.
  */
-function convertInterfaceDateToString(date: any): string {
+function convertInterfaceDateToString(date: IDateObject): string {
     const month = `${date.month}`.padStart(2, '0');
     const day = `${date.day}`.padStart(2, '0');
     const dateString = `${date.year}${month}${day}`;

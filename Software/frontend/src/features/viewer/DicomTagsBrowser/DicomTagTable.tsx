@@ -129,7 +129,7 @@ const rows = [
     }
 ];
 
-const DicomTagTable = ({}) => {
+const DicomTagTable = () => {
     const [searchValues, setSearchValues] = useState(Array(tableColumnHeadings.length).fill(''));
     const theme = useTheme();
 

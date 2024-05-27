@@ -1,4 +1,4 @@
-import getDICOMMetaData from './dicomMetaDataParser.ts';
+import getDICOMMetaData, { DICOMInfo } from './dicomMetaDataParser.ts';
 
 /**
  * Retrieves DICOM metadata for the given image ID and maps DICOM tags to their corresponding labels.
@@ -6,7 +6,7 @@ import getDICOMMetaData from './dicomMetaDataParser.ts';
  * @param {string} imageId The ID of the DICOM image.
  * @returns An object containing DICOM metadata based on the specified type.
  */
-const getMetadataByImageId = (type: string, imageId: string): any => {
+const getMetadataByImageId = (type: string, imageId: string): { [key: string]: DICOMInfo } => {
     const dicomData = getDICOMMetaData(imageId);
     if (!dicomData) {
         return {};
@@ -64,6 +64,8 @@ const getMetadataByImageId = (type: string, imageId: string): any => {
     }
 
     if (type === 'all') return dicomData;
+
+    return {};
 };
 
 export default getMetadataByImageId;

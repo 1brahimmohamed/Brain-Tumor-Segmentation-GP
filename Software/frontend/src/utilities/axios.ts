@@ -30,9 +30,9 @@ class AxiosUtil {
 
         try {
             responseData = (await axios({ ...axiosConfig })).data;
-        } catch (err) {
+        } catch (err: unknown) {
             if (showError !== false) {
-                const errResponse = err as AxiosError<any, any>;
+                const errResponse = err as AxiosError;
                 const response = errResponse.response?.data;
                 const errorMsg =
                     response?.message ||
@@ -83,8 +83,10 @@ class AxiosUtil {
             (response) => {
                 return response;
             },
-            (error: AxiosError<any, any>) => {
-                if (error.response?.status === 401) {
+            (error: unknown) => {
+                const err = error as AxiosError;
+
+                if (err.response?.status === 401) {
                     store.dispatch(authSliceActions.resetAuthInfo());
                 }
 

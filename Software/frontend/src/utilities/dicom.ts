@@ -4,6 +4,10 @@ import { uiSliceActions } from '@ui/ui-slice';
 import { Enums, metaData } from '@cornerstonejs/core';
 import { OrientationAxis } from '@cornerstonejs/core/src/enums';
 
+interface IPatientName {
+    Alphabetic?: string;
+}
+
 class DicomUtil {
     /**
      * Formats a given dicom date string into the specified format.
@@ -21,11 +25,11 @@ class DicomUtil {
         try {
             const parsedDateTime = parse(date, 'yyyyMMdd', new Date());
             return format(parsedDateTime, strFormat);
-        } catch (err: any) {
+        } catch (err: unknown) {
             store.dispatch(
                 uiSliceActions.setNotification({
                     type: 'error',
-                    content: err.message
+                    content: (err as Error).message
                 })
             );
         }
@@ -57,11 +61,11 @@ class DicomUtil {
             const parsedDateTime = parse(strTime, inputFormat.substring(0, strTime.length), new Date(0));
 
             return format(parsedDateTime, strFormat);
-        } catch (err: any) {
+        } catch (err: unknown) {
             store.dispatch(
                 uiSliceActions.setNotification({
                     type: 'error',
-                    content: err.message
+                    content: (err as Error).message
                 })
             );
         }
@@ -73,7 +77,9 @@ class DicomUtil {
      * @param {any} patientName - The patient name to be formatted.
      * @return {string | undefined} - The formatted patient name, or undefined if the input is falsy.
      */
-    public static formatPatientName(patientName: any): string | undefined {
+    public static formatPatientName(
+        patientName: string | IPatientName | null | undefined
+    ): string | undefined {
         if (!patientName) {
             return;
         }
@@ -84,6 +90,10 @@ class DicomUtil {
             if (patientName.Alphabetic) {
                 cleaned = patientName.Alphabetic;
             }
+        }
+
+        if (typeof cleaned !== 'string') {
+            return;
         }
 
         const commaBetweenFirstAndLast = cleaned.replace('^', ', ');

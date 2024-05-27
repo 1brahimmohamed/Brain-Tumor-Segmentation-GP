@@ -22,10 +22,10 @@ const DicomTagsBrowser = () => {
         { value: 'three', label: 'Three' }
     ];
 
-    const [selectedSeries, setSelectedSeries] = useState(options[0].value);
-    const handleSelectedSeriesChange = (newSelect: any, _action: any) => {
-        console.log(newSelect.value);
-        setSelectedSeries(newSelect.value);
+    const [selectedSeries, setSelectedSeries] = useState<string>(options[0].value);
+    const handleSelectedSeriesChange = (value: string | string[]) => {
+        console.log(value);
+        setSelectedSeries(value as string);
     };
 
     return (

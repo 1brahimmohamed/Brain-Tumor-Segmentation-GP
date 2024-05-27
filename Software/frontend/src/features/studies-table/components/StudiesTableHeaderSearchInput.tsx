@@ -1,9 +1,10 @@
 import { Input } from '@mui/material';
+import { Theme } from '@mui/material/styles';
 
 type TStudiesTableHeaderSearchInputProps = {
     displayName: string;
     onChange: (index: number, value: string) => void;
-    theme: any;
+    theme: Theme;
     index: number;
 };
 

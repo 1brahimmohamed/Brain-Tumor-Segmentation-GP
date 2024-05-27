@@ -1,19 +1,18 @@
 class HelpersUtil {
     /**
      * Returns a new array with the element at the specified index removed.
-     * @param {any[]} arr - The array to remove the element from.
+     * @param {T[]} arr - The array to remove the element from.
      * @param {number} index - The index of the element to remove.
      */
-    public static withoutElementAtIndex = (arr: any[], index: number) => [
-        ...arr.slice(0, index),
-        ...arr.slice(index + 1)
-    ];
+    public static withoutElementAtIndex<T>(arr: T[], index: number): T[] {
+        return [...arr.slice(0, index), ...arr.slice(index + 1)];
+    }
 
     /**
      * Checks if a value is a valid number.
      * @param {any} value - The value to check.
      */
-    public static isValidNumber = (value: any) => {
+    public static isValidNumber = (value: unknown): value is number => {
         return value !== null && value !== undefined && typeof value === 'number' && !isNaN(value);
     };
 

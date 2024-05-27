@@ -1,3 +1,5 @@
+import vtkVolume from '@kitware/vtk.js/Rendering/Core/Volume';
+
 const windowWidth = 400;
 const windowCenter = 40;
 
@@ -13,7 +15,11 @@ const ctVoiRange = { lower, upper };
  * @param {any} options.volumeActor - The volume actor to set the transfer function for.
  * @return {void} This function does not return a value.
  */
-export default function setCtTransferFunctionForVolumeActor({ volumeActor }: { volumeActor: any }): void {
+export default function setCtTransferFunctionForVolumeActor({
+    volumeActor
+}: {
+    volumeActor: vtkVolume;
+}): void {
     volumeActor.getProperty().getRGBTransferFunction(0).setMappingRange(lower, upper);
 }
 

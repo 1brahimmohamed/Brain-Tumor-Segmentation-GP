@@ -1,4 +1,5 @@
 import { utilities } from '@cornerstonejs/core';
+import vtkVolume from '@kitware/vtk.js/Rendering/Core/Volume';
 
 /**
  * Sets the transfer function for a PET volume actor.
@@ -7,7 +8,7 @@ import { utilities } from '@cornerstonejs/core';
  * @param {any} options.volumeActor - The volume actor to set the transfer function for.
  * @return {void} This function does not return a value.
  */
-export default function setPetTransferFunction({ volumeActor }: { volumeActor: any }): void {
+export default function setPetTransferFunction({ volumeActor }: { volumeActor: vtkVolume }): void {
     const rgbTransferFunction = volumeActor.getProperty().getRGBTransferFunction(0);
 
     rgbTransferFunction.setRange(0, 5);

@@ -1,7 +1,7 @@
 import cornerstoneDICOMImageLoader from '@cornerstonejs/dicom-image-loader';
 import DicomMapper from './dicomMapper';
 
-interface DICOMInfo {
+export interface DICOMInfo {
     tag: string;
     valueRepresentation: string;
     value?: string | string[];
@@ -14,7 +14,7 @@ interface DICOMInfo {
  * @param {string} imageId - The ID of the image.
  * @return {Object} An object containing the DICOM metadata for the image, with labels as keys and DICOMInfo objects as values.
  */
-const getDICOMMetaData = (imageId: string): object => {
+const getDICOMMetaData = (imageId: string): { [key: string]: DICOMInfo } => {
     const dicomData: { [key: string]: DICOMInfo } = {};
 
     try {
