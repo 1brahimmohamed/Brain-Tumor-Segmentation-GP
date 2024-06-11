@@ -2,6 +2,9 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { IStoreViewerSlice } from '@/models';
 
 const viewerViewportReducer = {
+    setCurrentStudy(state: IStoreViewerSlice, action: PayloadAction<string>) {
+        state.currentStudyInstanceUid = action.payload;
+    },
     setClickedSeries(state: IStoreViewerSlice, action: PayloadAction<string>) {
         state.selectedSeriesInstanceUid = action.payload;
     },

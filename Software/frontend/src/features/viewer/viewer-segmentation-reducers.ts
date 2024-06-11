@@ -1,8 +1,10 @@
-import { PayloadAction } from '@reduxjs/toolkit';
+import { Dispatch, PayloadAction } from '@reduxjs/toolkit';
 import { IStoreViewerSlice } from '@/models';
 import { ISegmentation } from '@models/viewer.ts';
 import * as cornerstoneTools from '@cornerstonejs/tools';
 import * as cornerstone from '@cornerstonejs/core';
+import store from '@/redux/store.ts';
+import { viewerSliceActions } from './viewer-slice';
 
 const segmentationAdditionMapper = (segmentationData: { id: string; volumeId: string; uid: string }) => {
     return {
@@ -39,16 +41,17 @@ const viewerSegmentationReducer = {
         state.segmentations.push(segmentation);
     },
 
-    removeSegmentation(state: IStoreViewerSlice, action: PayloadAction<string>) {
+    removeSegmentationbyId(state: IStoreViewerSlice, action: PayloadAction<string>) {
         const segmentationIndex = state.segmentations.findIndex(
             (segmentation) => segmentation.id === action.payload
         );
 
-        if (segmentationIndex === -1) {
-            return;
+        if (segmentationIndex !== -1 && state.segmentations.length > 1) {
+            // Remove the segmentation at the specified index
+            state.segmentations.splice(segmentationIndex, 1);
+        } else {
+            throw new Error('Cannot remove the last segmentation');
         }
-
-        state.segmentations.splice(segmentationIndex, 1);
     },
 
     addSegment(
@@ -75,7 +78,11 @@ const viewerSegmentationReducer = {
                             isActive:
                                 i === action.payload.numberOfSegments + segmentation.segments.length + 1,
                             segmentIndex: i,
-                            color: [0, 0, 0], // You can replace this with a color generation function
+                            color: cornerstoneTools.segmentation.config.color.getColorForSegmentIndex(
+                                state.currentToolGroupId,
+                                segmentation.uid,
+                                i
+                            ),
                             label: `Segment ${i}`,
                             isVisible: true,
                             isLocked: false
@@ -203,5 +210,39 @@ const viewerSegmentationReducer = {
         };
     }
 };
+
+// Thunk to remove segmentation from the state and update the active segmentation
+export const removeSegmentationAndUpdateActiveSegmentation =
+    (segmentationId: string) => (dispatch: Dispatch) => {
+        const segmentations = store.getState().viewer.segmentations; // Adjust according to your state structure
+
+        const segmentationIndex = segmentations.findIndex(
+            (segmentation) => segmentation.id === segmentationId
+        );
+
+        if (segmentationIndex === -1) {
+            return;
+        }
+
+        dispatch(viewerSliceActions.removeSegmentationbyId(segmentationId));
+
+        if (segmentations.length > 1) {
+            // Determine the nearest index to activate
+            let newActiveSegmentationIndex;
+            if (segmentationIndex > 0) {
+                // Prefer the one behind the deleted index
+                newActiveSegmentationIndex = segmentationIndex - 1;
+            } else {
+                // If it was the first element, activate the new first element
+                newActiveSegmentationIndex = 0;
+            }
+
+            const newActiveSegmentationId = segmentations[newActiveSegmentationIndex].id;
+            console.log('New Active Segmentation:', newActiveSegmentationId);
+            dispatch(viewerSliceActions.onSegmentationClick({ segmentationId: newActiveSegmentationId }));
+        } else {
+            throw new Error('Cannot remove this segmentation');
+        }
+    };
 
 export default viewerSegmentationReducer;

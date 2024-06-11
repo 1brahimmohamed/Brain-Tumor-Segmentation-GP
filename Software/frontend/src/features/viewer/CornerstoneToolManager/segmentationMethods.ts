@@ -5,12 +5,22 @@ import { viewerSliceActions } from '@features/viewer/viewer-slice.ts';
 import { adaptersSEG, helpers } from '@cornerstonejs/adapters';
 import * as cornerstoneDicomImageLoader from '@cornerstonejs/dicom-image-loader';
 import dcmjs from 'dcmjs';
+import { api } from 'dicomweb-client';
 const { wadouri } = cornerstoneDicomImageLoader;
 
 const { downloadDICOMData } = helpers;
 const { Cornerstone3D } = adaptersSEG;
 
+// Constants for DICOMWeb client
+const DICOM_URL = 'http://localhost:8080/http://localhost:8042/dicom-web';
+const SINGLEPART = true;
+const HEADERS = {
+    'Access-Control-Allow-Origin': 'http://localhost:5000',
+    'Access-Control-Allow-Credentials': 'true'
+};
+
 // Helper function to get rendering engine and viewport dynamically
+// This function is used to get the rendering engine and viewport based on the selected viewport
 const getRenderingAndViewport = (selectedViewportId: string) => {
     const state = store.getState();
     const { segmentations, renderingEngineId, currentToolGroupId } = state.viewer;
@@ -20,6 +30,7 @@ const getRenderingAndViewport = (selectedViewportId: string) => {
 };
 
 // Add Segment to a specific segmentation representation
+// This function is called when the user clicks on the add segment button in the segmentation panel
 export const addSegmentToSegmentation = (numberOfSegments: number) => {
     const { segmentations } = store.getState().viewer;
     // get the current segmententation
@@ -38,6 +49,7 @@ export const addSegmentToSegmentation = (numberOfSegments: number) => {
 };
 
 // Add a new segmentation to the viewer state
+// This function is called when the user clicks on the add segmentation button in the segmentation panel
 export const addSegmentation = async () => {
     const state = store.getState();
     const { selectedViewportId } = state.viewer;
@@ -51,6 +63,7 @@ export const addSegmentation = async () => {
 };
 
 // Download the current segmentation mask as a dcm file
+// This function is called when the user clicks on the download button in the segmentation panel
 export const downloadSegmentation = async () => {
     const state = store.getState();
     const { selectedViewportId } = state.viewer;
@@ -95,6 +108,7 @@ export const downloadSegmentation = async () => {
 };
 
 // Generate mock metadata for segment
+// This function generates mock metadata for a segment based on the segment index and color
 function generateMockMetadata(segmentIndex: number, color: any) {
     const RecommendedDisplayCIELabValue = dcmjs.data.Colors.rgb2DICOMLAB(
         color.slice(0, 3).map((value: number) => value / 255)
@@ -120,10 +134,13 @@ function generateMockMetadata(segmentIndex: number, color: any) {
 }
 
 // Create input element for file selection and trigger click to open file dialog
+// This function is called when the user clicks on the upload button in the segmentation panel
+
 export const uploadSegmentation = async () => {
     const inputElement = document.createElement('input');
     inputElement.type = 'file';
     inputElement.accept = '.dcm';
+    inputElement.multiple = true;
 
     inputElement.addEventListener('change', async (event) => {
         let eventTarget = (event.target as HTMLInputElement) || null;
@@ -140,23 +157,46 @@ export const uploadSegmentation = async () => {
     inputElement.click();
 };
 
-// Read the segmentation file and load it into the viewer
-export const readSegmentation = async (file: File) => {
-    const imageId = wadouri.fileManager.add(file);
-    const image = await cornerstone.imageLoader.loadAndCacheImage(imageId);
+// Read the segmentation input and load it into the viewer
+export const readSegmentation = async (input: File | string) => {
+    let imageId, arrayBuffer;
+    const state = store.getState();
+    const { currentStudyInstanceUid } = state.viewer;
 
-    if (!image) {
-        return;
+    if (typeof input === 'string') {
+        // If input is a string, assume it's a Series UID
+        const seriesInstanceUID = input;
+
+        // Construct URL to fetch DICOM image based on seriesInstanceUID
+        const client = new api.DICOMwebClient({
+            url: DICOM_URL,
+            singlepart: SINGLEPART,
+            headers: HEADERS
+        });
+
+        arrayBuffer = await client.retrieveInstance({
+            studyInstanceUID: currentStudyInstanceUid,
+            seriesInstanceUID: seriesInstanceUID,
+            sopInstanceUID: '2.25.650365970585381303806252206907588323991'
+        });
+    } else {
+        // If input is a File object, add it to wadouri file manager
+        imageId = wadouri.fileManager.add(input);
+
+        const image = await cornerstone.imageLoader.loadAndCacheImage(imageId);
+
+        const instance = cornerstone.metaData.get('instance', imageId);
+        if (instance.Modality !== 'SEG' && instance.Modality !== 'seg') {
+            console.error('This is not segmentation');
+            return;
+        }
+        arrayBuffer = image.data.byteArray.buffer;
     }
 
-    const instance = cornerstone.metaData.get('instance', imageId);
-    if (instance.Modality !== 'SEG') {
-        console.error('This is not segmentation: ' + file.name);
+    if (!arrayBuffer) {
+        console.error('Failed to load segmentation due to missing array buffer');
         return;
     }
-
-    const arrayBuffer = image.data.byteArray.buffer;
-
     loadSegmentation(arrayBuffer);
 };
 
@@ -247,3 +287,5 @@ async function addSegmentationsToState(
 
     return derivedVolume;
 }
+
+export default getRenderingAndViewport;

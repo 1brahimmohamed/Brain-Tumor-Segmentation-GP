@@ -9,6 +9,11 @@ import useResizeObserver from '@hooks/useResizeObserver.tsx';
 import ViewportOverlay from '@features/viewer/Viewport/ViewportOverlay/ViewportOverlay.tsx';
 import CinePlayer from '@features/viewer/Viewport/CinePlayer/CinePlayer.tsx';
 import { detectCineHeight } from '@features/viewer/Viewport/CinePlayer/detectCineHeight';
+import { createImageIdsAndCacheMetaData } from '@utilities/helpers/index';
+import getMetadataByImageId from '@/utilities/wadoMetaDataProvider';
+import { readSegmentation } from '../../CornerstoneToolManager/segmentationMethods';
+
+const wadoRsRoot = 'http://localhost:8042/dicom-web';
 
 type TViewportProps = {
     onClick?: (idx: string) => void;
@@ -27,8 +32,13 @@ const Viewport = ({ onClick, id, vNeighbours }: TViewportProps) => {
 
     const viewportRef = useRef<HTMLDivElement>(null);
     const cineRef = useRef<HTMLDivElement>(null);
-    const { selectedSeriesInstanceUid, selectedViewportId, renderingEngineId, viewportsWithCinePlayer } =
-        useSelector((store: IStore) => store.viewer);
+    const {
+        selectedSeriesInstanceUid,
+        selectedViewportId,
+        renderingEngineId,
+        viewportsWithCinePlayer,
+        currentStudyInstanceUid
+    } = useSelector((store: IStore) => store.viewer);
 
     const dispatch = useDispatch();
 
@@ -50,6 +60,19 @@ const Viewport = ({ onClick, id, vNeighbours }: TViewportProps) => {
                 ) as Types.IVolumeViewport;
 
                 const volumeId = `cornerstoneStreamingImageVolume:${selectedSeriesInstanceUid}`;
+                const imageIds = await createImageIdsAndCacheMetaData({
+                    StudyInstanceUID: currentStudyInstanceUid,
+                    SeriesInstanceUID: selectedSeriesInstanceUid,
+                    wadoRsRoot: wadoRsRoot
+                });
+
+                const metaData = getMetadataByImageId('all', imageIds[0]);
+
+                if (metaData['Modality'].value === 'SEG') {
+                    readSegmentation(selectedSeriesInstanceUid);
+                    return;
+                }
+
                 await viewport.setVolumes([{ volumeId }], true);
 
                 const direction = viewport.getImageData()?.imageData.getDirection() as number[];

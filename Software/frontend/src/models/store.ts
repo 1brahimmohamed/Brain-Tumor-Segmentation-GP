@@ -46,6 +46,7 @@ export interface IStoreViewerSlice {
     viewports: [];
     renderingEngineId: string;
     selectedViewportId: string;
+    currentStudyInstanceUid: string;
     selectedSeriesInstanceUid: string;
     studyData: IDicomSeriesData[] | null;
     annotationToolGroupIds: string[];
@@ -73,6 +74,7 @@ export const initialState: IStoreViewerSlice = {
     viewports: [],
     renderingEngineId: 'myRenderingEngine',
     selectedViewportId: '',
+    currentStudyInstanceUid: '',
     selectedSeriesInstanceUid: '',
     studyData: null,
     annotationToolGroupIds: [],

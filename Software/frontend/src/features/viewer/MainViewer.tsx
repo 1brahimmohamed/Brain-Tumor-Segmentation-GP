@@ -4,7 +4,9 @@ import * as cornerstone from '@cornerstonejs/core';
 import { useSelector } from 'react-redux';
 import ViewportsManager from '@features/viewer/Viewport/ViewportsManager.tsx';
 import CornerstoneToolManager from '@/features/viewer/CornerstoneToolManager/CornerstoneToolManager';
-
+import getMetadataByImageId from '@/utilities/wadoMetaDataProvider';
+import store from '@/redux/store.ts';
+import { viewerSliceActions } from '@features/viewer/viewer-slice.ts';
 import { IStore } from '@/models';
 
 const wadoRsRoot = 'http://localhost:8042/dicom-web';
@@ -26,11 +28,13 @@ const createDicomVolumes = async (studyInstanceUID: string | null, seriesInstanc
             // console.log(cornerstone.metaData.get('all', imageIds[0]));
 
             // Uncomment the following line to see the metadata of the first image in the series without the need for the provider
-            // console.log(getMetadataByImageId('all', imageIds[0]));
+            const metaData = getMetadataByImageId('all', imageIds[0]);
 
-            if (imageIds.length > 0) {
+            if (imageIds.length > 0 && metaData['Modality'].value != 'SEG') {
                 // @TODO: Handle Stack of Images as well as volumes.
-                return await cornerstone.volumeLoader.createAndCacheVolume(volumeId, { imageIds });
+                return await cornerstone.volumeLoader.createAndCacheVolume(volumeId, {
+                    imageIds
+                });
             }
         })
     );
@@ -41,6 +45,7 @@ const createDicomVolumes = async (studyInstanceUID: string | null, seriesInstanc
 const MainViewer = () => {
     const urlParams = new URLSearchParams(location.search);
     const studyInstanceUID = urlParams.get('StudyInstanceUID');
+    store.dispatch(viewerSliceActions.setCurrentStudy(studyInstanceUID));
 
     // Initialize the state with a type of null or an array of strings
     const [volumes, setVolumes] = useState<any[]>([]);

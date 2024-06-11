@@ -24,6 +24,7 @@ const initialState: IStoreViewerSlice = {
     studyData: null,
     annotationToolGroupIds: [],
     currentToolGroupId: '',
+    currentStudyInstanceUid: '',
     selectedCornerstoneTools: [],
     viewportsWithCinePlayer: [],
     segmentations: []
