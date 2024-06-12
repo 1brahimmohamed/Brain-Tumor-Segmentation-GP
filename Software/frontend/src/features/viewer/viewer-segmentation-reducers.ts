@@ -224,8 +224,6 @@ export const removeSegmentationAndUpdateActiveSegmentation =
             return;
         }
 
-        dispatch(viewerSliceActions.removeSegmentationbyId(segmentationId));
-
         if (segmentations.length > 1) {
             // Determine the nearest index to activate
             let newActiveSegmentationIndex;
@@ -240,6 +238,7 @@ export const removeSegmentationAndUpdateActiveSegmentation =
             const newActiveSegmentationId = segmentations[newActiveSegmentationIndex].id;
             console.log('New Active Segmentation:', newActiveSegmentationId);
             dispatch(viewerSliceActions.onSegmentationClick({ segmentationId: newActiveSegmentationId }));
+            dispatch(viewerSliceActions.removeSegmentationbyId(segmentationId));
         } else {
             throw new Error('Cannot remove this segmentation');
         }
