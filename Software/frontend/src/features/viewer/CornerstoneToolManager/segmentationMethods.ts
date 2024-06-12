@@ -6,6 +6,7 @@ import { adaptersSEG, helpers } from '@cornerstonejs/adapters';
 import * as cornerstoneDicomImageLoader from '@cornerstonejs/dicom-image-loader';
 import dcmjs from 'dcmjs';
 import { api } from 'dicomweb-client';
+import { getAndSetSeriesInstances, setSeriesInstances } from '../viewer-viewport-reducers';
 const { wadouri } = cornerstoneDicomImageLoader;
 
 const { downloadDICOMData } = helpers;
@@ -174,11 +175,14 @@ export const readSegmentation = async (input: File | string) => {
             headers: HEADERS
         });
 
+        const SOPInstanceUIDs = await getAndSetSeriesInstances(currentStudyInstanceUid, seriesInstanceUID);
+
         arrayBuffer = await client.retrieveInstance({
             studyInstanceUID: currentStudyInstanceUid,
             seriesInstanceUID: seriesInstanceUID,
-            sopInstanceUID: '2.25.650365970585381303806252206907588323991'
+            sopInstanceUID: SOPInstanceUIDs[0]
         });
+        
     } else {
         // If input is a File object, add it to wadouri file manager
         imageId = wadouri.fileManager.add(input);
@@ -197,6 +201,7 @@ export const readSegmentation = async (input: File | string) => {
         console.error('Failed to load segmentation due to missing array buffer');
         return;
     }
+
     loadSegmentation(arrayBuffer);
 };
 
