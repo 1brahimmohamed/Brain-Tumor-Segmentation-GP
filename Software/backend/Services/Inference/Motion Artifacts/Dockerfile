@@ -1,5 +1,4 @@
-FROM python:3.11
-ENV PYTHONUNBUFFERED=1
+FROM py310_tf215:latest
 
 WORKDIR /usr/src/app
 
@@ -7,6 +6,8 @@ COPY requirements.txt ./
 
 RUN pip install --no-cache-dir -r requirements.txt
 
+RUN apt-get update && apt-get install -y dcm2niix
+
 COPY . .
 
-CMD [ "python", "src/inference.py" ]
+CMD [ "python", "connection.py"]

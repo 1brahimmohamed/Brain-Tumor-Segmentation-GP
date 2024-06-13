@@ -58,14 +58,6 @@ services:
     volumes:
       - ./backend/Services/RabbitMQ:/var/lib/rabbitmq
 
-  inference:
-    build: ./backend/Services/Inference
-    container_name: gp_inference
-    volumes:
-      - ./backend/Services/Inference:/usr/src/app
-    depends_on:
-      - rabbitmq
-
   nifti_storage:
     build: ./backend/Services/NiftiStorage/
     container_name: gp_nifti_storage
@@ -74,4 +66,19 @@ services:
     volumes:
       - ./backend/Services/NiftiStorage:/usr/src/app
 
+  motion_artifacts_inference:
+    build: ./backend/Services/Inference/Motion Artifacts
+    container_name: gp_motion_artifacts_inference
+    volumes:
+      - ./backend/Services/Inference/Motion Artifacts:/usr/src/app
+    depends_on:
+      - rabbitmq
+
+  inference:
+    build: ./backend/Services/Inference
+    container_name: gp_inference
+    volumes:
+      - ./backend/Services/Inference:/usr/src/app
+    depends_on:
+      - rabbitmq
 
