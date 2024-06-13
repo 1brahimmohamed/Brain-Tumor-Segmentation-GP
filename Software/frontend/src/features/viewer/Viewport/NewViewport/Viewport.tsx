@@ -54,36 +54,52 @@ const Viewport = ({ onClick, id, vNeighbours }: TViewportProps) => {
         const renderingEngine = cornerstone.getRenderingEngine(renderingEngineId);
 
         const updateViewport = async () => {
-            if (selectedViewportId === id && selectedSeriesInstanceUid && renderingEngine) {
-                const viewport: Types.IVolumeViewport = renderingEngine!.getViewport(
-                    selectedViewportId
-                ) as Types.IVolumeViewport;
+            try {
+                if (selectedViewportId === id && selectedSeriesInstanceUid && renderingEngine) {
+                    const viewport: Types.IVolumeViewport = renderingEngine!.getViewport(
+                        selectedViewportId
+                    ) as Types.IVolumeViewport;
 
-                const volumeId = `cornerstoneStreamingImageVolume:${selectedSeriesInstanceUid}`;
-                const imageIds = await createImageIdsAndCacheMetaData({
-                    StudyInstanceUID: currentStudyInstanceUid,
-                    SeriesInstanceUID: selectedSeriesInstanceUid,
-                    wadoRsRoot: wadoRsRoot
-                });
+                    const volumeId = `cornerstoneStreamingImageVolume:${selectedSeriesInstanceUid}`;
 
-                const metaData = getMetadataByImageId('all', imageIds[0]);
+                    const imageIds = await createImageIdsAndCacheMetaData({
+                        StudyInstanceUID: currentStudyInstanceUid,
+                        SeriesInstanceUID: selectedSeriesInstanceUid,
+                        wadoRsRoot: wadoRsRoot
+                    });
 
-                if (metaData['Modality'].value === 'SEG') {
-                    readSegmentation(selectedSeriesInstanceUid);
-                    return;
+                    const metaData = getMetadataByImageId('all', imageIds[0]);
+
+                    if (metaData['Modality'].value === 'SEG') {
+                        readSegmentation(selectedSeriesInstanceUid);
+                        return;
+                    }
+
+                    const volume = await cornerstone.volumeLoader.createAndCacheVolume(volumeId, {
+                        imageIds
+                    });
+
+                    await volume.load();
+
+                    await viewport.setVolumes([{ volumeId }], true);
+
+                    const direction = viewport.getImageData()?.imageData.getDirection() as number[];
+                    const orientation = DicomUtil.detectImageOrientation(
+                        direction ? direction.slice(0, 6) : [1, 0, 0, 0, 1, 0]
+                    );
+
+                    // Set the orientation of the viewport
+                    viewport.setOrientation(orientation);
+                    // Render the viewport
+                    viewport.render();
+
+                    // Set the current viewport and imageIds
+                    setThisViewport(viewport);
+                    setThisViewportImageIds(viewport.getImageIds());
+                    dispatch(viewerSliceActions.removeClickedSeries());
                 }
-
-                await viewport.setVolumes([{ volumeId }], true);
-
-                const direction = viewport.getImageData()?.imageData.getDirection() as number[];
-                const orientation = DicomUtil.detectImageOrientation(
-                    direction ? direction.slice(0, 6) : [1, 0, 0, 0, 1, 0]
-                );
-                viewport.setOrientation(orientation);
-                viewport.render();
-                setThisViewport(viewport);
-                setThisViewportImageIds(viewport.getImageIds());
-                dispatch(viewerSliceActions.removeClickedSeries());
+            } catch (error) {
+                console.error('Error setting viewport', error);
             }
         };
 
