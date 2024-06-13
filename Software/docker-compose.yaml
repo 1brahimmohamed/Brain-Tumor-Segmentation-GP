@@ -39,7 +39,6 @@ services:
     ports:
       - "8042:8042"
       - "4242:4242"
-    tty: true
     volumes:
       - ./backend/Services/Orthanc/config/orthanc.json:/etc/orthanc/orthanc.json
       - ./backend/Services/Orthanc/config/dicomweb.json:/etc/orthanc/dicomweb.json
@@ -74,11 +73,11 @@ services:
     depends_on:
       - rabbitmq
 
-  inference:
-    build: ./backend/Services/Inference
-    container_name: gp_inference
-    volumes:
-      - ./backend/Services/Inference:/usr/src/app
-    depends_on:
-      - rabbitmq
+#  inference:
+#    build: ./backend/Services/Inference
+#    container_name: gp_inference
+#    volumes:
+#      - ./backend/Services/Inference:/usr/src/app
+#    depends_on:
+#      - rabbitmq
 

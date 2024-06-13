@@ -29,4 +29,4 @@ EXPOSE 4242
 EXPOSE 8042
 
 ## Start Orthanc
-CMD ["/usr/share/orthanc/scripts/starter_script.sh"]
+CMD ["/usr/sbin/Orthanc", "/etc/orthanc/orthanc.json"]
