@@ -1,7 +1,6 @@
 import pika
 from dotenv import load_dotenv
 from segmentation.callback import segmentation_callback
-from motioncorrection.callback import motion_correction_callback
 from synthesis.callback import synthesis_callback
 
 import os
@@ -27,7 +26,6 @@ print(' [*] Waiting for messages. To exit press CTRL+C')
 
 channel.basic_qos(prefetch_count=1)
 channel.basic_consume(queue='inf_segmentation', on_message_callback=segmentation_callback)
-channel.basic_consume(queue='inf_motion_correction', on_message_callback=motion_correction_callback)
 channel.basic_consume(queue='inf_sequence_synthesis', on_message_callback=synthesis_callback)
 
 
