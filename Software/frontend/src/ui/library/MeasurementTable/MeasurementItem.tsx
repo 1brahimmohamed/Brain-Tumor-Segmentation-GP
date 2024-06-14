@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import classnames from 'classnames';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import * as cornerstoneTools from '@cornerstonejs/tools';
 
 type TMeasurementItem = {
-    uid: string | number;
+    uid: string;
     index: number;
     label: string;
-    displayText: string[];
+    displayText: string;
+    toolName: string;
     isActive: boolean;
     isLocked: boolean;
     onClick: (data: { uid: string | number; isActive: boolean; event: MouseEvent }) => void;
@@ -18,6 +21,7 @@ const MeasurementItem = ({
     index,
     label,
     displayText,
+    toolName,
     isActive,
     isLocked,
     onClick,
@@ -28,6 +32,11 @@ const MeasurementItem = ({
     const onEditHandler = (event: any) => {
         event.stopPropagation();
         onEdit({ uid, isActive, event });
+    };
+
+    const onDeleteHandler = (event: any) => {
+        event.stopPropagation();
+        cornerstoneTools.annotation.state.removeAnnotation(uid);
     };
 
     const onClickHandler = (event: any) => onClick({ uid, isActive, event });
@@ -59,28 +68,39 @@ const MeasurementItem = ({
                 {index}
             </div>
             <div className="relative flex flex-1 flex-col px-2 py-1">
-                <span className="text-primary-light mb-1 text-base">{label}</span>
-                {displayText.map((line, i) => (
-                    <span
-                        key={i}
-                        className="border-primary-light border-l pl-2 text-base text-white"
-                        dangerouslySetInnerHTML={{ __html: line }}
-                    ></span>
-                ))}
+                <span className="text-primary-light mb-1 text-base">
+                    {label ? label : `${toolName}-${uid.split('-')[0]}`}
+                </span>
+                {displayText && (
+                    <span className="border-primary-light border-l pl-2 text-base text-white">
+                        ({displayText})
+                    </span>
+                )}
                 {!isLocked && (
-                    <EditIcon
-                        className={classnames(
-                            'absolute w-4 cursor-pointer text-white transition duration-300',
-                            { 'invisible mr-2 opacity-0': !isActive && !isHovering },
-                            { 'opacity-1 visible': !isActive && isHovering }
-                        )}
-                        style={{
-                            top: 4,
-                            right: 4,
-                            transform: isActive || isHovering ? '' : 'translateX(100%)'
-                        }}
-                        onClick={onEditHandler}
-                    />
+                    <div className="flex gap-1 top-1 right-1 absolute">
+                        <DeleteIcon
+                            className={classnames(
+                                'w-4 cursor-pointer text-white transition duration-300',
+                                { 'invisible mr-2 opacity-0': !isActive && !isHovering },
+                                { 'opacity-1 visible': !isActive && isHovering }
+                            )}
+                            style={{
+                                transform: isActive || isHovering ? '' : 'translateX(100%)'
+                            }}
+                            onClick={onDeleteHandler}
+                        />
+                        {/* <EditIcon
+                            className={classnames(
+                                'w-4 cursor-pointer text-white transition duration-300',
+                                { 'invisible mr-2 opacity-0': !isActive && !isHovering },
+                                { 'opacity-1 visible': !isActive && isHovering }
+                            )}
+                            style={{
+                                transform: isActive || isHovering ? '' : 'translateX(100%)'
+                            }}
+                            onClick={onEditHandler}
+                        /> */}
+                    </div>
                 )}
             </div>
         </div>
