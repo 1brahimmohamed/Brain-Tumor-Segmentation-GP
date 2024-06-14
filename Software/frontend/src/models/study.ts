@@ -12,6 +12,13 @@ export interface IDicomTableStudy {
     modality: string;
 }
 
+export interface INiftiTableStudy {
+    fileName: string;
+    category: string;
+    projectSub: string;
+    sequencey: string;
+}
+
 export interface IDicomSeriesData {
     studyInstanceUid: string;
     studyOrthancId: string;
@@ -25,6 +32,19 @@ export interface IDicomSeriesData {
 }
 
 export interface IDicomStudyData {
+    patientName: string;
+    patientId: string;
+    patientBirthDate: string;
+    patientSex: string;
+    studyDate: string;
+    studyTime: string;
+    studyInstanceUid: string;
+    studyTotalInstances: number;
+    modality: string;
+    series: IDicomSeriesData[];
+}
+
+export interface INiftiStudyData {
     patientName: string;
     patientId: string;
     patientBirthDate: string;
