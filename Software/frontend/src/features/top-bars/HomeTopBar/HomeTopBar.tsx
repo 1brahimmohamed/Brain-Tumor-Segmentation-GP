@@ -1,70 +1,46 @@
-import { DatePicker } from 'antd';
-import { Box, useTheme } from '@mui/material';
-import { useDispatch } from 'react-redux';
-import { studiesSliceActions } from '@features/studies-table/studies-slice.ts';
-import { TAppDispatch } from '@/redux/store.ts';
-import PeriodButtons from '@features/top-bars/HomeTopBar/PeriodButtons.tsx';
-import ModalityButtons from '@features/top-bars/HomeTopBar/ModalityButtons.tsx';
+import { Box, Button, Typography } from '@mui/material';
 import CustomButton from '@features/top-bars/components/CustomButton.tsx';
 import { OPTIONS } from '@features/top-bars/HomeTopBar/home-buttons.tsx';
 import '@styles/DateRange.scss';
-
-const { RangePicker } = DatePicker;
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const HomeTopBar = () => {
-    const theme = useTheme();
+    const navigate = useNavigate();
 
-    const dispatch = useDispatch<TAppDispatch>();
-    const isDisplayingDicomStudies = window.location.pathname === '/';
+    // get the current location
+    const { pathname: location } = useLocation();
 
-    const rangePickerChangeHandler = (data: any) => {
-        if (!data) {
-            dispatch(
-                studiesSliceActions.setDateFilter({
-                    startDate: null,
-                    endDate: null
-                })
-            );
-
-            return;
-        }
-
-        dispatch(
-            studiesSliceActions.setDateFilter({
-                startDate: new Date(data[0]).toISOString(),
-                endDate: new Date(data[1]).toISOString()
-            })
-        );
-    };
+    // check if the current location is the dicom studies
+    const isDisplayingDicomStudies = location === '/';
 
     return (
-        <Box className={'flex justify-between w-full h-full'}>
+        <Box
+            className={
+                'flex flex-col-reverse gap-4 md:flex-row justify-between md:items-center w-full h-full'
+            }
+        >
             {/* Left Side */}
-            {isDisplayingDicomStudies ? (
-                <Box className={'flex'}>
-                    <Box className={'flex'}>
-                        <RangePicker
-                            className={`createDateRangePicker ${theme.palette.mode === 'light' ? 'light-mode' : ''}`}
-                            popupClassName={`createDateRangePickerPopup ${theme.palette.mode === 'light' ? 'light-mode' : ''}`}
-                            allowClear={true}
-                            onChange={rangePickerChangeHandler}
-                        />
-                    </Box>
+            <Box className={'flex items-center space-x-2 h-1/12'}>
+                <Typography variant={'h4'}>Studies List</Typography>
 
-                    <Box className={'flex ml-2 h-full'}>
-                        <PeriodButtons />
-                    </Box>
-
-                    <Box className={'flex ml-2 '}>
-                        <ModalityButtons />
-                    </Box>
-                </Box>
-            ) : (
-                <Box></Box>
-            )}
+                <Button
+                    variant={isDisplayingDicomStudies ? 'contained' : 'outlined'}
+                    color={'secondary'}
+                    onClick={() => navigate('/')}
+                >
+                    DICOM
+                </Button>
+                <Button
+                    variant={isDisplayingDicomStudies ? 'outlined' : 'contained'}
+                    color={'secondary'}
+                    onClick={() => navigate('/nifti')}
+                >
+                    NIFTI
+                </Button>
+            </Box>
 
             {/* Right Side */}
-            <Box className={'flex space-x-1'}>
+            <Box className={'flex flex-wrap gap-1'}>
                 {OPTIONS.map((option, index) => (
                     <CustomButton
                         key={index}
