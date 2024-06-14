@@ -18,9 +18,7 @@ const SidePanel = ({ children, title, headerComponent }: TSidePanelProps) => {
     };
 
     return (
-        <div
-            className={`h-full w-72 bg-AAFirstShade transition-all duration-300  ${isOpen ? 'translate-x-0' : 'translate-x-64'}`}
-        >
+        <div className={`h-full bg-AAFirstShade transition-all duration-300  ${isOpen ? 'w-72' : 'w-8'}`}>
             <div className={'bg-AAPrimary flex text-center justify-between'}>
                 <div>
                     {/*Open & Close Button*/}
