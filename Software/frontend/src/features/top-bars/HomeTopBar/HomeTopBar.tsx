@@ -15,6 +15,7 @@ const HomeTopBar = () => {
     const theme = useTheme();
 
     const dispatch = useDispatch<TAppDispatch>();
+    const isDisplayingDicomStudies = window.location.pathname === '/';
 
     const rangePickerChangeHandler = (data: any) => {
         if (!data) {
@@ -39,24 +40,28 @@ const HomeTopBar = () => {
     return (
         <Box className={'flex justify-between w-full h-full'}>
             {/* Left Side */}
-            <Box className={'flex'}>
+            {isDisplayingDicomStudies ? (
                 <Box className={'flex'}>
-                    <RangePicker
-                        className={`createDateRangePicker ${theme.palette.mode === 'light' ? 'light-mode' : ''}`}
-                        popupClassName={`createDateRangePickerPopup ${theme.palette.mode === 'light' ? 'light-mode' : ''}`}
-                        allowClear={true}
-                        onChange={rangePickerChangeHandler}
-                    />
-                </Box>
+                    <Box className={'flex'}>
+                        <RangePicker
+                            className={`createDateRangePicker ${theme.palette.mode === 'light' ? 'light-mode' : ''}`}
+                            popupClassName={`createDateRangePickerPopup ${theme.palette.mode === 'light' ? 'light-mode' : ''}`}
+                            allowClear={true}
+                            onChange={rangePickerChangeHandler}
+                        />
+                    </Box>
 
-                <Box className={'flex ml-2 h-full'}>
-                    <PeriodButtons />
-                </Box>
+                    <Box className={'flex ml-2 h-full'}>
+                        <PeriodButtons />
+                    </Box>
 
-                <Box className={'flex ml-2 '}>
-                    <ModalityButtons />
+                    <Box className={'flex ml-2 '}>
+                        <ModalityButtons />
+                    </Box>
                 </Box>
-            </Box>
+            ) : (
+                <Box></Box>
+            )}
 
             {/* Right Side */}
             <Box className={'flex space-x-1'}>
