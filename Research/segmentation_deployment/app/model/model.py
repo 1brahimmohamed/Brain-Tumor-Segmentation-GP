@@ -168,7 +168,6 @@ def prepare_dataset(input_folder_path, isTrain):
 
 def nvidia_preprocess(root_path,data_path):
     # n --> to specify is it for nnunet(1) or 3d unet(0)
-    # needs generalization
     print("nvidia_preprocess")
     print(root_path)
     preprocess_path = os.path.join(root_path, 'app/nnUNet/preprocess.py')
@@ -210,7 +209,6 @@ def nvidia_predict(root_path, data_path):
     ckpt_path = os.path.join(root_path, 'app/nvidia_util/epoch=7-dice=84.40.ckpt')
 
     command = [
-    # 'C:/Users/mahamedhat/Downloads/nvidia-Segmentation/myenv/bin/python',
     python_path,
     nvidia_main_path,
     '--exec_mode', 'predict',
@@ -257,7 +255,6 @@ def save_nifti_prediction(prediction_tuple,output_directory,root_path):
     p = to_lbl(np.mean(preds, 0))
     original_image_path = os.path.join(output_directory,f"BraTS2021_train/images/{fname}.nii.gz")
     img = nibabel.load(original_image_path)
-    # img = nibabel.load(f"/home/mahamedhat/nvidia-Segmentation/Seg/data/BraTS2021_train/images/{fname}.nii.gz")
     nibabel.save(
         nibabel.Nifti1Image(p, img.affine, header=img.header),
         os.path.join(output_directory, fname + ".nii.gz"),
@@ -268,7 +265,6 @@ def prepare_prediction(output_directory,root_path):
     print('prepare_prediction')
     # model_switch 0 for 3dunet 1 for nvidia nnunet
     input_path =os.path.join(output_directory,"predictions_epoch=7-dice=84_40_task=11_fold=0_tta")
-    # input_path = "/home/mahamedhat/nvidia-Segmentation/Seg/data/predictions_epoch=7-dice=84_40_task=11_fold=0_tta"
    
     # List all files in the directory
     files = os.listdir(input_path)
