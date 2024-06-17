@@ -73,6 +73,15 @@ services:
     depends_on:
       - rabbitmq
 
+  segmentation_inference:
+    build: ./backend/Services/Inference/Segmentation
+    container_name: gp_segmentation_inference
+    volumes:
+      - ./backend/Services/Inference/Segmentation:/usr/src/app
+    depends_on:
+      - rabbitmq
+
+
 #  inference:
 #    build: ./backend/Services/Inference
 #    container_name: gp_inference
