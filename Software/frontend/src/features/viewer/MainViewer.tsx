@@ -7,7 +7,7 @@ import CornerstoneToolManager from '@/features/viewer/CornerstoneToolManager/Cor
 
 import { IStore } from '@/models';
 
-const wadoRsRoot = 'http://localhost:8042/dicom-web';
+const wadoRsRoot =  `${import.meta.env.VITE_ORTRHANC_PROXY_URL}/dicom-web`;
 
 // Function to create and return volume
 const createDicomVolumes = async (studyInstanceUID: string | null, seriesInstanceUIDs: string[]) => {
