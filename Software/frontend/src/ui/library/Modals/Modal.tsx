@@ -53,7 +53,7 @@ const Modal = ({
 
     return (
         <ReactModal
-            className="relative max-h-full w-11/12 text-white outline-none lg:w-10/12 xl:w-6/12"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-h-full w-11/12 text-white outline-none lg:w-10/12 xl:w-6/12"
             overlayClassName="fixed top-0 left-0 right-0 bottom-0 z-50 bg-overlay flex items-start justify-center py-16"
             shouldCloseOnEsc={shouldCloseOnEsc}
             onRequestClose={onClose}
