@@ -17,6 +17,7 @@ const ViewerTopBar = () => {
                 backgroundColor: theme.palette.primary.dark,
                 height: '4.1rem'
             }}
+            onContextMenu={(e) => e.preventDefault()}
         >
             <Box className={'ml-9 flex'}>
                 <Box className={'w-44 bg-transparent p-2'}>

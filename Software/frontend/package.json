@@ -28,6 +28,7 @@
         "@fortawesome/react-fontawesome": "^0.2.0",
         "@mui/icons-material": "^5.15.7",
         "@mui/material": "^5.15.7",
+        "@radix-ui/react-context-menu": "^2.1.5",
         "@reduxjs/toolkit": "^2.1.0",
         "antd": "^5.14.0",
         "axios": "^1.6.7",

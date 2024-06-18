@@ -28,6 +28,7 @@ const ViewerSidebar = ({ className }: { className?: string }) => {
             sx={{
                 backgroundColor: theme.palette.primary.dark
             }}
+            onContextMenu={(e) => e.preventDefault()}
         >
             {selectedDicomStudy && <StudyCard studyData={selectedDicomStudy} />}
         </Box>
