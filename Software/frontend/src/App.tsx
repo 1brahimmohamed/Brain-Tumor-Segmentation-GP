@@ -6,11 +6,14 @@ import { uiSliceActions } from '@ui/ui-slice.ts';
 import { TAppDispatch } from '@/redux/store.ts';
 import { Notification } from '@ui/library';
 import { Spinner } from '@ui/library';
+import { useEffect } from 'react';
 
 function App() {
     const notification = useSelector((store: IStore) => {
         return store.ui.notification;
     });
+
+    const theme = useSelector((store: IStore) => store.ui.themeMode);
 
     const isLoading = useSelector((store: IStore) => store.ui.isLoading);
 
@@ -19,6 +22,15 @@ function App() {
     const handleNotificationDisappearing = () => {
         dispatch(uiSliceActions.clearNotification());
     };
+
+    useEffect(() => {
+        const html = document.documentElement;
+        if (theme === 'dark') {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+        }
+    }, [theme]);
 
     return (
         <div className="app">
