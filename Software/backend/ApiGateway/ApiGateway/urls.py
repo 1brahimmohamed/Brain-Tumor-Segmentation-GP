@@ -16,10 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.urls import re_path
+from gateway.proxy.views import OrthancProxyView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('dicom/', include('gateway.orthanc.urls')),
     path('users/', include('gateway.users.urls')),
     path('inference/', include('gateway.inference.urls')),
+    re_path(r'^orthanc/(?P<path>.*)$', OrthancProxyView.as_view()),
 ]

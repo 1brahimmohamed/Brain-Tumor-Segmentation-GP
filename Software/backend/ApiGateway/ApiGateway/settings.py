@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'gateway',
     'rest_framework',
+    'revproxy',
 ]
 
 MIDDLEWARE = [

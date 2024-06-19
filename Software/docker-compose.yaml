@@ -1,13 +1,13 @@
 version: "3.8"
 services:
 
-  frontend:
-    build: ./frontend
-    container_name: gp_frontend
-    ports:
-      - "5000:5000"
-    depends_on:
-      - api_gateway
+  # frontend:
+  #   build: ./frontend
+  #   container_name: gp_frontend
+  #   ports:
+  #     - "5000:5000"
+  #   depends_on:
+  #     - api_gateway
 
   api_gateway:
     build: ./backend/ApiGateway
@@ -39,7 +39,6 @@ services:
     ports:
       - "8042:8042"
       - "4242:4242"
-    tty: true
     volumes:
       - ./backend/Services/Orthanc/config/orthanc.json:/etc/orthanc/orthanc.json
       - ./backend/Services/Orthanc/config/dicomweb.json:/etc/orthanc/dicomweb.json
@@ -58,14 +57,6 @@ services:
     volumes:
       - ./backend/Services/RabbitMQ:/var/lib/rabbitmq
 
-  inference:
-    build: ./backend/Services/Inference
-    container_name: gp_inference
-    volumes:
-      - ./backend/Services/Inference:/usr/src/app
-    depends_on:
-      - rabbitmq
-
   nifti_storage:
     build: ./backend/Services/NiftiStorage/
     container_name: gp_nifti_storage
@@ -74,4 +65,28 @@ services:
     volumes:
       - ./backend/Services/NiftiStorage:/usr/src/app
 
+  motion_artifacts_inference:
+    build: ./backend/Services/Inference/Motion Artifacts
+    container_name: gp_motion_artifacts_inference
+    volumes:
+      - ./backend/Services/Inference/Motion Artifacts:/usr/src/app
+    depends_on:
+      - rabbitmq
+
+  segmentation_inference:
+    build: ./backend/Services/Inference/Segmentation
+    container_name: gp_segmentation_inference
+    volumes:
+      - ./backend/Services/Inference/Segmentation:/usr/src/app
+    depends_on:
+      - rabbitmq
+
+
+#  inference:
+#    build: ./backend/Services/Inference
+#    container_name: gp_inference
+#    volumes:
+#      - ./backend/Services/Inference:/usr/src/app
+#    depends_on:
+#      - rabbitmq
 

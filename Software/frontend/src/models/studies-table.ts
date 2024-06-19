@@ -4,4 +4,10 @@ export interface IDicomTableColumnHead {
     searchable: boolean;
 }
 
+export interface INiftiTableColumnHead {
+    displayName: string;
+    key: string;
+    searchable: boolean;
+}
+
 export interface IDicomTableRow {}

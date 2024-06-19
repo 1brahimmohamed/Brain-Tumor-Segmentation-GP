@@ -15,12 +15,14 @@ interface SeriesCardProps {
 
 const SeriesCard = ({ seriesData, seriesIndex, selectedIndex, onSelectedSeriesChange }: SeriesCardProps) => {
     const theme = useTheme();
+
     const [isDeleting, setIsDeleting] = useState(false);
 
     let retrieveUrl = seriesData.retrieveUrl;
 
     // change link from localhost to localhost:8080
     retrieveUrl = retrieveUrl.replace('localhost', 'localhost:8042');
+
     const imageSrc = `http://localhost:8000/dicom/studies/${seriesData.studyInstanceUid}/series/${seriesData.seriesInstanceUid}/image`;
 
     return (

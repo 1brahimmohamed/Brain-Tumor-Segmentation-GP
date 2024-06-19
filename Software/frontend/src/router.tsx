@@ -13,6 +13,7 @@ import General from '@features/settings/pages/General.tsx';
 import SegmentationModels from '@features/settings/pages/SegmentationModels.tsx';
 import MotionArtifactsModels from '@features/settings/pages/MotionArtifactsModels.tsx';
 import SynthesisModels from '@features/settings/pages/SynthesisModels.tsx';
+import NiftiStudies from './features/studies-table/nifti-studies-table/NiftiStudies';
 
 const AppRouter = createBrowserRouter([
     {
@@ -25,7 +26,7 @@ const AppRouter = createBrowserRouter([
             },
             {
                 path: 'nifti',
-                element: <h1>NIFTI</h1>
+                element: <NiftiStudies />
             }
         ]
     },

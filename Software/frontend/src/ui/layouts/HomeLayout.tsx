@@ -1,17 +1,20 @@
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { Logo } from '@ui/library';
 import HomeTopBar from '@features/top-bars/HomeTopBar/HomeTopBar.tsx';
+import FiltersBar from '@/features/top-bars/HomeTopBar/FiltersBar';
+import UploadDicomModal from '@/features/studies-table/dicom-studies-table/UploadDicomModal';
+import { useState } from 'react';
 
 const HomeLayout = () => {
-    const navigate = useNavigate();
-
     // get the current location
-    const location = window.location.pathname;
+    const { pathname: location } = useLocation();
 
     // check if the current location is the dicom studies
     const isDisplayingDicomStudies = location === '/';
+
+    const [isAddingDicom, setIsAddingDicom] = useState(false);
 
     return (
         <div>
@@ -28,24 +31,24 @@ const HomeLayout = () => {
                     <HomeTopBar />
                 </Box>
 
-                <Box className={'flex items-center space-x-2 h-1/12 mt-4'}>
-                    <Typography variant={'h4'}>Studies List</Typography>
+                {isDisplayingDicomStudies && (
+                    <Box className={'flex flex-col gap-2 md:flex-row md:items-center justify-between mt-8'}>
+                        <Box className={'flex'}>
+                            <Button
+                                className={'md:h-12'}
+                                variant={'contained'}
+                                color={'secondary'}
+                                onClick={() => setIsAddingDicom(true)}
+                            >
+                                New Dicom
+                            </Button>
+                        </Box>
 
-                    <Button
-                        variant={isDisplayingDicomStudies ? 'contained' : 'outlined'}
-                        color={'secondary'}
-                        onClick={() => navigate('/')}
-                    >
-                        DICOM
-                    </Button>
-                    <Button
-                        variant={isDisplayingDicomStudies ? 'outlined' : 'contained'}
-                        color={'secondary'}
-                        onClick={() => navigate('/nifti')}
-                    >
-                        NIFTI
-                    </Button>
-                </Box>
+                        <Box className={'h-36 md:h-12'}>
+                            <FiltersBar />
+                        </Box>
+                    </Box>
+                )}
 
                 <Box className={''}>
                     <Outlet />
@@ -57,6 +60,10 @@ const HomeLayout = () => {
                     </Box>
                 </Box>
             </Box>
+
+            {isAddingDicom && (
+                <UploadDicomModal isOpen={isAddingDicom} onClose={() => setIsAddingDicom(false)} />
+            )}
         </div>
     );
 };
