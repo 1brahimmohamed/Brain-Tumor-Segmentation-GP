@@ -1,11 +1,4 @@
-import React from 'react';
-import {
-    MARK_BOLD,
-    MARK_CODE,
-    MARK_ITALIC,
-    MARK_STRIKETHROUGH,
-    MARK_UNDERLINE
-} from '@udecode/plate-basic-marks';
+import { MARK_BOLD, MARK_ITALIC, MARK_STRIKETHROUGH, MARK_UNDERLINE } from '@udecode/plate-basic-marks';
 import { useEditorReadOnly } from '@udecode/plate-common';
 import { MARK_BG_COLOR, MARK_COLOR } from '@udecode/plate-font';
 import { ListStyleType } from '@udecode/plate-indent-list';
@@ -14,8 +7,6 @@ import { ELEMENT_IMAGE } from '@udecode/plate-media';
 import { Icons, iconVariants } from '../icons';
 import { AlignDropdownMenu } from './align-dropdown-menu';
 import { ColorDropdownMenu } from './color-dropdown-menu';
-import { CommentToolbarButton } from './comment-toolbar-button';
-import { EmojiDropdownMenu } from './emoji-dropdown-menu';
 import { IndentListToolbarButton } from './indent-list-toolbar-button';
 import { IndentToolbarButton } from './indent-toolbar-button';
 import { LineHeightDropdownMenu } from './line-height-dropdown-menu';
@@ -63,9 +54,6 @@ export function FixedToolbarButtons() {
                             <MarkToolbarButton tooltip="Strikethrough (⌘+⇧+M)" nodeType={MARK_STRIKETHROUGH}>
                                 <Icons.strikethrough />
                             </MarkToolbarButton>
-                            <MarkToolbarButton tooltip="Code (⌘+E)" nodeType={MARK_CODE}>
-                                <Icons.code />
-                            </MarkToolbarButton>
                         </ToolbarGroup>
 
                         <ToolbarGroup>
@@ -96,8 +84,6 @@ export function FixedToolbarButtons() {
 
                             <TableDropdownMenu />
 
-                            <EmojiDropdownMenu />
-
                             <MoreDropdownMenu />
                         </ToolbarGroup>
                     </>
@@ -106,7 +92,6 @@ export function FixedToolbarButtons() {
                 <div className="grow" />
 
                 <ToolbarGroup noSeparator>
-                    <CommentToolbarButton />
                     <ModeDropdownMenu />
                 </ToolbarGroup>
             </div>

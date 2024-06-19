@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { useColorsCustom, useColorsCustomState } from '@udecode/plate-font';
 
 import { buttonVariants } from './button';

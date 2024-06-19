@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { cn } from '@udecode/cn';
-import { CommentsProvider } from '@udecode/plate-comments';
 import { Plate } from '@udecode/plate-common';
 import { ELEMENT_PARAGRAPH } from '@udecode/plate-paragraph';
 import { DndProvider } from 'react-dnd';
@@ -14,11 +13,8 @@ import { FixedToolbar } from './plate-ui/fixed-toolbar';
 import { FixedToolbarButtons } from './plate-ui/fixed-toolbar-buttons';
 import { FloatingToolbar } from './plate-ui/floating-toolbar';
 import { FloatingToolbarButtons } from './plate-ui/floating-toolbar-buttons';
-import { MentionCombobox } from './plate-ui/mention-combobox';
-import { CommentsPopover } from './plate-ui/comments-popover';
-import { commentsUsers, myUserId } from '../lib/plate/comments';
-import { MENTIONABLES } from '../lib/plate/mentionables';
 import { plugins } from '../lib/plate/plate-plugins';
+import { Button } from '@mui/material';
 
 export default function PlateEditor() {
     const containerRef = useRef(null);
@@ -33,40 +29,43 @@ export default function PlateEditor() {
 
     return (
         <DndProvider backend={HTML5Backend}>
-            <CommentsProvider users={commentsUsers} myUserId={myUserId}>
-                <Plate plugins={plugins} initialValue={initialValue}>
-                    <div
-                        ref={containerRef}
-                        className={cn(
-                            'relative',
-                            // Block selection
-                            '[&_.slate-start-area-left]:!w-[64px] [&_.slate-start-area-right]:!w-[64px] [&_.slate-start-area-top]:!h-4'
-                        )}
-                    >
-                        <FixedToolbar>
-                            <FixedToolbarButtons />
-                        </FixedToolbar>
+            <Plate plugins={plugins} initialValue={initialValue}>
+                <div
+                    ref={containerRef}
+                    className={cn(
+                        'relative',
+                        // Block selection
+                        '[&_.slate-start-area-left]:!w-[64px] [&_.slate-start-area-right]:!w-[64px] [&_.slate-start-area-top]:!h-4'
+                    )}
+                >
+                    <FixedToolbar>
+                        <FixedToolbarButtons />
+                    </FixedToolbar>
 
-                        <Editor
-                            className="px-[96px] py-16"
-                            autoFocus
-                            focusRing={false}
-                            variant="ghost"
-                            size="md"
-                        />
+                    <Editor
+                        className="px-[96px] py-16"
+                        autoFocus
+                        focusRing={false}
+                        variant="ghost"
+                        size="md"
+                    />
 
-                        <FloatingToolbar>
-                            <FloatingToolbarButtons />
-                        </FloatingToolbar>
+                    <FloatingToolbar>
+                        <FloatingToolbarButtons />
+                    </FloatingToolbar>
 
-                        <MentionCombobox items={MENTIONABLES} />
+                    <CursorOverlay containerRef={containerRef} />
 
-                        <CommentsPopover />
-
-                        <CursorOverlay containerRef={containerRef} />
+                    <div className="flex justify-end gap-4 mt-2">
+                        <Button variant="outlined" color="secondary" onClick={() => {}}>
+                            Cancel
+                        </Button>
+                        <Button variant="contained" color="secondary" onClick={() => {}}>
+                            Save
+                        </Button>
                     </div>
-                </Plate>
-            </CommentsProvider>
+                </div>
+            </Plate>
         </DndProvider>
     );
 }

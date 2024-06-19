@@ -1,4 +1,3 @@
-import React from 'react';
 import { withRef } from '@udecode/cn';
 import { ELEMENT_IMAGE, ELEMENT_MEDIA_EMBED, useMediaToolbarButton } from '@udecode/plate-media';
 

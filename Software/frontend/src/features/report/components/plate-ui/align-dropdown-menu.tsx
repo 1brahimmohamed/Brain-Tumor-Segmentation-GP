@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
 import { useAlignDropdownMenu, useAlignDropdownMenuState } from '@udecode/plate-alignment';
 

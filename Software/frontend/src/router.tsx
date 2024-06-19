@@ -15,8 +15,6 @@ import MotionArtifactsModels from '@features/settings/pages/MotionArtifactsModel
 import SynthesisModels from '@features/settings/pages/SynthesisModels.tsx';
 import NiftiStudies from './features/studies-table/nifti-studies-table/NiftiStudies';
 import Report from './features/report/Report';
-import { TooltipProvider } from './features/report/components/plate-ui/tooltip';
-import { ThemeProvider as NextThemesProvider } from 'next-themes';
 
 const AppRouter = createBrowserRouter([
     {
@@ -33,13 +31,7 @@ const AppRouter = createBrowserRouter([
             },
             {
                 path: 'report',
-                element: (
-                    <NextThemesProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-                        <TooltipProvider>
-                            <Report />
-                        </TooltipProvider>
-                    </NextThemesProvider>
-                )
+                element: <Report />
             }
         ]
     },

@@ -1,4 +1,3 @@
-import React from 'react';
 import { cn } from '@udecode/cn';
 import { createZustandStore } from '@udecode/plate-common';
 import {

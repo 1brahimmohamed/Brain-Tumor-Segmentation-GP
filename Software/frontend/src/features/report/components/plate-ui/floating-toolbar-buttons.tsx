@@ -1,4 +1,3 @@
-import React from 'react';
 import {
     MARK_BOLD,
     MARK_CODE,
@@ -9,7 +8,6 @@ import {
 import { useEditorReadOnly } from '@udecode/plate-common';
 
 import { Icons } from '../icons';
-import { CommentToolbarButton } from './comment-toolbar-button';
 import { LinkToolbarButton } from './link-toolbar-button';
 
 import { MarkToolbarButton } from './mark-toolbar-button';
@@ -44,8 +42,6 @@ export function FloatingToolbarButtons() {
                     <LinkToolbarButton />
                 </>
             )}
-
-            <CommentToolbarButton />
 
             <MoreDropdownMenu />
         </>

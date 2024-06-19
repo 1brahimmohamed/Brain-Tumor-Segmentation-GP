@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { cn, withRef } from '@udecode/cn';
 import { ClassNames, PlateElementProps, TEditor } from '@udecode/plate-common';
 import { DragItemNode, useDraggable, useDraggableState } from '@udecode/plate-dnd';

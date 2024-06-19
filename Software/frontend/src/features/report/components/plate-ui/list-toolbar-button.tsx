@@ -1,4 +1,3 @@
-import React from 'react';
 import { withRef } from '@udecode/cn';
 import { ELEMENT_UL, useListToolbarButton, useListToolbarButtonState } from '@udecode/plate-list';
 

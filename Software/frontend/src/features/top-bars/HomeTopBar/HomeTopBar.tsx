@@ -20,27 +20,33 @@ const HomeTopBar = () => {
             }
         >
             {/* Left Side */}
-            <Box className={'flex items-center space-x-2 h-1/12'}>
-                <Typography variant={'h4'}>Studies List</Typography>
+            {location === '/report' ? (
+                <Box>
+                    <p className={'text-2xl font-bold'}>Study Name/ID</p>
+                </Box>
+            ) : (
+                <Box className={'flex items-center space-x-2 h-1/12'}>
+                    <Typography variant={'h4'}>Studies List</Typography>
 
-                <Button
-                    variant={isDisplayingDicomStudies ? 'contained' : 'outlined'}
-                    color={'secondary'}
-                    onClick={() => navigate('/')}
-                >
-                    DICOM
-                </Button>
-                <Button
-                    variant={isDisplayingDicomStudies ? 'outlined' : 'contained'}
-                    color={'secondary'}
-                    onClick={() => navigate('/nifti')}
-                >
-                    NIFTI
-                </Button>
-            </Box>
+                    <Button
+                        variant={isDisplayingDicomStudies ? 'contained' : 'outlined'}
+                        color={'secondary'}
+                        onClick={() => navigate('/')}
+                    >
+                        DICOM
+                    </Button>
+                    <Button
+                        variant={isDisplayingDicomStudies ? 'outlined' : 'contained'}
+                        color={'secondary'}
+                        onClick={() => navigate('/nifti')}
+                    >
+                        NIFTI
+                    </Button>
+                </Box>
+            )}
 
             {/* Right Side */}
-            <Box className={'flex flex-wrap gap-1'}>
+            <Box className={`flex flex-wrap gap-1`}>
                 {OPTIONS.map((option, index) => (
                     <CustomButton
                         key={index}
