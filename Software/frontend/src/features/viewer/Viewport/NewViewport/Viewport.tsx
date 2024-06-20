@@ -9,6 +9,11 @@ import useResizeObserver from '@hooks/useResizeObserver.tsx';
 import ViewportOverlay from '@features/viewer/Viewport/ViewportOverlay/ViewportOverlay.tsx';
 import CinePlayer from '@features/viewer/Viewport/CinePlayer/CinePlayer.tsx';
 import { detectCineHeight } from '@features/viewer/Viewport/CinePlayer/detectCineHeight';
+import { createImageIdsAndCacheMetaData } from '@utilities/helpers/index';
+import getMetadataByImageId from '@/utilities/wadoMetaDataProvider';
+import { readSegmentation } from '../../CornerstoneToolManager/segmentationMethods';
+
+const wadoRsRoot = 'http://localhost:8042/dicom-web';
 
 type TViewportProps = {
     onClick?: (idx: string) => void;
@@ -27,8 +32,13 @@ const Viewport = ({ onClick, id, vNeighbours }: TViewportProps) => {
 
     const viewportRef = useRef<HTMLDivElement>(null);
     const cineRef = useRef<HTMLDivElement>(null);
-    const { selectedSeriesInstanceUid, selectedViewportId, renderingEngineId, viewportsWithCinePlayer } =
-        useSelector((store: IStore) => store.viewer);
+    const {
+        selectedSeriesInstanceUid,
+        selectedViewportId,
+        renderingEngineId,
+        viewportsWithCinePlayer,
+        currentStudyInstanceUid
+    } = useSelector((store: IStore) => store.viewer);
 
     const dispatch = useDispatch();
 
@@ -44,23 +54,52 @@ const Viewport = ({ onClick, id, vNeighbours }: TViewportProps) => {
         const renderingEngine = cornerstone.getRenderingEngine(renderingEngineId);
 
         const updateViewport = async () => {
-            if (selectedViewportId === id && selectedSeriesInstanceUid && renderingEngine) {
-                const viewport: Types.IVolumeViewport = renderingEngine!.getViewport(
-                    selectedViewportId
-                ) as Types.IVolumeViewport;
+            try {
+                if (selectedViewportId === id && selectedSeriesInstanceUid && renderingEngine) {
+                    const viewport: Types.IVolumeViewport = renderingEngine!.getViewport(
+                        selectedViewportId
+                    ) as Types.IVolumeViewport;
 
-                const volumeId = `cornerstoneStreamingImageVolume:${selectedSeriesInstanceUid}`;
-                await viewport.setVolumes([{ volumeId }], true);
+                    const volumeId = `cornerstoneStreamingImageVolume:${selectedSeriesInstanceUid}`;
 
-                const direction = viewport.getImageData()?.imageData.getDirection() as number[];
-                const orientation = DicomUtil.detectImageOrientation(
-                    direction ? direction.slice(0, 6) : [1, 0, 0, 0, 1, 0]
-                );
-                viewport.setOrientation(orientation);
-                viewport.render();
-                setThisViewport(viewport);
-                setThisViewportImageIds(viewport.getImageIds());
-                dispatch(viewerSliceActions.removeClickedSeries());
+                    const imageIds = await createImageIdsAndCacheMetaData({
+                        StudyInstanceUID: currentStudyInstanceUid,
+                        SeriesInstanceUID: selectedSeriesInstanceUid,
+                        wadoRsRoot: wadoRsRoot
+                    });
+
+                    const metaData = getMetadataByImageId('all', imageIds[0]);
+
+                    if (metaData['Modality'].value === 'SEG') {
+                        readSegmentation(selectedSeriesInstanceUid);
+                        return;
+                    }
+
+                    const volume = await cornerstone.volumeLoader.createAndCacheVolume(volumeId, {
+                        imageIds
+                    });
+
+                    await volume.load();
+
+                    await viewport.setVolumes([{ volumeId }], true);
+
+                    const direction = viewport.getImageData()?.imageData.getDirection() as number[];
+                    const orientation = DicomUtil.detectImageOrientation(
+                        direction ? direction.slice(0, 6) : [1, 0, 0, 0, 1, 0]
+                    );
+
+                    // Set the orientation of the viewport
+                    viewport.setOrientation(orientation);
+                    // Render the viewport
+                    viewport.render();
+
+                    // Set the current viewport and imageIds
+                    setThisViewport(viewport);
+                    setThisViewportImageIds(viewport.getImageIds());
+                    dispatch(viewerSliceActions.removeClickedSeries());
+                }
+            } catch (error) {
+                console.error('Error setting viewport', error);
             }
         };
 

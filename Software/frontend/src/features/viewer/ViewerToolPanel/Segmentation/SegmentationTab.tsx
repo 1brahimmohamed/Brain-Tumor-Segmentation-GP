@@ -1,12 +1,13 @@
 import { AdvancedToolBox, SegmentationGroupTable } from '@ui/library';
-import advancedToolConfig, {
+import advancedToolConfig from '../AdvancedToolConfig.ts';
+import {
     handleSegmentationDelete,
     handleSegmentationVisibilityToggle,
     handleSegmentClick,
     handleSegmentLockToggle,
     handleSegmentVisibilityToggle,
     onSegmentationClick
-} from '@features/viewer/ViewerToolPanel/segmentation-config.ts';
+} from './SegmentationTableFunctions.ts';
 import AISegmentation from './AISegmentation.tsx';
 import ActiveLearning from './ActiveLearning.tsx';
 import { CornerstoneToolManager } from '@features/viewer/CornerstoneToolManager';

@@ -6,7 +6,8 @@ type MeasurementTableProps = {
     data: {
         uid: string;
         label: string;
-        displayText: string[];
+        displayText: string;
+        toolName: string;
         isActive: boolean;
     }[];
     title: string;
@@ -41,6 +42,7 @@ const MeasurementTable = ({ data = [], title, onClick, onEdit }: MeasurementTabl
                                 isActive={measurementItem.isActive}
                                 isLocked={isLocked}
                                 displayText={measurementItem.displayText}
+                                toolName={measurementItem.toolName}
                                 onClick={onClick}
                                 onEdit={onEdit}
                             />
