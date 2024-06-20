@@ -1,5 +1,5 @@
-import { useMode } from '../assets/theme/theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
+import { useMode } from '../assets/theme/theme';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { IStore } from '@models/store.ts';

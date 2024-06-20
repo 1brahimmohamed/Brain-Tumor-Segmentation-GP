@@ -1,4 +1,4 @@
-FROM py310_tf215:latest
+FROM py310_tf215
 
 WORKDIR /usr/src/app
 

@@ -2,8 +2,14 @@ import { NotFoundProps } from './404.ts';
 import { ILogin, IUserInfo, IResetPassword } from './auth.ts';
 import { INotification } from './notification.ts';
 import { IStore, IStoreUISlice, IStoreStudiesSlice, IStoreViewerSlice, IStoreAuthSlice } from './store.ts';
-import { IDicomTableColumnHead, IDicomTableRow } from './studies-table.ts';
-import { IDicomTableStudy, IDicomSeriesData, IDicomStudyData } from './study.ts';
+import { IDicomTableColumnHead, INiftiTableColumnHead, IDicomTableRow } from './studies-table.ts';
+import {
+    IDicomTableStudy,
+    IDicomSeriesData,
+    IDicomStudyData,
+    INiftiStudyData,
+    INiftiTableStudy
+} from './study.ts';
 import { IViewportConfig, IViewportSliceState, ILayout, ISegmentation } from './viewer.ts';
 
 export type {
@@ -18,10 +24,13 @@ export type {
     IStoreViewerSlice,
     IStoreAuthSlice,
     IDicomTableColumnHead,
+    INiftiTableColumnHead,
     IDicomTableRow,
     IDicomTableStudy,
     IDicomSeriesData,
     IDicomStudyData,
+    INiftiTableStudy,
+    INiftiStudyData,
     IViewportConfig,
     IViewportSliceState,
     ILayout,

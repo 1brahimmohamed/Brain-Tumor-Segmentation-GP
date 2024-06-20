@@ -72,7 +72,7 @@ const AISegmentation = () => {
 
         if (studyData) {
             store.dispatch(
-                postNewSegmentationRequestThunk(selectedModel.url, studyData[0].studyOrthancId, reqBody)
+                postNewSegmentationRequestThunk(selectedModel.url, studyData[0].studyInstanceUid, reqBody)
             );
         }
     };

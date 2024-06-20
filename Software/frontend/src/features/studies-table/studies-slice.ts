@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IStoreStudiesSlice } from '@models/store.ts';
 import dicomStudiesReducers from '@features/studies-table/dicom-studies-table/dicom-studies-reducers.ts';
+import niftiStudiesReducers from '@features/studies-table/nifti-studies-table/nifti-studies-reducers.ts';
 import filterStudiesReducers from '@features/studies-table/filter-reducers.ts';
 
 const initialState: IStoreStudiesSlice = {
@@ -19,6 +20,7 @@ const studiesSlice = createSlice({
     initialState: initialState,
     reducers: {
         ...dicomStudiesReducers,
+        ...niftiStudiesReducers,
         ...filterStudiesReducers
     }
 });

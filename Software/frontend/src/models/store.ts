@@ -8,6 +8,7 @@ import {
 } from '@/models';
 import { TModeType } from '@assets/theme/theme';
 import { ISegmentation } from '@models/viewer.ts';
+import { INiftiStudyData, INiftiTableStudy } from './study';
 
 export interface IStoreUISlice {
     notification: INotification | null;
@@ -27,8 +28,8 @@ export interface IStoreAuthSlice {
 export interface IStoreStudiesSlice {
     dicomStudies: IDicomTableStudy[];
     selectedDicomStudy: IDicomStudyData | null;
-    niftiStudies: any[];
-    selectedNiftiStudy: any;
+    niftiStudies: INiftiTableStudy[];
+    selectedNiftiStudy: INiftiStudyData | null;
     startDateFilter: string | null;
     endDateFilter: string | null;
     filterPeriod: string;
@@ -46,6 +47,7 @@ export interface IStoreViewerSlice {
     viewports: [];
     renderingEngineId: string;
     selectedViewportId: string;
+    currentStudyInstanceUid: string;
     selectedSeriesInstanceUid: string;
     studyData: IDicomSeriesData[] | null;
     annotationToolGroupIds: string[];
@@ -73,6 +75,7 @@ export const initialState: IStoreViewerSlice = {
     viewports: [],
     renderingEngineId: 'myRenderingEngine',
     selectedViewportId: '',
+    currentStudyInstanceUid: '',
     selectedSeriesInstanceUid: '',
     studyData: null,
     annotationToolGroupIds: [],
