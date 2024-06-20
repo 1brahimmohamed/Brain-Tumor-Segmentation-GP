@@ -6,6 +6,7 @@ from .processing import extract_studies_metadata, extract_study_metadata
 import requests
 import environ
 from django.views.decorators.csrf import csrf_exempt
+from requests.auth import HTTPBasicAuth
 
 env = environ.Env()
 service_url = env('ORTHANC_URL')
@@ -19,7 +20,7 @@ def orthanc_dicomweb_proxy(request, dicom_web_path):
 
     # send request to orthanc server
     try:
-        resp = requests.get(service_url + '/dicom-web/' + dicom_web_path)
+        resp = requests.get(service_url + '/dicom-web/' + dicom_web_path, auth=HTTPBasicAuth(env('ORTHANC_USER'), env('ORTHANC_PASSWORD')))
     except Exception as e:
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data={'message': 'hima'})
 
@@ -35,7 +36,7 @@ def orthanc_dicomweb_proxy(request, dicom_web_path):
 def get_all_studies(request):
     # send request to orthanc server
     try:
-        studies_ids = requests.get(service_url + '/studies')
+        studies_ids = requests.get(service_url + '/studies', auth=HTTPBasicAuth(env('ORTHANC_USER'), env('ORTHANC_PASSWORD')))
         studies_json = studies_ids.json()
 
         # get the metadata for each study
@@ -61,7 +62,7 @@ def get_study(request, study_uid):
 
     # send request to orthanc server
     try:
-        study = requests.get(service_url + '/dicom-web/studies/' + study_uid + '/series')
+        study = requests.get(service_url + '/dicom-web/studies/' + study_uid + '/series', auth=HTTPBasicAuth(env('ORTHANC_USER'), env('ORTHANC_PASSWORD')))
         study = study.json()
 
         # get the study metadata
@@ -79,7 +80,7 @@ def get_study(request, study_uid):
 @api_view(['GET'])
 def get_series_image(request, study_uid, series_uid):
     try:
-        image = requests.get(service_url + '/dicom-web/studies/' + study_uid + '/series/' + series_uid + '/rendered')
+        image = requests.get(service_url + '/dicom-web/studies/' + study_uid + '/series/' + series_uid + '/rendered', auth=HTTPBasicAuth(env('ORTHANC_USER'), env('ORTHANC_PASSWORD')))
     except Exception as e:
         print(e)
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
