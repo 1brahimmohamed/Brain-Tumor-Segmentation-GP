@@ -20,7 +20,7 @@ const HomeTopBar = () => {
             }
         >
             {/* Left Side */}
-            {location === '/report' ? (
+            {location.startsWith('/report') ? (
                 <Box>
                     <p className={'text-2xl font-bold'}>Study Name/ID</p>
                 </Box>
