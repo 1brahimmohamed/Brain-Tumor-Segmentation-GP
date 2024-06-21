@@ -15,6 +15,7 @@ import { FloatingToolbar } from './plate-ui/floating-toolbar';
 import { FloatingToolbarButtons } from './plate-ui/floating-toolbar-buttons';
 import { plugins } from '../lib/plate/plate-plugins';
 import { Button } from '@mui/material';
+import SaveButton from './SaveButton';
 
 export default function PlateEditor() {
     const containerRef = useRef(null);
@@ -60,9 +61,8 @@ export default function PlateEditor() {
                         <Button variant="outlined" color="secondary" onClick={() => {}}>
                             Cancel
                         </Button>
-                        <Button variant="contained" color="secondary" onClick={() => {}}>
-                            Save
-                        </Button>
+
+                        <SaveButton />
                     </div>
                 </div>
             </Plate>
