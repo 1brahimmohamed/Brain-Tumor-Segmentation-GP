@@ -30,7 +30,7 @@ const AppRouter = createBrowserRouter([
                 element: <NiftiStudies />
             },
             {
-                path: 'report',
+                path: 'report/:studyId',
                 element: <Report />
             }
         ]
