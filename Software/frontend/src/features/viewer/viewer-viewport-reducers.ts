@@ -1,10 +1,8 @@
-import { Dispatch, PayloadAction } from '@reduxjs/toolkit';
+import { PayloadAction } from '@reduxjs/toolkit';
 import { IStoreViewerSlice } from '@/models';
-import store from '@/redux/store.ts';
-import { viewerSliceActions } from './viewer-slice';
 import axios from 'axios';
 
-const orthanc_url = 'http://localhost:8042';
+const orthanc_url = import.meta.env.VITE_ORTRHANC_PROXY_URL || 'http://localhost:8042';
 
 const viewerViewportReducer = {
     setCurrentStudy(state: IStoreViewerSlice, action: PayloadAction<string>) {

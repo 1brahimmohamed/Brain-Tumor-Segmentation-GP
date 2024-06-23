@@ -13,7 +13,7 @@ import { createImageIdsAndCacheMetaData } from '@utilities/helpers/index';
 import getMetadataByImageId from '@/utilities/wadoMetaDataProvider';
 import { readSegmentation } from '../../CornerstoneToolManager/segmentationMethods';
 
-const wadoRsRoot = 'http://localhost:8042/dicom-web';
+const wadoRsRoot = import.meta.env.VITE_ORTRHANC_PROXY_URL;
 
 type TViewportProps = {
     onClick?: (idx: string) => void;
