@@ -66,7 +66,7 @@ services:
     build: ./backend/Services/NiftiStorage/
     container_name: gp_nifti_storage
     ports:
-      - "8080:8080"
+      - "7070:8080"
     volumes:
       - ./backend/Services/NiftiStorage:/usr/src/app
 
