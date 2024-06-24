@@ -1,4 +1,9 @@
 version: "3.8"
+
+volumes:
+  postgres_data:
+  api_gateway_db_data:
+
 services:
 
   frontend:
@@ -15,7 +20,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./backend/ApiGateway:/usr/src/app
+      - api_gateway_db_data:/usr/src/app
     depends_on:
       - api_gateway_db
       - orthanc
@@ -65,21 +70,21 @@ services:
     volumes:
       - ./backend/Services/NiftiStorage:/usr/src/app
 
-  # motion_artifacts_inference:
-  #   build: ./backend/Services/Inference/Motion Artifacts
-  #   container_name: gp_motion_artifacts_inference
-  #   volumes:
-  #     - ./backend/Services/Inference/Motion Artifacts:/usr/src/app
-  #   depends_on:
-  #     - rabbitmq
+  motion_artifacts_inference:
+    build: ./backend/Services/Inference/Motion Artifacts
+    container_name: gp_motion_artifacts_inference
+    volumes:
+      - ./backend/Services/Inference/Motion Artifacts:/usr/src/app
+    depends_on:
+      - rabbitmq
 
-  # segmentation_inference:
-  #   build: ./backend/Services/Inference/Segmentation
-  #   container_name: gp_segmentation_inference
-  #   volumes:
-  #     - ./backend/Services/Inference/Segmentation:/usr/src/app
-  #   depends_on:
-  #     - rabbitmq
+  segmentation_inference:
+    build: ./backend/Services/Inference/Segmentation
+    container_name: gp_segmentation_inference
+    volumes:
+      - ./backend/Services/Inference/Segmentation:/usr/src/app
+    depends_on:
+      - rabbitmq
 
   reporting_db:
     image: postgres:latest
@@ -103,13 +108,3 @@ services:
     depends_on:
       - reporting_db
 
-#  inference:
-#    build: ./backend/Services/Inference
-#    container_name: gp_inference
-#    volumes:
-#      - ./backend/Services/Inference:/usr/src/app
-#    depends_on:
-#      - rabbitmq
-
-volumes:
-  postgres_data: 
