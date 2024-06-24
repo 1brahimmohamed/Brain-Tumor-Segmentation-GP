@@ -1,0 +1,39 @@
+name: Push gateway to Dockerhub
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'Software/backend/ApiGateway/**'  # Trigger only when changes occur in software/backend/ApiGateway or its subdirectories
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'Software/backend/ApiGateway/**'  # Trigger only when changes occur in software/backend/ApiGateway or its subdirectories
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4         
+        
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3.2.0
+        with:
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+        
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build the Docker image
+        run: docker build software/backend/ApiGateway -f software/backend/ApiGateway/Dockerfile -t gp_api_gateway:${{ env.GITHUB_RUN_ATTEMPT }}
+
+      - name: Push Docker image to registry
+        if: success()  # Only push if the previous steps were successful
+        run: |
+          docker tag my-github-action-test:latest ${{ secrets.REGISTRY_USERNAME }}/gp_api_gateway:${{ env.GITHUB_RUN_ATTEMPT }}
+          docker push ${{ secrets.REGISTRY_USERNAME }}/gp_api_gateway:${{ env.GITHUB_RUN_ATTEMPT }}
