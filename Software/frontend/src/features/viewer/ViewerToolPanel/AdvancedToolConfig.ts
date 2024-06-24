@@ -169,5 +169,4 @@ const advancedToolConfig: TItem[] = [
     }
 ];
 
-
 export default advancedToolConfig;
