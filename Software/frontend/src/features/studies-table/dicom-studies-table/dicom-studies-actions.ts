@@ -51,6 +51,5 @@ export const uploadDicomFilesThunk = (file: File) => {
         if (!response) {
             return;
         }
-
     };
-}
+};

@@ -1,4 +1,4 @@
-import {useTheme, Box } from '@mui/material';
+import { useTheme, Box } from '@mui/material';
 import { Logo } from '@ui/library';
 import { Link } from 'react-router-dom';
 import {

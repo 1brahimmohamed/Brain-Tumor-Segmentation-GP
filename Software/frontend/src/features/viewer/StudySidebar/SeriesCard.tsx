@@ -8,7 +8,6 @@ import { Box } from '@mui/material';
 
 const gatewayUrl = import.meta.env.VITE_SERVER_URL;
 
-
 interface SeriesCardProps {
     seriesData: IDicomSeriesData;
     seriesIndex: number;

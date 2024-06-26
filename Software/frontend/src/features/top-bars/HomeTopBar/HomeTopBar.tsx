@@ -1,4 +1,4 @@
-import {Button, Typography, Box } from '@mui/material';
+import { Button, Typography, Box } from '@mui/material';
 import CustomButton from '@features/top-bars/components/CustomButton.tsx';
 import { OPTIONS } from '@features/top-bars/HomeTopBar/home-buttons.tsx';
 import '@styles/DateRange.scss';

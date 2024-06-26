@@ -3,9 +3,9 @@ import Dropzone from 'react-dropzone';
 import { Box, Button, LinearProgress } from '@mui/material';
 import { Cloud, DocumentScanner } from '@mui/icons-material';
 import { Modal } from '@ui/library';
-import {uploadDicomFilesThunk} from "@features/studies-table/dicom-studies-table/dicom-studies-actions.ts";
-import {useDispatch} from "react-redux";
-import {TAppDispatch} from "@/redux/store.ts";
+import { uploadDicomFilesThunk } from '@features/studies-table/dicom-studies-table/dicom-studies-actions.ts';
+import { useDispatch } from 'react-redux';
+import { TAppDispatch } from '@/redux/store.ts';
 
 interface UploadDicomModalProps {
     isOpen: boolean;
