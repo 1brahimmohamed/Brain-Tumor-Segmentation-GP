@@ -1,4 +1,5 @@
 from pydicom import Dataset
+import pydicom
 import json
 
 studies_dic = {}
@@ -79,3 +80,17 @@ def extract_study_metadata(study):
         }
 
     return study_data
+
+
+def check_is_dicom(file):
+    """
+    Check if the uploaded file is a DICOM file
+    :param file: uploaded file
+    :return: boolean
+    """
+    # try open the file
+    try:
+        pydicom.dcmread(file)
+    except:
+        return False
+    return True
