@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { Box, Button } from '@mui/material';
+import { Button, Box } from '@mui/material';
 import { Logo } from '@ui/library';
 import HomeTopBar from '@features/top-bars/HomeTopBar/HomeTopBar.tsx';
 import FiltersBar from '@/features/top-bars/HomeTopBar/FiltersBar';

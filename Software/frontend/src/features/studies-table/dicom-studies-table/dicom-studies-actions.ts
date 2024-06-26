@@ -36,30 +36,21 @@ export const fetchDicomStudyByIdThunk = (studyInstanceUID: string) => {
     };
 };
 
-// export const fetchDicomSeries = (studyInstanceUID: string, seriesInstanceUID: string) => {
-//     return async (dispatch: Dispatch) => {
-//         const data = await AxiosUtil.sendRequest({
-//             method: 'GET',
-//             url: `${GATEWAY_URL}/dicom/studies/${studyInstanceUID}/series/${seriesInstanceUID}/`,
-//         });
-//
-//         if (data) {
-//             return;
-//         }
-//     };
-// };
-//
-// export const fetchDicomSeriesThumbnail = (studyInstanceUID: string, seriesInstanceUID: string) => {
-//
-//     return async (dispatch: Dispatch) => {
-//         const data = await AxiosUtil.sendRequest({
-//             method: 'GET',
-//             url: `${GATEWAY_URL}/dicom/studies/${studyInstanceUID}/series/${seriesInstanceUID}/rendered`,
-//         });
-//
-//         if (data) {
-//             return;
-//         }
-//
-//     };
-// };
+export const uploadDicomFilesThunk = (file: File) => {
+    return async () => {
+        const formData = new FormData();
+
+        formData.append('file', file);
+
+        const response = await AxiosUtil.sendRequest({
+            method: 'POST',
+            url: `${GATEWAY_URL}/dicom/upload`,
+            data: formData
+        });
+
+        if (!response) {
+            return;
+        }
+
+    };
+}

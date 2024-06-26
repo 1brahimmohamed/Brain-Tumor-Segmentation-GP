@@ -20,7 +20,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - api_gateway_db_data:/usr/src/app
+      - ./backend/ApiGateway:/usr/src/app
     depends_on:
       - api_gateway_db
       - orthanc
@@ -35,7 +35,7 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
     volumes:
-      - ./backend/ApiGateway/pgdata:/var/lib/postgresql/data
+      - api_gateway_db_data:/var/lib/postgresql/data
     restart: always
 
   orthanc:
