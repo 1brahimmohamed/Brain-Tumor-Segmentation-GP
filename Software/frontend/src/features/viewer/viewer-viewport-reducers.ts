@@ -34,9 +34,7 @@ export const getAndSetSeriesInstances = async (
 ) => {
     let SOPinstanceUIDs: string[] = [];
     await axios
-        .get(
-            `${orthanc_url}/dicom-web/studies/${currentStudyInstanceUid}/series/${seriesInstanceUID}/metadata`
-        )
+        .get(`${orthanc_url}/studies/${currentStudyInstanceUid}/series/${seriesInstanceUID}/metadata`)
         .then((response) => {
             for (let i = 0; i < response.data.length; i++) {
                 SOPinstanceUIDs.push(response.data[i]['00080018'].Value[0]);
@@ -47,6 +45,24 @@ export const getAndSetSeriesInstances = async (
         });
 
     return SOPinstanceUIDs;
+};
+
+// Thunk to get series metadata
+export const getSeriesModality = async (studyInstanceUID: string, seriesInstanceUID: string) => {
+    let Modality = '';
+
+    // Fetch series metadata from the backend
+    await axios
+        .get(`${orthanc_url}/studies/${studyInstanceUID}/series/${seriesInstanceUID}/metadata`)
+        .then((response) => {
+            const metadata = response.data;
+            Modality = metadata[0]['00080060'].Value[0];
+        })
+        .catch((error) => {
+            console.error('Error fetching series metadata:', error);
+        });
+
+    return Modality;
 };
 
 export default viewerViewportReducer;

@@ -1,7 +1,7 @@
 version: "3.8"
 
 volumes:
-  postgres_data:
+  reporting_db_data:
   api_gateway_db_data:
 
 services:
@@ -90,7 +90,7 @@ services:
     image: postgres:latest
     container_name: gp_reporting_db
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - reporting_db_data:/var/lib/postgresql/data/
     ports:
       - "5433:5432"
     environment:

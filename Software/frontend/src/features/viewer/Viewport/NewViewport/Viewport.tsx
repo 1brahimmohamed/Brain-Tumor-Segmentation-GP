@@ -10,8 +10,8 @@ import ViewportOverlay from '@features/viewer/Viewport/ViewportOverlay/ViewportO
 import CinePlayer from '@features/viewer/Viewport/CinePlayer/CinePlayer.tsx';
 import { detectCineHeight } from '@features/viewer/Viewport/CinePlayer/detectCineHeight';
 import { createImageIdsAndCacheMetaData } from '@utilities/helpers/index';
-import getMetadataByImageId from '@/utilities/wadoMetaDataProvider';
 import { readSegmentation } from '../../CornerstoneToolManager/segmentationMethods';
+import { getSeriesModality } from '@features/viewer/viewer-viewport-reducers';
 
 const wadoRsRoot = import.meta.env.VITE_ORTRHANC_PROXY_URL;
 
@@ -60,6 +60,14 @@ const Viewport = ({ onClick, id, vNeighbours }: TViewportProps) => {
                         selectedViewportId
                     ) as Types.IVolumeViewport;
 
+                    if (
+                        (await getSeriesModality(currentStudyInstanceUid, selectedSeriesInstanceUid)) ===
+                        'SEG'
+                    ) {
+                        readSegmentation(selectedSeriesInstanceUid);
+                        return;
+                    }
+
                     const volumeId = `cornerstoneStreamingImageVolume:${selectedSeriesInstanceUid}`;
 
                     const imageIds = await createImageIdsAndCacheMetaData({
@@ -67,13 +75,6 @@ const Viewport = ({ onClick, id, vNeighbours }: TViewportProps) => {
                         SeriesInstanceUID: selectedSeriesInstanceUid,
                         wadoRsRoot: wadoRsRoot
                     });
-
-                    const metaData = getMetadataByImageId('all', imageIds[0]);
-
-                    if (metaData['Modality'].value === 'SEG') {
-                        readSegmentation(selectedSeriesInstanceUid);
-                        return;
-                    }
 
                     const volume = await cornerstone.volumeLoader.createAndCacheVolume(volumeId, {
                         imageIds

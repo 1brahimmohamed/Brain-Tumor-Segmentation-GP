@@ -6,6 +6,7 @@ import * as cornerstone from '@cornerstonejs/core';
 import store from '@/redux/store.ts';
 import { viewerSliceActions } from './viewer-slice';
 
+
 const segmentationAdditionMapper = (segmentationData: { id: string; volumeId: string; uid: string }) => {
     return {
         id: segmentationData.id,
@@ -243,5 +244,6 @@ export const removeSegmentationAndUpdateActiveSegmentation =
             throw new Error('Cannot remove this segmentation');
         }
     };
+
 
 export default viewerSegmentationReducer;
