@@ -56,3 +56,17 @@ export interface INiftiStudyData {
     modality: string;
     series: IDicomSeriesData[];
 }
+
+export interface IStudyReport {
+    patientName: string;
+    patientId: string;
+    patientBirthDate: string;
+    patientSex: string;
+    studyDate: string;
+    studyTime: string;
+    studyInstanceUid: string;
+    reportId: string | null;
+    studyTotalInstances: number;
+    modality: string;
+    content: string | null;
+}

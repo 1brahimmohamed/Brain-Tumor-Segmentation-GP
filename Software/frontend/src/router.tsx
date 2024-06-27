@@ -14,6 +14,7 @@ import SegmentationModels from '@features/settings/pages/SegmentationModels.tsx'
 import MotionArtifactsModels from '@features/settings/pages/MotionArtifactsModels.tsx';
 import SynthesisModels from '@features/settings/pages/SynthesisModels.tsx';
 import NiftiStudies from './features/studies-table/nifti-studies-table/NiftiStudies';
+import Report from './features/report/Report';
 
 const AppRouter = createBrowserRouter([
     {
@@ -27,6 +28,10 @@ const AppRouter = createBrowserRouter([
             {
                 path: 'nifti',
                 element: <NiftiStudies />
+            },
+            {
+                path: 'report/:studyId',
+                element: <Report />
             }
         ]
     },

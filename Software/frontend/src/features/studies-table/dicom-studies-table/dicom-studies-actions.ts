@@ -36,6 +36,49 @@ export const fetchDicomStudyByIdThunk = (studyInstanceUID: string) => {
     };
 };
 
+export const fetchStudyReportByIdThunk = (studyInstanceUID: string) => {
+    return async (dispatch: Dispatch) => {
+        const report = await AxiosUtil.sendRequest({
+            method: 'GET',
+            url: `${GATEWAY_URL}/reports/${studyInstanceUID}`
+        });
+
+        if (!report) {
+            return;
+        }
+
+        dispatch(studiesSliceActions.setSelectedDicomStudy(report));
+    };
+};
+
+// export const fetchDicomSeries = (studyInstanceUID: string, seriesInstanceUID: string) => {
+//     return async (dispatch: Dispatch) => {
+//         const data = await AxiosUtil.sendRequest({
+//             method: 'GET',
+//             url: `${GATEWAY_URL}/dicom/studies/${studyInstanceUID}/series/${seriesInstanceUID}/`,
+//         });
+//
+//         if (data) {
+//             return;
+//         }
+//     };
+// };
+//
+// export const fetchDicomSeriesThumbnail = (studyInstanceUID: string, seriesInstanceUID: string) => {
+//
+//     return async (dispatch: Dispatch) => {
+//         const data = await AxiosUtil.sendRequest({
+//             method: 'GET',
+//             url: `${GATEWAY_URL}/dicom/studies/${studyInstanceUID}/series/${seriesInstanceUID}/rendered`,
+//         });
+//
+//         if (data) {
+//             return;
+//         }
+//
+//     };
+// };
+
 export const uploadDicomFilesThunk = (file: File) => {
     return async () => {
         const formData = new FormData();
