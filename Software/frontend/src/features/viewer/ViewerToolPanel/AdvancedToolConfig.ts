@@ -16,7 +16,7 @@ const handleToolChange = async (tool: string) => {
 
     if (!segmentations || segmentations.length === 0) {
         await CornerstoneToolManager.addSegmentation();
-        CornerstoneToolManager.addSegmentToSegmentation();
+        CornerstoneToolManager.addSegmentToSegmentation(1);
     }
 
     switch (tool) {
@@ -169,63 +169,4 @@ const advancedToolConfig: TItem[] = [
     }
 ];
 
-// ---------------------- Segmentation Table Functions ---------------------- //
-
-const handleSegmentationVisibilityToggle = (segmentationId: string) => {
-    store.dispatch(viewerSliceActions.handleSegmentationVisibility({ segmentationId }));
-};
-
-const handleSegmentVisibilityToggle = (segmentationId: string, segmentIndex: number) => {
-    const currentToolGroupId = store.getState().viewer.currentToolGroupId;
-
-    const currentVisibility = cornerstoneTools.segmentation.config.visibility.getSegmentVisibility(
-        currentToolGroupId,
-        segmentationId,
-        segmentIndex
-    );
-
-    cornerstoneTools.segmentation.config.visibility.setSegmentVisibility(
-        currentToolGroupId,
-        segmentationId,
-        segmentIndex,
-        !currentVisibility
-    );
-};
-
-const handleSegmentLockToggle = (segmentationId: string, segmentIndex: number) => {
-    const currentLock = cornerstoneTools.segmentation.segmentLocking.isSegmentIndexLocked(
-        segmentationId,
-        segmentIndex
-    );
-
-    cornerstoneTools.segmentation.segmentLocking.setSegmentIndexLocked(
-        segmentationId,
-        segmentIndex,
-        !currentLock
-    );
-};
-
-const handleSegmentationDelete = (segmentationId: string) => {
-    const currentToolGroupId = store.getState().viewer.currentToolGroupId;
-
-    cornerstoneTools.segmentation.removeSegmentationsFromToolGroup(currentToolGroupId, [segmentationId]);
-};
-
-const handleSegmentClick = (segmentationId: string, segmentIndex: number) => {
-    store.dispatch(viewerSliceActions.handleSegmentClick({ segmentationId, segmentIndex }));
-    console.log('Segment Clicked', segmentationId, segmentIndex);
-};
-
-const onSegmentationClick = (segmentationId: string) => {
-    store.dispatch(viewerSliceActions.onSegmentationClick({ segmentationId }));
-};
-
-export {
-    handleSegmentationVisibilityToggle,
-    handleSegmentVisibilityToggle,
-    handleSegmentLockToggle,
-    handleSegmentationDelete,
-    handleSegmentClick,
-    onSegmentationClick
-};
 export default advancedToolConfig;

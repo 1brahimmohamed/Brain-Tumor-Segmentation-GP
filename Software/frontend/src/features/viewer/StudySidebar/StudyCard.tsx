@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Box } from '@mui/material';
 import SeriesCard from './SeriesCard.js';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -9,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { viewerSliceActions } from '@features/viewer/viewer-slice.ts';
 import { IDicomSeriesData, IDicomStudyData } from '@/models';
 import { useTheme } from '@mui/material/styles';
+import { Box } from '@mui/material';
 
 const StudyCard = ({ studyData }: { studyData: IDicomStudyData }) => {
     const theme = useTheme();

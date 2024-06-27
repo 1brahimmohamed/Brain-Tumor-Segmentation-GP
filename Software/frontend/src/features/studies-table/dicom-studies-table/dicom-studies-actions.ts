@@ -78,3 +78,21 @@ export const fetchStudyReportByIdThunk = (studyInstanceUID: string) => {
 //
 //     };
 // };
+
+export const uploadDicomFilesThunk = (file: File) => {
+    return async () => {
+        const formData = new FormData();
+
+        formData.append('file', file);
+
+        const response = await AxiosUtil.sendRequest({
+            method: 'POST',
+            url: `${GATEWAY_URL}/dicom/upload`,
+            data: formData
+        });
+
+        if (!response) {
+            return;
+        }
+    };
+};

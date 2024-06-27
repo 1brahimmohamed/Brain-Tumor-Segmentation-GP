@@ -5,20 +5,28 @@ import { CornerstoneToolManager } from '@features/viewer/CornerstoneToolManager'
 import * as cornerstoneTools from '@cornerstonejs/tools';
 import { useEffect, useState } from 'react';
 const MeasurementsTab = () => {
-    const annotations = cornerstoneTools.annotation.state.getAllAnnotations();
-
     const [measurementsData, setMeasurementsData] = useState<any>([]);
 
     useEffect(() => {
-        const data = annotations.map((annotation: any) => {
-            return {
-                uid: annotation.annotationUID,
-                label: annotation.label,
-                displayText: annotation.text,
-                isActive: false
-            };
-        });
-        setMeasurementsData(data);
+        const intervalId = setInterval(() => {
+            const annotations = cornerstoneTools.annotation.state.getAllAnnotations();
+            if (annotations) {
+                const data = annotations.map((annotation) => {
+                    return {
+                        uid: annotation.annotationUID,
+                        label: annotation.data.label,
+                        displayText: annotation.data.text,
+                        toolName: annotation.metadata.toolName,
+                        isActive: false
+                    };
+                });
+                setMeasurementsData(data);
+            }
+        }, 1000);
+
+        return () => {
+            clearInterval(intervalId);
+        };
     }, []);
 
     return (

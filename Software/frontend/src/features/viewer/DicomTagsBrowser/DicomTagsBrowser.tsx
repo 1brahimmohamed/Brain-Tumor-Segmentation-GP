@@ -1,6 +1,6 @@
 import { InputRange, Modal } from '@ui/library';
 import { useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 import { Select } from '@ui/library';
 import DicomTagTable from '@features/viewer/DicomTagsBrowser/DicomTagTable.tsx';
 
