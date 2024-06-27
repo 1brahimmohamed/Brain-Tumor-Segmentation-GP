@@ -90,18 +90,20 @@ def get_series_image(request, study_uid, series_uid):
 @csrf_exempt
 @api_view(['POST'])
 def upload_instances(request):
-
+    
     if not request.FILES:
         return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'instances are required'})
 
-    file_obj = request.FILES['file']
-
+    file_obj = request.FILES['file']                                                            
+    
     if not check_is_dicom(file_obj):
         return Response(status=status.HTTP_400_BAD_REQUEST, data={'message': 'file is not a dicom file'})
 
     try:
-        resp = requests.post(service_url + '/instances', data=file_obj, auth=auth_cred)
-        print(resp.content)
+        file_obj.seek(0)
+        files = {'file': (file_obj.name, file_obj.read(), file_obj.content_type)}
+        
+        requests.post(service_url + '/instances', files=files, auth=auth_cred)        
     except Exception as e:
         print(e)
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
