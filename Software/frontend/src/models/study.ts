@@ -58,15 +58,7 @@ export interface INiftiStudyData {
 }
 
 export interface IStudyReport {
-    patientName: string;
-    patientId: string;
-    patientBirthDate: string;
-    patientSex: string;
-    studyDate: string;
-    studyTime: string;
-    studyInstanceUid: string;
-    reportId: string | null;
-    studyTotalInstances: number;
-    modality: string;
-    content: string | null;
+    id: string;
+    studyId: string;
+    content: string;
 }

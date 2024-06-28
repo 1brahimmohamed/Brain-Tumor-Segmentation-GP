@@ -1,10 +1,10 @@
 import { cn } from '@udecode/cn';
-import { PlateContent } from '@udecode/plate-common';
+import { PlateContent, usePlateStore } from '@udecode/plate-common';
 import { cva } from 'class-variance-authority';
 
 import type { PlateContentProps } from '@udecode/plate-common';
 import type { VariantProps } from 'class-variance-authority';
-import { forwardRef } from 'react';
+import { forwardRef, useEffect } from 'react';
 
 const editorVariants = cva(
     cn(
@@ -43,10 +43,24 @@ const editorVariants = cva(
     }
 );
 
-export type EditorProps = PlateContentProps & VariantProps<typeof editorVariants>;
+export type EditorProps = PlateContentProps &
+    VariantProps<typeof editorVariants> & {
+        initialReadOnly: boolean;
+    };
 
 const Editor = forwardRef<HTMLDivElement, EditorProps>(
-    ({ className, disabled, focused, focusRing, readOnly, size, variant, ...props }, ref) => {
+    (
+        { className, disabled, focused, focusRing, readOnly, size, variant, initialReadOnly, ...props },
+        ref
+    ) => {
+        const setReadOnly = usePlateStore().set.readOnly();
+
+        useEffect(() => {
+            if (initialReadOnly) {
+                setReadOnly(true);
+            }
+        }, [initialReadOnly]);
+
         return (
             <div ref={ref} className="relative w-full">
                 <PlateContent

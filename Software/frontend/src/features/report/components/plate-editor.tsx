@@ -1,9 +1,8 @@
 'use client';
 
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { cn } from '@udecode/cn';
 import { Plate } from '@udecode/plate-common';
-import { ELEMENT_PARAGRAPH } from '@udecode/plate-paragraph';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
@@ -17,25 +16,27 @@ import { plugins } from '../lib/plate/plate-plugins';
 import { Button } from '@mui/material';
 import SaveButton from './SaveButton';
 
-export default function PlateEditor() {
+interface PlateEditorProps {
+    initialReport: any[];
+    initialReadOnly: boolean;
+}
+
+export default function PlateEditor({ initialReport, initialReadOnly }: PlateEditorProps) {
     const containerRef = useRef(null);
 
-    const initialValue = [
-        {
-            id: '1',
-            type: ELEMENT_PARAGRAPH,
-            children: [{ text: 'Hello, World!' }]
+    const key = useMemo(() => {
+        if (initialReport) {
+            return window.crypto.randomUUID();
         }
-    ];
+    }, [initialReport]);
 
     return (
         <DndProvider backend={HTML5Backend}>
-            <Plate plugins={plugins} initialValue={initialValue}>
+            <Plate id="report" key={key} plugins={plugins} initialValue={initialReport}>
                 <div
                     ref={containerRef}
                     className={cn(
                         'relative',
-                        // Block selection
                         '[&_.slate-start-area-left]:!w-[64px] [&_.slate-start-area-right]:!w-[64px] [&_.slate-start-area-top]:!h-4'
                     )}
                 >
@@ -49,6 +50,7 @@ export default function PlateEditor() {
                         focusRing={false}
                         variant="ghost"
                         size="md"
+                        initialReadOnly={initialReadOnly}
                     />
 
                     <FloatingToolbar>
@@ -62,7 +64,7 @@ export default function PlateEditor() {
                             Cancel
                         </Button>
 
-                        <SaveButton />
+                        <SaveButton key={key} />
                     </div>
                 </div>
             </Plate>

@@ -28,6 +28,17 @@ def get_report_by_id(db: Session, report_id: int):
         return None
 
 
+def get_report_by_study_id(db: Session, study_id: str):
+    try:
+        print("Good")
+        report = db.query(Report).filter(Report.studyId == study_id).first()
+        print("Report is")
+        print(report)
+        return report
+    except:
+        return None
+
+
 def update_report(db: Session, report_id: int, requestedReport: RequestReport):
     try:
         report = db.query(Report).filter(Report.id == report_id).first()

@@ -3,6 +3,7 @@ import { AxiosUtil } from '@/utilities';
 import { studiesSliceActions } from '@features/studies-table/studies-slice.ts';
 
 const GATEWAY_URL = import.meta.env.VITE_SERVER_URL;
+const REPORTING_API_URL = import.meta.env.VITE_REPORTING_API_URL;
 
 export const fetchDicomStudiesThunk = () => {
     console.log(`fetching dicom studies from ${GATEWAY_URL}/dicom/studies`);
@@ -40,14 +41,14 @@ export const fetchStudyReportByIdThunk = (studyInstanceUID: string) => {
     return async (dispatch: Dispatch) => {
         const report = await AxiosUtil.sendRequest({
             method: 'GET',
-            url: `${GATEWAY_URL}/reports/${studyInstanceUID}`
+            url: `${REPORTING_API_URL}/report/${studyInstanceUID}`
         });
 
         if (!report) {
             return;
         }
 
-        dispatch(studiesSliceActions.setSelectedDicomStudy(report));
+        dispatch(studiesSliceActions.setSelectStudyReport(report.result));
     };
 };
 
