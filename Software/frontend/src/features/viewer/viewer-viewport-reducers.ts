@@ -34,7 +34,7 @@ export const getAndSetSeriesInstances = async (
 ) => {
     let SOPinstanceUIDs: string[] = [];
 
-    AxiosUtil.sendRequest({
+    await AxiosUtil.sendRequest({
         method: 'GET',
         url: `${orthanc_url}/studies/${currentStudyInstanceUid}/series/${seriesInstanceUID}/metadata`
     })
@@ -55,7 +55,7 @@ export const getSeriesModality = async (studyInstanceUID: string, seriesInstance
     let Modality = '';
 
     // Fetch series metadata from the backend
-    AxiosUtil.sendRequest({
+    await AxiosUtil.sendRequest({
         method: 'GET',
         url: `${orthanc_url}/studies/${studyInstanceUID}/series/${seriesInstanceUID}/metadata`
     })

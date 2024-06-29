@@ -43,7 +43,6 @@ const UploadDicomModal = ({ isOpen, onClose }: UploadDicomModalProps) => {
         const progressInterval = startSimulateProgress();
 
         for (const file of files) {
-            console.log('Uploading file:', file.name);
             await new Promise((resolve) => setTimeout(resolve, 100));
 
             dispatch(uploadDicomFilesThunk(file));
