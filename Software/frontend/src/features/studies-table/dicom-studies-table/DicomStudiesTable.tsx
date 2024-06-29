@@ -15,20 +15,29 @@ import {
     TableRow,
     Box,
     useTheme,
-    Checkbox
+    Checkbox,
+    IconButton
 } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SearchIcon from '@mui/icons-material/Search';
 import { DicomUtil } from '@/utilities';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { TAppDispatch } from '@/redux/store.ts';
+import { deleteDicomStudyThunk } from '@features/studies-table/dicom-studies-table/dicom-studies-actions.ts';
+
+import { MdDeleteForever } from 'react-icons/md';
 
 const StudiesDataTable = ({ data }: { data: IDicomTableStudy[] }) => {
     const theme = useTheme();
     const [searchValues, setSearchValues] = useState(Array(tableColumnHeadings.length).fill(''));
-
+    const dispatch = useDispatch<TAppDispatch>();
     const { startDateFilter, endDateFilter, filterPeriod, selectedModalities } = useSelector(
         (store: IStore) => store.studies
     );
+
+    const handleDelete = (studyOrthancId: string) => {
+        dispatch(deleteDicomStudyThunk(studyOrthancId));
+    };
 
     const filterRows = () => {
         let filteredData = data;
@@ -174,6 +183,21 @@ const StudiesDataTable = ({ data }: { data: IDicomTableStudy[] }) => {
 
                                     <StyledTableCell component="th" align="left" sx={{ width: '10%' }}>
                                         {DicomUtil.formatDate(row.studyDate)}
+                                    </StyledTableCell>
+
+                                    <StyledTableCell component="th" align="left" sx={{ width: '5%' }}>
+                                        <IconButton
+                                            aria-label="delete"
+                                            onClick={() => handleDelete(row.studyOrthancId)}
+                                            sx={{
+                                                color: theme.palette.error.main,
+                                                '&:hover': {
+                                                    color: theme.palette.error.dark
+                                                }
+                                            }}
+                                        >
+                                            <MdDeleteForever />
+                                        </IconButton>
                                     </StyledTableCell>
                                 </StyledTableRow>
                             );

@@ -7,8 +7,8 @@ const tableColumnHeadings: IDicomTableColumnHead[] = [
         searchable: false
     },
     {
-        displayName: 'Scan',
-        key: 'reportId',
+        displayName: 'View',
+        key: 'viewer',
         searchable: false
     },
     {
@@ -50,6 +50,11 @@ const tableColumnHeadings: IDicomTableColumnHead[] = [
         displayName: 'Study Date',
         key: 'studyDate',
         searchable: true
+    },
+    {
+        displayName: '',
+        key: 'delete',
+        searchable: false
     }
 ];
 

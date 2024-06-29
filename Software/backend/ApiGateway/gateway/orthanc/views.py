@@ -50,7 +50,6 @@ def get_all_studies(request):
 
         # get the metadata for all the studies
         studies = extract_studies_metadata(studies_metadata_arr, first_series_metadata_arr)
-
     except Exception as e:
         print(e)
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -82,7 +81,7 @@ def get_series_image(request, study_uid, series_uid):
     try:
         image = requests.get(service_url + '/dicom-web/studies/' + study_uid + '/series/' + series_uid + '/rendered', auth=auth_cred)
     except Exception as e:
-        print(e)
+        print(e)    
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     return HttpResponse(image.content, content_type=image.headers['Content-Type'])
@@ -109,3 +108,16 @@ def upload_instances(request):
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     return Response(status=status.HTTP_200_OK, data={'message': 'instances uploaded successfully'})
+
+@csrf_exempt
+@api_view(['DELETE'])
+def delete_study(request, study_orthanc_id):
+    try:
+        response = requests.delete(service_url + '/studies/' + study_orthanc_id, auth=auth_cred)
+        if response.status_code == 200:
+            return Response(status=status.HTTP_200_OK, data={'message': 'Study deleted successfully'})
+        else:
+            return Response(status=response.status_code, data=response.json())
+    except Exception as e:
+        print(e)
+        return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data={'message': 'Failed to delete study'})

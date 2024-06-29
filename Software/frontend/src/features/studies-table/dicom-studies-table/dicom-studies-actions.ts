@@ -97,3 +97,18 @@ export const uploadDicomFilesThunk = (file: File) => {
         }
     };
 };
+
+export const deleteDicomStudyThunk = (studyOrthancID: string) => {
+    return async (dispatch: Dispatch) => {
+        const response = await AxiosUtil.sendRequest({
+            method: 'DELETE',
+            url: `${GATEWAY_URL}/dicom/delete/studies/${studyOrthancID}`
+        });
+
+        if (!response) {
+            return;
+        }
+
+        dispatch(studiesSliceActions.removeStudy(studyOrthancID));
+    };
+};

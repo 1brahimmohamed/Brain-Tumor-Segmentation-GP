@@ -1,6 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { IStoreViewerSlice } from '@/models';
-import axios from 'axios';
+import { AxiosUtil } from '@/utilities';
 
 const orthanc_url = import.meta.env.VITE_ORTRHANC_PROXY_URL || 'http://localhost:8042';
 
@@ -33,11 +33,14 @@ export const getAndSetSeriesInstances = async (
     seriesInstanceUID: string
 ) => {
     let SOPinstanceUIDs: string[] = [];
-    await axios
-        .get(`${orthanc_url}/studies/${currentStudyInstanceUid}/series/${seriesInstanceUID}/metadata`)
-        .then((response) => {
-            for (let i = 0; i < response.data.length; i++) {
-                SOPinstanceUIDs.push(response.data[i]['00080018'].Value[0]);
+
+    AxiosUtil.sendRequest({
+        method: 'GET',
+        url: `${orthanc_url}/studies/${currentStudyInstanceUid}/series/${seriesInstanceUID}/metadata`
+    })
+        .then((metadata) => {
+            for (let i = 0; i < metadata.length; i++) {
+                SOPinstanceUIDs.push(metadata[i]['00080018'].Value[0]);
             }
         })
         .catch((error) => {
@@ -52,10 +55,11 @@ export const getSeriesModality = async (studyInstanceUID: string, seriesInstance
     let Modality = '';
 
     // Fetch series metadata from the backend
-    await axios
-        .get(`${orthanc_url}/studies/${studyInstanceUID}/series/${seriesInstanceUID}/metadata`)
-        .then((response) => {
-            const metadata = response.data;
+    AxiosUtil.sendRequest({
+        method: 'GET',
+        url: `${orthanc_url}/studies/${studyInstanceUID}/series/${seriesInstanceUID}/metadata`
+    })
+        .then((metadata) => {
             Modality = metadata[0]['00080060'].Value[0];
         })
         .catch((error) => {

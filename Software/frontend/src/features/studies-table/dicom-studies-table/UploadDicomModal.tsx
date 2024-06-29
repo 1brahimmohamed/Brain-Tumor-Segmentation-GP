@@ -3,7 +3,10 @@ import Dropzone from 'react-dropzone';
 import { Box, Button, LinearProgress } from '@mui/material';
 import { Cloud, DocumentScanner } from '@mui/icons-material';
 import { Modal } from '@ui/library';
-import { uploadDicomFilesThunk } from '@features/studies-table/dicom-studies-table/dicom-studies-actions.ts';
+import {
+    uploadDicomFilesThunk,
+    fetchDicomStudiesThunk
+} from '@features/studies-table/dicom-studies-table/dicom-studies-actions.ts';
 import { useDispatch } from 'react-redux';
 import { TAppDispatch } from '@/redux/store.ts';
 
@@ -52,6 +55,7 @@ const UploadDicomModal = ({ isOpen, onClose }: UploadDicomModalProps) => {
         return setTimeout(() => {
             setIsUploading(false);
             onClose();
+            dispatch(fetchDicomStudiesThunk());
         }, 1000);
     };
 

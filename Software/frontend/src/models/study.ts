@@ -3,6 +3,7 @@ export interface IDicomTableStudy {
     studyId: string;
     studyInstanceUid: string;
     studyDescription: string;
+    studyOrthancId: string;
     studyDate: string;
     studyTime: string;
     patientId: string;
