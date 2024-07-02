@@ -121,3 +121,34 @@ def delete_study(request, study_orthanc_id):
     except Exception as e:
         print(e)
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data={'message': 'Failed to delete study'})
+
+@api_view(['DELETE'])
+def delete_series(request, series_uid):
+    try:
+        series_orthanc_id = get_orthanc_id_form_dicom_id(series_uid)
+
+        if not series_orthanc_id:
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data={'message': 'Failed to get orthanc id'})
+
+        response = requests.delete(f"{service_url}/series/{series_orthanc_id}", auth=auth_cred)
+        if response.status_code == 200:
+            return Response(status=status.HTTP_200_OK, data={'message': f'Series deleted successfully with orthanc id: {series_orthanc_id} and series_uid: {series_uid}'})
+        else:
+            return Response(status=response.status_code, data=response.json())
+    except Exception as e:
+        print(e)
+        return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data={'message': 'Failed to delete series'})
+
+
+def get_orthanc_id_form_dicom_id(dicom_id):
+    try:
+        response = requests.post(f"{service_url}/tools/lookup", data=dicom_id, auth=auth_cred)
+        response_data = response.json()
+        
+        if response_data and isinstance(response_data, list) and 'ID' in response_data[0]:
+            return response_data[0]['ID']
+        else:
+            raise ValueError("ID not found in response")
+    except Exception as e:
+        print(e)
+        return None  # Return None if there's an error getting the orthanc id

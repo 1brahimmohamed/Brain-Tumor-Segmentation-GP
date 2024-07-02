@@ -112,3 +112,18 @@ export const deleteDicomStudyThunk = (studyOrthancID: string) => {
         dispatch(studiesSliceActions.removeStudy(studyOrthancID));
     };
 };
+
+export const deleteSeriesbyIdThunk = (seriesInstanceUID: string) => {
+    return async (dispatch: Dispatch) => {
+        await AxiosUtil.sendRequest({
+            method: 'DELETE',
+            url: `${GATEWAY_URL}/dicom/delete/series/${seriesInstanceUID}`
+        })
+            .then(() => {
+                dispatch(studiesSliceActions.removeSeries(seriesInstanceUID));
+            })
+            .catch((error) => {
+                console.error('Error deleting series:', error);
+            });
+    };
+};

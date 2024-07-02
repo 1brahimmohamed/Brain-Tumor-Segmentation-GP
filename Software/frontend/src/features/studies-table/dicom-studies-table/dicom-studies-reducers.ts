@@ -16,6 +16,15 @@ const dicomStudiesReducers = {
     },
     setSelectStudyReport: (state: IStoreStudiesSlice, action: PayloadAction<IStudyReport>) => {
         state.selectedStudyReport = action.payload;
+    },
+    removeSeries: (state: IStoreStudiesSlice, action: PayloadAction<string>) => {
+        if (state.selectedDicomStudy) {
+            state.selectedDicomStudy.series = state.selectedDicomStudy.series.filter(
+                (series) => series.seriesInstanceUid !== action.payload
+            );
+        } else {
+            console.error('No series to remove');
+        }
     }
 };
 
