@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import * as cornerstoneTools from '@cornerstonejs/tools';
+import { refreshSelectedViewport } from '@/utilities/uiHelper';
 
 type TMeasurementItem = {
     uid: string;
@@ -29,14 +30,15 @@ const MeasurementItem = ({
 }: TMeasurementItem) => {
     const [isHovering, setIsHovering] = useState(false);
 
-    const onEditHandler = (event: any) => {
-        event.stopPropagation();
-        onEdit({ uid, isActive, event });
-    };
+    // const onEditHandler = (event: any) => {
+    //     event.stopPropagation();
+    //     onEdit({ uid, isActive, event });
+    // };
 
     const onDeleteHandler = (event: any) => {
         event.stopPropagation();
         cornerstoneTools.annotation.state.removeAnnotation(uid);
+        refreshSelectedViewport();
     };
 
     const onClickHandler = (event: any) => onClick({ uid, isActive, event });
