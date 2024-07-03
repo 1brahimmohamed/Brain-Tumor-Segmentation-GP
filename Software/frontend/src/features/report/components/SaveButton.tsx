@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import { usePlateStore } from '@udecode/plate-common';
 import store from '@/redux/store.ts';
-import { createReport, updateReport } from '../report-actions';
+import { createReportThunk, updateReport } from '../report-actions';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { IStore } from '@/models';
@@ -16,7 +16,7 @@ export default function SaveButton() {
             if (selectedStudyReport) {
                 store.dispatch(updateReport(selectedStudyReport.id, studyId, JSON.stringify(value)));
             } else {
-                store.dispatch(createReport(studyId, JSON.stringify(value)));
+                store.dispatch(createReportThunk(studyId, JSON.stringify(value)));
             }
         }
     };
