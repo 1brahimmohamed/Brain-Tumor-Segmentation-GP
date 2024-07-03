@@ -3,7 +3,6 @@ import { CornerstoneToolManager, SEGMENTATION_TOOLS } from '@features/viewer/Cor
 import * as cornerstoneTools from '@cornerstonejs/tools';
 import store from '@/redux/store.ts';
 import { TItem } from '@ui/library/AdvancedToolBox/AdvancedToolBox.tsx';
-import { viewerSliceActions } from '../viewer-slice';
 
 const { utilities: cstUtils } = cornerstoneTools;
 

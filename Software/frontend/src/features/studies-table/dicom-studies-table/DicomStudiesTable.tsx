@@ -145,7 +145,7 @@ const StudiesDataTable = ({ data }: { data: IDicomTableStudy[] }) => {
                                         </Link>
                                     </StyledTableCell>
 
-                                    <StyledTableCell component="th" scope="row" sx={{ width: '5%' }}>
+                                    {/* <StyledTableCell component="th" scope="row" sx={{ width: '5%' }}>
                                         <Link target={'_blank'} to={`/report/${row.studyInstanceUid}`}>
                                             <VisibilityIcon
                                                 sx={{
@@ -155,7 +155,7 @@ const StudiesDataTable = ({ data }: { data: IDicomTableStudy[] }) => {
                                                 }}
                                             />
                                         </Link>
-                                    </StyledTableCell>
+                                    </StyledTableCell> */}
 
                                     <StyledTableCell component="th" scope="row" sx={{ width: '10%' }}>
                                         {row.studyId}

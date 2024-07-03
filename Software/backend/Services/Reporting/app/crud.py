@@ -5,11 +5,11 @@ from app.schemas import RequestReport
 
 def create_report(db: Session, report: RequestReport):
     try:
-        report = Report(**report.model_dump())
-        db.add(report)
+        new_report = Report(**report.model_dump())
+        db.add(new_report)
         db.commit()
-        db.refresh(report)
-        return report
+        db.refresh(new_report)
+        return new_report
     except:
         return None
 
@@ -28,13 +28,10 @@ def get_report_by_id(db: Session, report_id: int):
         return None
 
 
-def get_report_by_study_id(db: Session, study_id: str):
+def get_reports_by_study_id(db: Session, study_id: str):
     try:
-        print("Good")
-        report = db.query(Report).filter(Report.studyId == study_id).first()
-        print("Report is")
-        print(report)
-        return report
+        reports = db.query(Report).filter(Report.studyId == study_id).all()
+        return reports
     except:
         return None
 
@@ -50,9 +47,9 @@ def update_report(db: Session, report_id: int, requestedReport: RequestReport):
         return None
 
 
-def delete_report(db: Session, report_id: int):
+def delete_report(db: Session, report_id: int, study_id: str):
     try:
-        report = db.query(Report).filter(Report.id == report_id).first()
+        report = db.query(Report).filter(Report.id == report_id and Report.studyId == study_id).first()
         db.delete(report)
         db.commit()
         return True

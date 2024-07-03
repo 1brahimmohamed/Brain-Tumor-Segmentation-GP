@@ -27,7 +27,8 @@ const initialState: IStoreViewerSlice = {
     currentStudyInstanceUid: '',
     selectedCornerstoneTools: [],
     viewportsWithCinePlayer: [],
-    segmentations: []
+    segmentations: [],
+    selectedStudyReports: []
 };
 
 const viewportsSlice = createSlice({

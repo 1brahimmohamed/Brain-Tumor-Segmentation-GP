@@ -59,7 +59,7 @@ export interface INiftiStudyData {
 }
 
 export interface IStudyReport {
-    id: string;
+    id: number;
     studyId: string;
     content: string;
 }

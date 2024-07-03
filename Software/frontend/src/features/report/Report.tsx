@@ -6,10 +6,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TAppDispatch } from '@/redux/store';
 import { useParams } from 'react-router-dom';
-import {
-    fetchDicomStudyByIdThunk,
-    fetchStudyReportByIdThunk
-} from '../studies-table/dicom-studies-table/dicom-studies-actions';
+import { fetchDicomStudyByIdThunk } from '@features/studies-table/dicom-studies-table/dicom-studies-actions';
+import { fetchStudyReportByIdThunk } from '@features/report/report-actions';
 import { IStore } from '@/models';
 
 export default function Report() {

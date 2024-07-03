@@ -8,5 +8,5 @@ class Report(Base):
     id = Column(
         Integer, primary_key=True, index=True, nullable=False, autoincrement=True
     )
-    studyId = Column(String, unique=True, nullable=False)
+    studyId = Column(String, nullable=False)
     content = Column(String, nullable=True)

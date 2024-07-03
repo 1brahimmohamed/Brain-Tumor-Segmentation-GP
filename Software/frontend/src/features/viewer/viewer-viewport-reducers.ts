@@ -1,6 +1,7 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { IStoreViewerSlice } from '@/models';
 import { AxiosUtil } from '@/utilities';
+import { IStudyReport } from '@/models';
 
 const orthanc_url = import.meta.env.VITE_ORTRHANC_PROXY_URL || 'http://localhost:8042';
 
@@ -14,16 +15,17 @@ const viewerViewportReducer = {
     removeClickedSeries(state: IStoreViewerSlice) {
         state.selectedSeriesInstanceUid = '';
     },
-
     setSelectedViewport(state: IStoreViewerSlice, action: PayloadAction<string>) {
         state.selectedViewportId = action.payload;
     },
     removeClickedViewport(state: IStoreViewerSlice) {
         state.selectedViewportId = '';
     },
-
     setStudyData(state: IStoreViewerSlice, action: PayloadAction<any>) {
         state.studyData = action.payload;
+    },
+    setSelectedStudyReports: (state: IStoreViewerSlice, action: PayloadAction<IStudyReport[]>) => {
+        state.selectedStudyReports = action.payload;
     }
 };
 

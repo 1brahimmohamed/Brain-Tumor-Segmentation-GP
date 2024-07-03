@@ -12,11 +12,6 @@ const tableColumnHeadings: IDicomTableColumnHead[] = [
         searchable: false
     },
     {
-        displayName: 'Report',
-        key: 'reportId',
-        searchable: false
-    },
-    {
         displayName: 'Study ID',
         key: 'studyId',
         searchable: true

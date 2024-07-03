@@ -59,6 +59,7 @@ export interface IStoreViewerSlice {
     }>;
     viewportsWithCinePlayer: string[];
     segmentations: ISegmentation[];
+    selectedStudyReports: IStudyReport[];
 }
 
 export const initialState: IStoreViewerSlice = {
@@ -83,7 +84,8 @@ export const initialState: IStoreViewerSlice = {
     currentToolGroupId: '',
     selectedCornerstoneTools: [],
     viewportsWithCinePlayer: [],
-    segmentations: []
+    segmentations: [],
+    selectedStudyReports: []
 };
 
 export interface IStore {
