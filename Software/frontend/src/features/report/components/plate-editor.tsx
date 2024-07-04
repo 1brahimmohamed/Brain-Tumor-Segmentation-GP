@@ -15,6 +15,7 @@ import { FloatingToolbarButtons } from './plate-ui/floating-toolbar-buttons';
 import { plugins } from '../lib/plate/plate-plugins';
 import { Button } from '@mui/material';
 import SaveButton from './SaveButton';
+import { useNavigate } from 'react-router-dom';
 
 interface PlateEditorProps {
     initialReport: any[];
@@ -23,7 +24,7 @@ interface PlateEditorProps {
 
 export default function PlateEditor({ initialReport, initialReadOnly }: PlateEditorProps) {
     const containerRef = useRef(null);
-
+    const navigate = useNavigate();
     const key = useMemo(() => {
         if (initialReport) {
             return window.crypto.randomUUID();
@@ -45,7 +46,7 @@ export default function PlateEditor({ initialReport, initialReadOnly }: PlateEdi
                     </FixedToolbar>
 
                     <Editor
-                        className="px-[48px] py-8 h-72 overflow-y-auto"
+                        className="px-[48px] py-8 overflow-y-auto"
                         autoFocus
                         focusRing={false}
                         variant="ghost"
@@ -60,7 +61,13 @@ export default function PlateEditor({ initialReport, initialReadOnly }: PlateEdi
                     <CursorOverlay containerRef={containerRef} />
 
                     <div className="flex justify-end gap-4 mt-2">
-                        <Button variant="outlined" color="secondary" onClick={() => {}}>
+                        <Button
+                            variant="outlined"
+                            color="secondary"
+                            onClick={() => {
+                                navigate(-1);
+                            }}
+                        >
                             Cancel
                         </Button>
 

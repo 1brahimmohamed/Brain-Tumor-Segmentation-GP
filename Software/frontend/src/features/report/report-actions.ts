@@ -3,11 +3,20 @@ import { AxiosUtil } from '@/utilities';
 import { uiSliceActions } from '@ui/ui-slice.ts';
 import { viewerSliceActions } from '@features/viewer/viewer-slice';
 import store from '@/redux/store';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * The URL for the reporting API.
  */
 const REPORTING_API_URL = import.meta.env.VITE_REPORTING_API_URL;
+const templateReportContent = `[
+    {"id":"1","children":[{"text":"{Doctor's info}\\n"}],"type":"p"},
+    {"children":[{"children":[{"children":[{"children":[{"text":"Patient's name: {patientName}"}],"type":"p","id":"6tjqr"}],"type":"td","id":"4nkmv"},
+    {"children":[{"children":[{"text":"Branch: {branchInstitution}"}],"type":"p","id":"e82lq"}],"type":"td","id":"e7917"}],"type":"tr","id":"72zj3"},
+    {"children":[{"children":[{"children":[{"text":"Date of Examination: {examinationDate}"}],"type":"p","id":"hdvz3"}],"type":"td","id":"f6hox"},
+    {"children":[{"children":[{"text":"{Body parts}"}],"type":"p","id":"e9cb4"}],"type":"td","id":"s4vob"}],"type":"tr","id":"mqt5s"}],"type":"table","id":"j2bl1"},
+    {"children":[{"text":"CLINICAL HISTORY: {clinicalHistory} \\n\\nCOMPARISON: {comparison}\\n\\nTECHNIQUE: {technique}\\n\\n FINDINGS: {findings}\\n\\nIMPRESSION: {impression}\\n"}],"type":"p","id":"flr32"}
+]`;
 
 /**
  * Creates a new report for the specified study.
@@ -15,21 +24,20 @@ const REPORTING_API_URL = import.meta.env.VITE_REPORTING_API_URL;
  * @param {string} studyInstanceUid - The study instance UID.
  * @param {string} reportContent - The report content.
  */
-export const createReportThunk = (studyInstanceUid: string, reportContent: string) => {
+export const createReportThunk = (studyInstanceUid: string, navigate: any) => {
     return async (dispatch: Dispatch) => {
         const res = await AxiosUtil.sendRequest({
             method: 'POST',
             url: `${REPORTING_API_URL}/report`,
             data: {
                 studyId: studyInstanceUid,
-                content: reportContent
+                content: templateReportContent
             }
         });
 
         if (!res) {
             return;
         }
-
         store.dispatch(fetchStudyReportByIdThunk(studyInstanceUid));
 
         dispatch(
@@ -38,6 +46,8 @@ export const createReportThunk = (studyInstanceUid: string, reportContent: strin
                 content: 'Report has been created successfully!'
             })
         );
+
+        navigate(`/report/${res.result.id}/study/${studyInstanceUid}`);
     };
 };
 
@@ -47,7 +57,7 @@ export const createReportThunk = (studyInstanceUid: string, reportContent: strin
  * @param {string} studyInstanceUid - The study instance UID.
  * @param {string} reportContent - The new report content.
  */
-export const updateReport = (reportId: string, studyId: string, reportContent: string) => {
+export const updateReport = (reportId: number, studyId: string, reportContent: string) => {
     return async (dispatch: Dispatch) => {
         const res = await AxiosUtil.sendRequest({
             method: 'PUT',

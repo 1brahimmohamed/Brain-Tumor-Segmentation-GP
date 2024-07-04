@@ -27,7 +27,7 @@ const ReportingTab = () => {
 
             return textContent;
         } catch (error) {
-            return 'Error displaying content';
+            return 'No content found';
         }
     };
 
@@ -35,8 +35,8 @@ const ReportingTab = () => {
         store.dispatch(deleteReportbyIdThunk(reportId, studyId));
     };
 
-    const createReport = (studyId: string, reportContent: string) => {
-        store.dispatch(createReportThunk(studyId, reportContent));
+    const createReport = (studyId: string, navigate: any) => {
+        store.dispatch(createReportThunk(studyId, navigate));
     };
 
     return (

@@ -34,7 +34,6 @@ export interface IStoreStudiesSlice {
     endDateFilter: string | null;
     filterPeriod: string;
     selectedModalities: string[];
-    selectedStudyReport: IStudyReport;
 }
 
 export interface IStoreViewerSlice {
