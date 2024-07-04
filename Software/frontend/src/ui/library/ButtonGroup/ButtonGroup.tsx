@@ -48,7 +48,7 @@ const ButtonGroup = ({
                         {...buttonProps}
                         key={index}
                         className={classnames(
-                            'rounded-md px-2 py-1',
+                            'rounded-md px-2 py-1 hover:bg-AAPrimaryDark',
                             isActive
                                 ? `text-white ${activeTabColor ? activeTabColor : 'bg-AAPrimary'}`
                                 : 'text-primary-active bg-AAFirstShade'

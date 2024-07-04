@@ -1,5 +1,5 @@
 import { createContext, useMemo } from 'react';
-import { createTheme } from '@mui/material/styles';
+import createTheme from '@mui/material/styles/createTheme';
 
 export type TModeType = 'light' | 'dark';
 

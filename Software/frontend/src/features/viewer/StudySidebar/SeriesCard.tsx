@@ -1,10 +1,12 @@
 import { useTheme } from '@mui/material/styles';
-import { Box } from '@mui/material';
 import { Image } from '@ui/library';
 import { IDicomSeriesData } from '@/models';
 import * as ContextMenu from '@radix-ui/react-context-menu';
 import { useState } from 'react';
 import DeleteSeriesModal from './DeleteSeriesModal';
+import { Box } from '@mui/material';
+
+const gatewayUrl = import.meta.env.VITE_SERVER_URL;
 
 interface SeriesCardProps {
     seriesData: IDicomSeriesData;
@@ -18,12 +20,7 @@ const SeriesCard = ({ seriesData, seriesIndex, selectedIndex, onSelectedSeriesCh
 
     const [isDeleting, setIsDeleting] = useState(false);
 
-    let retrieveUrl = seriesData.retrieveUrl;
-
-    // change link from localhost to localhost:8080
-    retrieveUrl = retrieveUrl.replace('localhost', 'localhost:8042');
-
-    const imageSrc = `http://localhost:8000/dicom/studies/${seriesData.studyInstanceUid}/series/${seriesData.seriesInstanceUid}/image`;
+    const imageSrc = `${gatewayUrl}/dicom/studies/${seriesData.studyInstanceUid}/series/${seriesData.seriesInstanceUid}/image`;
 
     return (
         <>

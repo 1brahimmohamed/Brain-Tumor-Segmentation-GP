@@ -3,6 +3,12 @@ import Dropzone from 'react-dropzone';
 import { Box, Button, LinearProgress } from '@mui/material';
 import { Cloud, DocumentScanner } from '@mui/icons-material';
 import { Modal } from '@ui/library';
+import {
+    uploadDicomFilesThunk,
+    fetchDicomStudiesThunk
+} from '@features/studies-table/dicom-studies-table/dicom-studies-actions.ts';
+import { useDispatch } from 'react-redux';
+import { TAppDispatch } from '@/redux/store.ts';
 
 interface UploadDicomModalProps {
     isOpen: boolean;
@@ -14,6 +20,7 @@ const UploadDicomModal = ({ isOpen, onClose }: UploadDicomModalProps) => {
     const [fileError, setFileError] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
     const [progressValue, setProgressValue] = useState(0);
+    const dispatch = useDispatch<TAppDispatch>();
 
     const startSimulateProgress = () => {
         setProgressValue(0);
@@ -36,8 +43,9 @@ const UploadDicomModal = ({ isOpen, onClose }: UploadDicomModalProps) => {
         const progressInterval = startSimulateProgress();
 
         for (const file of files) {
-            console.log('Uploading file:', file.name);
             await new Promise((resolve) => setTimeout(resolve, 100));
+
+            dispatch(uploadDicomFilesThunk(file));
         }
 
         clearInterval(progressInterval);
@@ -46,6 +54,7 @@ const UploadDicomModal = ({ isOpen, onClose }: UploadDicomModalProps) => {
         return setTimeout(() => {
             setIsUploading(false);
             onClose();
+            dispatch(fetchDicomStudiesThunk());
         }, 1000);
     };
 

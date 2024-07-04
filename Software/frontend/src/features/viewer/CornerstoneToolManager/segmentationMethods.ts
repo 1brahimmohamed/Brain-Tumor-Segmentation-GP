@@ -14,12 +14,8 @@ const { downloadDICOMData } = helpers;
 const { Cornerstone3D } = adaptersSEG;
 
 // Constants for DICOMWeb client
-const DICOM_URL = 'http://localhost:8080/http://localhost:8042/dicom-web';
+const DICOM_URL = import.meta.env.VITE_ORTRHANC_PROXY_URL;
 const SINGLEPART = true;
-const HEADERS = {
-    'Access-Control-Allow-Origin': 'http://localhost:5000',
-    'Access-Control-Allow-Credentials': 'true'
-};
 
 /**
  * Helper function to get rendering engine and viewport dynamically
@@ -226,8 +222,7 @@ export const readSegmentation = async (input: File | string) => {
         // Construct URL to fetch DICOM image based on seriesInstanceUID
         const client = new api.DICOMwebClient({
             url: DICOM_URL,
-            singlepart: SINGLEPART,
-            headers: HEADERS
+            singlepart: SINGLEPART
         });
 
         // Retrieve the SOP Instance UIDs for the specified series

@@ -8,7 +8,8 @@ import {
     IDicomSeriesData,
     IDicomStudyData,
     INiftiStudyData,
-    INiftiTableStudy
+    INiftiTableStudy,
+    IStudyReport
 } from './study.ts';
 import { IViewportConfig, IViewportSliceState, ILayout, ISegmentation } from './viewer.ts';
 
@@ -31,6 +32,7 @@ export type {
     IDicomStudyData,
     INiftiTableStudy,
     INiftiStudyData,
+    IStudyReport,
     IViewportConfig,
     IViewportSliceState,
     ILayout,

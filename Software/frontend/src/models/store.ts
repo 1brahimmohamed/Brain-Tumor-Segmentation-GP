@@ -8,7 +8,7 @@ import {
 } from '@/models';
 import { TModeType } from '@assets/theme/theme';
 import { ISegmentation } from '@models/viewer.ts';
-import { INiftiStudyData, INiftiTableStudy } from './study';
+import { INiftiStudyData, INiftiTableStudy, IStudyReport } from './study';
 
 export interface IStoreUISlice {
     notification: INotification | null;
@@ -58,6 +58,7 @@ export interface IStoreViewerSlice {
     }>;
     viewportsWithCinePlayer: string[];
     segmentations: ISegmentation[];
+    selectedStudyReports: IStudyReport[];
 }
 
 export const initialState: IStoreViewerSlice = {
@@ -82,7 +83,8 @@ export const initialState: IStoreViewerSlice = {
     currentToolGroupId: '',
     selectedCornerstoneTools: [],
     viewportsWithCinePlayer: [],
-    segmentations: []
+    segmentations: [],
+    selectedStudyReports: []
 };
 
 export interface IStore {

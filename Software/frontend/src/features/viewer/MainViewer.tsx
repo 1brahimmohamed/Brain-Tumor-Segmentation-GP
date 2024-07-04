@@ -1,5 +1,5 @@
 import { initCornerstone } from '@utilities/helpers/index';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import * as cornerstone from '@cornerstonejs/core';
 import { useSelector } from 'react-redux';
 import ViewportsManager from '@features/viewer/Viewport/ViewportsManager.tsx';

@@ -2,9 +2,9 @@ import { ReactNode, useState } from 'react';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { StyledDiv } from '@features/top-bars/components/StyledDiv.tsx';
 import SvgIcon from '@mui/material/SvgIcon';
-import { Box } from '@mui/material';
 import { useTheme } from '@mui/material';
 import { StyledMenu } from '@ui/library';
+import { Box } from '@mui/material';
 
 interface ICustomButtonProps {
     title: string;

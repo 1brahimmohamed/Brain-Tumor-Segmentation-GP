@@ -3,6 +3,7 @@ export interface IDicomTableStudy {
     studyId: string;
     studyInstanceUid: string;
     studyDescription: string;
+    studyOrthancId: string;
     studyDate: string;
     studyTime: string;
     patientId: string;
@@ -55,4 +56,10 @@ export interface INiftiStudyData {
     studyTotalInstances: number;
     modality: string;
     series: IDicomSeriesData[];
+}
+
+export interface IStudyReport {
+    id: number;
+    studyId: string;
+    content: string;
 }

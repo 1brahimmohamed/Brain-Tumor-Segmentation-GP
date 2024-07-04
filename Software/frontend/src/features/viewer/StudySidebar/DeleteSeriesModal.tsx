@@ -1,5 +1,8 @@
 import { Modal } from '@/ui/library';
 import { Box, Button } from '@mui/material';
+import { deleteSeriesbyIdThunk } from '@features/studies-table/dicom-studies-table/dicom-studies-actions';
+import { useDispatch } from 'react-redux';
+import { TAppDispatch } from '@/redux/store.ts';
 
 interface DeleteSeriesModalProps {
     isOpen: boolean;
@@ -9,6 +12,13 @@ interface DeleteSeriesModalProps {
 }
 
 const DeleteSeriesModal = ({ isOpen, onClose, seriesId, seriesTitle }: DeleteSeriesModalProps) => {
+    const dispatch = useDispatch<TAppDispatch>();
+
+    const handleDeleteClick = async () => {
+        dispatch(deleteSeriesbyIdThunk(seriesId));
+        onClose(); // Ensure onClose is properly called
+    };
+
     return (
         <Modal
             isOpen={isOpen}
@@ -25,11 +35,7 @@ const DeleteSeriesModal = ({ isOpen, onClose, seriesId, seriesTitle }: DeleteSer
                     <Button variant={'outlined'} color={'secondary'} onClick={onClose}>
                         Cancel
                     </Button>
-                    <Button
-                        variant={'contained'}
-                        color={'secondary'}
-                        onClick={() => console.log('Delete series', seriesId)}
-                    >
+                    <Button variant={'contained'} color={'secondary'} onClick={handleDeleteClick}>
                         Delete
                     </Button>
                 </Box>
