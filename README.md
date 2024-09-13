@@ -22,4 +22,6 @@ Supervised By:
 - Prof. Mohammed Al-masni
     -  Assistant Professor, Department of Artificial Intelligence, Sejong University, South Korea.
 
-Sponsored By:
+Collaborated With:
+- Ain Shams University Hospital
+- Sejong University
