@@ -351,4 +351,7 @@ cd [repo]
 This project was made in Collaboration with Ain Shams University Hospital (ASUH)
 as an IRB protocol was submitted.
 
+<div style="display: flex; justify-items: center; align-items: center">
+<img src="./files/images/sbme.webp" width="150px;"/>
 <img src="./files/images/FMASU.png" width="150px;"/>
+</div>
